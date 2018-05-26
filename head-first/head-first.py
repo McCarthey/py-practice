@@ -63,7 +63,7 @@ finally:
 
 # 使用with语句，从而可以省略finally组
 try:
-    with open('missing.txt') as data:
+    with open('man_data.txt') as data:
         print(data.readline(), end='')
 except IOError as err:
     print('File error: ' + str(err))
