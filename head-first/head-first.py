@@ -5,5 +5,12 @@ test_file = open('test.txt')
 print(test_file.readline(), end='')
 # seek()方法返回到文件起始位置。也可以使用tell()
 test_file.seek(0)
-print(test_file.readline(), end='')
+# 开始循环遍历
+print('-----------分割线，开始循环遍历--------------')
+for line in test_file:
+    # 多重赋值
+    (role, line_spoken) = line.split(':')
+    print(role, end='')
+    print(' said:', end='')
+    print(line_spoken, end='')
 test_file.close()
