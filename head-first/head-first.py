@@ -55,11 +55,18 @@ finally:
 
 try:
     data = open('missing.txt')
-    print(data.readline(),end='')
-except IOError:
-    print('file error')
+    print(data.readline(), end='')
+except IOError as err:
+    print('file error: ' + str(err))
 finally:
     # locals() BIF会返回当前作用域中定义的所有名的一个集合
     if 'data' in locals():
-        # 需要检查data是否存在，否则会报错 
+        # 需要检查data是否存在，否则会报错
         data.close()
+
+# 使用with语句，从而可以省略finally组
+try:
+    with open('missing.txt') as data:
+        print(data.readline(), end='')
+except IOError as err:
+    print('File error: ' + str(err))
