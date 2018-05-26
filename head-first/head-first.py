@@ -26,15 +26,25 @@ try:
                 man.append(line_spoken)
             elif role == 'Other Man':
                 other.append(line_spoken)
-        # 可以指定运行时的错误类型 
+        # 可以指定运行时的错误类型
         except ValueError:
             print('发生错误了')
             pass
-        
+
     test_file.close()
-# 可以指定运行时的错误类型 
+# 可以指定运行时的错误类型
 except IOError:
     print('test.txt is missing!')
 
-print(man)
-print(other)
+try:
+    man_out = open('man_data.txt', 'w')
+    other_out = open('other.txt', 'w')
+    print(man, file=man_out)
+    print(other, file=other_out)
+    man_out.close()
+    other_out.close()
+    print('file write success!')
+except IOError:
+    print('file write error!')
+# open() BIF打开磁盘文件时候，默认是读模式（r）,可以指定写模式（w）
+# 如果要写一个文件，但该文件不存在，则会自动创建，然后进行写操作
