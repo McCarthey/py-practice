@@ -8,9 +8,10 @@ test_file.seek(0)
 # 开始循环遍历
 print('-----------分割线，开始循环遍历--------------')
 for line in test_file:
-    # 多重赋值
-    (role, line_spoken) = line.split(':')
+    # 多重赋值 split([sep[, maxsplit]]) maxsplit是可选参数，指定要分割的数量，默认是要到分隔符就会分割
+    (role, line_spoken) = line.split(':',1)
     print(role, end='')
     print(' said:', end='')
     print(line_spoken, end='')
+
 test_file.close()
