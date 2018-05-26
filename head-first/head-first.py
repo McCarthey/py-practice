@@ -1,5 +1,8 @@
 # open() BIF
 # open() BIF会创建一个迭代器，使用readline()从文件向你的代码输入数据行，一次传入一行数据
+# import os 
+# 检查是否存在测试用的文件
+# os.path.exists('test.txt')
 test_file = open('test.txt')
 # 数据处理
 print(test_file.readline(), end='')
@@ -19,5 +22,6 @@ for line in test_file:
         print(line_spoken, end='')
     except:
         print('发生错误了')
+        pass
 
 test_file.close()
