@@ -10,6 +10,8 @@ try:
     # seek()方法返回到文件起始位置。也可以使用tell()
     test_file.seek(0)
     # 开始循环遍历
+    man = []
+    other = []
     print('-----------分割线，开始循环遍历--------------')
     for line in test_file:
         # 多重赋值 split([sep[, maxsplit]]) maxsplit是可选参数，指定要分割的数量，默认是要到分隔符就会分割
@@ -18,15 +20,21 @@ try:
         # if not line.find(":") == -1:
         try:
             (role, line_spoken) = line.split(':', 1)
-            print(role, end='')
-            print(' said:', end='')
-            print(line_spoken, end='')
+            # 去除字符串首位空白符
+            line_spoken = line_spoken.strip()
+            if role == 'Man':
+                man.append(line_spoken)
+            elif role == 'Other Man':
+                other.append(line_spoken)
         # 可以指定运行时的错误类型 
         except ValueError:
             print('发生错误了')
             pass
-
+        
     test_file.close()
 # 可以指定运行时的错误类型 
 except IOError:
     print('test.txt is missing!')
+
+print(man)
+print(other)
