@@ -3,6 +3,7 @@
 # import os
 # 检查是否存在测试用的文件
 # os.path.exists('test.txt')
+from nester import print_lol
 try:
     test_file = open('test.txt')
     # 数据处理
@@ -40,9 +41,9 @@ except IOError:
 # 如果要写一个文件，但该文件不存在，则会自动创建，然后进行写操作
 try:
     with open('man_data.txt', 'w') as man_out:
-        print(man, file=man_out)
+        print_lol(man, out_file=man_out)
     with open('other.txt', 'w') as other_out:
-        print(other, file=other_out)
+        print_lol(other, out_file=other_out)
     # print() BIF可以将指定的变量数据保存到指定的文件对象(加上file=file_object)
     # 如果在文件关闭前发生了IOError，则文件始终不会被关闭！会导致数据被破坏
     print('file write success!')

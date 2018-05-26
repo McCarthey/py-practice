@@ -1,1 +1,4 @@
-['Is this the right room for an argument?', "No, you haven't!", 'When?', 'That was bullshit!']
+Is this the right room for an argument?
+No, you haven't!
+When?
+That was bullshit!
