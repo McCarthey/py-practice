@@ -39,19 +39,16 @@ except IOError:
 # open() BIF打开磁盘文件时候，默认是读模式（r）,可以指定写模式（w）
 # 如果要写一个文件，但该文件不存在，则会自动创建，然后进行写操作
 try:
-    man_out = open('man_data.txt', 'w')
-    other_out = open('other.txt', 'w')
+    with open('man_data.txt', 'w') as man_out:
+        print(man, file=man_out)
+    with open('other.txt', 'w') as other_out:
+        print(other, file=other_out)
     # print() BIF可以将指定的变量数据保存到指定的文件对象(加上file=file_object)
     # 如果在文件关闭前发生了IOError，则文件始终不会被关闭！会导致数据被破坏
-    print(man, file=man_out)
-    print(other, file=other_out)
     print('file write success!')
-except IOError:
-    print('file write error!')
-# finally 是无论如何都会执行的代码 确保文件对象被关闭
-finally:
-    man_out.close()
-    other_out.close()
+except IOError as err:
+    print('file error: ' + str(err))
+
 
 try:
     data = open('missing.txt')
