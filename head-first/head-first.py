@@ -70,9 +70,13 @@ except IOError as err:
     print('File error: ' + str(err))
 
 
-# 杂事儿 
+# 杂事儿
 '''两个width:50%的行内元素（inline-block）并排放置，中间会有间隙（这个间隙来自你的标记中行内元素间的空白），因此第二个元素会换到下一行
    要删除这个间隙，需要在HTML中通过注释删除空白（右）
    例如：
    <div class="half">50% wide</div><!-- --><div class="half">50% wide</div>
+'''
+# 杂事儿
+'''善用Array.prototype.every 和 filter 会节省很多代码
+
 '''
