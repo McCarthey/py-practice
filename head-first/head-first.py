@@ -77,6 +77,6 @@ except IOError as err:
    <div class="half">50% wide</div><!-- --><div class="half">50% wide</div>
 '''
 # 杂事儿
-'''善用Array.prototype.every 和 filter 会节省很多代码
-
+''' - 善用Array.prototype.every 和 filter 会节省很多代码
+    - vue中computed属性中默认只设置了getter函数，我们还可以添加setter函数
 '''
