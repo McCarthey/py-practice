@@ -97,4 +97,6 @@ except IOError as err:
     html {
         scroll-behavior: smooth;
     }
+    
+    - position: sticky; 粘性定位 需要指定top,bottom,left,right之一才可以实现粘性效果
 '''
