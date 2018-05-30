@@ -79,4 +79,13 @@ except IOError as err:
 # 杂事儿
 ''' - 善用Array.prototype.every 和 filter 会节省很多代码
     - vue中computed属性中默认只设置了getter函数，我们还可以添加setter函数
+    
+    以下样式可以在webkit浏览器中模拟macOS中的滚动条样式
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #c1c1c1;
+        border-radius: 4px;
+    }  
 '''
