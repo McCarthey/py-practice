@@ -99,4 +99,10 @@ except IOError as err:
     }
     
     - position: sticky; 粘性定位 需要指定top,bottom,left,right之一才可以实现粘性效果
+    - 利用css shape-outside 可以让内联元素以不规则的形状进行外部排列（可以实现刘海屏的适配）
+      且元素必须是浮动元素，以下是绕开刘海屏的实现
+    .shape {
+        float: left;
+        shape-outside: polygon(0 0, 0 150px, 16px 154px, 30px 166px, 30px 314px, 16px 326px, 0 330px, 0 0);
+    }
 '''
