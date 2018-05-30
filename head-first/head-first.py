@@ -93,4 +93,8 @@ except IOError as err:
     elem.scrollIntoView({
         behavior: 'smooth'
     });
+    有一个全新的 CSS 属性（仍在工作草案中），可以用简单的一行代码改变整个页面滚动的行为:
+    html {
+        scroll-behavior: smooth;
+    }
 '''
