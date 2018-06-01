@@ -1,7 +1,25 @@
 <html>
 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="refresh" content="5; url=https://www.baidu.com">
+    <style>
+        #countDown {
+            text-decoration: underline;
+            color: blueviolet;
+        }
+    </style>
+</head>
+
 <body>
-    <script src="../ts/greeter.js"></script>
+    测试meta标签的重定向 <span id="countDown">5</span>s后到百度
+    <script src="../ts/built/greeter.js"></script>
+    <script>
+        let countDown = document.getElementById('countDown')
+        setInterval(() => {
+            countDown.innerText = Number(countDown.innerText) - 1
+        }, 1000)
+    </script>
 </body>
 
 </html>

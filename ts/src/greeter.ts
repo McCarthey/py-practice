@@ -14,6 +14,6 @@ function greeter(person: Person) {
 }
 
 let user = {firstName: 'Mary', lastName: 'Jane'}
-let student = new Student('Ryan', 'Dahl', 'Node')
+let student = new Student('Ryan', 'Node', 'Dahl')
 
 document.body.innerHTML = greeter(student)
