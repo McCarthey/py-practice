@@ -2,7 +2,19 @@
 
 <head>
     <meta charset="utf-8">
+    <!-- 上下这两行等效，不过不推荐使用后者 -->
+    <!-- <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> -->
     <meta http-equiv="refresh" content="5; url=https://www.baidu.com">
+    <!-- 重要!!! 指定白名单，从而防止XSS攻击 （或者可以设置http头信息的Content-Security-Policy字段）-->
+    <!-- 改行meta的意思： 
+            - 脚本：只信任当前域名
+            - <object>标签：不信任任何url，即不加载任何资源
+            - 样式表：只信任cdn.example.org和third-party.org
+            - 框架(frame)：必须使用https协议加载
+            - 其他资源：没有限制
+    -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none'; style-src cdn.example.org third-party.org; child-src https:">
+
     <style>
         #countDown {
             text-decoration: underline;
