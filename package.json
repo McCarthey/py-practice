@@ -1,0 +1,11 @@
+{
+  "name": "py-practice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/McCarthey/py-practice.git",
+  "author": "mccarthey <mccarthey123@outlook.com>",
+  "license": "MIT",
+  "dependencies": {
+    "webpack": "^4.10.2"
+  }
+}

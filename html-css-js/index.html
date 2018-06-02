@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <!-- 上下这两行等效，不过不推荐使用后者 -->
     <!-- <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> -->
-    <meta http-equiv="refresh" content="5; url=https://www.baidu.com">
+    <!-- <meta http-equiv="refresh" content="5; url=https://www.baidu.com"> -->
     <!-- 如果content只包含一个正整数，则是重新载入页面的时间间隔； -->
     <!-- 如果content包含一个正整数并且跟着一个字符串，则是重定向到指定链接的时间间隔（秒） -->
     <!-- 重要!!! 指定白名单，从而防止XSS攻击 （或者可以设置http头信息的Content-Security-Policy字段）-->
@@ -47,11 +47,16 @@
 </head>
 
 <body>
-    测试meta标签的重定向 <span id="countDown">5</span>s后到百度
+    测试meta标签的重定向
+    <span id="countDown">5</span>s后到百度
     <script src="../ts/built/greeter.js"></script>
     <script>
         let countDown = document.getElementById('countDown')
-        setInterval(() => {
+        let timer = setInterval(() => {
+            if (Number(countDown.innerText) <= 0) {
+                timer = null
+                return false
+            }
             countDown.innerText = Number(countDown.innerText) - 1
         }, 1000)
     </script>
