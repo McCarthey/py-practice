@@ -29,6 +29,15 @@
         - unsafe-URL：在同源请求下，发送完整的URL (不含查询参数)。
     -->
     <meta name="referrer" content="no-referrer">
+    <!-- 还有没有成为正式标准的一些属性：包括creator,googlebot,publisher,robots -->
+    <!-- 重要的viewport，提供了有关视口初始大小的提示，仅供移动设备使用：
+        - width：一个正整数或device-width，以像素为单位，定义视口的宽度
+        - height：一个正整数或device-height，以像素为单位，定义视口的高度
+        - initial-scale：一个0.0到10.0之间的正数，定义设备宽度（纵向模式下的设备宽度或横向模式下的设备高度）与视口大小之间的缩放比率
+        - maximum-scale：一个0.0到10.0之间的正数，定义缩放比率的最大值，它必须大于等于minimum-scale的值
+        - minimum-scale：一个0.0到10.0之间的正数，定义缩放比率的最小值，它必须小于等于maximum-scale的值 
+        - user-scalable：一个布尔值（yes or no），如果设置为no，用户将不能缩放该页面。默认为yes -->
+    <meta name="viewport" content="">
     <style>
         #countDown {
             text-decoration: underline;
