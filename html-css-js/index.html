@@ -5,6 +5,8 @@
     <!-- 上下这两行等效，不过不推荐使用后者 -->
     <!-- <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> -->
     <meta http-equiv="refresh" content="5; url=https://www.baidu.com">
+    <!-- 如果content只包含一个正整数，则是重新载入页面的时间间隔； -->
+    <!-- 如果content包含一个正整数并且跟着一个字符串，则是重定向到指定链接的时间间隔（秒） -->
     <!-- 重要!!! 指定白名单，从而防止XSS攻击 （或者可以设置http头信息的Content-Security-Policy字段）-->
     <!-- 改行meta的意思： 
             - 脚本：只信任当前域名
