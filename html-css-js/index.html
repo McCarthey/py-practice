@@ -16,7 +16,19 @@
             - 其他资源：没有限制
     -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self'; object-src 'none'; style-src cdn.example.org third-party.org; child-src https:">
-
+    <!-- 当有itemprop,http-equiv或者charset时，就不应该设置meta的name属性 -->
+    <meta name="author" content="mccarthey">
+    <meta name="description" content="this is for test">
+    <meta name="generator" content="containing, in a free format, the identifier to the software that generated the page">
+    <meta name="keywords" content="html,css,js,python,base">
+    <!-- 控制所有从该文档发出的 HTTP 请求中HTTP Referer 首部的内容，referrer可取的content有：
+        - no-referrer：不要发送http referrer首部
+        - origin：发送当前文档的origin
+        - no-referrer-when-downgrade：当目的地是先验安全的(https->https)则发送 origin 作为 referrer ，但是当目的地是较不安全的 (https->http)时则不发送 referrer 。这个是默认的行为。
+        - origin-when-crossorigin：在同源请求下，发送完整的URL (不含查询参数) ，其他情况下则仅发送当前文档的 origin。
+        - unsafe-URL：在同源请求下，发送完整的URL (不含查询参数)。
+    -->
+    <meta name="referrer" content="no-referrer">
     <style>
         #countDown {
             text-decoration: underline;
