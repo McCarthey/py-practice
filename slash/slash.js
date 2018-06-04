@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const { exec } = require('child_process')
+
 function convert(argv) {
     try {
         argv[0]
@@ -9,6 +11,7 @@ function convert(argv) {
             // console.log(argv[0])
             let res = argv[0].replace(/\\/g, '/')
             console.log(res)
+            exec('clip').stdin.end(res)
         } else {
             console.error('I do not konw what you want,please try again')
         }
