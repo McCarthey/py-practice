@@ -52,7 +52,6 @@ try:
 except IOError as err:
     print('file error: ' + str(err))
 
-
 try:
     data = open('missing.txt')
     print(data.readline(), end='')
