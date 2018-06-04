@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const { exec } = require('child_process')
+const iconv = require('iconv-lite')
 
 function convert(argv) {
     try {
@@ -11,7 +12,7 @@ function convert(argv) {
             // console.log(argv[0])
             let res = argv[0].replace(/\\/g, '/')
             console.log(res)
-            exec('clip').stdin.end(res)
+            exec('clip').stdin.end(iconv.encode(res, 'gbk'))
         } else {
             console.error('I do not konw what you want,please try again')
         }

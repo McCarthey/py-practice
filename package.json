@@ -6,6 +6,7 @@
     "author": "mccarthey <mccarthey123@outlook.com>",
     "license": "MIT",
     "dependencies": {
+        "iconv-lite": "^0.4.23",
         "webpack": "^4.10.2"
     },
     "scripts": {
