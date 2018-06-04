@@ -3,6 +3,7 @@
 """
 import sys
 
+
 def print_lol(the_list, indent=False, level=0, out_file=sys.stdout):
     for each_item in the_list:
         if isinstance(each_item, list):

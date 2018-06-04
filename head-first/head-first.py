@@ -1,3 +1,4 @@
+# coding=utf-8
 # open() BIF
 # open() BIF会创建一个迭代器，使用readline()从文件向你的代码输入数据行，一次传入一行数据
 # import os
@@ -5,7 +6,7 @@
 # os.path.exists('test.txt')
 from nester import print_lol
 try:
-    test_file = open('test.txt')
+    test_file = open('test.txt', encoding='utf8')
     # 数据处理
     print(test_file.readline(), end='')
     # seek()方法返回到文件起始位置。也可以使用tell()
@@ -40,10 +41,12 @@ except IOError:
 # open() BIF打开磁盘文件时候，默认是读模式（r）,可以指定写模式（w）
 # 如果要写一个文件，但该文件不存在，则会自动创建，然后进行写操作
 try:
-    with open('man_data.txt', 'w') as man_out:
+    with open('man_data.txt', 'w', encoding="utf8") as man_out:
         print_lol(man, out_file=man_out)
-    with open('other.txt', 'w') as other_out:
+        print(man)
+    with open('other.txt', 'w', encoding="utf8") as other_out:
         print_lol(other, out_file=other_out)
+        print(other)
     # print() BIF可以将指定的变量数据保存到指定的文件对象(加上file=file_object)
     # 如果在文件关闭前发生了IOError，则文件始终不会被关闭！会导致数据被破坏
     print('file write success!')
@@ -61,13 +64,6 @@ finally:
     if 'data' in locals():
         # 需要检查data是否存在，否则会报错
         data.close()
-
-# 使用with语句，从而可以省略finally组
-try:
-    with open('man_data.txt') as data:
-        print(data.readline(), end='')
-except IOError as err:
-    print('File error: ' + str(err))
 
 
 # 杂事儿
