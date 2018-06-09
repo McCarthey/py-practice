@@ -16,11 +16,11 @@ people = [{
     'new': []
 },
     {
-    'old': sarahData,
+    'old': mikeyData,
     'new': []
 },
     {
-    'old': jamesData,
+    'old': sarahData,
     'new': []
 }]
 
@@ -48,31 +48,16 @@ def sanitize(time_string):
     return (mins + '.' + secs)
 
 
-jamesListCleanedSorted = sorted([sanitize(t) for t in jamesList])
-julieListCleanedSorted = sorted([sanitize(t) for t in julieList])
-mikeyListCleanedSorted = sorted([sanitize(t) for t in mikeyList])
-sarahListCleanedSorted = sorted([sanitize(t) for t in sarahList])
+jamesListCleanedSortedUnique = sorted(set([sanitize(t) for t in jamesList]))  # sorted会将集合自动转成列表并排序
+julieListCleanedSortedUnique = sorted(set([sanitize(t) for t in julieList]))
+mikeyListCleanedSortedUnique = sorted(set([sanitize(t) for t in mikeyList]))
+sarahListCleanedSortedUnique = sorted(set([sanitize(t) for t in sarahList]))
 
-# 去重
-jamesListCleanedSortedUnique = []
-julieListCleanedSortedUnique = []
-mikeyListCleanedSortedUnique = []
-sarahListCleanedSortedUnique=[]
-for s in jamesListCleanedSorted:
-    if s not in jamesListCleanedSortedUnique:
-        jamesListCleanedSortedUnique.append(s)
-for s in julieListCleanedSorted:
-    if s not in julieListCleanedSortedUnique:
-        julieListCleanedSortedUnique.append(s)
-for s in mikeyListCleanedSorted:
-    if s not in mikeyListCleanedSortedUnique:
-        mikeyListCleanedSortedUnique.append(s)
-for s in sarahListCleanedSorted:
-    if s not in sarahListCleanedSortedUnique:
-        sarahListCleanedSortedUnique.append(s)
 
+# 使用集合去重复
+# python提供了集合数据结构，特点是无序、不允许重复
 
 print(jamesListCleanedSortedUnique[0:3])
-print(julieListCleanedSortedUnique[0:3])
+print(julieListCleanedSortedUnique[0:3]) 
 print(mikeyListCleanedSortedUnique[0:3])
 print(sarahListCleanedSortedUnique[0:3])
