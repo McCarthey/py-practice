@@ -48,28 +48,11 @@ def sanitize(time_string):
     return (mins + '.' + secs)
 
 
-jamesListCleaned = []
-julieListCleaned = []
-mikeyListCleaned = []
-sarahListCleaned = []
+jamesListCleanedSorted = sorted([sanitize(t) for t in jamesList])
+julieListCleanedSorted = sorted([sanitize(t) for t in julieList])
+mikeyListCleanedSorted = sorted([sanitize(t) for t in mikeyList])
+sarahListCleanedSorted = sorted([sanitize(t) for t in sarahList])
 
-for item in jamesList:
-    itemCleaned = sanitize(item)
-    jamesListCleaned.append(itemCleaned)
-for item in julieList:
-    itemCleaned = sanitize(item)
-    julieListCleaned.append(itemCleaned)
-for item in mikeyList:
-    itemCleaned = sanitize(item)
-    mikeyListCleaned.append(itemCleaned)
-for item in sarahList:
-    itemCleaned = sanitize(item)
-    sarahListCleaned.append(itemCleaned)
-
-jamesListCleanedSorted = sorted(jamesListCleaned)
-julieListCleanedSorted = sorted(julieListCleaned)
-mikeyListCleanedSorted = sorted(mikeyListCleaned)
-sarahListCleanedSorted = sorted(sarahListCleaned)
 
 print(jamesListCleanedSorted)
 print(julieListCleanedSorted)
