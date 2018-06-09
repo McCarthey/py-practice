@@ -53,8 +53,26 @@ julieListCleanedSorted = sorted([sanitize(t) for t in julieList])
 mikeyListCleanedSorted = sorted([sanitize(t) for t in mikeyList])
 sarahListCleanedSorted = sorted([sanitize(t) for t in sarahList])
 
+# 去重
+jamesListCleanedSortedUnique = []
+julieListCleanedSortedUnique = []
+mikeyListCleanedSortedUnique = []
+sarahListCleanedSortedUnique=[]
+for s in jamesListCleanedSorted:
+    if s not in jamesListCleanedSortedUnique:
+        jamesListCleanedSortedUnique.append(s)
+for s in julieListCleanedSorted:
+    if s not in julieListCleanedSortedUnique:
+        julieListCleanedSortedUnique.append(s)
+for s in mikeyListCleanedSorted:
+    if s not in mikeyListCleanedSortedUnique:
+        mikeyListCleanedSortedUnique.append(s)
+for s in sarahListCleanedSorted:
+    if s not in sarahListCleanedSortedUnique:
+        sarahListCleanedSortedUnique.append(s)
 
-print(jamesListCleanedSorted)
-print(julieListCleanedSorted)
-print(mikeyListCleanedSorted)
-print(sarahListCleanedSorted)
+
+print(jamesListCleanedSortedUnique[0:3])
+print(julieListCleanedSortedUnique[0:3])
+print(mikeyListCleanedSortedUnique[0:3])
+print(sarahListCleanedSortedUnique[0:3])
