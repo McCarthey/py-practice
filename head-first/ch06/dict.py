@@ -13,17 +13,24 @@ def get_coach_data(filename):
     try:
         with open(filename) as f:
             data = f.readline()
-        return(data.strip().split(','))
+        res = data.strip().split(',')
+        res = [t.strip() for t in res]
+        return ({
+			'name': res.pop(0),
+			'birthday': res.pop(0),
+			'times': res,
+			'fastestTimes': sorted(set([sanitize(t) for t in res]))[0:3]
+		})
     except IOError as err:
         print('File error: ' + str(err))
         return(None)
+		
+james = get_coach_data('./rawText/james.txt')
+julie = get_coach_data('./rawText/julie.txt')
+mikey = get_coach_data('./rawText/mikey.txt')
+sarah = get_coach_data('./rawText/sarah.txt')
 
-
-sarah = [t.strip() for t in get_coach_data('./rawText/sarah.txt')]
-
-sarah_dict = {}
-sarah_dict['name'] = sarah.pop(0)
-sarah_dict['birthday'] = sarah.pop(0)
-sarah_dict['times'] = sarah
-
-print(sarah_dict['name'] + " 's fastest times are:" + str(sorted(set([sanitize(t) for t in sarah_dict['times']]))[0:3]))
+print(james['name'] + " 's fastest times are: " + str(james['fastestTimes']))
+print(julie['name'] + " 's fastest times are: " + str(julie['fastestTimes']))
+print(mikey['name'] + " 's fastest times are: " + str(mikey['fastestTimes']))
+print(sarah['name'] + " 's fastest times are: " + str(sarah['fastestTimes']))
