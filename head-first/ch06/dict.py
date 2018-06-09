@@ -18,8 +18,12 @@ def get_coach_data(filename):
         print('File error: ' + str(err))
         return(None)
 
-sarah = [t.strip() for t in get_coach_data('./rawText/sarah.txt')]
-# 取出姓名和出生日期
-(sarah_name, sarah_dob) = sarah.pop(0), sarah.pop(0)
-print(sarah_name + "'s fastest times are: " + str(sorted(set([sanitize(t) for t in sarah]))[0:3]))
 
+sarah = [t.strip() for t in get_coach_data('./rawText/sarah.txt')]
+
+sarah_dict = {}
+sarah_dict['name'] = sarah.pop(0)
+sarah_dict['birthday'] = sarah.pop(0)
+sarah_dict['times'] = sarah
+
+print(sarah_dict['name'] + " 's fastest times are:" + str(sorted(set([sanitize(t) for t in sarah_dict['times']]))[0:3]))
