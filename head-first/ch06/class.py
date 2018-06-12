@@ -10,6 +10,10 @@ class Athlete:
         self.times = a_times
     def top3(self):
         return (sorted(set([sanitize(t) for t in self.times]))[0:3])
+    def add_time(self, time):
+        self.times.append(time)
+    def add_times(self, time_list):
+        self.times.extend(time_list)  # 数组拼接 
 
 def sanitize(time_string):
     if '-' in time_string:
@@ -39,7 +43,11 @@ julie = get_coach_data('./rawText/julie.txt')
 mikey = get_coach_data('./rawText/mikey.txt')
 sarah = get_coach_data('./rawText/sarah.txt')
 
+james.add_time('1.99')
+julie.add_times(['1.88','1.90'])
+
 print(james.name + " 's fastest times are: " + str(james.top3()))
 print(julie.name + " 's fastest times are: " + str(julie.top3()))
 print(mikey.name + " 's fastest times are: " + str(mikey.top3()))
 print(sarah.name + " 's fastest times are: " + str(sarah.top3()))
+
