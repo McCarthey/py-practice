@@ -1,0 +1,26 @@
+<html>
+
+<style>
+    .red-block {
+        background-color: red;
+        height: 300px;
+        width: 200px;
+    }
+</style>
+
+<body>
+    <div id="capture" style="padding: 10px; background: #f5da55">
+        <h4 style="color: #000; ">Hello world!</h4>
+        <img src="https://spacdn.hellobyebye.com/imgs/index/shares1-29ce391803.jpg" alt="">
+    </div>
+</body>
+<script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+<script>
+    html2canvas(document.querySelector("#capture"), {
+        allowTaint: true
+    }).then(canvas => {
+        document.body.appendChild(canvas)
+    });
+</script>
+
+</html>
