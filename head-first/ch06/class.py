@@ -43,11 +43,13 @@ julie = get_coach_data('./rawText/julie.txt')
 mikey = get_coach_data('./rawText/mikey.txt')
 sarah = get_coach_data('./rawText/sarah.txt')
 
-james.add_time('1.99')
-julie.add_times(['1.88','1.90'])
+vera = Athlete('Vera Vi')
+vera.add_time('2.23')
+vera.add_times(['2.09','2.38','2.16'])
 
 print(james.name + " 's fastest times are: " + str(james.top3()))
 print(julie.name + " 's fastest times are: " + str(julie.top3()))
 print(mikey.name + " 's fastest times are: " + str(mikey.top3()))
 print(sarah.name + " 's fastest times are: " + str(sarah.top3()))
+print(vera.name + " 's fastest times are: " + str(vera.top3()))
 
