@@ -54,3 +54,8 @@ html {
 }
 ```
 
+- window对象
+
+调用window.close()，可以关闭当前页面
+
+
