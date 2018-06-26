@@ -14,6 +14,8 @@
       
       .bottom { border-top: 1px solid #E5E8EB; width:94%; max-width: 600px;margin: 0 auto;background-color:#fff;border-radius:  0 0 4px 4px;padding:28px;box-sizing: border-box;}
       .btn-verify { width: 200px;text-decoration:none;color:#fff;background-color:#CDA777;height:44px;display:block;margin:0 auto;border-radius:22px;text-align:center;line-height:44px;}
+      
+      .link {color: #4A6FE1;text-decoration:none;}
     </style>
   </head>
   <body>
@@ -33,7 +35,7 @@
       </row>
       <row class="bottom">
         <column><a href="https://www.onluxy.com/go#/credit_card/?openid={{OPENID}}" class="btn-verify">Verify Your Account</a></column>
-        <column style="margin:35px auto 45px;"><p class="text">Not you? If it wasn't you who registered the account, please <a href="https://www.onluxy.com/go#/credit_card/?openid={{OPENID}}">contact us</a></p></column>
+        <column style="margin:35px auto 45px;"><p class="text">Not you? If it wasn't you who registered the account, please <a class="link" href="%unsubscribe_url%">contact us</a></p></column>
       </row>
     </container>
   </body>
