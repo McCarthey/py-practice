@@ -1,0 +1,40 @@
+<heml>
+  <head>
+    <subject>Verify Your Luxy Account</subject>
+    <preview>Learn about all the cool things you can do with email today!</preview>
+    <style>
+      body { background: #E5E8EB; }
+      container { max-width: 100vw;}
+      h1 { color: DarkViolet; }
+      .logo-wrap { background-color: #333; width:100vw;height:140px;text-align:center;}
+      .logo { height: 33px;margin: 26px auto;}
+      .upper { width:94%; max-width: 600px;margin: 0 auto;background-color:#fff;margin-top:-50px; border-radius: 4px 4px 0 0;padding:28px;box-sizing: border-box;}
+      .title {color:#CDA777;font-size:24px;margin-bottom:20px;}
+      .text { text-align:center; color:#333; font-size: 14px; margin: 0;}
+      
+      .bottom { border-top: 1px solid #E5E8EB; width:94%; max-width: 600px;margin: 0 auto;background-color:#fff;border-radius:  0 0 4px 4px;padding:28px;box-sizing: border-box;}
+      .btn-verify { width: 200px;text-decoration:none;color:#fff;background-color:#CDA777;height:44px;display:block;margin:0 auto;border-radius:22px;text-align:center;line-height:44px;}
+    </style>
+  </head>
+  <body>
+    <container>
+      <row class="logo-wrap">
+        <column><img src="https://www.onluxy.com/static/images/f_email/Logo.png" class="logo" /></column>
+      </row>
+      <row class="upper">
+        <column><p class="title">Verify Your Luxy Account</p></column>
+        <column>
+          <p class="text">Hi , welcome to Luxy!</p>
+
+          <p class="text">Before you can use the Luxy, you must verify your account.</p>
+
+          <p class="text">Please click the button below to verify your account.</p>
+        </column>
+      </row>
+      <row class="bottom">
+        <column><a href="https://www.onluxy.com/go#/credit_card/?openid={{OPENID}}" class="btn-verify">Verify Your Account</a></column>
+        <column style="margin:35px auto 45px;"><p class="text">Not you? If it wasn't you who registered the account, please <a href="https://www.onluxy.com/go#/credit_card/?openid={{OPENID}}">contact us</a></p></column>
+      </row>
+    </container>
+  </body>
+</heml>
