@@ -19,6 +19,8 @@
       .link {color: #4A6FE1;text-decoration:none;}
       
       .follow { max-width: 600px; margin: 0 auto;padding:18px 16px 0px 16px;box-sizing:border-box; }
+      
+      .footer { color:#ccc; font-size:12px; margin:20px auto 40px;}
     </style>
   </head>
   <body>
@@ -73,6 +75,9 @@
           <column>
             <p class="text contact">You're receiving this email because you are a Luxy member. Manage your email setting <a class="link" href="%unsubscribe_url%">HERE</a></p>
           </column>
+        </row>
+        <row>
+          <column><p class="footer">© 2018 Luxy Inc</p></column>
         </row>
       </block>
     </container>
