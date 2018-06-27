@@ -42,10 +42,10 @@
       </row>
       <block class="bottom">
         <row>
-          <column><a href="https://www.onluxy.com/go#/credit_card/?openid={{OPENID}}" class="btn-verify">Verify Your Account</a></column>
+          <column><a href="https://test.onluxy.com/static/luxy_verify.html#/?openid={{OPENID}}&email={{EMAIL}}" class="btn-verify">Verify Your Account</a></column>
         </row>
         <row class="contact">
-          <column style="margin:35px auto 45px;"><p class="text contact">Not you? If it wasn't you who registered the account, please <a class="link" href="%unsubscribe_url%">contact us</a></p></column>
+          <column style="margin:35px auto 45px;"><p class="text contact">Not you? If it wasn't you who registered the account, please <a class="link" href=https://test.onluxy.com/static/luxy_verify.html#/disabled?openid={{OPENID}}&email={{EMAIL}}>contact us</a></p></column>
         </row>
       </block>
       <block class="follow">
@@ -71,11 +71,6 @@
             </column>
           </row>
         </block>
-        <row>
-          <column>
-            <p class="text contact">You're receiving this email because you are a Luxy member. Manage your email setting <a class="link" href="%unsubscribe_url%">HERE</a></p>
-          </column>
-        </row>
         <row>
           <column><p class="footer">© 2018 Luxy Inc</p></column>
         </row>
