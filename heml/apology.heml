@@ -1,7 +1,7 @@
 <heml>
   <head>
     <subject>Apology</subject>
-    <preview>Learn about all the cool things you can do with email today!</preview>
+    <preview>Thank you for choosing Luxy! However, due to an issue on our servers, your registration was not successfully processed. Please accept our sincere apologies.</preview>
     <style>
       body { background: #E5E8EB; }
       container { max-width: 100vw;}
