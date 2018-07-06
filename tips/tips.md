@@ -62,3 +62,11 @@ html {
 - PWA 
 serviceWorker除了由浏览器触发更新之外，还应用了特殊的缓存策略：如果该文件24小时没有更新，当触发更新时，会强制更新。也就意味着最坏情况下service Worker会每天更新一次。
 serviceWorker标准中给出了ServiceWorkerRegistrantion.update()放法，调用该方法会导致立即调用Service worker。但chrome貌似还是不会跳过http缓存，此处实现和标准尚存差异。
+
+
+- 判断对象是否为空{}
+利用Object.keys遍历对象的可枚举属性，并返回一个由属性名组成的数组，通过判断这个数组的长度来检查对象是否是空
+```
+    const obj = {}
+    Object.keys(obj).length === 0
+```
