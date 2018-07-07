@@ -6,8 +6,9 @@ class Ship():
 		self.screen = screen
 		
 		# 加载飞船图像并获取其外接矩形 
-		# 该函数返回了一个表示飞船的surface，存储到self.image中
+		# 该函数返回了一个表示飞船的surface，存储到self.image中 
 		self.image = pygame.image.load('images/ship.bmp')
+		# rect是通过surface的get_rect()方法获得的
 		self.rect = self.image.get_rect()
 		self.screen_rect = screen.get_rect()
 		
@@ -15,6 +16,6 @@ class Ship():
 		self.rect.centerx = self.screen_rect.centerx
 		self.rect.bottom = self.screen_rect.bottom
 		
-		def blitme(self):
-			# 在指定的位置绘制飞船
-			self.screen.blit(self.image, self.rect)
+	def blitme(self):
+		# 在指定的位置绘制飞船
+		self.screen.blit(self.image, self.rect)

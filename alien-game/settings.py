@@ -6,4 +6,5 @@ class Settings():
 		# 屏幕设置
 		self.screen_width = 1200
 		self.screen_height = 800
+		# 设置背景颜色 pygame中的颜色都是RGB的形式
 		self.bg_color = (230,230,230)
