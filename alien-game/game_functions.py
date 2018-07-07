@@ -2,7 +2,7 @@ import sys
 import pygame
 
 
-def check_events(ship):
+def check_events(ai_settings, screen, ship, bullets):
     # 用于响应鼠标和键盘事件
         # 每当用户按键时，都将在pygame中注册一个事件。事件都是通过pygame.event.get()方法获取的
     for event in pygame.event.get():
@@ -30,7 +30,7 @@ def check_keyup_events(event, ship):
         ship.moving_left = False
 
 
-def update_screen(ai_settings, screen, ship):
+def update_screen(ai_settings, screen, ship, bullets):
     # 用于更新屏幕
     # 每次循环时都重绘屏幕 填充颜色
     screen.fill(ai_settings.bg_color)
