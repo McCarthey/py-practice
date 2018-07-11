@@ -60,7 +60,41 @@ html {
 ```
 
 -   多行省略
-块级元素，webkit浏览器有效，其他浏览器需指定最大高度
+    块级元素，webkit 浏览器有效，其他浏览器需指定最大高度
+
+```
+    width: 308px;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+    word-break: break-word;
+    word-wrap: normal;
+```
+
+-   placeholder 颜色
+
+```
+    element::-webkit-input-placeholder {
+        color: #cda777 !important;
+    }
+
+    element::-moz-placeholder {
+        color: #cda777 !important;
+    }
+
+    element:-moz-placeholder {
+        color: #cda777 !important;
+    }
+
+    element::-ms-input-placeholder {
+        color: #cda777 !important;
+    }
+```
+
+块级元素，webkit 浏览器有效，其他浏览器需指定最大高度
+
 ```
     width: 308px;
     text-overflow: ellipsis;
