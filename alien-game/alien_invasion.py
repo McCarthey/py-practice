@@ -26,12 +26,7 @@ def run_game():
         gf.check_events(ai_settings, screen, ship, bullets)
         # 飞船、子弹的位置将在检测到键盘事件后（更新屏幕前）更新
         ship.update()
-        bullets.update()
-        
-        # 删除已消失的子弹
-        for bullet in bullets.copy():
-            if bullet.rect.bottom <= 0:
-                bullets.remove(bullet)
+        gf.update_bullets(bullets)
         gf.update_screen(ai_settings, screen, ship, bullets)
 
 run_game()
