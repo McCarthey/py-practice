@@ -59,17 +59,21 @@ def create_fleet(ai_settings, screen, aliens):
     # 外星人间距为外星人宽度
     alien = Alien(ai_settings, screen)
     alien_width = alien.rect.width
+    create_alien(ai_settings, alien_width, screen, aliens)
+
+def get_number_alien_x(ai_settings, alien_width):
+    # 计算一行能排多少外星人
     available_space_x = ai_settings.screen_width - 2 * alien_width
     number_aliens_x = int(available_space_x / (2 * alien_width))
+    return number_aliens_x
 
-    # 创建第一行外形人
-    for alien_number in range(number_aliens_x):
-        # 创建一个外心人并将其加入当前行
-        alien = Alien(ai_settings, screen)
-        alien.x = alien_width + 2 * alien_width * alien_number
-        alien.rect.x = alien.x
-        aliens.add(alien)
-
+def create_alien(ai_settings, alien_number, screen, aliens):
+    # 创建一个外星人并将其加入当前行
+    alien = Alien(ai_settings, screen)
+    alien_width = alien.rect.width
+    alien.x = alien_width + 2 * alien_width * alien_number
+    alien.rect.x = alien.x
+    aliens.add(alien)
 
 def update_screen(ai_settings, screen, ship, aliens, bullets):
     # 用于更新屏幕
