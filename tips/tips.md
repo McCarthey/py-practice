@@ -121,3 +121,12 @@ html {
     const obj = {}
     Object.keys(obj).length === 0
 ```
+
+- git 简写
+
+使用 git config --global alias.[alias] [order] 配置命令简写
+例如:
+```
+    git config --global alias.st status
+    git config --global alias.ci commit
+```
