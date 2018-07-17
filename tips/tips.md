@@ -121,3 +121,8 @@ html {
     const obj = {}
     Object.keys(obj).length === 0
 ```
+- 边框渐变
+```
+    border-image: linear-gradient()
+```
+能够实现盒子边框的颜色渐变，但此时 border-radius 属性无效，故无法简单地实现一个圆角边框渐变效果
