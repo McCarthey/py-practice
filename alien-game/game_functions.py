@@ -73,6 +73,10 @@ def create_alien(ai_settings, alien_number, screen, aliens, row_number):
     alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
     aliens.add(alien)
 
+def update_aliens(aliens):
+    # 更新外星人群中所有外星人的位置
+    aliens.update()
+
 def create_fleet(ai_settings, screen, ship, aliens):
     # 创建外星人群
     # 外星人间距为外星人宽度
