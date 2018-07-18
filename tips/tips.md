@@ -126,3 +126,6 @@ html {
     border-image: linear-gradient()
 ```
 能够实现盒子边框的颜色渐变，但此时 border-radius 属性无效，故无法简单地实现一个圆角边框渐变效果
+
+
+- word-wrap 由于和 word-break 属性语意过于相似，故在css3规范中更名为overflow-wrap，但只有chrome/safari支持
