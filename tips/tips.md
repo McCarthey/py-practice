@@ -129,3 +129,10 @@ html {
 
 
 - word-wrap 由于和 word-break 属性语意过于相似，故在css3规范中更名为overflow-wrap，但只有chrome/safari支持
+
+- map
+```javascript
+let list = [1,3,5,76,123,412,3]
+let result = list.map(v => v = v * 2)
+console.log(result) // [2, 6, 10, 152, 246, 824, 6]
+```
