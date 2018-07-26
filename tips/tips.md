@@ -153,3 +153,8 @@ target="_blank"
 ```
 当使用 target="_blank" 链接至另一个页面时，新页面将与您的页面在同一个进程上进行。如果新页面正在执行开销极大的 JavaScript，您的页面性能可能会受影响。
 此外，target="_blank" 也是一个安全漏洞。新的页面可以通过 window.opener 访问您的窗口对象，并且它可以使用 window.opener.location = newURL 将您的页面导航至不同的网址。（可怕）
+
+一般情况下，当您在新窗口或标签中打开一个外部链接时，始终添加 rel="noopener"
+```
+<a href="https://examplepetstore.com" target="_blank" rel="noopener">...</a>
+```
