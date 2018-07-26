@@ -24,7 +24,7 @@
       .text-placeholder { font-size: 0px; color: transparent;}
       .bottom {width:94%; max-width: 600px;margin: 0 auto;background-color:#fff;border-radius:  0 0 4px 4px;padding:10px 8px 8px;box-sizing: border-box;}
       .btn-meetup { width: 200px;text-decoration:none;color:#fff;background-color:#CDA777;height:44px;display:block;margin:40px auto 15px;border-radius:22px;text-align:center;line-height:44px;box-shadow: 0px 10px 20px rgba(205, 167, 119, 0.4)}
-      .person-img-wrap { padding: 6px;}
+      .person-img-wrap { padding: 6px; max-width: 170px; margin: 0 auto;}
       .person-name {text-align:left; font-size: 18px; margin: 10px 0 4px;}
       .person-addr {text-align:left; font-size: 12px; margin: 2px 0; color:#666666;}
       .contact {color:#B6B8BA; font-size:13px; margin:16px auto 0;}
@@ -50,7 +50,7 @@
         </column>
       </row>
       <container>
-      <row class="upper" style="border-bottom:1px solid #E5E8EB;margin: 0 auto;">
+      <row class="upper" style="border-bottom:1px solid #E5E8EB;margin: -50px auto 0;">
         <column>
           <p class="text email-title">Thank You For Subscribing to Luxy Newsletter</p>
 
@@ -103,14 +103,14 @@
       <container class="bottom">
         <row>
           <column large="8" small="6">
-            <div class="person-img-wrap">
+            <div class="person-img-wrap" style="margin:0 2px 0 auto;">
               <img src="https://img.hellobyebye.com/d6440476064471964a48f4b45826fc5c.jpg" class="person-img" />
               <p class="person-name">Janet, 26</p>
               <p class="person-addr">500m</p>
             </div>
           </column>
           <column large="8" small="6">
-            <div class="person-img-wrap">
+            <div class="person-img-wrap" style="margin:0 auto 0 2px;">
               <img src="https://img.hellobyebye.com/32a467c64c3a37563191f94ab9c60b71.jpg" class="person-img" />
               <p class="person-name">Tiffany, 28</p>
               <p class="person-addr">1.5km</p>
@@ -120,14 +120,14 @@
         
         <row>
           <column large="8" small="6">
-            <div class="person-img-wrap">
+            <div class="person-img-wrap" style="margin:0 2px 0 auto;">
               <img src="https://img.hellobyebye.com/997c9cf9172f236450af33e318aa3bfa.jpg" class="person-img" />
               <p class="person-name">William, 31</p>
               <p class="person-addr">2km</p>
             </div>
           </column>
           <column large="8" small="6">
-            <div class="person-img-wrap">
+            <div class="person-img-wrap" style="margin:0 auto 0 2px;">
               <img src="https://img.hellobyebye.com/7483d40a6290cf99ff1596998b272158.jpg" class="person-img" />
               <p class="person-name">Max, 35</p>
               <p class="person-addr">700m</p>
