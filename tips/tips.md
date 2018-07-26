@@ -136,3 +136,13 @@ let list = [1,3,5,76,123,412,3]
 let result = list.map(v => v = v * 2)
 console.log(result) // [2, 6, 10, 152, 246, 824, 6]
 ```
+
+
+- node child processes模块
+利用child_process模块的exec对象写shell脚本，需要注意：
+```
+exec('shell命令',(err, stdout, stderr) => {
+    if (err) throw err
+    // 命令执行成功后要做的事情
+})
+```
