@@ -49,6 +49,7 @@
           </a>
         </column>
       </row>
+      <container>
       <row class="upper" style="border-bottom:1px solid #E5E8EB;">
         <column>
           <p class="text email-title">Thank You For Subscribing to Luxy Newsletter</p>
@@ -61,7 +62,7 @@
           
           <p class="text text-info">Don't want to receive this email again?</p>
           <p class="text">
-          <a href="https://test.onluxy.com/static/email_template/%unsubscribe_url%" style="color: #0084FF">Unsubscribe here.</a>
+          <a href="https://www.onluxy.com/static/email_template/%unsubscribe_url%" style="color: #0084FF">Unsubscribe here.</a>
           </p>
         </column>
       </row>
@@ -135,7 +136,8 @@
         </row>
       </row>
       </a>
-
+      </container>
+      
       <block class="follow">
         <row>
           <column><p>Follow us:</p></column>
@@ -143,7 +145,7 @@
         <block>
           <row style="max-width:300px;margin:0 auto;">
             <column large="4" small="1">
-              <p class="text-placeholder" style="font-size:0px;">test</p>
+              <p class="text-placeholder" style="font-size:0px;"></p>
             </column>
             <column large="4" small="2" class="icon-wrap">
             <img border="0" src="http://luxyimg.s3.amazonaws.com/a2bf6a768668a6a8379c3bc072171ad5.jpg" style="display:inline-block;width:36px;height:36px;margin:0 auto;">
@@ -161,7 +163,7 @@
             <img border="0" src="http://luxyimg.s3.amazonaws.com/834a4d06ba28f22aa1a6122941fa1c4a.jpg" style="display:inline-block;width:36px;height:36px;margin:0 auto;">
             </column>
             <column large="4" small="1">
-              <p class="text-placeholder" style="font-size:0px;">test</p>
+              <p class="text-placeholder" style="font-size:0px;"></p>
             </column>
           </row>
         </block>
