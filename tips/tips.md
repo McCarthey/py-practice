@@ -62,7 +62,7 @@ html {
 -   多行省略
     块级元素，webkit 浏览器有效，其他浏览器需指定最大高度
 
-```
+```css
     width: 308px;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -75,7 +75,7 @@ html {
 
 -   placeholder 颜色
 
-```
+```css
     element::-webkit-input-placeholder {
         color: #cda777 !important;
     }
@@ -95,7 +95,7 @@ html {
 
 块级元素，webkit 浏览器有效，其他浏览器需指定最大高度
 
-```
+```css
     width: 308px;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -140,7 +140,7 @@ console.log(result) // [2, 6, 10, 152, 246, 824, 6]
 
 - node child processes模块
 利用child_process模块的exec对象写shell脚本，需要注意：
-```
+```javascript
 exec('shell命令',(err, stdout, stderr) => {
     if (err) throw err
     // 命令执行成功后要做的事情
@@ -155,7 +155,7 @@ target="_blank"
 此外，target="_blank" 也是一个安全漏洞。新的页面可以通过 window.opener 访问您的窗口对象，并且它可以使用 window.opener.location = newURL 将您的页面导航至不同的网址。（可怕）
 
 一般情况下，当您在新窗口或标签中打开一个外部链接时，始终添加 rel="noopener"
-```
+```html
 <a href="https://examplepetstore.com" target="_blank" rel="noopener">...</a>
 ```
 
