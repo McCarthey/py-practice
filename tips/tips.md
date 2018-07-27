@@ -158,3 +158,17 @@ target="_blank"
 ```
 <a href="https://examplepetstore.com" target="_blank" rel="noopener">...</a>
 ```
+
+- 引用资源预加载
+<link>元素的rel属性的属性值preload能够让你在你的<head>元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即可需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能。例如：
+
+```html 
+ <link rel="preload" href="style.css" as="style">
+ <link rel="preload" href="main.js" as="script">
+```
+
+使用as来指定将要预加载的内容的类型，将使得浏览器能够：
+    - 更精确地优化资源加载优先级。
+    - 匹配未来的加载需求，在适当的情况下，重复利用同一资源。
+    - 为资源应用正确的内容安全策略。
+    - 为资源设置正确的 Accept 请求头。
