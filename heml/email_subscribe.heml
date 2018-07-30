@@ -11,6 +11,7 @@
       .logo-right { height: 34px;margin: 26px 10px 26px auto;}
       .upper { width:94%; max-width: 600px;margin: 0 auto;background-color:#fff;margin-top:-50px; border-radius: 4px 4px 0 0;padding:24px 13px 35px;box-sizing: border-box;}
       .middle { width:94%; max-width: 600px;margin: 0 auto;background-color:#fff;border-radius: 4px 4px 0 0;padding:24px 13px;padding-bottom:16px;box-sizing: border-box;}
+      .middle-text {background: #fff;border-bottom:1px solid #E5E8EB;max-width: 600px;margin: 0 auto;}
       .middle-item { font-weight: bold; margin-bottom: 30px;}
       .middle-img-wrap {height: 60px; text-align: center;}
       .middle-img { width:49px; display:inline;}
@@ -50,7 +51,7 @@
         </column>
       </row>
       <container>
-      <row class="upper" style="border-bottom:1px solid #E5E8EB;margin: -50px auto 0;">
+      <row class="upper" style="border-bottom:1px solid #E5E8EB;margin: 0 auto !important;margin-top: -50px;">
         <column>
           <p class="text email-title">Thank You For Subscribing to Luxy Newsletter</p>
 
@@ -67,7 +68,7 @@
         </column>
       </row>
       
-      <row class="middle" style="border-bottom:1px solid #E5E8EB;">
+      <row class="middle">
         <column large="4" small="4">
           <div class="middle-item">
           <div class="middle-img-wrap">
@@ -91,12 +92,12 @@
           </div>
           <p>Special Offers and Rewards!</p>
           </div>
-          </column>
-          <row>
-            <column>
-              <p class="text-info">Don't want to miss? Add <a class="text-email" href="mailto:luxyer@onluxy.com">luxyer@onluxy.com</a> to your address book</p>
-            </column>
-          </row>
+        </column>
+      </row>
+      <row class="middle-text">
+        <column>
+          <p class="text-info">Don't want to miss? Add <a class="text-email" href="mailto:luxyer@onluxy.com">luxyer@onluxy.com</a> to your address book</p>
+        </column>
       </row>
       
       <a href="https://www.onluxy.com/deeplink" style="text-decoration:none;">
