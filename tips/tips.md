@@ -63,47 +63,47 @@ html {
     块级元素，webkit 浏览器有效，其他浏览器需指定最大高度
 
 ```css
-    width: 308px;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-    word-break: break-word;
-    word-wrap: normal;
+width: 308px;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 3;
+overflow: hidden;
+word-break: break-word;
+word-wrap: normal;
 ```
 
 -   placeholder 颜色
 
 ```css
-    element::-webkit-input-placeholder {
-        color: #cda777 !important;
-    }
+element::-webkit-input-placeholder {
+    color: #cda777 !important;
+}
 
-    element::-moz-placeholder {
-        color: #cda777 !important;
-    }
+element::-moz-placeholder {
+    color: #cda777 !important;
+}
 
-    element:-moz-placeholder {
-        color: #cda777 !important;
-    }
+element:-moz-placeholder {
+    color: #cda777 !important;
+}
 
-    element::-ms-input-placeholder {
-        color: #cda777 !important;
-    }
+element::-ms-input-placeholder {
+    color: #cda777 !important;
+}
 ```
 
 块级元素，webkit 浏览器有效，其他浏览器需指定最大高度
 
 ```css
-    width: 308px;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    overflow: hidden;
-    word-break: break-word;
-    word-wrap: normal;
+width: 308px;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 3;
+overflow: hidden;
+word-break: break-word;
+word-wrap: normal;
 ```
 
 -   window 对象
@@ -121,54 +121,69 @@ html {
     const obj = {}
     Object.keys(obj).length === 0
 ```
-- 边框渐变
+
+-   边框渐变
+
 ```
     border-image: linear-gradient()
 ```
+
 能够实现盒子边框的颜色渐变，但此时 border-radius 属性无效，故无法简单地实现一个圆角边框渐变效果
 
+-   word-wrap 由于和 word-break 属性语意过于相似，故在 css3 规范中更名为 overflow-wrap，但只有 chrome/safari 支持
 
-- word-wrap 由于和 word-break 属性语意过于相似，故在css3规范中更名为overflow-wrap，但只有chrome/safari支持
+-   map
 
-- map
 ```javascript
-let list = [1,3,5,76,123,412,3]
-let result = list.map(v => v = v * 2)
+let list = [1, 3, 5, 76, 123, 412, 3]
+let result = list.map(v => (v = v * 2))
 console.log(result) // [2, 6, 10, 152, 246, 824, 6]
 ```
 
+-   node child processes 模块
+    利用 child_process 模块的 exec 对象写 shell 脚本，需要注意：
 
-- node child processes模块
-利用child_process模块的exec对象写shell脚本，需要注意：
 ```javascript
-exec('shell命令',(err, stdout, stderr) => {
+exec('shell命令', (err, stdout, stderr) => {
     if (err) throw err
     // 命令执行成功后要做的事情
 })
 ```
 
-- 外链
+-   外链
+
 ```
 target="_blank"
 ```
-当使用 target="_blank" 链接至另一个页面时，新页面将与您的页面在同一个进程上进行。如果新页面正在执行开销极大的 JavaScript，您的页面性能可能会受影响。
-此外，target="_blank" 也是一个安全漏洞。新的页面可以通过 window.opener 访问您的窗口对象，并且它可以使用 window.opener.location = newURL 将您的页面导航至不同的网址。（可怕）
+
+当使用 target="\_blank" 链接至另一个页面时，新页面将与您的页面在同一个进程上进行。如果新页面正在执行开销极大的 JavaScript，您的页面性能可能会受影响。
+此外，target="\_blank" 也是一个安全漏洞。新的页面可以通过 window.opener 访问您的窗口对象，并且它可以使用 window.opener.location = newURL 将您的页面导航至不同的网址。（可怕）
 
 一般情况下，当您在新窗口或标签中打开一个外部链接时，始终添加 rel="noopener"
+
 ```html
 <a href="https://examplepetstore.com" target="_blank" rel="noopener">...</a>
 ```
 
-- 引用资源预加载
-<link>元素的rel属性的属性值preload能够让你在你的<head>元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即可需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能。例如：
+-   引用资源预加载
+    <link>元素的rel属性的属性值preload能够让你在你的<head>元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即可需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能。例如：
 
-```html 
+```html
  <link rel="preload" href="style.css" as="style">
  <link rel="preload" href="main.js" as="script">
 ```
 
-使用as来指定将要预加载的内容的类型，将使得浏览器能够：
-    - 更精确地优化资源加载优先级。
-    - 匹配未来的加载需求，在适当的情况下，重复利用同一资源。
-    - 为资源应用正确的内容安全策略。
-    - 为资源设置正确的 Accept 请求头。
+使用 as 来指定将要预加载的内容的类型，将使得浏览器能够： - 更精确地优化资源加载优先级。 - 匹配未来的加载需求，在适当的情况下，重复利用同一资源。 - 为资源应用正确的内容安全策略。 - 为资源设置正确的 Accept 请求头。
+
+-   伪元素
+    :before 和:after 是在 CSS2.1 中发布的。起初伪元素的语法是使用一个冒号“:”，但是随着 web 的发展，在 CSS3 中伪元素使用两个冒号“::”——也就变成了::before 和::after——以便将它与伪类区分开（如:hover，:active 等）。然而，不管你使用单冒号还是双冒号，浏览器都能识别它们。但是**IE8 只支持单冒号的格式**，如果你想要保持广泛的浏览器兼容性，使用单冒号会更安全。
+    可以给伪元素添加任何样式。伪元素默认为**内联元素**，因此若要指定宽高，则需声明 display:block;。最好使用 background 属性来设置伪元素的背景图片，这比直接在 content 中使用 url()更容易控制。即使不使用 content 属性，也必须写上，可设置为空，否则伪元素无法正常工作。
+
+我们可以结合使用伪元素和伪类：
+
+```css
+blockquote:hover:after,
+blockquote:hover:before {
+    background-color: #555;
+}
+```
