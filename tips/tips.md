@@ -191,3 +191,6 @@ blockquote:hover:before {
 
 - 滚动到页底加载更多的实现
 可以使用intersectionObserver实现
+思路：
+- 页面底部放置一个id为load-more的元素
+- 使用intersectionObserver.observer监听这个元素，这个元素一旦出现，就将分页数+1，发送请求
