@@ -194,3 +194,6 @@ blockquote:hover:before {
 思路：
 - 页面底部放置一个id为load-more的元素
 - 使用intersectionObserver.observer监听这个元素，这个元素一旦出现，就将分页数+1，发送请求
+注意：
+- 因为一开始是没有数据的，因此load-more元素不显示，此时无法设置intersectionObserver.observer监听，会报错
+- 注意开始监听的时机，不可重复监听，页面销毁/没有更多数据时，要取消监听
