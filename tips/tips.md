@@ -204,11 +204,11 @@ blockquote:hover:before {
 ```
 异步ajax函数如下：
 ```javascript
-async getVerifyList(btn) {
+async getList(btn) {
     ...
     try {
         this.loading = true   // 开始loading
-        const res = await this.vxGetVerifyList({
+        const res = await this.vxgetList({
             fromDate: +new Date(this.startTime) / 1000,
             toDate: +new Date(this.endTime) / 1000,
             pageIdx: this.page
@@ -238,7 +238,21 @@ async getVerifyList(btn) {
         this.page++
     } catch (e) {
         this.loading = false
-        console.log('获取认证历史列表报错', e)
     }
 },
+
+// 初始化监听函数
+const intersectionObserver = new IntersectionObserver((entries) => {
+    // 如果不可见，就返回 ; 如果正在发送请求 也返回
+    if (entries[0].intersectionRatio <= 0) return;
+    if (this.loading) return;
+    this.getList()
+});
+this.intersectionObserver = intersectionObserver
 ```
+优势：
+- 传统的交集检测涉及到事件监听以及 Element.getBoundingClientRect() 的使用，这个代码是运行在主线程中的，会造成性能问题
+- 代码简洁，浏览器会对其做优化
+缺点：
+- 浏览器兼容性
+- 规格写明，IntersectionObserver的实现，应该采用requestIdleCallback()，即只有线程空闲下来，才会执行观察器。这意味着，这个观察器的优先级非常低，只在其他任务执行完，浏览器有了空闲才会执行。
