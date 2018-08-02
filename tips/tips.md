@@ -197,3 +197,48 @@ blockquote:hover:before {
 注意：
 - 因为一开始是没有数据的，因此load-more元素不显示，此时无法设置intersectionObserver.observer监听，会报错
 - 注意开始监听的时机，不可重复监听，页面销毁/没有更多数据时，要取消监听
+实现：
+设置一个load-more元素，此时 showLoadMore===fasle ，即不显示加载更多
+```html
+<p id="next-page" class="load-text" v-if="showLoadMore">{{loading?'Loading...':'Load More'}}</p>
+```
+异步ajax函数如下：
+```javascript
+async getVerifyList(btn) {
+    ...
+    try {
+        this.loading = true   // 开始loading
+        const res = await this.vxGetVerifyList({
+            fromDate: +new Date(this.startTime) / 1000,
+            toDate: +new Date(this.endTime) / 1000,
+            pageIdx: this.page
+        })
+        if (res.length === 0) {        // 如果响应的数据数组为0，即没有更多数据，此时不再显示load-more元素，同时取消对他的监听
+            const loadMoreEle = document.querySelector('#next-page')
+            this.intersectionObserver.unobserve(
+                loadMoreEle
+            )
+            this.showLoadMore = false
+        }
+
+        if (btn === 'submit') {       // 如果是首次请求（或者更改搜索条件），则响应数组直接为数据渲染数组
+            this.content = res
+        } else {
+            this.content = this.content.concat(res) // 否则则将这次的响应拼接在之前的数据后
+        }
+        if (this.page === 1) {       // 如果是首次请求（或者更改搜索条件）,则显示load-more元素，同时开始对他进行监听
+            this.showLoadMore = true
+            setTimeout(() => {
+                this.intersectionObserver.observe(
+                    document.querySelector('#next-page')
+                )
+            }, 2000);
+        }
+        this.loading = false           // loading结束，页数索引++
+        this.page++
+    } catch (e) {
+        this.loading = false
+        console.log('获取认证历史列表报错', e)
+    }
+},
+```
