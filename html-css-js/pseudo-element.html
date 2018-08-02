@@ -1,0 +1,60 @@
+<html>
+<style>
+    body,
+    html {
+        background-color: #ccc;
+        padding: 20px;
+        margin: 0;
+    }
+
+    .pseudo-element-section {
+        position: relative;
+    }
+
+    .white-paper {
+        width: 400px;
+        height: 160px;
+        background-color: #666;
+        position: relative;
+        z-index: 10;
+    }
+
+    .white-paper .content {
+        width: 400px;
+        height: 160px;
+		background-color: #fff;
+    }
+
+    .white-paper::before,
+    .white-paper::after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 10px;
+        width: 250px;
+        height: 20px;
+        box-shadow: 0 10px 10px #666;
+        z-index: -9;
+    }
+
+    .white-paper::before {
+        left: 4px;
+        transform: rotate(-3deg)
+    }
+
+    .white-paper::after {
+        right: 4px;
+        transform: rotate(3deg)
+    }
+</style>
+
+<body>
+    <div class="pseudo-element-section">
+        <div class="white-paper">
+            <!-- <img src="./vaas.jpg" alt="" class="content"> -->
+            <div class="content"></div>
+        </div>
+    </div>
+</body>
+
+</html>
