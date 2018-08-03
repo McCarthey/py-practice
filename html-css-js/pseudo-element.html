@@ -85,6 +85,18 @@
         font-weight: normal;
     }
 
+    .btn-shadow::after {
+        content: '';
+        display: block;
+        width: 220px;
+        height: 10px;
+        box-shadow: 0 4px 20px #666;
+        position: relative;
+        top: -6px;
+        left: -40px;
+        z-index: -10;
+    }
+
     /* 遮罩弹框 水平垂直都居中 */
 
     .dialog_box {
@@ -137,6 +149,7 @@
 <script>
     var btn = document.querySelector('.btn-shadow')
     var dialog = document.querySelector('.dialog_container')
+    dialog.style.display = 'none'
     btn.addEventListener('click', () => {
         if (dialog.style.display === 'none') {
             dialog.style.display = 'block'
