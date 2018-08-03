@@ -49,6 +49,7 @@
     .btn-shadow-section {
         margin-top: 100px;
         position: relative;
+        z-index: 11;
     }
 
     .btn-shadow {
@@ -96,6 +97,7 @@
     }
 
     .dialog_container {
+        display: none;
         text-align: center;
         width: 100vw;
         height: 100vh;
@@ -105,7 +107,9 @@
         left: 0;
         z-index: 10;
     }
+
     /* 垂直居中关键 */
+
     .dialog_container::after {
         display: inline-block;
         content: '';
@@ -129,5 +133,17 @@
         <div class="dialog_box"></div>
     </div>
 </body>
+
+<script>
+    var btn = document.querySelector('.btn-shadow')
+    var dialog = document.querySelector('.dialog_container')
+    btn.addEventListener('click', () => {
+        if (dialog.style.display === 'none') {
+            dialog.style.display = 'block'
+        } else {
+            dialog.style.display = 'none'
+        }
+    })
+</script>
 
 </html>
