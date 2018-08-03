@@ -2,7 +2,7 @@
 <style>
     body,
     html {
-        background-color: #ccc;
+        background-color: #ddd;
         padding: 20px;
         margin: 0;
     }
@@ -14,7 +14,6 @@
     .white-paper {
         width: 400px;
         height: 160px;
-        background-color: #666;
         position: relative;
         z-index: 10;
     }
@@ -22,7 +21,7 @@
     .white-paper .content {
         width: 400px;
         height: 160px;
-		background-color: #fff;
+        background-color: #fff;
     }
 
     .white-paper::before,
@@ -46,6 +45,44 @@
         right: 4px;
         transform: rotate(3deg)
     }
+
+    .btn-shadow-section {
+        margin-top: 100px;
+        position: relative;
+    }
+
+    .btn-shadow {
+        display: block;
+        background: linear-gradient(#67a9d8, #4c82bb);
+        width: 180px;
+        height: 35px;
+        text-decoration: none;
+        color: #fff;
+        line-height: 35px;
+        border-radius: 5px;
+        box-shadow: 0 5px 0 #25578d;
+        padding-left: 40px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .btn-shadow::before {
+        content: '1';
+        display: inline-block;
+        width: 40px;
+        height: 35px;
+        background: linear-gradient(#346fad, #1f4e81);
+        border-radius: 5px 0 0 5px;
+        box-shadow: 0 5px 0 #18385a;
+        position: absolute;
+        border-right: 1px solid #245992;
+        top: 0;
+        left: 0;
+        font-size: 18px;
+        color: #acd1ec;
+        font-weight: normal;
+    }
 </style>
 
 <body>
@@ -54,6 +91,9 @@
             <!-- <img src="./vaas.jpg" alt="" class="content"> -->
             <div class="content"></div>
         </div>
+    </div>
+    <div class="btn-shadow-section">
+        <a href="#" class="btn-shadow">NUMBER ONE!</a>
     </div>
 </body>
 

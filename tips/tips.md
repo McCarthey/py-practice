@@ -259,3 +259,24 @@ this.intersectionObserver = intersectionObserver
 缺点：
 - 浏览器兼容性
 - 规格写明，IntersectionObserver的实现，应该采用requestIdleCallback()，即只有线程空闲下来，才会执行观察器。这意味着，这个观察器的优先级非常低，只在其他任务执行完，浏览器有了空闲才会执行。
+
+
+
+- css实现弹框居中
+```css
+    .dialog_box {  // 弹框样式
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+    }
+    .dialog_container {  // 遮罩层
+        text-align: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,.35);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10;
+    }
+```
