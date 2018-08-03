@@ -264,12 +264,12 @@ this.intersectionObserver = intersectionObserver
 
 - css实现弹框居中
 ```css
-    .dialog_box {  // 弹框样式
+    .dialog_box {  /* 弹框样式 */
         display: inline-block;
         vertical-align: middle;
         position: relative;
     }
-    .dialog_container {  // 遮罩层
+    .dialog_container {  /* 遮罩层 */
         text-align: center;
         width: 100vw;
         height: 100vh;
@@ -278,5 +278,13 @@ this.intersectionObserver = intersectionObserver
         top: 0;
         left: 0;
         z-index: 10;
+    }
+    /* 垂直居中关键 */
+    .dialog_container::after {
+        display: inline-block;
+        content: '';
+        width: 0;
+        height: 100%;
+        vertical-align: middle;
     }
 ```

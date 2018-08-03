@@ -83,6 +83,36 @@
         color: #acd1ec;
         font-weight: normal;
     }
+
+    /* 遮罩弹框 水平垂直都居中 */
+
+    .dialog_box {
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        width: 400px;
+        height: 300px;
+        background-color: #fff;
+    }
+
+    .dialog_container {
+        text-align: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .35);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10;
+    }
+    /* 垂直居中关键 */
+    .dialog_container::after {
+        display: inline-block;
+        content: '';
+        width: 0;
+        height: 100%;
+        vertical-align: middle;
+    }
 </style>
 
 <body>
@@ -94,6 +124,9 @@
     </div>
     <div class="btn-shadow-section">
         <a href="#" class="btn-shadow">NUMBER ONE!</a>
+    </div>
+    <div class="dialog_container">
+        <div class="dialog_box"></div>
     </div>
 </body>
 
