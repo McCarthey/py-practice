@@ -268,6 +268,9 @@ this.intersectionObserver = intersectionObserver
         display: inline-block;
         vertical-align: middle;
         position: relative;
+        width: 400px;
+        height: 300px;
+        background: #fff;
     }
     .dialog_container {  /* 遮罩层 */
         text-align: center;
@@ -288,3 +291,7 @@ this.intersectionObserver = intersectionObserver
         vertical-align: middle;
     }
 ```
+首先用100vw, 100vh撑满整个视图窗口, 颜色设置透明度, 位置固定在视口左上角, 层级要比页面内容高。
+水平居中：设置遮罩容器的text-align: center; 弹框的display: inline-block;（弹框长宽随意设置）
+垂直居中：实现的关键在于遮罩容器的伪元素::after。该伪元素display: inline-block; 使其与弹框同一行; 宽度为0, 高度设置为100%, 最最关键的属性就是vertical-align: middle;
+这样弹框和伪元素就在同一行内实现了垂直居中。伪元素的宽度为0，因此不会影响弹框的水平居中
