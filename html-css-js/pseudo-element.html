@@ -103,9 +103,9 @@
         display: inline-block;
         vertical-align: middle;
         position: relative;
-        width: 400px;
-        height: 300px;
-        background-color: #fff;
+        width: 800px;
+        height: 600px;
+        background-color: #eee;
     }
 
     .dialog_container {
@@ -129,6 +129,57 @@
         height: 100%;
         vertical-align: middle;
     }
+
+    .img-group-section {
+        margin-top: 200px;
+    }
+
+    .img-wrapper {
+        width: 400px;
+        height: 400px;
+        overflow: hidden;
+        margin: 100px auto;
+        border: 12px solid #fff;
+        position: relative;
+        z-index: 20;
+    }
+
+    .img-wrapper img {
+        height: 400px;
+        position: relative;
+        left: -220px;
+    }
+
+    .dialog_box::before,
+    .dialog_box::after {
+        width: 400px;
+        height: 400px;
+        border: 12px solid #fff;
+    }
+
+    .dialog_box::before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 106px;
+        left: 200px;
+        transform: rotate(5deg);
+        background: #666;
+        z-index: 19;
+        box-shadow: 4px 4px 20px #bbb;
+    }
+
+    .dialog_box::after {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 100px;
+        left: 188px;
+        transform: rotate(-5deg);
+        background: #ccc;
+        z-index: 18;
+        box-shadow: 4px 4px 20px #bbb;
+    }
 </style>
 
 <body>
@@ -142,8 +193,14 @@
         <a href="#" class="btn-shadow">NUMBER ONE!</a>
     </div>
     <div class="dialog_container">
-        <div class="dialog_box"></div>
+        <div class="dialog_box">
+            <!-- 弹框内容 -->
+            <div class="img-wrapper">
+                <img src="./vaas.jpg">
+            </div>
+        </div>
     </div>
+
 </body>
 
 <script>
