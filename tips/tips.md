@@ -302,3 +302,7 @@ this.intersectionObserver = intersectionObserver
 参考[文章](https://developers.google.com/web/updates/2016/02/font-display)戳这里
 大意：
 在网络字体没有加载完成时，页面字体的表现
+
+
+- cookie
+服务器通过设置cookie属性为httpOnly，则可以防止浏览器端使用JS访问
