@@ -37,3 +37,9 @@ python manage.py runserver
 python manage.py runserver 8001
 ```
 切换其他端口
+- 创建应用程序
+在learning_log同级目录下执行startapp命令
+```
+python manage.py startapp learning_logs
+```
+命令startapp [appname] 让Django建立创建应用程序所需的基础设施
