@@ -48,3 +48,7 @@ python manage.py startapp learning_logs
 ```
 python manage.py createsuperuser
 ```
+
+- 创建网页
+使用Django创建网页的过程通常分三个阶段：定义URL、编写视图和编写模板。
+
