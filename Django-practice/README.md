@@ -45,3 +45,6 @@ python manage.py startapp learning_logs
 命令startapp [appname] 让Django建立创建应用程序所需的基础设施
 
 - 创建超级用户
+```
+python manage.py createsuperuser
+```
