@@ -295,3 +295,10 @@ this.intersectionObserver = intersectionObserver
 水平居中：设置遮罩容器的text-align: center; 弹框的display: inline-block;（弹框长宽随意设置）
 垂直居中：实现的关键在于遮罩容器的伪元素::after。该伪元素display: inline-block; 使其与弹框同一行; 宽度为0, 高度设置为100%, 最最关键的属性就是vertical-align: middle;
 这样弹框和伪元素就在同一行内实现了垂直居中。伪元素的宽度为0，因此不会影响弹框的水平居中
+
+
+- font-display 属性:
+
+参考[文章](https://developers.google.com/web/updates/2016/02/font-display)戳这里
+大意：
+在网络字体没有加载完成时，页面字体的表现
