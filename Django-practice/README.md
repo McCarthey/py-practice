@@ -1,4 +1,4 @@
-创建python虚拟环境：
+- 创建python虚拟环境：
 新建项目目录，执行
 ```
 python -m venv [env_name]
@@ -13,3 +13,9 @@ Linux:
 ```
 source learning_env/bin/activate
 ```
+
+- 安装Django
+```
+pip install Django
+```
+

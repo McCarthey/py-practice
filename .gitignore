@@ -1,2 +1,3 @@
 /node_modules/
 *.pyc
+/Django-practice/learning_log/11_env/
