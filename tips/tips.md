@@ -306,3 +306,7 @@ this.intersectionObserver = intersectionObserver
 
 - cookie
 服务器通过设置cookie属性为httpOnly，则可以防止浏览器端使用JS访问
+
+- v-show  VS  v-if
+v-if是真正的条件渲染，如果为false的话，DOM元素不会渲染上。而且如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+v-show不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
