@@ -54,14 +54,11 @@
     <script src="https://cdn.bootcss.com/lodash.js/4.17.10/lodash.min.js"></script>
     <script src="../html-css-js/index.js"></script>
     <script>
-        let countDown = document.getElementById('countDown')
-        let timer = setInterval(() => {
-            if (Number(countDown.innerText) <= 0) {
-                timer = null
-                return false
-            }
-            countDown.innerText = Number(countDown.innerText) - 1
-        }, 1000)
+        if (window.Notification && Notification.permission !== "denied") {
+            Notification.requestPermission().then(() => {
+                const n = new Notification('通知标题', { body: '这里是通知内容！' });
+            })
+        }
     </script>
 </body>
 
