@@ -1,5 +1,5 @@
 Arguments: 
-  D:\node.js\node.exe D:\yarn\bin\yarn.js add puppeteer
+  D:\node.js\node.exe D:\yarn\bin\yarn.js add prerender-spa-plugin
 
 PATH: 
   D:\Git\mingw64\bin;D:\Git\usr\bin;C:\Users\Administrator\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;D:\node.js;D:\Git\cmd;D:\yarn\bin;C:\Program Files (x86)\Calibre2;D:\SVN\bin;D:\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32\Scripts;C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32;C:\Users\Administrator\AppData\Roaming\npm;D:\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Local\Yarn\bin;D:\cmder
@@ -23,6 +23,7 @@ npm manifest:
       "license": "MIT",
       "dependencies": {
           "iconv-lite": "^0.4.23",
+          "puppeteer": "^1.6.1",
           "webpack": "^4.10.2"
       },
       "scripts": {
