@@ -325,3 +325,6 @@ v-show不管初始条件是什么，元素总是会被渲染，并且只是简�
 
 劣势：
 可拓展性、可移植性不强
+
+- 关于table布局？
+td display: inline-block;
