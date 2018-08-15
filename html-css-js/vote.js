@@ -44,3 +44,14 @@ setInterval(() => {
     btn.click()
   })
 }, 5);
+
+// 自动取消弹窗
+setInterval(() => {
+  try {
+    document
+      .querySelector('#livecheck')
+      .click()
+  } catch (e) {
+    console.log('没有弹窗')
+  }
+}, 1000);
