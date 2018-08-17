@@ -36,4 +36,20 @@ Flask类构造函数只有一个必须指定的参数，即程序主模块或包
 def index():
 	return '<h1>Hello World!</h1>'
 ```
-此处index()函数为程序跟地址的处理程序
+此处index()函数为程序跟地址的处理程序，被称为视图函数
+
+Flask支持URL中存在可变部分，
+```python
+@app.route('/user/<name>')
+def user(name):
+	return '<h1>Hello, %s!</h1>' %name
+```
+
+- 启动服务器
+```python
+if __name__ == '__main__':
+	app.run(debug=True)
+```
+```
+__name__=='__main__'确保直接执行这个脚本时才启动开发服务器
+```
