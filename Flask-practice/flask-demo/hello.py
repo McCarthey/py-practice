@@ -55,6 +55,10 @@ def upload_file():
 		f.save('./uploads/uploaded_file.txt')
 		return 'file saved'
 
+@app.errorhandler(404)
+def page_not_found(error):
+	return render_template('page404.html'), 404
+
 if __name__ == '__main__':
     app.run(debug=True)
 
