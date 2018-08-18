@@ -33,6 +33,7 @@ def post(post_id):
 def login():
     error = None
     if request.method == 'POST':
+        print(request.form)
         if valid_login(request.form['username'], request.form['password']):
             return 'login success'
         else:
