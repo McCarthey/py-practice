@@ -55,7 +55,15 @@ def projects():
 def about():
     return 'The about page'
 ```
-访问http://127.0.0.1:5000/projects 或者 http://127.0.0.1:5000/projects/都会路由到project页；但是访问http://127.0.0.1:5000/about/会报404，只能访问http://127.0.0.1:5000/about
+访问http://127.0.0.1:5000/projects 或者 http://127.0.0.1:5000/projects/都会路由到project页，前者会被flask重定向到末尾带斜杠的路由；但是访问http://127.0.0.1:5000/about/会报404，只能访问http://127.0.0.1:5000/about
+
+
+- HTTP方法
+默认情况下，路由只回应GET请求，但可以通过route()装饰器传递methods参数可以改变这个行为
+
+- 构造URL
+Flask不仅能匹配url，还可以用url_for生成url 
+
 
 - 启动服务器
 ```python
@@ -78,5 +86,4 @@ def index():
 	return '<p>Your browser is %s</p>' % user_agent
 ```
 此处的 request 在一个线程中全局可访问
-
 

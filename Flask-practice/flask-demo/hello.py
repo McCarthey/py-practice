@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 app = Flask(__name__)
 
 
@@ -6,21 +6,35 @@ app = Flask(__name__)
 def index():
     return '<h1>Hello World!</h1>'
 
+
 @app.route('/projects/')
 def projects():
-	return 'the project page'
+    return 'the project page'
+
 
 @app.route('/about')
 def about():
-	return 'The about page'
+    return 'The about page'
+
 
 @app.route('/user/<name>')
 def user(name):
     return '<h1>Hello, %s!</h1>' % name
 
+
 @app.route('/post/<int:post_id>')
 def post(post_id):
-	return '<p>This is post %s</p>' %post_id
+    return '<p>This is post %s</p>' % post_id
+
+# post请求
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        return 'do login'
+    else:
+        return 'show you login form'
 
 
 if __name__ == '__main__':
