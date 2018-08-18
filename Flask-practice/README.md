@@ -92,3 +92,4 @@ def index():
 
 - 模板渲染
 使用render_template()方法渲染模板。Flask 会在 templates 文件夹里寻找模板。
+Flask采用[Jinja2模板](http://docs.jinkan.org/docs/jinja2/)。如果name包含HTML，自动转义功能默认开启。

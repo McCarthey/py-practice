@@ -31,13 +31,23 @@ def post(post_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    error = None
     if request.method == 'POST':
-        return 'do login'
-    else:
-        return 'show you login form'
+        if valid_login(request.form['username'], request.form['password']):
+            return 'login success'
+        else:
+            error = 'Invalid username or password'
+            return error
+    return render_template('login.html', error=error)
+
+
+def valid_login(user, pwd):
+    if user == 'admin' and pwd == 'admin':
+        return True
+
 
 if __name__ == '__main__':
     app.run(debug=True)
-	
+
 
 url_for('static', filename='style.css')
