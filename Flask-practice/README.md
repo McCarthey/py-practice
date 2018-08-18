@@ -50,6 +50,21 @@ def user(name):
 if __name__ == '__main__':
 	app.run(debug=True)
 ```
+debut=True可以实现应用的热更新
 ```
 __name__=='__main__'确保直接执行这个脚本时才启动开发服务器
 ```
+
+- 程序和请求上下文
+Flask使用上下文临时把某些对象变为全局可访问。例如：
+```python
+from flask import request
+
+@app.route('/')
+def index():
+	user_agent = request.headers.get('User-Agent')
+	return '<p>Your browser is %s</p>' % user_agent
+```
+此处的 request 在一个线程中全局可访问
+
+
