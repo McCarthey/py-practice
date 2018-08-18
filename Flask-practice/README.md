@@ -90,3 +90,5 @@ def index():
 - 静态文件
 你的包中或是模块的所在目录中创建一个名为 static 的文件夹，在应用中使用 /static 即可访问，通过url_for模块生成路由
 
+- 模板渲染
+使用render_template()方法渲染模板。Flask 会在 templates 文件夹里寻找模板。

@@ -1,4 +1,4 @@
-from flask import Flask, request, url_for
+from flask import Flask, request, url_for, render_template
 app = Flask(__name__)
 
 
@@ -18,8 +18,8 @@ def about():
 
 
 @app.route('/user/<name>')
-def user(name):
-    return '<h1>Hello, %s!</h1>' % name
+def user(name=None):
+    return render_template('user.html', name=name)
 
 
 @app.route('/post/<int:post_id>')
