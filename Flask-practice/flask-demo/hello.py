@@ -47,6 +47,14 @@ def valid_login(user, pwd):
         return True
 
 
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+	if request.method == 'POST':
+		f = request.files['the_file']
+		print(f.filename) 
+		f.save('./uploads/uploaded_file.txt')
+		return 'file saved'
+
 if __name__ == '__main__':
     app.run(debug=True)
 
