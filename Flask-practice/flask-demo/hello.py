@@ -1,10 +1,10 @@
-from flask import Flask, request, url_for, render_template
+from flask import Flask, request, url_for, render_template, make_response, redirect
 app = Flask(__name__)
 
 
 @app.route('/')
 def index():
-    return '<h1>Hello World!</h1>'
+    return redirect(url_for('login'))
 
 
 @app.route('/projects/')
