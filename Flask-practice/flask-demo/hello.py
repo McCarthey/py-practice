@@ -6,6 +6,13 @@ app = Flask(__name__)
 def index():
     return '<h1>Hello World!</h1>'
 
+@app.route('/projects/')
+def projects():
+	return 'the project page'
+
+@app.route('/about')
+def about():
+	return 'The about page'
 
 @app.route('/user/<name>')
 def user(name):

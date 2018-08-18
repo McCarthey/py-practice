@@ -45,6 +45,18 @@ def user(name):
 	return '<h1>Hello, %s!</h1>' %name
 ```
 
+请注意URL的重定向行为
+```python
+@app.route('/projects/')
+def projects():
+    return 'The project page'
+
+@app.route('/about')
+def about():
+    return 'The about page'
+```
+访问http://127.0.0.1:5000/projects 或者 http://127.0.0.1:5000/projects/都会路由到project页；但是访问http://127.0.0.1:5000/about/会报404，只能访问http://127.0.0.1:5000/about
+
 - 启动服务器
 ```python
 if __name__ == '__main__':
