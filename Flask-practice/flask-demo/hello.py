@@ -1,10 +1,13 @@
-from flask import Flask, request, url_for, render_template, make_response, redirect
+from flask import Flask, request, url_for, render_template, make_response, redirect, session, escape
 app = Flask(__name__)
 
+app.secret_key = '\xe6\xeb~\xfb\x81\x05\x83h\xfbEK\xb6s\xef\x16\x17\xd1Q\xf8\xddG\x9a\xa2\x81'
 
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    if 'username' in session:
+        return 'Logged in as %s' % escape(session['username'])
+    return 'You are not logged in'
 
 
 @app.route('/projects/')
@@ -35,7 +38,8 @@ def login():
     if request.method == 'POST':
         print(request.form)
         if valid_login(request.form['username'], request.form['password']):
-            return 'login success'
+            session['username'] = request.form['username']
+            return redirect(url_for('index'))
         else:
             error = 'Invalid username or password'
             return error
@@ -47,17 +51,25 @@ def valid_login(user, pwd):
         return True
 
 
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
+
+
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
-	if request.method == 'POST':
-		f = request.files['the_file']
-		print(f.filename) 
-		f.save('./uploads/uploaded_file.txt')
-		return 'file saved'
+    if request.method == 'POST':
+        f = request.files['the_file']
+        print(f.filename)
+        f.save('./uploads/uploaded_file.txt')
+        return 'file saved'
+
 
 @app.errorhandler(404)
 def page_not_found(error):
-	return render_template('page404.html'), 404
+    return render_template('page404.html'), 404
+
 
 if __name__ == '__main__':
     app.run(debug=True)
