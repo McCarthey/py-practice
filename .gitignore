@@ -3,3 +3,5 @@
 /Django-practice/learning_log/11_env/
 /Flask-practice/flask-demo/11env/
 /Flask-practice/flaskr/flaskrenv/
+*.sql
+*.sqlite
