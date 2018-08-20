@@ -7,7 +7,7 @@ app.secret_key = '\xe6\xeb~\xfb\x81\x05\x83h\xfbEK\xb6s\xef\x16\x17\xd1Q\xf8\xdd
 def index():
     if 'username' in session:
         return 'Logged in as %s' % escape(session['username'])
-    return 'You are not logged in'
+    return 'You are not logged in <a href="/login">Click here to log in</a>'
 
 
 @app.route('/projects/')
