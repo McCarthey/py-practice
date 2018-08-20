@@ -97,3 +97,14 @@ Flask采用[Jinja2模板](http://docs.jinkan.org/docs/jinja2/)。如果name包�
 - 使用form表单
 使用form表单实现登录验证功能
 注意input的name属性即是表单提交时的键值
+
+- 数据库模式
+```sql
+drop table if exists entries;
+create table entries(
+	id integer primary key autoincrement,
+	title string not null,
+	text string not null
+)
+```
+这个模式包含一个名为 entries 的表，该表中的每行都包含一个 id 、一个 title 和一个 text 。 id 是一个自增的整数，也是主键；其余的两个是字符串，且不允许为空。
