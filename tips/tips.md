@@ -333,3 +333,6 @@ td display: inline-block;
 ```css
 white-space: nowrap;
 ```
+
+- 图片png与jpg 
+在无需透明度的情况下 可以抽离掉png图片的alpha通道以减少体积；或者换成jpg，能有效缩减体积
