@@ -336,3 +336,10 @@ white-space: nowrap;
 
 - 图片png与jpg 
 在无需透明度的情况下 可以抽离掉png图片的alpha通道以减少体积；或者换成jpg，能有效缩减体积
+
+- 判断浏览器是否支持webp图片
+```javascript
+var isSupportWebp = !![].map && document.createElement('canvas').toDataURL('image/webp').indexOf('data:image/webp') == 0;
+
+console.log(isSupportWebp);
+```
