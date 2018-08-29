@@ -97,7 +97,8 @@ console.log(callSum1(10, 10))
 console.log(callSum2(10, 10))
 
  /**
-  * 使用apply()和call()扩充函数运行的作用域
+  * 使用apply()和call()扩充函数运行的作用域,
+  * 使用它们的最大好处就是对象不需要与方法有任何耦合关系
   */
 window.color = 'red'
 var o = {color: 'blue'}
@@ -110,3 +111,23 @@ sayColor()
 sayColor.call(this)
 sayColor.call(window)
 sayColor.call(o)
+
+/**
+ * bind()方法。该方法会创建一个函数的实例,其this值会被绑定到传给bind()函数的值
+ */
+window.color = 'red'
+var o = {color: 'blue'}
+function sayColor() {
+    console.log(this.color)
+}
+
+var objectSayColor = sayColor.bind(o)
+
+objectSayColor()
+
+/**
+ * 函数的toLocaleString()、toString()和valueOf()方法均会返回函数代码
+ */
+sayColor.toString()
+sayColor.toLocaleString()
+sayColor.valueOf()
