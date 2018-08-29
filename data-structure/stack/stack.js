@@ -7,8 +7,8 @@ function Stack() {
     this.push = function(element) {
         items.push(element) // 新元素放在末尾（栈顶）
     }
-    this.pop = function(element) {
-        return items.pop(element) // 弹出并返回末尾的元素
+    this.pop = function() {
+        return items.pop() // 弹出并返回末尾的元素
     }
     this.peek = function() {
         return items[items.length - 1] // 返回最后入栈的元素
@@ -41,8 +41,8 @@ class Stack {
 		this.items.push(element)
 	}
 	
-	pop(element) {
-		return this.items.pop(element)
+	pop() {
+		return this.items.pop()
 	}
 	
 	peek() {
