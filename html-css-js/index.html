@@ -54,7 +54,8 @@
     测试meta标签的重定向
     <span id="countDown">5</span>s后到百度
     <p>这是一个emoji：&#x1F49C;</p>
-    <img class="lazy-img" data-src="./vaas.jpg" height="400">
+    <button class="btn-close">close WebSocket</button>
+    <!-- <img class="lazy-img" data-src="./vaas.jpg" height="400"> -->
     <script src="../ts/built/greeter.js"></script>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.10/lodash.min.js"></script>
     <script src="../html-css-js/index.js"></script>
@@ -67,6 +68,30 @@
             Notification.requestPermission().then(() => {
                 const n = new Notification('通知标题', { body: '这里是通知内容！' });
             })
+        }
+
+        // Create WebSocket connection.
+        let socket = new WebSocket('ws://198.13.62.74:8080/ws');
+
+        // Connection opened
+        socket.addEventListener('open', function(event) {
+            socket.send('Hello Server!');
+        });
+
+        // Listen for messages
+        socket.addEventListener('message', function(event) {
+            console.log('Message from server ', event.data);
+        });
+
+        socket.addEventListener('close', function(event) {
+            console.log('Disconnected ', event.data);
+        });
+
+        document.querySelector('.btn-close').addEventListener('click', close)
+
+        function close() {
+            console.log('close')
+            socket.close()
         }
     </script>
 </body>
