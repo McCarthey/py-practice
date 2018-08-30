@@ -53,4 +53,4 @@ function decimalConvert(decimal, base) {
 }
 
 
-decimalConvert(255, 16)
+decimalConvert(100345, 16)
