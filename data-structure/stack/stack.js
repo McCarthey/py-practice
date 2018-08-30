@@ -27,7 +27,7 @@ function Stack() {
 	}
 }
 
-var stack = new Stack()
+var stack1 = new Stack()
 
 /**
  * ES6 的class实现

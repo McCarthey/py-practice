@@ -343,3 +343,20 @@ var isSupportWebp = !![].map && document.createElement('canvas').toDataURL('imag
 
 console.log(isSupportWebp);
 ```
+
+
+- 构造函数模式的劣势
+例如，本库中data-structure目录下的stack.js中，使用构造函数模式模拟了栈（具体实现请看代码，此处略）
+```javascript
+function Stack(){
+    ...
+}
+
+const stack1 = new Stack()
+const stack2 = new Stack()
+```
+此处初始化两个栈的实例对象。单看代码是没有问题的，简单明了。但是，这两个实例的方法是不同的函数引用，也就是说构造函数的每个方法都要在每个实例上重新创建一遍，可如此检验：
+```javascript
+console.log(stack1.pop === stack2.pop) // false
+```
+因此，不同实例上的同名函数是不相等的。可将构造函数中的方法移动到全局，在构造函数内部引用，这样就可以使不同的实例共享相同的方法了。但是这种方式并不推荐，因为会增加很多全局函数，而且这些函数仅是为了给某个对象调用，显然不合理，因此构造函数模式比较适合单例场景。这些问题可由原型模式解决。
