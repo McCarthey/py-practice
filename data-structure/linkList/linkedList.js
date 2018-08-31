@@ -35,24 +35,24 @@ function LinkedList() {
             var current = head,
                 previous,
                 index = 0
-			// 如果要添加第一项，将他的指针指向当前元素（头部）,再将头部设置为他
+            // 如果要添加第一项，将他的指针指向当前元素（头部）,再将头部设置为他
             if (position === 0) {
                 node.next = current
                 head = node
             } else {
-                while (index++ < position) {
+                while (index++ < position) { // index++ 结果为当前index值，然后index再+1。例如，当index = 0, position = 1时，循环会执行一次，循环结束后index = 1
                     previous = current
                     current = current.next
                 }
-				node.next = current
-				previous.next = node // 将他的指针指向当前元素（头部）,再将前一个元素的指针指向他
-			}
-			
-			length++
-			return true
-		} else {
-			return false
-		}
+                node.next = current
+                previous.next = node // 将他的指针指向当前元素（头部）,再将前一个元素的指针指向他
+            }
+
+            length++
+            return true
+        } else {
+            return false
+        }
     }
     // 从列表特定位置移除一项
     this.removeAt = function(position) {
@@ -82,23 +82,42 @@ function LinkedList() {
     }
     // 从列表中移除一项
     this.remove = function(element) {
-
+		var index = this.indexOf(element) 
+		return this.removeAt(index)
     }
     // 返回元素在列表中的索引 没有则返回-1
     this.indexOf = function(element) {
+        var current = head,
+            index = 0
 
+        while (current) {
+            if (current.element === element) {
+                return index
+            }
+            index++
+            current = current.next
+        }
+
+        return -1
     }
     this.isEmpty = function() {
-
+		return length === 0
     }
     this.size = function() {
-
-    }
+		return length
+	}
+	this.getHead = function () {
+		return head
+	}
     this.toString = function() {
+        var current = head,
+            string = ''
 
-    }
-    this.print = function() {
-
+        while (current) {
+            string += "," + current.element
+            current = current.next
+        }
+        return string.slice(1)
     }
 }
 var list = new LinkedList()
