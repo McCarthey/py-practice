@@ -344,6 +344,19 @@ var isSupportWebp = !![].map && document.createElement('canvas').toDataURL('imag
 console.log(isSupportWebp);
 ```
 
+- 对象扩展运算符...
+```javascript
+var player = {name:'Jack', age: 24, job: 'engineer', country: 'china'}
+var newPlayer = {...player, name: 'Sam',age: 25}
+console.log(newPlayer) // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
+```
+对象扩展运算符可以用以复制/继承另一个对象，并改写他的属性，类似于Object.assign()，因此上下两部分代码等价:
+```javascript
+var player = {name:'Jack', age: 24, job: 'engineer', country: 'china'}
+var newPlayer = Object.assign({}, player, {name: 'Sam', age: 25})
+console.log(newPlayer) // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
+```
+
 
 - 构造函数模式的劣势
 例如，本库中data-structure目录下的stack.js中，使用构造函数模式模拟了栈（具体实现请看代码，此处略）
