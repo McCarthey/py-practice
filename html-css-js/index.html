@@ -55,6 +55,7 @@
     <span id="countDown">5</span>s后到百度
     <p>这是一个emoji：&#x1F49C;</p>
     <button class="btn-close">close WebSocket</button>
+    <button class="init">send init info</button>
     <!-- <img class="lazy-img" data-src="./vaas.jpg" height="400"> -->
     <script src="../ts/built/greeter.js"></script>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.10/lodash.min.js"></script>
@@ -71,7 +72,8 @@
         }
 
         // Create WebSocket connection.
-        let socket = new WebSocket('ws://198.13.62.74:8080/ws');
+        // let socket = new WebSocket('ws://54.187.101.185:8050/ws');
+        let socket = new WebSocket('ws://10.0.0.14:8777');
 
         // Connection opened
         socket.addEventListener('open', function(event) {
@@ -83,15 +85,20 @@
             console.log('Message from server ', event.data);
         });
 
-        socket.addEventListener('close', function(event) {
-            console.log('Disconnected ', event.data);
-        });
-
+        socket.onclose = () => {
+            console.log('web socket closed')
+        }
+        
         document.querySelector('.btn-close').addEventListener('click', close)
+        document.querySelector('.init').addEventListener('click', initServer)
 
         function close() {
             console.log('close')
             socket.close()
+        }
+
+        function initServer() {
+            socket.send('172.31.0.232|lovechat_account')
         }
     </script>
 </body>
