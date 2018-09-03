@@ -384,3 +384,11 @@ console.log(stack1.pop === stack2.pop) // false
 非对称加密如何相信用于加密的公钥？通过可以使用可信任的第三方的签名，即证书，来保证其不可伪造性
 
 非对称加密更慢，消耗更多性能，因此非对称加密只用来加密用于确定对称加密的密码信息（对称加密的规则）,剩下的使用更高效的对称加密通信
+
+- Git多人协作工作模式
+    
+    - 首先，可以试图用git push origin branch-name推送自己的修改；
+    - 如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；
+    - 如果合并有冲突，则解决冲突，并在本地提交；
+    - 没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
+    - 如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
