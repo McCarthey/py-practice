@@ -5,4 +5,4 @@ Git tracks changes.
 
 This is written on dev branch
 
-Creating a new branch is quick & simple
+Creating a new branch is quick and simple
