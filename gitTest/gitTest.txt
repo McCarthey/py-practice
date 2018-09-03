@@ -3,6 +3,6 @@ Git is free software distributed under the GPL.
 Git has a mutable index called stage.
 Git tracks changes.
 
-This is written on dev branch
+This is written on dev branch again
 
 Creating a new branch is quick and simple
