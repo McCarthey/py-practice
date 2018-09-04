@@ -392,3 +392,6 @@ console.log(stack1.pop === stack2.pop) // false
     - 如果合并有冲突，则解决冲突，并在本地提交；
     - 没有冲突或者解决掉冲突后，再用git push origin branch-name推送就能成功！
     - 如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
+
+
+- 

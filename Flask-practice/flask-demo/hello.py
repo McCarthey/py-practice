@@ -74,5 +74,3 @@ def page_not_found(error):
 if __name__ == '__main__':
     app.run(debug=True)
 
-
-url_for('static', filename='style.css')
