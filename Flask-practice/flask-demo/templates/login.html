@@ -1,18 +1,50 @@
 <!doctype html>
+<html>
 <title>Login</title>
 
 <head>
     <link rel="stylesheet" href="../static/style.css">
 </head>
-<form action="http://127.0.0.1:5000/login" method="post">
-    <label for="username">username</label>
-    <input type="text" name="username">
-    <label for="password">password</label>
-    <input type="password" name="password">
-    <button type="submit">login</button>
-</form>
 
-<form action="http://127.0.0.1:5000/upload" enctype="multipart/form-data" method="post">
-	<input type="file" name="the_file">
-	<button type="submit">upload</button>
-</form>
+<body>
+    <form action="http://127.0.0.1:5000/login" method="post">
+        <label for="username">username</label>
+        <input type="text" name="username">
+        <label for="password">password</label>
+        <input type="password" name="password">
+        <button type="submit">login</button>
+    </form>
+
+    <form action="http://127.0.0.1:5000/upload" enctype="multipart/form-data" method="post">
+        <input type="file" name="the_file">
+        <button type="submit">upload</button>
+    </form>
+
+    <button id="getAJAX">getAJAX</button>
+    <button id="postAJAX">postAJAX</button>
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
+    <script>
+        const btnGetAJAX = document.querySelector('#getAJAX')
+        const btnPostAJAX = document.querySelector('#postAJAX')
+        btnGetAJAX.addEventListener('click', () => {
+            axios.get('/testAJAX')
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        })
+        btnPostAJAX.addEventListener('click', () => {
+            axios.post('/testAJAX')
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        })
+    </script>
+</body>
+
+</html>

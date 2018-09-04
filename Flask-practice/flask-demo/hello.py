@@ -65,6 +65,11 @@ def upload_file():
         f.save('./uploads/uploaded_file.txt')
         return 'file saved'
 
+@app.route('/testAJAX', methods=['POST'])
+def testAJAX():
+    if request.method == 'POST':
+        return 'You got it!'
+        
 
 @app.errorhandler(404)
 def page_not_found(error):
