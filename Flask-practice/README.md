@@ -15,12 +15,14 @@ source learning_env/bin/activate
 ```
 
 - 安装flask
+
 虚拟环境中执行
 ```shell
 pip install flask
 ```
 
 - 初始化
+
 所有Flask程序都必须创建一个程序实例，
 ```python
 from flask import Flask
@@ -29,6 +31,7 @@ app = Flask(__name__)
 Flask类构造函数只有一个必须指定的参数，即程序主模块或包的名字
 
 - 路由和视图函数
+
 客户端将请求发送给web服务器，web服务器再将请求发送给Flask程序实例。
 使用程序提供的app.route修饰器来定义路由，把修饰的函数注册为路由。
 ```python
@@ -59,9 +62,11 @@ def about():
 
 
 - HTTP方法
+
 默认情况下，路由只回应GET请求，但可以通过route()装饰器传递methods参数可以改变这个行为
 
 - 构造URL
+
 Flask不仅能匹配url，还可以用url_for生成url 
 
 
@@ -88,13 +93,16 @@ def index():
 此处的 request 在一个线程中全局可访问
 
 - 静态文件
+
 你的包中或是模块的所在目录中创建一个名为 static 的文件夹，在应用中使用 /static 即可访问，通过url_for模块生成路由
 
 - 模板渲染
+
 使用render_template()方法渲染模板。Flask 会在 templates 文件夹里寻找模板。
 Flask采用[Jinja2模板](http://docs.jinkan.org/docs/jinja2/)。如果name包含HTML，自动转义功能默认开启。
 
 - 使用form表单
+
 使用form表单实现登录验证功能
 注意input的name属性即是表单提交时的键值
 
@@ -110,10 +118,35 @@ create table entries(
 这个模式包含一个名为 entries 的表，该表中的每行都包含一个 id 、一个 title 和一个 text 。 id 是一个自增的整数，也是主键；其余的两个是字符串，且不允许为空。
 
 - SQL优缺点
+
 使用 SQLite 的便利性在于不需要单独配置一个数据库服务器，并且 Python 提供了 内置支持。但是当并发请求同时要写入时，会比较慢一点，因为每个写操作是按顺序 进行的。小应用没有问题，但是大应用可能就需要考虑换成别的数据库了。
 
 - 创建数据库连接
+
 当使用 SQLite 数据库（包括其他多数数据库的 Python 库）时，第一件事就是创建 一个数据库的连接。所有查询和操作都要通过该连接来执行，完事后该连接关闭。
 
 - 蓝图blueprint
+
 Blueprint 是一种组织一组相关视图及其他代码的方式。与把视图及其他 代码直接注册到应用的方式不同，蓝图方式是把它们注册到蓝图，然后在工厂函数中把蓝图注册到应用。
+
+- SQL数据库相关
+
+数据库中的主键是表中各行的唯一标识符。表中还可以有称为外键的列，引用同一个表或不同表中某行的主键。行之间的这种联系称为关系，这是关系型数据库模型的基础。
+
+抽象层，也称为对象关系映射（Object-Relational Mapper, ORM）或对象文档映射（Object-Document Mapper, ODM）。ORM和ODM把对象业务转换成数据库业务会有一定损耗。
+
+**模型：** 这个术语表示程序使用的持久化实体。在ORM中，模型一般是一个python类，类中的属性对应数据库表中的列。例如：
+```python
+class Role(db.Model):
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    def __repr__(self):
+        return '<Role %r>' % self.name
+```
+其中，类变量__tablename__定义在数据库中使用的表名。如果没有定义__tablename__，Flask-SQLAlchemy会使用一个默认名字，但默认的表名没有遵守使用复数形式进行命名的约定，所以最好由我们自己来指定表名。其余的类变量都是该模型的属性，被定义为db.Column类的实例
+
+
+
+
+

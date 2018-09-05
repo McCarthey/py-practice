@@ -22,10 +22,12 @@
 
     <button id="getAJAX">getAJAX</button>
     <button id="postAJAX">postAJAX</button>
+    <p id="ajax-result"></p>
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
     <script>
         const btnGetAJAX = document.querySelector('#getAJAX')
         const btnPostAJAX = document.querySelector('#postAJAX')
+        const ajaxResult = document.querySelector('#ajax-result')
         btnGetAJAX.addEventListener('click', () => {
             axios.get('/testAJAX')
                 .then(res => {
@@ -39,6 +41,7 @@
             axios.post('/testAJAX')
                 .then(res => {
                     console.log(res)
+                    ajaxResult.innerHTML = res.data
                 })
                 .catch(err => {
                     console.log(err)
