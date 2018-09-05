@@ -146,6 +146,28 @@ class Role(db.Model):
 ```
 其中，类变量__tablename__定义在数据库中使用的表名。如果没有定义__tablename__，Flask-SQLAlchemy会使用一个默认名字，但默认的表名没有遵守使用复数形式进行命名的约定，所以最好由我们自己来指定表名。其余的类变量都是该模型的属性，被定义为db.Column类的实例
 
+db.Column类构造函数的第一个参数是数据库列和模型属性的类型。
+
+
+类型名 | python类型  | 说明
+------------- | ------------- | -------------
+Integer | int | 普通整数，一般是32位
+SmallInteger | int | 小的整数，一般是16位
+BigInteger | int 或 long | 不限制精度的整数
+Float | float | 浮点数
+Numeric | decimal.Decimal | 定点数
+String | str | 变长字符串
+Text | str | 变长字符串，对较长或不限长度的字符串做了优化
+Unicode | unicode | 变长Unicode字符串
+UnicodeText | unicode | 变长Unicode字符串，对较长或不限长度的字符串做了优化
+Boolean | bool | 布尔值
+Date | datetime.date | 日期
+Time | datetime.time | 时间
+DateTime | datetime.datetime | 日期和时间
+Interval | datetime.timedelta | 时间间隔
+Enum | str | 一组字符串
+PickleType | 任何Python对象 | 自动使用Pickle序列化
+LargeBinary | str | 二进制文件
 
 
 

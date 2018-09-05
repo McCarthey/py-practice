@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<title>Register</title>
+
+<head>
+</head>
+
+<body>
+    <label for="email">email</label>
+    <input type="text" name="email">
+    <label for="password">password</label>
+    <input type="password" name="password">
+    <button id="submit" type="submit">register</button>
+    <button id="test" type="submit">test</button>
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
+    <script>
+        const btn = document.querySelector('#submit')
+        const test = document.querySelector('#test')
+        btn.addEventListener('click', () => {
+            axios.post('/api/api/v1/user/register', )
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        })
+        test.addEventListener('click', () => {
+            axios.get('/api/api/v1/book/get', )
+                .then(res => {
+                    console.log(res)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        })
+    </script>
+</body>
+
+</html>
