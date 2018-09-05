@@ -394,4 +394,14 @@ console.log(stack1.pop === stack2.pop) // false
     - 如果git pull提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream branch-name origin/branch-name。
 
 
-- 
+- 元素滚动到底部
+
+场景：监听并打印新消息，假设消息窗口元素节点为msgBox，只需在消息监听函数里加上msgDiv.scrollTop = msgDiv.scrollHeight，即可实现滚动到底部
+```javascript
+    socketMessageEvent(e) {
+        console.log(`Message from server: ${e.data}`)
+        // 打印消息数据，并滚动到底部
+        this.msg.push(e.data)
+        this.msgBox.scrollTop = this.msgBox.scrollHeight
+    },
+```
