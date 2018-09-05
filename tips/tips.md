@@ -415,7 +415,21 @@ console.log(stack1.pop === stack2.pop) // false
             const oldTitle = document.title
             document.title = 'New page title'
         ```
-    - URL: URL属性包含当前页面的完整标题，等同window.location.href
+    - URL: URL属性包含当前页面的完整标题，即地址栏中显示的URL，读取时等同window.location.href
         ```javascript
             document.URL === window.location.href
         ```
+        
+    - domain: domain属性值包含页面的域名
+    - referrer： referrer属性保存着链接到当前页面的那个页面的URL。
+    
+    其中title，domain属性是可以设置的，但是出于安全限制，domain不能被设置成URL中不包含的域
+    
+- DOM操作相关
+
+getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与NodeList非常相似。可以使用[]或item()访问该对象中的项。其中[]中可以是数字索引，或字符串。字符串代表要查找的元素的name属性的值，方便查找已命名的元素，等同于调用namedItem(name)方法。
+
+要想获得全部元素组成的HTMLCollection，如下：
+```javascript
+    var allElements = document.getElementsByTagName('*')
+```
