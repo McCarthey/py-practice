@@ -405,3 +405,17 @@ console.log(stack1.pop === stack2.pop) // false
         this.msgBox.scrollTop = this.msgBox.scrollHeight
     },
 ```
+
+- document对象
+
+    document对象上有一些实用的属性：
+    
+    - title: 可以通过document.title读取并设置页面标题，读取的即是```<title>```元素中的文本，但是不会改变页面中的```<title>```元素
+        ```javascript
+            const oldTitle = document.title
+            document.title = 'New page title'
+        ```
+    - URL: URL属性包含当前页面的完整标题，等同window.location.href
+        ```javascript
+            document.URL === window.location.href
+        ```
