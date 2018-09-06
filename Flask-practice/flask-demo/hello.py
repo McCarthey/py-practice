@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, url_for, render_template, make_response, redirect, session, escape
+from flask import Flask, request, url_for, render_template, make_response, redirect, session, escape, json
 # 版本兼容问题？
 # from flask.ext.sqlalchemy import SQLAlchemy 或 from flaskext.sqlalchemy import SQLAlchemy 均报错
 from flask_sqlalchemy import SQLAlchemy
@@ -59,7 +59,7 @@ def post(post_id):
 
 # post请求
 
-
+# 假登录
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -77,6 +77,17 @@ def login():
 def valid_login(user, pwd):
     if user == 'admin' and pwd == 'admin':
         return True
+
+# 注册
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    error = None
+    if request.method == 'POST':
+        print('请求：', request.json)
+        email = request.json.get('email', '')
+        password = request.json.get('password', '')
+        return f'Your email is {email} , your password is ***'
 
 
 @app.route('/logout')

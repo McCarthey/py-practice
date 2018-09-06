@@ -21,7 +21,7 @@
         const password = document.querySelector('#password')
         const result = document.querySelector('#result')
         btn.addEventListener('click', () => {
-            axios.post('/api/v1/user/register', {
+            axios.post('/api/register', {
                     email: email.value,
                     password: password.value
                 })
@@ -31,7 +31,7 @@
                 })
                 .catch(err => {
                     console.log(err.response)
-
+                    
                 })
         })
         test.addEventListener('click', () => {

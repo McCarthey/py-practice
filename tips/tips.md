@@ -433,3 +433,10 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
 ```javascript
     var allElements = document.getElementsByTagName('*')
 ```
+
+- python 字符串模板
+较新的python版本模板字符串可以这样写：
+```python
+    f'Your email is {email} , your password is ***'
+```
+简洁，类似于ES6
