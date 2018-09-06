@@ -194,5 +194,13 @@ Flask-SQLAlchemy要求每个模型都要定义**主键**，这一列经常命名
 ```python
 	db.session.commit()
 ```
+如果在数据库写入操作中发生了错误，整个会话都会失效。会话可以通过调用db.session.rollback()回滚。
+
+更新行：
+```python
+	admin_role.name = 'Administrator'
+	db.session.add(admin_role)
+	db.session.commit()
+```
 
 
