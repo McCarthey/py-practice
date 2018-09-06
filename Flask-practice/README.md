@@ -203,4 +203,54 @@ Flask-SQLAlchemy要求每个模型都要定义**主键**，这一列经常命名
 	db.session.commit()
 ```
 
+删除行：
+```python
+	db.session.delete(mod_role)
+	db.session.commit()
+```
+查询行：
+Flask-SQLAlchemy为每一个模型都提供了query对象。
+```python
+	Role.query.all()
+	User.query.all()
+```
+使用过滤器可以配置query对象进行更精确的数据库查询。下面的例子查找角色为User的所有用户:
+```python
+	User.query.filter_by(role=user_role).all()
+```
+使用str(User.query.filter_by(role=user_role))即可查看原生的SQL语句。
 
+如果关闭了当前shell，则丢失了以上python对象的引用，需要重新从数据库中读取
+```python
+	user_role = Role.query.filter_by(name='User').first()
+```
+filter_by()等过滤器在query对象上调用，返回一个更精确的query对象。多个过滤器可以一起调用，知道获得所需结果。
+
+常用的SQLAlchemy查询过滤器
+过滤器 | 说明
+------------- | ------------- 
+filter() | 把过滤器添加到原查询上，返回一个新查询
+filter_by() |  把等值过滤器添加到原查询上，返回一个新查询
+limit() | 使用指定的值限制原查询返回的结果数量，返回一个新查询
+offset() | 偏移原查询返回的结果，返回一个新查询
+order_by() | 根据指定条件对原查询结果进行排序，返回一个新查询
+group_by() | 根据指定条件对原查询结果进行分组，返回一个新查询
+
+在查询上应用过滤器后面通过调用all()执行查询，以列表的形式返回结果。除了all()之外，还有其他方法能触发查询执行。
+
+常用的SQLAlchemy查询执行函数
+方法 | 说明
+---------- | ----------
+all() | 以列表形式返回查询的所有结果
+first() | 返回查询的第一个结果，如果没有结果，则返回None
+first_or_404() | 返回查询的第一个结果，如果没有结果，则终止请求，返回404错误响应
+get() | 返回指定主键对应的行，如果没有对应的行，则返回None
+get_or_404() | 返回指定主键对应的行，如果没找到指定的主键，则终止请求，返回404错误响应
+count() | 返回查询结果的数量
+paginate() | 返回一个Paginate对象，它包含指定范围内的结果
+
+```python
+	users = user_role.users
+	users
+```
+执行user_role.users表达式时，隐含的查询会调用all()返回一个用户列表。query对象是隐藏的，因此无法指定更精确的查询过滤器。在模型的关系设置中，我们加入了lazy='dynamic'参数，从而禁止自动执行查询。
