@@ -12,12 +12,14 @@
     <input id="password" type="password" name="password">
     <button id="submit" type="submit">register</button>
     <button id="test" type="submit">test</button>
+    <p id="result"></p>
     <script src="https://cdn.bootcss.com/axios/0.18.0/axios.js"></script>
     <script>
         const btn = document.querySelector('#submit')
         const test = document.querySelector('#test')
         const email = document.querySelector('#email')
         const password = document.querySelector('#password')
+        const result = document.querySelector('#result')
         btn.addEventListener('click', () => {
             axios.post('/api/v1/user/register', {
                     email: email.value,
@@ -25,9 +27,11 @@
                 })
                 .then(res => {
                     console.log(res)
+                    result.innerHTML = res.data.msg
                 })
                 .catch(err => {
-                    console.log(err)
+                    console.log(err.response)
+
                 })
         })
         test.addEventListener('click', () => {

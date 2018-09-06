@@ -169,6 +169,16 @@ Enum | str | 一组字符串
 PickleType | 任何Python对象 | 自动使用Pickle序列化
 LargeBinary | str | 二进制文件
 
+一些常用的SQLAlchemy列选项
+选项名 | 说明
+------------- | ------------- 
+primary_key | 如果设为True，这列就是表的主键 
+unique | 如果设为True，这列不允许出现重复的值
+index | 如果设置为True，为这列创建索引，提升查询效率
+nullable | 如果设为True，这列允许使用空值；如果设置为False，这列不允许使用空值
+default | 为这列定义默认值 
+
+Flask-SQLAlchemy要求每个模型都要定义**主键**，这一列经常命名为id。
 
 
 
