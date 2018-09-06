@@ -179,6 +179,20 @@ nullable | 如果设为True，这列允许使用空值；如果设置为False，
 default | 为这列定义默认值 
 
 Flask-SQLAlchemy要求每个模型都要定义**主键**，这一列经常命名为id。
-
+主键由Flask-SQLAlchemy管理，无需指定
+```python
+	user_role = Role(name='User')
+	user_john = User(username='john', role=user_role)
+```
+通过数据库**会话**管理对数据库所做的改动，在Flask-SQLAlchemy中，会话由db.session表示，Flask-SQLAlchemy中，绘画有db.session表示。准备把对象写入数据库之前，先要将其添加到会话中：
+```python
+	db.session.add(user_role)
+	db.session.add(user_john)
+	...
+```
+也可以使用 db.session.add_all([user_role, user_john, ...])全部添加到会话中。最后再调用commit()方法**提交**会话:
+```python
+	db.session.commit()
+```
 
 
