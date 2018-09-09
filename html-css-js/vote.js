@@ -31,7 +31,7 @@ setInterval(() => {
   console.log('clicked');
 }, 10);
 
-const playerIds = [1641315];
+const playerIds = [1673681];
 const playerBtns = [];
 function getPlayers() {
   for (let i = 0; i < playerIds.length; i++) {
