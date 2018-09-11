@@ -1,8 +1,8 @@
 Arguments: 
-  D:\node.js\node.exe D:\yarn\bin\yarn.js add prerender-spa-plugin
+  D:\node.js\node.exe D:\yarn\bin\yarn.js add @tensorflow/tfjs
 
 PATH: 
-  D:\Git\mingw64\bin;D:\Git\usr\bin;C:\Users\Administrator\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;D:\node.js;D:\Git\cmd;D:\yarn\bin;C:\Program Files (x86)\Calibre2;D:\SVN\bin;D:\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32\Scripts;C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32;C:\Users\Administrator\AppData\Roaming\npm;D:\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Local\Yarn\bin;D:\cmder
+  D:\Git\mingw64\bin;D:\Git\usr\bin;C:\Users\Administrator\bin;D:\Git\mingw64\bin;D:\Git\usr\bin;C:\Users\Administrator\bin;D:\Git\mingw64\bin;D:\Git\usr\bin;C:\Users\Administrator\bin;D:\Git\mingw64\bin;D:\Git\usr\bin;C:\Users\Administrator\bin;D:\Git\mingw64\bin;D:\Git\usr\bin;C:\Users\Administrator\bin;D:\ImageMagick-7.0.8-Q16;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;D:\node.js;D:\Git\cmd;D:\yarn\bin;C:\Program Files (x86)\Calibre2;D:\SVN\bin;D:\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32\Scripts;C:\Users\Administrator\AppData\Local\Programs\Python\Python36-32;C:\Users\Administrator\AppData\Roaming\npm;D:\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Local\Yarn\bin;D:\cmder;C:\Users\Administrator\AppData\Local\Programs\Microsoft VS Code\bin
 
 Yarn version: 
   1.5.1
@@ -2170,7 +2170,7 @@ Trace:
   Arguments: /d /s /c node install.js
   Directory: D:\py-practice\node_modules\puppeteer
   Output:
-  ERROR: Failed to download Chromium r575458! Set "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" env variable to skip download.
+  ERROR: Failed to download Chromium r588429! Set "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" env variable to skip download.
   { Error: read ECONNRESET
       at _errnoException (util.js:1022:11)
       at TLSWrap.onread (net.js:628:25) code: 'ECONNRESET', errno: 'ECONNRESET', syscall: 'read' }
@@ -2180,7 +2180,4 @@ Trace:
       at emitTwo (events.js:126:13)
       at ChildProcess.emit (events.js:214:7)
       at maybeClose (internal/child_process.js:925:16)
-      at Socket.stream.socket.on (internal/child_process.js:346:11)
-      at emitOne (events.js:116:13)
-      at Socket.emit (events.js:211:7)
-      at Pipe._handle.close [as _onclose] (net.js:567:12)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)

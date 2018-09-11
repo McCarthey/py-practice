@@ -6,8 +6,8 @@
     "author": "mccarthey <mccarthey123@outlook.com>",
     "license": "MIT",
     "dependencies": {
+        "@tensorflow/tfjs": "^0.12.7",
         "iconv-lite": "^0.4.23",
-        "puppeteer": "^1.6.1",
         "webpack": "^4.10.2"
     },
     "scripts": {
