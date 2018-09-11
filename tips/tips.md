@@ -440,3 +440,25 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     f'Your email is {email} , your password is ***'
 ```
 简洁，类似于ES6
+
+
+- css动画小技巧
+场景：想要做出动画持续2s，停顿2s后再循环的效果
+思路：设置好关键帧的位置
+```css
+.step-bar-line {
+    animation: 4s ease-in-out infinite grow;
+}
+@keyframes grow {
+    0% {
+        width: 0;
+    }
+    50% {
+        width: 232px;
+    }
+    100% {
+        width: 232px;
+    }
+}
+```
+让总时长等于4s，那么前2s就是动画持续时间，后2s的状态和动画结束时状态一致（在这儿停顿XD），这样就实现了停顿2s的效果
