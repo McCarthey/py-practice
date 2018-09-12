@@ -440,3 +440,90 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     f'Your email is {email} , your password is ***'
 ```
 简洁，类似于ES6
+
+
+- css动画小技巧
+场景：想要做出动画持续2s，停顿2s后再循环的效果
+思路：设置好关键帧的位置
+```css
+.step-bar-line {
+    animation: 4s ease-in-out infinite grow;
+}
+@keyframes grow {
+    0% {
+        width: 0;
+    }
+    50% {
+        width: 232px;
+    }
+    100% {
+        width: 232px;
+    }
+}
+```
+让总时长等于4s，那么前2s就是动画持续时间，后2s的状态和动画结束时状态一致（在这儿停顿XD），这样就实现了停顿2s的效果
+
+- 重排和重绘
+    
+    - 部分渲染树（或者整个渲染树）需要重新分析并且节点尺寸需要重新计算。这被称为**重排**。注意这里至少会有一次重排-初始化页面布局。
+    - 由于节点的几何属性发生改变或者由于样式发生改变，例如改变元素背景色时，屏幕上的部分内容需要更新。这样的更新被称为**重绘**。
+    
+    任何改变用来构建渲染树的信息都会导致一次重排或重绘
+    
+    - 添加、删除、更新DOM节点
+    - 通过display: none隐藏一个DOM节点-触发重排和重绘
+    - 通过visibility: hidden隐藏一个DOM节点-只触发重绘，因为没有几何变化
+    - 移动或者给页面中的DOM节点添加动画
+    - 添加一个样式表，调整样式属性
+    - 用户行为，例如调整窗口大小，改变字号，或者滚动。
+    
+    ```javascript
+    var bstyle = document.body.style; // cache
+    bstyle.padding = "20px"; // 重排+重绘
+    bstyle.border = "10px solid red"; // 另一次重排+重绘
+    bstyle.color = "blue"; // 没有尺寸变化，只重绘
+    bstyle.backgroundColor = "#fad"; // 重绘
+    bstyle.fontSize = "2em"; // 重排+重绘
+    // 新的DOM节点 - 重排+重绘
+    document.body.appendChild(document.createTextNode('dude!'));
+    ```
+    
+- 最小化重排/重绘
+
+    - 不要逐个变样式。对于静态页面来说，明智且兼具可维护性的做法是改变类名而不是样式。对于动态改变的样式来说，相较每次微小修改都直接触及元素，更好的办法是统一在cssText变量中编辑。
+    
+    ```javascript
+        // bad
+        var left = 10,
+            top = 10;
+        el.style.left = left + "px";
+        el.style.top  = top  + "px";
+        // better 
+        el.className += " theclassname";
+        // 当top和left的值是动态计算而成时...
+        // better
+        el.style.cssText += "; left: " + left + "px; top: " + top + "px;";
+    ```
+    
+    - 通过documentFragment来保留临时变动
+    - 复制你即将更新的节点，在副本上工作，然后将之前的节点和新节点交换
+    - 通过display:none属性隐藏元素（只有一次重排重绘），添加足够多的变更后，通过display属性显示（另一次重排重绘）。通过这种方式即使大量变更也只触发两次重排。
+    - 不要频繁计算样式。如果你有一个样式需要计算，只取一次，将它缓存在一个变量中并且在这个变量上工作。看一下下面这个反例：
+    ```javascript
+        // no-no!
+        for(big; loop; here) {
+            el.style.left = el.offsetLeft + 10 + "px";
+            el.style.top  = el.offsetTop  + 10 + "px";
+        }
+        // better
+        var left = el.offsetLeft,
+            top  = el.offsetTop
+            esty = el.style;
+        for(big; loop; here) {
+            left += 10;
+            top  += 10;
+            esty.left = left + "px";
+            esty.top  = top  + "px";
+        }
+    ```
+    - 通常情况下，考虑一下渲染树和变更后需要重新验证的消耗。举个例子，使用绝对定位会使得该元素单独成为渲染树中body的一个子元素，所以当你对其添加动画时，它不会对其它节点造成太多影响。当你在这些节点上放置这个元素时，一些其它在这个区域内的节点可能需要重绘，但是不需要重排。
