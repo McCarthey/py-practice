@@ -31,9 +31,7 @@ setInterval(() => {
   console.log('clicked');
 }, 10);
 
-
-
-const playerIds = [1673681];
+const playerIds = [1673681, 1673370];
 const playerBtns = [];
 function getPlayers() {
   for (let i = 0; i < playerIds.length; i++) {
@@ -45,7 +43,7 @@ setInterval(() => {
   playerBtns.forEach(btn => {
     btn.click()
   })
-}, 5);
+}, 60);
 
 // 自动取消弹窗
 setInterval(() => {

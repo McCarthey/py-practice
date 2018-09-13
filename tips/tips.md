@@ -527,6 +527,7 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
         }
     ```
     - 通常情况下，考虑一下渲染树和变更后需要重新验证的消耗。举个例子，使用绝对定位会使得该元素单独成为渲染树中body的一个子元素，所以当你对其添加动画时，它不会对其它节点造成太多影响。当你在这些节点上放置这个元素时，一些其它在这个区域内的节点可能需要重绘，但是不需要重排。
+<<<<<<< HEAD
     
 - 网页生成的过程
 
@@ -574,3 +575,19 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     ```
     
     
+=======
+
+- 事件机制
+```javascript
+    // 以下会先打印冒泡然后是捕获
+    node.addEventListener('click',(event) =>{
+        console.log('冒泡')
+    },false);
+    node.addEventListener('click',(event) =>{
+        console.log('捕获 ')
+    },true)
+```
+DOM2级事件定义了两个方法，用于处理指定和删除事件处理程序的操作：addEventListener()和removeEventListener()。所有DOM节点都包含这两个方法，并且它们都接受3个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。最后这个布尔值如果是true，表示在捕获阶段调用事件处理程序；如果是false，表示在冒泡阶段调用事件处理程序。
+
+如果给一个目标节点同时注册冒泡和捕获事件，如上述代码，事件触发会按照注册的顺序执行。
+>>>>>>> af14b4eb14d886f7666fcedddcd9f25cb4e9d2e1
