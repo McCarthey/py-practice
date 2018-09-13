@@ -527,3 +527,50 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
         }
     ```
     - 通常情况下，考虑一下渲染树和变更后需要重新验证的消耗。举个例子，使用绝对定位会使得该元素单独成为渲染树中body的一个子元素，所以当你对其添加动画时，它不会对其它节点造成太多影响。当你在这些节点上放置这个元素时，一些其它在这个区域内的节点可能需要重绘，但是不需要重排。
+    
+- 网页生成的过程
+
+    1. HTML代码转化成DOM
+    2. CSS代码转化成CSSOM（CSS Object Model）
+    3. 结合DOM和CSSOM，生成一棵渲染树（包含每个节点的视觉信息）
+    4. 生成布局（layout），即将所有渲染树的所有节点进行平面合成 （**耗时**）
+    5. 将布局绘制（paint）在屏幕上 （**耗时**）
+    
+    "**生成布局**"（flow）和"**绘制**"（paint）这两步，合称为"**渲染**"（render）。
+    
+    **网页生成的时候，至少会渲染一次。用户访问的过程中，还会不断重新渲染。**以下三种情况，会导致网页重新渲染：
+
+        - 修改DOM
+        - 修改样式表
+        - 用户事件（比如鼠标悬停、页面滚动、输入框键入文字、改变窗口大小等等）
+    **重新渲染，就需要重新生成布局和重新绘制。前者叫做"重排"（reflow），后者叫做"重绘"（repaint）。**
+    
+    需要注意的是，**"重绘"不一定需要"重排"**，比如改变某个网页元素的颜色，就只会触发"重绘"，不会触发"重排"，因为布局没有改变。但是，**"重排"必然导致"重绘"**，比如改变一个网页元素的位置，就会同时触发"重排"和"重绘"，因为布局改变了。
+    
+    一般来说，样式的写操作之后，如果有下面这些属性的读操作，都会引发浏览器立即重新渲染:
+    ```
+        offsetTop/offsetLeft/offsetWidth/offsetHeight
+        scrollTop/scrollLeft/scrollWidth/scrollHeight
+        clientTop/clientLeft/clientWidth/clientHeight
+        getComputedStyle()
+    ```
+    所以，从性能角度考虑，尽量不要把读操作和写操作，放在一个语句里面:
+    ```
+        // bad
+        div.style.left = div.offsetLeft + 10 + "px";
+        div.style.top = div.offsetTop + 10 + "px";
+
+        // good
+        var left = div.offsetLeft;
+        var top  = div.offsetTop;
+        div.style.left = left + 10 + "px";
+        div.style.top = top + 10 + "px";
+    ```
+    一般的规则是：
+    ```
+        样式表越简单，重排和重绘就越快。
+        重排和重绘的DOM元素层级越高，成本就越高。
+        table元素的重排和重绘成本，要高于div元素 
+    ```
+    
+    
