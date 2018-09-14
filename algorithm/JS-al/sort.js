@@ -29,12 +29,12 @@ function ArrayList() {
             }
         }
     }
-	/**
-	 * 选择排序：找到数据结构中最小值并将其放在第一位，接着找第二小的值，放在第二位
-	 * 假定最小值索引值，然后遍历，更新最小值索引，如果最小值索引已更新，则交换原索引和新索引，即找到当前列表的最小值
-	 * 循环以上步骤（最后一次不必执行，因为列表中只有最后一项，必然已经排序）
-	 */
-	this.selectionSort = function () {
+    /**
+     * 选择排序：找到数据结构中最小值并将其放在第一位，接着找第二小的值，放在第二位
+     * 假定最小值索引值，然后遍历，更新最小值索引，如果最小值索引已更新，则交换原索引和新索引，即找到当前列表的最小值
+     * 循环以上步骤（最后一次不必执行，因为列表中只有最后一项，必然已经排序）
+     */
+    this.selectionSort = function() {
         var indexMin
         for (var i = 0; i < array.length - 1; i++) {
             indexMin = i
@@ -48,13 +48,31 @@ function ArrayList() {
             }
         }
     }
+    /**
+     * 插入排序：每次排一个数组项，判断数组项应该插入的位置
+     */
+    this.insertionSort = function() {
+        
+    }
 }
 
 // 测试
 var array = new ArrayList()
-array.insert(3)
-array.insert(8)
-array.insert(1)
-array.insert(9)
-array.insert(0)
-array.insert(5)
+for (var i = 0; i < 10000; i++) {
+    array.insert(Math.round(Math.random() * 10000))
+}
+
+console.time('time')
+array.selectionSort()
+console.timeEnd('time')
+
+// 测试sort方法
+var jsSort = []
+for (var i = 0; i < 10000; i++) {
+    jsSort.push(Math.round(Math.random() * 10000))
+}
+console.time('time')
+jsSort.sort((a, b) => {
+    return a - b
+})
+console.timeEnd('time')
