@@ -15,7 +15,17 @@ function ArrayList() {
                 }
             }
         }
-	}
+    }
+    // 改进后的冒泡算法: 已排序后的不进行比较
+    this.modifyBubbleSort = function() {
+        for (var i = 0; i < array.length; i++) {
+            for (var j = 0; j < array.length - i - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    swap(array, j, j + 1)
+                }
+            }
+        }
+    }
 }
 
 function swap(arr, j, k) {
