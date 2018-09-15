@@ -65,10 +65,52 @@ function ArrayList() {
             array[j] = temp
         }
     }
+    /**
+     * 归并排序：分治算法，将原始数组切分成较小的数组，直到每个小数组只有一个位置，接着将小数组归并为较大的数组，直到最后只有一个排序完毕的大数组
+     * 归并时候，采用双指针，每次比较都将两个数组中较小值推入结果中，一旦有一个数组遍历完，就把剩下的数组的元素依次推入结果中
+     */
+    this.mergeSort = function() {
+        var mergeSortRec = function(array) {
+            var length = array.length
+            if (length === 1) {
+                return array
+            }
+            var mid = Math.floor(length / 2),
+                left = array.slice(0, mid),
+                right = array.slice(mid, length)
+
+            return merge(mergeSortRec(left), mergeSortRec(right))
+        }
+
+        var merge = function(left, right) {
+            var result = [],
+                il = 0,
+                ir = 0
+
+            while (il < left.length && ir < right.length) {
+                if (left[il] < right[ir]) {
+                    result.push(left[il++])
+                } else {
+                    result.push(right[ir++])
+                }
+            }
+            
+            while (il < left.length) {
+                result.push(left[il++])
+            }
+            
+            while (ir < right.length) {
+                result.push(right[ir++])
+            }
+            
+            return result
+        }
+        
+        array = mergeSortRec(array)
+    }
 }
 
-// 测试
-
+// 测试性能
 function createNonSortedArray(size) {
     var array = new ArrayList()
     for (var i = 0; i < size; i++) {
