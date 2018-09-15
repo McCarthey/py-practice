@@ -50,29 +50,33 @@ function ArrayList() {
     }
     /**
      * 插入排序：每次排一个数组项，判断数组项应该插入的位置
+     * 算法假定第一项已排序，从第二项开始，将每项的索引和值赋给两个临时变量
+     * 如果前一项大于当前项的值，则将前一项的值赋给当前项，
      */
     this.insertionSort = function() {
-        
+        var j, temp
+        for (var i = 1; i < array.length; i++) {
+            j = i
+            temp = array[i]
+            while (j > 0 && array[j - 1] > temp) {
+                array[j] = array[j - 1]
+                j--
+            }
+            array[j] = temp
+        }
     }
 }
 
 // 测试
-var array = new ArrayList()
-for (var i = 0; i < 10000; i++) {
-    array.insert(Math.round(Math.random() * 10000))
-}
 
+function createNonSortedArray(size) {
+    var array = new ArrayList()
+    for (var i = 0; i < size; i++) {
+        array.insert(Math.round(Math.random() * size))
+    }
+    return array;
+}
+var array = new createNonSortedArray(10000)
 console.time('time')
 array.selectionSort()
-console.timeEnd('time')
-
-// 测试sort方法
-var jsSort = []
-for (var i = 0; i < 10000; i++) {
-    jsSort.push(Math.round(Math.random() * 10000))
-}
-console.time('time')
-jsSort.sort((a, b) => {
-    return a - b
-})
 console.timeEnd('time')
