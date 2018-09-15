@@ -3,12 +3,20 @@ from flask import Flask, request, url_for, render_template, make_response, redir
 # 版本兼容问题？
 # from flask.ext.sqlalchemy import SQLAlchemy 或 from flaskext.sqlalchemy import SQLAlchemy 均报错
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+
+mail = Mail(app)
 
 db = SQLAlchemy(app)
 # 定义Role和User模型
