@@ -94,19 +94,66 @@ function ArrayList() {
                     result.push(right[ir++])
                 }
             }
-            
+
             while (il < left.length) {
                 result.push(left[il++])
             }
-            
+
             while (ir < right.length) {
                 result.push(right[ir++])
             }
-            
+
             return result
         }
-        
+
         array = mergeSortRec(array)
+    }
+
+    /**
+     * 快速排序: 分治算法，
+     * 1. 从数组中选择中间一项作为主元
+     * 2. 创建两个指针，左边一个指向数组第一个项，右边一个指向数组最后一个项。移动左指针直到我们找到一个比主元大的元素，接着，移动右边指针直到找到一个比主元小的元素，然后交换它们，重复这个过程，直到左指针超过了右指针。这个过程将使得比主元小的值都排在主元之前，而比主元大的值都排在主元之后，这一步叫做划分操作。
+     * 3. 算法对划分后的小数组（较主元小的值组成的子数组，以及较主元大的值组成的子数组）重复之前的两个步骤，直至数组已完全排序。
+     * 
+     * （注：主元的选择将影响算法的表现）
+     */
+    this.quickSort = function() {
+        var quick = function(array, left, right) {
+            var index
+            if (array.length > 1) {
+                index = partition(array, left, right)
+
+                if (left < index - 1) {
+                    quick(array, left, index - 1)
+                }
+                
+                if (index < right) {
+                    quick(array, index, right)
+                }
+            }
+        }
+        
+        var partition = function (array, left, right) {
+            var pivot = array[Math.floor((left + right) / 2)],
+                i = left,
+                j = right
+            while (i <= j) {
+                while (array[i] < pivot) {
+                    i++
+                }
+                while (array[j] > pivot) {
+                    j--
+                }
+                if (i <= j) {
+                    swap(array, i, j)
+                    i++
+                    j--
+                }
+            }
+            return i
+        }
+
+        quick(array, 0, array.length - 1)
     }
 }
 
@@ -122,3 +169,17 @@ var array = new createNonSortedArray(10000)
 console.time('time')
 array.selectionSort()
 console.timeEnd('time')
+
+
+// 测试ES自带的sort方法
+(function testSort() {
+    var array = []
+    for (var i = 0; i < 100000; i++) {
+        array.push(Math.round(Math.random() * 100000))
+    }
+    console.time('time')
+    array.sort((a, b) => {
+        return a - b
+    })
+    console.timeEnd('time')
+}())
