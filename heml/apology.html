@@ -6,6 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>letter of apology</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript">
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-55363978-7', 'auto');
+        ga('set', 'dimension1', window.webkit || window.android ? '1' : '2')
+        ga('require', 'displayfeatures');
+    </script>
     <link rel="stylesheet" type="text/css" href="/static/css/font.css">
     <style>
         body {
@@ -101,12 +117,12 @@
             The reason we are implementing this new rule is because 60% of our users have been exposed to different levels of harassment in the year of 2018. This is a tough issue that can't be evaded. It occurred due to a wrong choice of our strategy what incentivized our users to operate in an incorrect way. We believe that this is not what our users should expect.
             <br>
             <br>
-            We sincerely apologize for the inconvenience caused by our adjustments, and will compensate every affected user with 1000 Coins. We hope you will enjoy this improved service from Luxy. Thank you for sharing us your trust!
+            We sincerely apologize for the inconvenience caused by our adjustments, and will compensate every affected user with 300 Coins. We hope you will enjoy this improved service from Luxy. Thank you for sharing us your trust!
 
         </p>
         <p class="text-notice">
             When you send the keyword<br>
-            <span class="text-notice-coin">"1000 coins"</span> to Amanda in our in-app feedback within 30 days from receiving this message, the 1000 coins will be added to your Luxy account automatically. Thank you for your understanding.
+            <span class="text-notice-coin">"300 coins"</span> to Luciana in our in-app feedback within 30 days from receiving this message, the 300 coins will be added to your Luxy account automatically. Thank you for your understanding.
         </p>
         <p>
             Currently, there are several deficiencies on Luxy, and we are striving to optimize our services to continue in maintaining a high-quality community. In the meantime, we hope that all users will cherish their matches, instead of ignoring or snubbing them.
@@ -128,6 +144,22 @@
         <div class="black-line black-line__thin"></div>
         <div class="black-line black-line__wide"></div>
     </div>
+    <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        function getQuery(name) {
+            var regExp = new RegExp("(^|&)" + name + "=([^&]*)(&|$)")
+            var result = window.location.search.substr(1).match(regExp)
+            if (result !== null) {
+                return unescape(result[2])
+            }
+            return null
+        }
+
+        var openId = getQuery('openid') || 'not set'
+        $(document).ready(function() {
+            ga('send', 'event', 'Apology_letter_open', 'not set', openId)
+        });
+    </script>
 </body>
 
 </html>
