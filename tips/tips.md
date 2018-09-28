@@ -648,4 +648,31 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
             
             }
         ```
+- 弹出层弹出后背景不可滑动/滚动
+    ```css
+    .no-scroll {
+        position: fixed;
+        overflow: hidden;
+    }
+    ```
+    此时页面视窗固定，但是内容会返回到顶端，因此这里需要记录一下当前的滚动值，可以写在vuex的mutation中
+    ```javascript
+    let bodyEl = document.body
+    let top = 0
+    export default {
+        setShowingDlg(state, showing) {
+            state.isShowingDlg = showing
+            if (showing) {
+                top = window.scrollY
+                bodyEl.style.position = 'fixed'
+                bodyEl.style.top = `${-top}px`
+            } else {
+                bodyEl.style.position = ''
+                bodyEl.style.top = ''
+
+                window.scrollTo(0, top) // 回到原先的高度
+            }
+        }
+    }
+    ```
         
