@@ -577,3 +577,75 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
 参考[CentOS 7下安装python3](https://segmentfault.com/a/1190000009922582)
 
 - 小程序、小游戏Serverless
+
+- 水平垂直居中
+    - 已知高度宽度元素的水平垂直居中 
+        - 绝对定位与负边距实现
+        ```css
+            #container{
+                position:relative;
+            }
+            
+            #center{
+                width:100px;
+                height:100px;
+                position:absolute;
+                top:50%;
+                left:50%;
+                margin:-50px 0 0 -50px;
+            }
+        ```
+        - 绝对定位与margin
+        ```css
+            #container{
+                position:relative;
+            }
+            
+            #center{
+                position:absolute;
+                margin:auto;
+                top:0;
+                bottom:0;
+                left:0;
+                right:0;
+            }
+        ```
+    - 未知高度和宽度元素的水平垂直居中 
+        - 当要被居中的元素是inline或者inline-block元素
+        ```css
+            #container{
+                display:table-cell;
+                text-align:center;
+                vertical-align:middle;
+            }
+            
+            #center{
+            
+            }
+        ```
+        - Css3的transform
+        ```css
+            #container{
+                position:relative;
+            }
+            
+            #center{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        ```
+        - flex
+        ```css
+            #container{
+                display:flex;
+                justify-content:center;
+                align-items: center;
+            }
+            
+            #center{
+            
+            }
+        ```
+        
