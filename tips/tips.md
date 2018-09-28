@@ -675,4 +675,25 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
         }
     }
     ```
+    
+- web移动端调用自带短信功能
+    ```javascript
+    isIos() {
+        return this.$util.getBrowserVersion().isIos()
+    },
+    isAndroid() {
+        return this.$util.getBrowserVersion().isAndroid()
+    },
+    smsLink() {
+        let link = ''
+        if (this.isIos) {
+            link = `sms:&body=${this.inviteText}`
+        } else if (this.isAndroid) {
+            link = `sms:?body=${this.inviteText}`
+        } else {
+            link = `sms:;body=${this.inviteText}`
+        }
+        return link
+    },
+    ```
         
