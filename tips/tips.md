@@ -697,3 +697,5 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     },
     ```
         
+- ios设备div点击无反应的兼容措施
+    在ios设备中，div这种语义化不强的标签，默认是没有点击事件的。因此需要给div添加一个空的onlick=""事件监听，或者添加css属性：cursor:pointer; ios设备才会处理他的点击事件
