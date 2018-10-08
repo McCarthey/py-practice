@@ -701,3 +701,4 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     在ios设备中，div这种语义化不强的标签，默认是没有点击事件的。因此需要给div添加一个空的onlick=""事件监听，或者添加css属性：cursor:pointer; ios设备才会处理他的点击事件
     
 - border为0.5px的时候各个浏览器兼容性变现不同
+- 设置父元素height: 0; overflow: visiable; background: red;子元素负责撑开高度，但是父元素的兄弟元素则会紧跟排列，可以实现部分遮挡的效果
