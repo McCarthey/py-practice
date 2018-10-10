@@ -703,3 +703,16 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
 - border为0.5px的时候各个浏览器兼容性变现不同
 - 设置父元素height: 0; overflow: visiable; background: red;子元素负责撑开高度，但是父元素的兄弟元素则会紧跟排列，可以实现部分遮挡的效果
 - ios的-webkit-tap-highlight-color属性：当你点击一个链接或者通过Javascript定义的可点击元素的时候，它就会出现一个半透明的灰色背景。-webkit-tap-highlight-color: rgba(0, 0, 0, 0.5); 可以设置alpha为0来禁用该属性
+- iphoneX底部充满适配
+    
+    [参考](https://aotu.io/notes/2017/11/27/iphonex/index.html)
+    ```html
+        <!-- 新增 viweport-fit 属性，使得页面内容完全覆盖整个窗口： -->
+        <meta name="viewport" content="width=device-width, viewport-fit=cover">
+    ```
+    ```css
+        body {
+            padding-bottom: constant(safe-area-inset-bottom);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    ```
