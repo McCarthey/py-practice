@@ -721,3 +721,12 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
 
     在使用axios时，axios默认的header中content-type: application/json，此时post请求传上去的数据是在request payload中的，后端需要在这里取；
     当设置content-type: application/x-www-form-urlencoded时，此时post请求是以Form data方式上传的，需要对form data做序列化处理（如使用qs库），后端需要解析序列化后的数据 
+    
+- 判断空字符串" "
+    ```javascript
+    const message = " "
+    if (message.replace(/(^\s*)|(\s*$)/g, "").length === 0) {
+        console.log('Message cannot be empty!')
+    }
+    ```
+    
