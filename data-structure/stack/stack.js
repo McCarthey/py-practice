@@ -17,49 +17,58 @@ function Stack() {
         return items.length === 0 // 判断栈是否为空
     }
     this.size = function() {
-		return items.length // 返回栈的大小
-	}
-	this.clear = function () {
-		items = [] // 把栈清空
-	}
-	this.print = function () {
-		console.log(items.toString())
-	}
+        return items.length // 返回栈的大小
+    }
+    this.clear = function() {
+        items = [] // 把栈清空
+    }
+    this.print = function() {
+        console.log(items.toString())
+    }
 }
 
 var stack1 = new Stack()
 
 /**
  * ES6 的class实现
+ * 1. 用ES^=6的限定作用域Symbol实现类
+ * 	  声明了Symbol类型的变量，在constructor函数中初始化它的值
+ * 	  该方法创建了一个假的私有属性，因为Object.getOwnPropertySymbols方法能够取到类里面声明的所有Symbols属性，
+ *    通过stack[Object.getOwnPropertySymbols(stack)[0]]可以访问到_items
  */
+let _items = Symbol()
 class Stack {
-	constructor(items) {
-		this.items = items
-	}
-	
-	push(element) {
-		this.items.push(element)
-	}
-	
-	pop() {
-		return this.items.pop()
-	}
-	
-	peek() {
-		return this.items[this.items.length - 1]
-	}
-	
-	isEmpty() {
-		return this.items.length === 0
-	}
-	
-	clear() {
-		this.items = []
-	}
-	
-	size() {
-		return this.items.length
-	}
+    constructor() {
+        this[_items] = []
+    }
+
+    push(element) {
+        this[_items].push(element)
+    }
+
+    pop() {
+        return this[_items].pop()
+    }
+
+    peek() {
+        return this[_items][this[_items].length - 1]
+    }
+
+    isEmpty() {
+        return this[_items].length === 0
+    }
+
+    clear() {
+        this[_items] = []
+    }
+
+    size() {
+        return this[_items].length
+    }
+
+    print() {
+        console.log(this[_items].toString())
+    }
 }
 
-const stack = new Stack([])
+const stack = new Stack()

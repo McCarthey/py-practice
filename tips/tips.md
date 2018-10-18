@@ -730,3 +730,7 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     }
     ```
     
+- facebook pixel
+    
+    用法同GA
+    
