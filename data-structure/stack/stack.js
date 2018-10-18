@@ -31,12 +31,32 @@ var stack1 = new Stack()
 
 /**
  * ES6 的class实现
- * 1. 用ES^=6的限定作用域Symbol实现类
+ * 1. 用ES6的限定作用域Symbol实现类
  * 	  声明了Symbol类型的变量，在constructor函数中初始化它的值
  * 	  该方法创建了一个假的私有属性，因为Object.getOwnPropertySymbols方法能够取到类里面声明的所有Symbols属性，
  *    通过stack[Object.getOwnPropertySymbols(stack)[0]]可以访问到_items
+ * 2. 用ES6的WeakMap实现类
+ *    WeakMap可以确保属性是私有的，可以用WeakMap来存储items变量，是真正的私有属性
  */
-let _items = Symbol()
+let _items = Symbol() // symbol
+
+let Stack = (function() {
+    const items = new WeakMap()
+    class Stack {
+        constructor() {
+            items.set(this, []) // weakMap: 以this(Stack类自己的引用)为键，把代表栈的数组存入items
+		}
+		
+		push(element) {
+		    this[_items].push(element)
+		    let s = items.get(this) // weakMap: 从weakMap中取出值，即以this为键从items中取值
+		    s.push(element) // weakMap
+		}
+		// ...
+	}
+	return Stack
+})()
+
 class Stack {
     constructor() {
         this[_items] = []
