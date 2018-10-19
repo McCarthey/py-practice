@@ -39,8 +39,6 @@ var stack1 = new Stack()
  *    WeakMap可以确保属性是私有的，可以用WeakMap来存储items变量，是真正的私有属性
  * 	  用闭包将类包起来
  */
-let _items = Symbol() // symbol
-
 let Stack = (function() {
     const items = new WeakMap()
     class Stack {
@@ -58,6 +56,8 @@ let Stack = (function() {
 	return Stack
 })()
 
+
+let _items = Symbol() // symbol
 class Stack {
     constructor() {
         this[_items] = []

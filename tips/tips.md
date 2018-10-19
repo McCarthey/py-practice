@@ -815,3 +815,43 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     data.quantity = 10
     console.log("total = " + data.total)
     ```
+    
+    使用Proxy实现响应式
+    ```javascript
+    let deps = new Map() /* 创建一个Map对象 */
+    Object.keys(data).forEach(key => {  /* 为每个属性都设置一个依赖实例 并放入deps中 */
+        deps.set(key, new Dep())
+    })
+    class Dep {
+        constructor() {
+            this.subscribers = []
+        }
+        
+        depend() {
+            if( target && !this.subscribers.includes(target)) {
+                this.subscribers.push(target)
+            }
+        }
+        
+        notify() {
+            this.subscribers.forEach(sub => sub())
+        }
+    }
+    let data_without_proxy = data /* 保存源对象 */
+    data = new Proxy(data_without_proxy, {  /* 重写数据以在中间创建一个代理 */
+        get(obj, key) {
+            deps.get(key).depend()
+            return obj[key]
+        },
+        set(obj, key, newVal) {
+            obj[key] = newVal
+            deps.get(key).notify()
+            return true
+        }
+    })
+    ```
+    如你所见，我们创建了一个变量data_without_proxy来作为源对象的副本，在覆盖源对象时来使用副本创建一个Proxy对象。第二个参数是包含了get()和set()这两个陷阱函数属性的handler对象。
+
+    get(obj, key) => 是在访问属性时调用的函数。第一个参数obj为原始对象（data_without_proxy），第二个参数是被访问属性的key。这里面调用了与特定属性关联的特定方法（Dep class中的depend()）。最后，使用return obj[key]返回与该key相关的值。
+
+    set(obj, key, newVal) => 中前两个参数与get的相同，第三个参数是新的修改值，然后，我们将新值设置给obj[key] = newVal修改的属性上，并调用notify()方法。
