@@ -37,6 +37,7 @@ var stack1 = new Stack()
  *    通过stack[Object.getOwnPropertySymbols(stack)[0]]可以访问到_items
  * 2. 用ES6的WeakMap实现类
  *    WeakMap可以确保属性是私有的，可以用WeakMap来存储items变量，是真正的私有属性
+ * 	  用闭包将类包起来
  */
 let _items = Symbol() // symbol
 

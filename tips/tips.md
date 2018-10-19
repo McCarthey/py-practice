@@ -733,4 +733,36 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
 - facebook pixel
     
     用法同GA
+- 属性描述符
+    
+    对象里目前存在的属性描述符有两种主要形式：**数据描述符**和 **存取描述符**。数据描述符是一个具有值的属性，该值可能是可写的，也可能不是可写的。存取描述符是由getter-setter函数对描述的属性。描述符必须是这两种形式之一；不能同时是两者。
+    
+    数据描述符和存取描述符均具有configurable和enumerable
+    
+    数据描述符具有value，writable
+    
+    存取描述符具有get，set
+    
+    如果一个描述符不具有value,writable,get 和 set 任意一个关键字，那么它将被认为是一个数据描述符。如果一个描述符同时有(value或writable)和(get或set)关键字，将会产生一个异常。
+    
+    ```javascript
+    let person = { name: 'Mike', age: 18 }
+    Object.defineProperty(person, 'name', {
+        value: 'Lily'
+    })
+    console.log(person)  /* {name: "Lily", age: 18} */
+    
+    Object.defineProperty(person, 'fullName', {
+        get() {
+            return 'Lily White'
+        },
+        set(newVal) {
+            this.name = newVal 
+        }
+    })
+    
+    console.log(person.fullName) /* "Lily White" */
+    person.fullName = 'Mike White'
+    console.log(person) /* {name: "Mike White", age: 18} */
+    ```
     
