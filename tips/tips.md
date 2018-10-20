@@ -855,3 +855,11 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     get(obj, key) => 是在访问属性时调用的函数。第一个参数obj为原始对象（data_without_proxy），第二个参数是被访问属性的key。这里面调用了与特定属性关联的特定方法（Dep class中的depend()）。最后，使用return obj[key]返回与该key相关的值。
 
     set(obj, key, newVal) => 中前两个参数与get的相同，第三个参数是新的修改值，然后，我们将新值设置给obj[key] = newVal修改的属性上，并调用notify()方法。
+    
+- 设置animation-fill-mode
+    ```css
+    animation-fill-mode: none; 动画执行前后不改变任何样式，默认
+    animation-fill-mode: forwards; 目标保持动画最后一帧的样式，最后一帧是哪个取决于animation-direction和animation-iteration-count
+    animation-fill-mode: backwards; 动画采用相应第一帧的样式，保持animation-delay
+    animation-fill-mode: both; 动画将会执行 forwards 和 backwards 执行的动作
+    ```
