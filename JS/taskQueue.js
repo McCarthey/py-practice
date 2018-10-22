@@ -4,6 +4,7 @@
  * - process.nextTick
  * - promise
  * - Object.observe
+ * - MutationObserver
  * macrotasks:
  * - setTimeout
  * - setInterval

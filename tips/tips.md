@@ -863,6 +863,7 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     animation-fill-mode: backwards; 动画采用相应第一帧的样式，保持animation-delay
     animation-fill-mode: both; 动画将会执行 forwards 和 backwards 执行的动作
     ```
+    
 - microtask macrotask
 - 继承
 - 正则
