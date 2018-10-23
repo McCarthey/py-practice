@@ -83,3 +83,17 @@ var Something = {
 Something.cool()
 Something.greeting
 Something.count
+
+var Another = {
+	cool: function () {
+		// 隐式把Something混入Another
+		Something.cool.call(this)
+	}
+}
+Another.cool()
+Another.greeting
+Another.count
+
+/**
+ * 注意：混入没有使用[[prototype]]链机制
+ */
