@@ -68,3 +68,18 @@ function Car() {
 
 var myCar = new Car() // 或者不使用new，直接调用Car()，结果相同，但是可以避免创建并丢弃多余的对象
 myCar.drive()
+
+/**
+ * 隐式混入：
+ * 类似显式伪多态
+ */
+var Something = {
+	cool: function () {
+		this.greeting = "hello world"
+		this.count = this.count ? this.count + 1 : 1
+	}
+}
+
+Something.cool()
+Something.greeting
+Something.count
