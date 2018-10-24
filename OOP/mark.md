@@ -10,3 +10,12 @@
 - [[prototype]]
 	
 	JavaScript中的对象有一个特殊的[[prototype]]内置属性，实就是对于其他对象的引用。几乎所有的对象在创建时[[Prototype]]属性都会被赋予一个非空的值。对于默认的[[Get]]操作来说，如果无法在对象本身找到需要的属性，就会继续访问对象的[[Prototype]]链：
+	```javascript
+	var anotherObj = {
+		a: 2
+	}
+	// 创建一个关联到anotherObj的对象
+	var myObj = Object.create(anotherObj)
+	
+	myObj.a // 2
+	```

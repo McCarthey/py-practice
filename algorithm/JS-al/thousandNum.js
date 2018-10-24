@@ -26,6 +26,10 @@ function toThousands(num) {
     return res
 }
 // 正则版本
+/**
+ * 正向肯定查找x(?=y)：匹配'x'仅仅当'x'后面跟着'y'. 
+ * 正向否定查找x(?!y)：匹配'x'仅仅当'x'后面不跟着'y'. 
+ */
 function toThousandsReg(num) {
 	let numStr = String(num)
 	return numStr.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
