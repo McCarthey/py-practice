@@ -869,3 +869,9 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
 - 正则
 - http
 - apply,call,bind
+
+- 内联写在html属性中的js语句，如:
+    ```html
+    <div onclick="showUserInfo('Mike','25','I'm a boy')"></div>
+    <!-- 这里使用的单引号和双引号会引起bug，正确的做法是将I'm中的单引号转义成html转义字符&#39; 特别是当这些值都是由javascript动态传过来的时候，一定要注意使用html的转义字符-->
+    ```

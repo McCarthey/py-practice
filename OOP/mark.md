@@ -14,8 +14,9 @@
 	var anotherObj = {
 		a: 2
 	}
-	// 创建一个关联到anotherObj的对象
+	// 创建一个关联到anotherObj的对象：Object.create会创建一个对象并把这个对象的[[prototype]]关联到指定的对象
 	var myObj = Object.create(anotherObj)
 	
 	myObj.a // 2
 	```
+	使用for..in和in操作符检查属性在对象中是否存在时,会向上遍历对象的[[prototype]]链
