@@ -20,3 +20,36 @@
 	myObj.a // 2
 	```
 	使用for..in和in操作符检查属性在对象中是否存在时,会向上遍历对象的[[prototype]]链
+	
+- .prototype对象
+	```javascript
+	function Foo() {
+		// ...
+	}
+	
+	var a = new Foo()
+	Object.getPrototypeOf(a) === Foo.prototype; // true
+	Foo.prototype.constructor === Foo; // true
+	a.constructor === Foo; // true
+	```
+	这里的Foo.prototype对象是在调用new Foo时创建的，最后被关联到这个Foo.prototype对象上。即a内部的[[prototype]]关联的是Foo.prototype指向的那个对象
+	
+- 模仿类
+	```javascript
+	function Foo(name) {
+		this.name = name
+	}
+	
+	Foo.prototype.myName = function() {
+		return this.name
+	}
+	
+	var a = new Foo('a')
+	var b = new Foo ('b')
+	
+	a.myName()
+	b.myName()
+	```
+	以上代码展示了两种模拟类的技巧：
+	1. this.name = name给每个由new Foo()调用生成的对象都添加了name属性
+	2. Foo.prototype.myName = ...给Foo.prototype对象添加了一个属性。由于上文提到的在调用new Foo()时，a内部的[[prototype]]关联到了Foo.prototype上，因此当调用a.myName()时，虽然a对象本身不存在myName函数，但是通过委托，在它的上层[[prototype]]链上，即Foo.prototype上存在myName。
