@@ -875,3 +875,9 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     <div onclick="showUserInfo('Mike','25','I'm a boy')"></div>
     <!-- 这里使用的单引号和双引号会引起bug，正确的做法是将I'm中的单引号转义成html转义字符&#39; 特别是当这些值都是由javascript动态传过来的时候，一定要注意使用html的转义字符-->
     ```
+    
+- 前后端跨域带cookie联调
+    
+    前端：ajax请求时，需要写明withCredentials: true
+    
+    后端：服务器(Nginx)需要配置Access-Control-Allow-Credentials: true才能获得前端的cookie，但是此时 **Access-Control-Allow-Origin不能为'*'**，可以配置成前端的本地的开发服务器地址

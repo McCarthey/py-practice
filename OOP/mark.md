@@ -30,7 +30,7 @@
 	var a = new Foo()
 	Object.getPrototypeOf(a) === Foo.prototype; // true
 	Foo.prototype.constructor === Foo; // true
-	a.constructor === Foo; // true
+	a.constructor === Foo; // true 通过a内部的[[prototype]]委托给了Foo.prototype
 	```
 	这里的Foo.prototype对象是在调用new Foo时创建的，最后被关联到这个Foo.prototype对象上。即a内部的[[prototype]]关联的是Foo.prototype指向的那个对象
 	
