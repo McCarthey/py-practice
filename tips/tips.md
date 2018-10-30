@@ -881,3 +881,20 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     前端：ajax请求时，需要写明withCredentials: true
     
     后端：服务器(Nginx)需要配置Access-Control-Allow-Credentials: true才能获得前端的cookie，但是此时 **Access-Control-Allow-Origin不能为'*'**，可以配置成前端的本地的开发服务器地址
+    
+- 原生图片懒加载
+    ```javascript
+    // 监听底部轮播 图片懒加载
+    var userWrap = document.querySelector('.users')
+    var intersectionObserver = new IntersectionObserver(function(entries) {
+        if (entries[0].intersectionRatio <= 0) return;
+
+        console.log('Loaded swiper');
+        intersectionObserver.unobserve(userWrap);
+        var imgs = userWrap.querySelectorAll('img')
+        for (var i = 0; i < imgs.length; i++) {
+            var dataSrc = imgs[i].getAttribute('data-src')
+            imgs[i].setAttribute('src', dataSrc)
+        }
+    });
+    ```
