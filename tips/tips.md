@@ -882,6 +882,8 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     
     后端：服务器(Nginx)需要配置Access-Control-Allow-Credentials: true才能获得前端的cookie，但是此时 **Access-Control-Allow-Origin不能为'*'**，可以配置成前端的本地的开发服务器地址
     
+    这样设置后不知为何偶尔还是会带不上cookie，因此开发环境可以再设置一个proxy代理
+    
 - 原生图片懒加载
     ```javascript
     // 监听底部轮播 图片懒加载
