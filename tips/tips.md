@@ -921,3 +921,22 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
         }
     })
     ```
+    
+- 判断是否是iphoneX XR XS
+    ```javascript
+    /* iPhone X */
+    const isIPhoneX = /iphone/gi.test(window.navigator.userAgent) &&
+				window.devicePixelRatio && window.devicePixelRatio === 3 &&
+				window.screen.width === 375 && window.screen.height === 812
+    /* iPhone XS Max */
+    const isIPhoneXSMax = /iphone/gi.test(window.navigator.userAgent) &&
+                window.devicePixelRatio && window.devicePixelRatio === 3 &&
+                window.screen.width === 414 && window.screen.height === 896
+    /* iPhone XR */
+    const isIPhoneXR = /iphone/gi.test(window.navigator.userAgent) &&
+                window.devicePixelRatio && window.devicePixelRatio === 2 &&
+                window.screen.width === 414 && window.screen.height === 896
+                
+    console.log('是否是iphoneX XR XS', isIPhoneX || isIPhoneXSMax || isIPhoneXR)
+    return isIPhoneX || isIPhoneXSMax || isIPhoneXR
+    ```
