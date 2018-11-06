@@ -65,3 +65,42 @@ function getJQ() {
     .item(0);
   head.appendChild(scriptTag);
 }
+
+
+
+// ==UserScript==
+// @name         New Userscript
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       https://github.com/McCarthey
+// @match        https://www.weibo.com/u/1779876472?profile_ftype=1&is_ori=1
+// @require      https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.18.2/babel.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.16.0/polyfill.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js
+// @grant        none
+// ==/UserScript==
+
+(async function() {
+    'use strict';
+    const divs = $('div[tbinfo="ouid=1779876472]"')
+    console.log('divs', divs)
+    async function scrollToBottom(t1, t2) {
+        await setTimeout(() => {
+            $('html, body, .content').animate({ scrollTop: $(document).height() }, 300);
+        }, t1)
+        await setTimeout(() => {
+            $('html, body, .content').animate({ scrollTop: $(document).height() }, 300);
+        }, t2)
+    }
+    await scrollToBottom(1000, 6000)
+    await setTimeout(() => {
+        $('html, body, .content').animate({ scrollTop: 0 }, 300);
+        // 开始遍历
+    }, 12000)
+    // id=1779876472 用于测试
+    // 先滚动到底部 翻页后 再滚动到底部 -> 即翻页两次后 回到顶部 开始遍历：
+    // 遍历所有 [tbinfo="ouid=<ouid>"]的div
+    // 打开
+    // Your code here...
+})();
