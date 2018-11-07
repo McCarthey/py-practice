@@ -940,3 +940,26 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
     console.log('是否是iphoneX XR XS', isIPhoneX || isIPhoneXSMax || isIPhoneXR)
     return isIPhoneX || isIPhoneXSMax || isIPhoneXR
     ```
+    
+- 浏览器内核
+
+    - Trident(IE内核)：
+        
+        IE8的JavaScript引擎是Jscript，IE9开始用Chakra，这两个版本区别很大，Chakra无论是速度和标准化方面都很出色。Edge 的是新内核 EdgeHTML。
+        
+    - Gecko(Firefox内核)：
+    
+        Netscape6开始采用的内核，后来的Mozilla FireFox(火狐浏览器) 也采用了该内核，Gecko的特点是代码完全公开，其JavaScript引擎是SpiderMonkey。
+        
+    - Presto(Opera前内核) (已废弃)：
+    
+        Opera12.17及更早版本曾经采用的内核，现已停止开发并废弃。
+        
+    - Webkit(Safari内核,Chrome内核原型,开源):
+        
+        它是苹果公司自己的内核，也是苹果的Safari浏览器使用的内核。 Webkit引擎包含WebCore排版引擎及JavaScriptCore解析引擎，均是从KDE的KHTML及KJS引擎衍生而来。Google Chrome、360极速浏览器以及搜狗高速浏览器高速模式也使用Webkit作为内核(在脚本理解方面，Chrome使用自己研发的V8引擎)。WebKit 内核在手机上的应用也十分广泛，例如 Google 的手机 Gphone、 Apple 的iPhone， Nokia’s Series 60 browser 等所使用的 Browser 内核引擎，都是基于 WebKit。
+        
+        **很多人错误的把Webkit叫做Chrome内核，其实Chrome浏览器的内核一开始叫Chromium，后来又变成了Blink了，苹果的Safari才是从一开始就叫Webkit，后来又升级为Webkit2的。**
+    - 
+        
+        
