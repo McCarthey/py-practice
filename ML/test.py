@@ -14,3 +14,9 @@ print("Numpy Array:\n{}".format(eye))
 sparse_matrix = sparse.csr_matrix(eye)
 print("\nSciPy sparce CSR matrix:\n{}".format(sparse_matrix))
 
+# 创建稀疏数据的稠密表示太浪费内存，要直接创建其稀疏表示
+data = np.ones(4)
+row_indices = np.arange(4)
+col_indices = np.arange(4)
+eye_coo = sparse.coo_matrix((data, (row_indices, col_indices)))
+print("COO representation:\n{}".format(eye_coo))
