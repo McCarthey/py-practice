@@ -962,4 +962,6 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
         **很多人错误的把Webkit叫做Chrome内核，其实Chrome浏览器的内核一开始叫Chromium，后来又变成了Blink了，苹果的Safari才是从一开始就叫Webkit，后来又升级为Webkit2的。**
     - 
         
-        
+- ios clipboard.js兼容性处理
+
+    - 在指定点击的元素时，如果是button元素，ios默认是可以点击的，没有任何问题；如果是div,p等元素，ios默认他们是不具备点击行为的，因此需要在这些元素上添加onclick=""属性，让他们可以点击，否则无法完成点击复制的操作。或者指定css属性cursor: pointer;也可以达到相同的目的

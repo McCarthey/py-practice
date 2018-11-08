@@ -84,6 +84,9 @@ function getJQ() {
 (async function() {
     'use strict';
     const divs = $('div[tbinfo="ouid=1779876472]"')
+    // id=1779876472 用于测试
+    // 先滚动到底部 翻页后 再滚动到底部 -> 即翻页两次后 回到顶部 开始遍历：
+    // 遍历所有 [tbinfo="ouid=<ouid>"]的div
     console.log('divs', divs)
     async function scrollToBottom(t1, t2) {
         await setTimeout(() => {
@@ -98,9 +101,5 @@ function getJQ() {
         $('html, body, .content').animate({ scrollTop: 0 }, 300);
         // 开始遍历
     }, 12000)
-    // id=1779876472 用于测试
-    // 先滚动到底部 翻页后 再滚动到底部 -> 即翻页两次后 回到顶部 开始遍历：
-    // 遍历所有 [tbinfo="ouid=<ouid>"]的div
-    // 打开
     // Your code here...
 })();
