@@ -9,6 +9,7 @@ print("x:\n{}".format(x))
 eye = np.eye(4)
 print("Numpy Array:\n{}".format(eye))
 
+# sparse是scipy中最重要的方法，可以给出稀疏矩阵
 # 将Numpy数组转换为CSR格式的SciPy稀疏矩阵
 # 只保存非零元素
 sparse_matrix = sparse.csr_matrix(eye)
