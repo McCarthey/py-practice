@@ -7,8 +7,10 @@
     "license": "MIT",
     "dependencies": {
         "@tensorflow/tfjs": "^0.12.7",
+        "cheerio": "^1.0.0-rc.2",
         "express": "^4.16.4",
         "iconv-lite": "^0.4.23",
+        "request": "^2.88.0",
         "superagent": "^4.0.0-beta.5",
         "webpack": "^4.10.2"
     },
