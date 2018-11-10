@@ -27,7 +27,7 @@ function startRequest(url) {
 						obj.country = $(tdEle).text()
 					} 
 					if (tdx === 3) {
-						obj.num = $(tdEle).text()
+						obj.num = `+${$(tdEle).text()}`
 					}
 				})
 				if (!obj.country.trim()) return
