@@ -45,3 +45,31 @@ app.listen('5000')
  * - 一个任务 task 可以放入 macrotask queue 也可以放入 microtask queue 中
  * - 当一个 task 被放入队列 queue(macro或micro) 那这个 task 就可以被立即执行了
  */
+
+ 
+ /**
+  * eventloop是一个队列（先进先出）
+  * 用一个持续运行的while循环实现，循环的每一轮称为一个tick，对每个tick而言，如果在队列中有等待事件，那么就会从队列中摘下一个事件并执行，这些事件就是回调函数
+  * 简化代码如下：
+  */
+var eventLoop = []
+var event
+
+while (true) {
+    if (eventLoop.length > 0) {
+        event = eventLoop.shift()
+        
+        try {
+            event()
+        }
+        catch (err) {
+            handleError(err)
+        }
+    }
+}
+
+/**
+ * 注意setTimeout(...) 并没有把你的回调函数挂在事件循环队列中， 
+ * 他所做的是设定一个定时器， 当定时器到时后， 环境会把你的回调函数放在事件队列中， 这样， 在未来某个时刻的tick会摘下并执行这个回调
+ */
+ 
