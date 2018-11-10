@@ -30,6 +30,7 @@ function startRequest(url) {
 						obj.num = $(tdEle).text()
 					}
 				})
+				if (!obj.country.trim()) return
 				result.push(obj)
 			})
 			const jsonData = JSON.stringify(result)
