@@ -965,3 +965,18 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
 - ios clipboard.js兼容性处理
 
     - 在指定点击的元素时，如果是button元素，ios默认是可以点击的，没有任何问题；如果是div,p等元素，ios默认他们是不具备点击行为的，因此需要在这些元素上添加onclick=""属性，让他们可以点击，否则无法完成点击复制的操作。或者指定css属性cursor: pointer;也可以达到相同的目的
+    
+- v-cloak指令
+
+    这个指令保持在元素上直到关联实例结束编译。如可以设置css:
+    ```css
+    [v-cloak] {
+        display: none;
+    }
+    ```
+    这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕，也就是解决{{ 插值 }}闪烁的问题
+    ```html
+    <div v-cloak>
+        {{ message }}
+    </div>
+    ```

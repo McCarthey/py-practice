@@ -4,3 +4,5 @@
 /Flask-practice/flask-demo/11env/
 /Flask-practice/flaskr/flaskrenv/
 *.sqlite
+/AwesomeProjectNative/android/
+/AwesomeProjectNative/ios/
