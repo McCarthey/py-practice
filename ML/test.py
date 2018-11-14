@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import sparse 
+import matplotlib.pyplot as plt
 
 # numpy核心功能是ndarray类，即多维数组。数组的所有元素须为同一类型
 x = np.array([[1, 2, 3],[4, 5, 6]])
@@ -21,3 +22,8 @@ row_indices = np.arange(4)
 col_indices = np.arange(4)
 eye_coo = sparse.coo_matrix((data, (row_indices, col_indices)))
 print("COO representation:\n{}".format(eye_coo))
+
+# 在-10和10之间生成一个数列，共1000个数
+x = np.linspace(-10, 10, 100)
+y = np.sin(x)
+plt.plot(x, y, marker="x")
