@@ -980,3 +980,14 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
         {{ message }}
     </div>
     ```
+- shell 相关
+
+    ```shell
+    mode=1
+    if [ $1 == $mode ]
+    then
+        gulp --p luxy build && cp ./dist/luxy/index.html /d/onluxy/template/dev_spa/home/index.html
+    else
+        gulp --p luxy build && cp ./dist/luxy/index.html /d/onluxy/template/spa/home/index.html
+    fi
+    ```
