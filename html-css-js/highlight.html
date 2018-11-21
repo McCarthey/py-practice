@@ -1,0 +1,50 @@
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.8.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function check() {
+        var key = $("#k").val();
+        if (key == '') {
+            $("#dvPop").hide();
+        } else {
+            var rx = new RegExp(key, "g");
+            var t = $('#content');
+            if (rx.test(t.val())) {
+                var pop = $('#dvPop');
+                if (!pop.attr('init')) pop.css({ left: t.offset().left, top: t.offset().top, width: t.width(), height: t.height() });
+                pop.find('div:last').html(t.val().replace(rx, '<span class="kw">' + key + '</span>')).end().show();
+            }
+        }
+    }
+
+    function dohide() {
+        $("#dvPop").hide();
+    }
+</script>
+<style type="text/css">
+    .kw {
+        background: #f00;
+        color: #fff;
+    }
+
+    #dvPop {
+        position: absolute;
+        display: none;
+        border: solid 0px #000;
+        background: #fff;
+        overflow: auto;
+        font-size: 13px;
+    }
+
+    #dvPop .close {
+        text-align: right;
+        color: blue
+    }
+</style>
+<div id="dvPop">
+    <div></div>
+</div>
+<textarea id="content" cols="50" rows="5">
+ CSDN（www.csdn.net）创立于1999年，是中国最大的开发者服务平台，也是全球最大的中文IT技术社区。拥有5000万注册用户以及60万注册企业及合作伙伴。CSDN定位于企业和开发者的基础需求，拥有知识服务和开发服务两大服务体系，帮助企业、团队及个人实现产品与技术的突破与提升。依托强大的技术团队、领袖级的专家资源及丰富的行业经验，在提升效率、节约成本、加强协作等方面成功服务国内外千余家知名企业。
+ </textarea><br />
+<input name="k" id="k" value="" />
+<input type="button" value="查找" onclick="check()" />
+<input type="button" value="重置" onclick="dohide()" />
