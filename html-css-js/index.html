@@ -54,6 +54,10 @@
     测试meta标签的重定向
     <span id="countDown">5</span>s后到百度
     <p>这是一个emoji：&#x1F49C;</p>
+    <p>test</p>
+    <p>test 新的</p>
+    <input type="text">
+    <textarea cols="30" rows="10"></textarea>
     <button class="btn-close">close WebSocket</button>
     <button class="init">send init info</button>
     <a href="https://www.google.com" onclick="test()">测试</a>
@@ -62,12 +66,15 @@
     <script src="https://cdn.bootcss.com/lodash.js/4.17.10/lodash.min.js"></script>
     <script src="../html-css-js/index.js"></script>
     <script src="https://cdn.bootcss.com/vanilla-lazyload/10.6.0/lazyload.min.js"></script>
+    <script src="./highlight.js"></script>
     <script>
         var myLazyLoad = new LazyLoad({ elements_selector: ".lazy-img" });
 
         function test() {
             console.log('clicked')
         }
+        
+        window.Highlighter = Highlighter
     </script>
     <script>
         let socket = new WebSocket('ws://54.187.101.185:8050/ws');
