@@ -22,7 +22,7 @@ if (element.scrollHeight - element.scrollTop === element.clientHeight) {
 -   善用 Array.prototype.every 和 filter 会节省很多代码 - vue 中 computed 属性中默认只设置了 getter 函数，我们还可以添加 setter 函数
 
 -   以下样式可以在 webkit 浏览器中模拟 macOS 中的滚动条样式:
-
+-   vuex中的getters相当于其state的计算属性，常用于派生一些状态
 ```css
 ::-webkit-scrollbar {
     width: 8px;
@@ -980,3 +980,7 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
         {{ message }}
     </div>
     ```
+
+- indexedDB
+
+    localforage库虽然好用，但是还需优化，比如可以维护一个数组，用于存放变化的键，同步到indexedDB后，数组清空
