@@ -984,3 +984,20 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
 - indexedDB
 
     localforage库虽然好用，但是还需优化，比如可以维护一个数组，用于存放变化的键，同步到indexedDB后，数组清空
+    
+- 滚动问题
+
+    需求：一个可以滚动的<div>标签，里面有很多个子元素标签，需要滚动定位到特定的标签元素
+    
+    解决：
+    ```javascript
+    const scrollDiv = document.querySelector('.scrollDiv')
+    const targetDiv = document.querySelector('.target')
+    scrollDiv.scrollTo(0, target.offsetTop)
+    ```
+    配合css平滑滚动效果更好
+    ```css
+    .scrollDiv {
+        scroll-behavior: smooth;
+    }
+    ```
