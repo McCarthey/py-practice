@@ -12,6 +12,7 @@
         "express": "^4.16.4",
         "global": "^4.3.2",
         "iconv-lite": "^0.4.23",
+        "node-emoji": "^1.8.1",
         "request": "^2.88.0",
         "superagent": "^4.0.0-beta.5",
         "vue": "^2.5.17",
