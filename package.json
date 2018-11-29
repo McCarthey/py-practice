@@ -8,6 +8,7 @@
     "dependencies": {
         "@tensorflow/tfjs": "^0.12.7",
         "cheerio": "^1.0.0-rc.2",
+        "emoji-regex": "^7.0.1",
         "expo-cli": "^2.3.8",
         "express": "^4.16.4",
         "global": "^4.3.2",
