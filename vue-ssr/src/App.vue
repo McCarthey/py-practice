@@ -1,4 +1,4 @@
 <template>
-	<div>App.vue</div>
+	<div id="app">App.vue</div>
 </template>
 	
