@@ -1001,3 +1001,5 @@ getElementsByTagName()方法会返回一个HTMLCollections对象，该对象与N
         scroll-behavior: smooth;
     }
     ```
+    
+- Object.entries()方法返回一个给定对象自身可枚举属性的键值对数组，其排列与使用 for...in 循环遍历该对象时返回的顺序一致（区别在于 for-in 循环也枚举原型链中的属性）。
