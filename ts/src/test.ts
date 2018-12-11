@@ -41,3 +41,8 @@ console.log(c)
 let colorName: string = Color[4]
 
 console.log(colorName)
+
+// Any
+let notSure: any = 4
+notSure = "maybe a string instead"
+notSure = false
