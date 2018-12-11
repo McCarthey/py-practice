@@ -33,7 +33,11 @@ console.log(x[1].toString()) // ok, 'string'和'number'都有toString方法
 
 // 枚举 enum
 // enum 类型是对 JavaScript 标准数据类型的一个补充。像c#一样，使用枚举类型可以为一组数值赋予友好的名字。
-// 默认情况下，从0开始为元素编号。也可以手动指定成员的数值。可以改成从 1 开始编号
-enum Color { Red=1, Green, Blue }
-let c: Color = Color.Green
+// 默认情况下，从0开始为元素编号。也可以手动指定成员的数值。可以改成从 1 开始编号。也可以分别赋值
+enum Color { Red = 1, Green = 2, Blue = 4 }
+let c: Color = Color.Blue
 console.log(c)
+// 枚举的好处是你可以由枚举的值得到它的名字。
+let colorName: string = Color[4]
+
+console.log(colorName)
