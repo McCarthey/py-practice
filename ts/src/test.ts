@@ -25,3 +25,7 @@ x = ['hello', 10];
 // x = [10, 'hello']; // Error
 console.log(x[0].substr(1))
 // console.log(x[1].substr(1)) // Error,'number' does not have 'substr'
+
+x[2] = 'world'; // ok, 字符串可以赋值给(string | number)类型
+console.log(x[1].toString()) // ok, 'string'和'number'都有toString方法
+// x[6] = true; // Error, 布尔不是(string | number)类型 
