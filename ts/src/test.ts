@@ -22,4 +22,6 @@ let anotherList: Array<number> = [1, 2, 3];
 // 元组：各元素的类型不必相同
 let x: [string, number];
 x = ['hello', 10];
-x = [10, 'hello']; // Error
+// x = [10, 'hello']; // Error
+console.log(x[0].substr(1))
+// console.log(x[1].substr(1)) // Error,'number' does not have 'substr'
