@@ -55,3 +55,22 @@ anyList[1] = 100
 function warnUser(): void {
   console.log('This is my warning message');
 }
+
+let unusable: void = undefined // 声明一个void类型的变量没有什么作用，因为你只能给它赋值undefined和null
+
+// Null 和 Undefined
+let u: undefined = undefined
+let n : null = null // 默认情况下null和undefined是所有类型的子类型。
+
+// Never 表示的是你那些永不存在的值的类型。类型是任何类型的子类型。
+function error(message: string): never{
+  throw new Error(message)
+}
+
+function fail() {
+  return error("Something failed")
+}
+
+function infiniteLoop(): never {
+  while(true) {}
+}
