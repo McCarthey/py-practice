@@ -93,4 +93,17 @@ let strLength: number = (<string>someValue).length // 尖括号断言
 let someValue2: any = 'this is a string'
 let strLength2: number = (someValue2 as string).length // as 语法
 
+/**================================================== */
+/** 变量声明 
+ * 使用 let 和 const 代替 var
+*/
+
+let o = {
+  a: "foo",
+  b: 12,
+  c: "bar"
+};
+let { a: newName1, b: newName2 } = o
+console.log(o.a, o.b)
+
 
