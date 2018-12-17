@@ -33,3 +33,21 @@ function createSquare(config: SquareConfig): {color: string; area: number} {
 
 let newSquare = createSquare({color: 'black'})
 console.log(newSquare)
+
+/**
+ * 只读属性：一些对象属性只能在对象刚刚创建的时候修改其值。你可以在属性名前用 readonly 来指定只读属性
+ */
+interface Point {
+    readonly x: number
+    readonly y: number
+}
+
+let p1: Point = {x: 10, y: 20}
+// p1.x = 5 // error!
+
+let arr: number[] = [1, 2, 3, 4]
+let ro: ReadonlyArray<number> = arr
+// ro[0] = 12 // error!
+// ro.push(5) // error!
+// ro.length = 100 // error!
+// a = ro // error!
