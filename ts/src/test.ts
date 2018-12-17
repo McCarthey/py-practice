@@ -146,6 +146,12 @@ function fun({a = '', b = 0, c = 'test', d = 1}: C): void {
     console.log(a, b, c, d)
 }
 fun(obj)
+
 /**
- *
+ * 展开
  */
+let bar = [1, 2]
+let baz = [3, 4]
+let bothPlus = [0, ...bar, ...baz]
+
+console.log(bothPlus)
