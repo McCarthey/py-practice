@@ -1045,3 +1045,40 @@ var allElements = document.getElementsByTagName('*')
     
     dedupe([1,1,2,3]) // [1,2,3]
     ```
+- Set的遍历操作
+    
+    需要特别指出的是，Set的遍历顺序就是插入顺序。这个特性有时非常有用，比如使用 Set 保存一个回调函数列表，调用时就能保证按照添加顺序调用。
+    
+    由于Set结构没有键名，只有键值（或者说键名和键值是用一个值），所以keys方法和values方法的行为完全一致
+    ```javascript
+    let set = new Set(['red','green','blue'])
+    for(let i of set.keys()) { // 返回键名的遍历器
+        console.log(i)
+    }   
+    // red
+    // green
+    // blue
+    for(let i of set.values()) { // 返回键值的遍历器
+        console.log(i)
+    }
+    // red
+    // green
+    // blue
+    for(let i of set.entries()) { // 返回键值对的遍历器
+        console.log(i)
+    }
+    // ["red", "red"]
+    // ["green", "green"]
+    // ["blue", "blue"]
+    ```
+    Set 结构默认可遍历，它的默认遍历器生成函数就是它的 values 方法，因此可以直接for...of遍历set
+    ```javascript
+    Set.prototype[Symbol.iterator] === Set.prototype.values // true
+    
+    for(let i of set) {
+        console.log(i)
+    }
+    // red
+    // green
+    // blue
+    ```
