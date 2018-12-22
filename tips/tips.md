@@ -1031,3 +1031,17 @@ var allElements = document.getElementsByTagName('*')
     s.add({})
     s.size // 2
     ```
+    Array.from方法可以将Set结构转为数组
+    ```javascript
+    const items = new Set([1,2,3,4,5])
+    let list = Array.from(items)
+    console.log(list) // [1, 2, 3, 4, 5]
+    ```
+    因此，数组去重的方法还可以这样写：
+    ```javascript
+    function dedupe(array) {
+        return Array.from(new Set(array))
+    }
+    
+    dedupe([1,1,2,3]) // [1,2,3]
+    ```
