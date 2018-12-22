@@ -49,4 +49,4 @@ function divideBy2(decNumber) {
 	console.log(binaryString)
 }
 
-divideBy2(10)
+divideBy2(process.argv[2])
