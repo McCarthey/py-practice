@@ -3543,6 +3543,10 @@ puppeteer-core@^1.9.0:
     rimraf "^2.6.1"
     ws "^5.1.1"
 
+push.js@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/push.js/-/push.js-1.0.9.tgz#926e1612a89dca741ebc93bed8aa305bd9bbcfc6"
+
 qrcode-terminal@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/qrcode-terminal/-/qrcode-terminal-0.11.0.tgz#ffc6c28a2fc0bfb47052b47e23f4f446a5fbdb9e"

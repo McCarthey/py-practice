@@ -67,6 +67,7 @@
     <script src="../html-css-js/index.js"></script>
     <script src="https://cdn.bootcss.com/vanilla-lazyload/10.6.0/lazyload.min.js"></script>
     <script src="./highlight.js"></script>
+    <script src="./sw.js"></script>
     <script>
         var myLazyLoad = new LazyLoad({ elements_selector: ".lazy-img" });
 
@@ -79,15 +80,19 @@
     <script>
         let socket = new WebSocket('ws://54.187.101.185:8050/ws');
 
-        if (window.Notification && Notification.permission !== "denied") {
-            Notification.requestPermission().then(() => {
-                const n = new Notification('通知标题', { body: '这里是通知内容！点一下玩一年' });
-                n.onclick = e => {
-                    // Create WebSocket connection.
-                    initServer()
-                    // socket = new WebSocket('ws://10.0.0.14:8777');
-                }
+        if('serviceWorker' in navigator && 'PushManager' in window) {
+            console.log('Service Worker and Push is supported')
+            navigator.serviceWorker.register('sw.js').then((swReg) => {
+                console.log('Service Worker is registered'. swReg)
+                
+                swRegistration = swReg
             })
+            .catch((error) => {
+                console.log('Service Worker Error', error)
+            })
+        } else {
+            console.warn('Push messaging is not supported')
+            pushButton.textContent = 'Push Not Supported'
         }
 
         // Create WebSocket connection.

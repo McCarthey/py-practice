@@ -1,0 +1,30 @@
+<html>
+
+<head>notify demo</head>
+
+<body>
+    this is a test
+</body>
+<script>
+    function askPermission() {
+        return new Promise(function(resolve, reject) {
+            var permissionResult = Notification.requestPermission(function(result) {
+                resolve(result)
+            })
+
+            if (permissionResult) {
+                permissionResult.then(resolve.reject)
+            }
+        }).then(function(permissionResult) {
+            if (permissionResult !== 'granted') {
+                throw new Error('We weren\'t granted permission.')
+            }
+        })
+    }
+
+    registerServiceWorker('./sw.js').then(function(registration) {
+        return Promise.all([registration, askPermission()])
+    })
+</script>
+
+</html>

@@ -50,4 +50,4 @@ let ro: ReadonlyArray<number> = arr
 // ro[0] = 12 // error!
 // ro.push(5) // error!
 // ro.length = 100 // error!
-// a = ro // error!
+// a = ro // error!  c 
