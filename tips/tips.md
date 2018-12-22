@@ -1093,3 +1093,67 @@ var allElements = document.getElementsByTagName('*')
     ws.add(Symbol()) // Uncaught TypeError: Invalid value used in weak set
     ```
     WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用。WeakSet 的成员是不适合引用的，因为它会随时消失。另外，由于 WeakSet 内部有多少个成员，取决于垃圾回收机制有没有运行，运行前后很可能成员个数是不一样的，而垃圾回收机制何时运行是不可预测的，因此 ES6 规定 WeakSet 不可遍历。WeakMap同理。
+    
+    
+- Map
+
+    为了解决对象中的键只能是字符串的问题，ES6引入了Map数据结构。类似于对象，也是键值对的集合，但是键的范围不限于字符串。
+    ```javascript
+    const m = new Map();
+    const o = {p: 'Hello World'};
+
+    m.set(o, 'content')
+    m.get(o) // "content"
+
+    m.has(o) // true
+    m.delete(o) // true
+    m.has(o) // false
+    ```
+    使用 Map 结构的set方法，将对象o当作m的一个键，然后又用get方法读取这个键，接着用delete删除了这个键。
+    
+    Map 构造函数接受数组作为参数，该数组的成员是一个个表示键值对的数组：
+    ```javascript
+    const map = new Map([
+        ['name', '张三'],
+        ['title', 'Author']
+    ])
+    
+    map.size // 2
+    map.has('name') // true
+    map.get('name') // "张三"
+    ```
+    实际上执行的是下面的算法：
+    ```javascript
+    const items = [
+        ['name', '张三'],
+        ['title', 'Author']
+    ]
+    
+    const map = new Map()
+    items.forEach(
+        ([key, value]) => map.set(key, value)
+    )
+    ```
+    注意，只有对同一个对象的引用，Map 结构才将其视为同一个键：
+    ```javascript
+    const map = new Map()
+    
+    map.set(['a'], 555)
+    map.get(['a']) // undefined
+    ```
+    上面的set和get方法，表面是针对同一个键，但实际上这是两个值，内存地址是不一样的，因此get方法无法读取该键，返回undefined。
+    
+    同理，同样的值的两个实例，在 Map 结构中被视为两个键。
+    ```javascript
+    const map = new Map()
+    
+    const k1 = ['a']
+    const k2 = ['a']
+    
+    map.set(k1, 111)
+    map.set(k2, 222)
+    
+    map.get(k1) // 111
+    map.get(k2) // 222
+    ```
+    因此，Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就是为两个键。
