@@ -1022,3 +1022,12 @@ var allElements = document.getElementsByTagName('*')
     let s = new Set([1, '5', 5, NaN, NaN, 'test'])
     console.log(s) // Set(5) {1, "5", 5, NaN, "test"}
     ```
+    另外，两个对象总是不相等的
+    ```javascript
+    let s = new Set()
+    s.add({})
+    s.size // 1
+    
+    s.add({})
+    s.size // 2
+    ```
