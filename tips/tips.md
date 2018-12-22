@@ -1082,3 +1082,14 @@ var allElements = document.getElementsByTagName('*')
     // green
     // blue
     ```
+    
+- WeakSet
+
+    WeakSet 结构与 Set 类似，也是不重复的值的集合。但是，它与 Set 有两个区别。
+    首先，WeakSet 的成员只能是对象，而不能是其他类型的值。
+    ```javascript
+    const ws = new WeakSet()
+    ws.add(1) // Uncaught TypeError: Invalid value used in weak set
+    ws.add(Symbol()) // Uncaught TypeError: Invalid value used in weak set
+    ```
+    WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用。WeakSet 的成员是不适合引用的，因为它会随时消失。另外，由于 WeakSet 内部有多少个成员，取决于垃圾回收机制有没有运行，运行前后很可能成员个数是不一样的，而垃圾回收机制何时运行是不可预测的，因此 ES6 规定 WeakSet 不可遍历。WeakMap同理。
