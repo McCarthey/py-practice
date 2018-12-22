@@ -33,7 +33,6 @@ class Stack {
 }
 
 function divideBy2(decNumber) {
-	
 	const remStack = new Stack([])
 	let rem
 	let	binaryString = ''
