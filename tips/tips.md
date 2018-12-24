@@ -1157,3 +1157,27 @@ var allElements = document.getElementsByTagName('*')
     map.get(k2) // 222
     ```
     因此，Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就是为两个键。
+    
+- proxy
+    
+    ```javascript
+    let obj = {
+        a: 1
+    }
+    
+    let proxyObj = new Proxy(obj, {
+        get: function(target, prop) {
+            return prop in target ? target[prop] : 0
+        },
+        set: function(target, prop, value) {
+            target[prop] = 888
+        }
+    })
+    
+    console.log(proxyObj.a) // 1
+    console.log(proxyObj.b) // 0
+    
+    proxyObj.a = 666
+    console.log(proxyObj.a) // 888
+    ```
+    设置handler拦截重写set, get方法
