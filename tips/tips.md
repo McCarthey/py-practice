@@ -1185,5 +1185,17 @@ var allElements = document.getElementsByTagName('*')
 - 离线 web push
     
     注册sw -> 询问通知权限 -> （同意后）获取订阅信息 -> 将订阅信息发送给服务器 -> 等待推送 
+    
+    - 获取订阅信息：
+    
+        浏览器向push service（google/firefox 或者其他提供了push service服务的服务商）请求订阅信息，生成的订阅信息包括 endpoint 、keys
+        
+    - 将订阅信息发送给服务器：
+    
+        将上一步的订阅信息（endpoint 、keys）发送个服务器，服务器将其与用户关联
+    
+    - service worker 中需要增加监听push的回调，通常是显示通知
+    
+    **注意：** 服务器push消息时一定要添加 ttl 参数，否则push service不会保存该信息，即浏览器关闭时是无法收到 ttl = 0 的消息通知的！
 
     
