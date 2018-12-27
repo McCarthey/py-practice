@@ -1181,3 +1181,9 @@ var allElements = document.getElementsByTagName('*')
     console.log(proxyObj.a) // 888
     ```
     设置handler拦截重写set, get方法
+    
+- 离线 web push
+    
+    注册sw -> 询问通知权限 -> （同意后）获取订阅信息 -> 将订阅信息发送给服务器 -> 等待推送 
+
+    
