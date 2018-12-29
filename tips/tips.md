@@ -1198,4 +1198,6 @@ var allElements = document.getElementsByTagName('*')
     
     **注意：** 服务器push消息时一定要添加 ttl 参数，否则push service不会保存该信息，即浏览器关闭时是无法收到 ttl = 0 的消息通知的！
 
-    
+- 简单请求与非简单请求
+
+    [参见阮一峰老师的CORS博文](http://www.ruanyifeng.com/blog/2016/04/cors.html)
