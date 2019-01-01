@@ -31,7 +31,7 @@ function Queue() {
  * ES6 class
  */
 class Queue {
-	constructor(items){
+	constructor(items) {
 		this.items = items
 	}
 	enqueue(element) {
