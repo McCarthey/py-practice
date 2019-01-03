@@ -1201,3 +1201,15 @@ var allElements = document.getElementsByTagName('*')
 - 简单请求与非简单请求
 
     [参见阮一峰老师的CORS博文](http://www.ruanyifeng.com/blog/2016/04/cors.html)
+
+
+- 页面可见性API
+
+    标签栏的显示隐藏会触发 visibilitychange 事件
+    ```javascript
+    document.addEventListener('visibilitychange', () => { // 监听document的显隐，控制标题
+        if (!document.hidden) {
+            // ...
+        }
+    })
+    ```
