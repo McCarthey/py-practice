@@ -1,5 +1,5 @@
 # vim practice
-H - 
-J -
-K -
-L -
+H - left 
+J - down
+K - up
+L - right
