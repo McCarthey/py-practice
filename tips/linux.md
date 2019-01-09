@@ -8,3 +8,5 @@
 - wget
 
 - tail
+
+- solarized改变终端和vim配色
