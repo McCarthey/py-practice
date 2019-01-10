@@ -2,4 +2,5 @@
 H - left 
 J - down
 K - up
-L - right
+L - righet
+enter - next line first no empty char
