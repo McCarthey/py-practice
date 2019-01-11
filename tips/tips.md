@@ -1213,3 +1213,9 @@ var allElements = document.getElementsByTagName('*')
         }
     })
     ```
+    
+- 判断数值是否有穷
+
+    - 全局 isFinite() 函数
+    
+    - Number.isFinite() 方法
