@@ -1217,5 +1217,9 @@ var allElements = document.getElementsByTagName('*')
 - 判断数值是否有穷
 
     - 全局 isFinite() 函数
+        
+        全局 isFinite() 函数用来判断被传入的参数值是否为一个有限数值（finite number）。在必要情况下，参数会首先转为一个数值。
     
     - Number.isFinite() 方法
+
+        Number.isFinite() 方法用来检测传入的参数是否是一个有穷数（finite number）。和全局的 isFinite() 函数相比，这个方法不会强制将一个非数值的参数转换成数值，这就意味着，只有数值类型的值，且是有穷的（finite），才返回 true。
