@@ -32,4 +32,4 @@ lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s
 [core]
 autocrlf = true
 [push]
-default = simple
+dfault = simple
