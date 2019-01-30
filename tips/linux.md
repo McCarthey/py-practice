@@ -13,6 +13,10 @@
 
 - git config --list
 
+- git config --global user.name "McCarthey"
+
+- git config --global user.email mccarthey123@outlook.com
+
 - [alias]
 st = status -sb
 co = checkout
