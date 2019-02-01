@@ -11,6 +11,11 @@
 
 - solarized改变终端和vim配色
 
+- ssh-keygen -t rsa -C "mccarthey123@outlook.com"
+
+- clip < ~/.ssh/id_rsa.pub # copy public key to clipboard
+
+- ssh -T git@github.com # test connecting to github 
 - git config --list
 
 - git config --global user.name "McCarthey"
