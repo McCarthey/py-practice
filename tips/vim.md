@@ -11,3 +11,5 @@ e - next word last char
 G - last line this document
 x,X - del the following letter
 {n}x - del next {n} following letters
+dd - del current line
+{n}dd - del next {n} lines
