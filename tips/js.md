@@ -1,4 +1,4 @@
-### 补充一些js基础
+## 补充一些js基础
 #### 自己实现一个new
 ```javascript
 function create() {
@@ -12,5 +12,18 @@ function create() {
     let result = Con.apply(obj, arguments)
     // 确保new出来的是个对象
     return typeof result === 'object' ? result : obj
+}
+```
+#### 自己实现call
+```javascript
+Function.prototype.myCall = function(context) {
+    var context = context || window
+    // 给context添加一个属性
+    context.fn = this
+    // 将context后面的参数取出来
+    var args = [...arguments].slice(1)
+    var result = context.fn(...args)
+    delete context.fn
+    return result
 }
 ```
