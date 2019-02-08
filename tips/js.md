@@ -1,5 +1,11 @@
 ## 补充一些js基础
 #### 原型
+每个函数都有prototype属性（除了let fun = Function.prototype.bind()以外）,该属性的值是一个对象，只有一个constructor属性，对应着构造函数
+```javascript
+Foo.prototype.constructor === Foo // true
+```
+
+
 ```javascript
 function Foo() {
     console.log('Foo')
@@ -16,7 +22,7 @@ Foo.prototype.valueOf = function() {
     console.log('Cunstom valueOf method')
 }
 
-foo.valueOf() // 'Cunstom valueOf method'
+foo.valueOf() // 'Cunstom valueOf method' 屏蔽了Object上的原生valueOf方法
 ```
 #### 自己实现一个new
 ```javascript
