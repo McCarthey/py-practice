@@ -1,4 +1,23 @@
 ## 补充一些js基础
+#### 原型
+```javascript
+function Foo() {
+    console.log('Foo')
+}
+let foo = new Foo()
+// 获取foo对象的原型
+Object.getPrototypeOf(foo) === Foo.prototype // true
+// 判断一个对象是否是另一个对象的原型
+Foo.prototype.isPrototypeOf(foo) // true
+// 因为Foo没有这个方法isPrototypeOf 因此Foo需要沿着原型继续查找，因此相当于
+Foo.prototype.__proto__.isPrototypeOf(foo) // true
+// 通过在构造函数的原型上添加同名属性改写原生方法
+Foo.prototype.valueOf = function() {
+    console.log('Cunstom valueOf method')
+}
+
+foo.valueOf() // 'Cunstom valueOf method'
+```
 #### 自己实现一个new
 ```javascript
 function create() {
