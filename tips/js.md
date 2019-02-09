@@ -4,6 +4,7 @@
 ```javascript
 Foo.prototype.constructor === Foo // true
 ```
+每个对象都有__proto__属性，指向了创建该对象的构造函数的原型。其实指向的是内部属性[[prototype]]。对象可以通过__proto__来寻找不属于该对象的属性，__proto__将对象链接成了原型链。
 
 
 ```javascript
