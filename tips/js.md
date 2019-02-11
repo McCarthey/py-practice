@@ -84,3 +84,41 @@ JS引擎中对变量的存储主要有两种，**堆内存**和**栈内存**。
 **堆内存**主要负责对象Object变量类型的存储。因此“const定义的常量无法修改”这种说法对于const a = {}来说，仅仅是该对象的指针不变（即堆内存指向不改变）,但堆内存中的数据本身的大小或属性是可变的。因此 a.name = 'test' 等属性赋值操作依然生效。
 
 因此，使用let、const 二次定义变量时的报错也可以解释了————即使用let、const时都要先遍历栈内存，如果有重名变量则返回错误。  
+
+#### 定时器的第三个参数
+经典面试题，循环中使用闭包解决 var 定义函数的问题
+```javascript
+for ( var i=1; i<=5; i++) {
+	setTimeout( function timer() {
+		console.log( i );
+	}, i*1000 );
+}
+```
+解决办法有三：闭包、setTimeout的第三个参数、let
+```javascript
+// 闭包
+for ( var i=1; i<=5; i++) {
+	(function(j) {
+        setTimeout(function(){
+            console.log(j)
+        }, j* 1000)
+    }(i))
+}
+```
+```javascript
+// setTimeout的第三个参数（兼容IE9以上）
+// setTimeout第三个以后的参数将作为参数传递给function
+for ( var i=1; i<=5; i++) {
+	setTimeout(function(j){
+        console.log(j)
+    }, i* 1000, i)
+}
+```
+```javascript
+// let 创建块级作用域
+for ( let i=1; i<=5; i++) {
+	setTimeout( function timer() {
+		console.log( i );
+	}, i*1000 );
+}
+```
