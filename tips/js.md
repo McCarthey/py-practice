@@ -75,3 +75,12 @@ Function.prototype.myCall = function(context) {
     return result
 }
 ```
+
+#### 堆内存与栈内存
+JS引擎中对变量的存储主要有两种，**堆内存**和**栈内存**。
+
+**栈内存**主要用于存储各种**基本类型**的变量，Boolean、Number、String、Undefined、Null以及对象变量的指针。
+
+**堆内存**主要负责对象Object变量类型的存储。因此“const定义的常量无法修改”这种说法对于const a = {}来说，仅仅是该对象的指针不变（即堆内存指向不改变）,但堆内存中的数据本身的大小或属性是可变的。因此 a.name = 'test' 等属性赋值操作依然生效。
+
+因此，使用let、const 二次定义变量时的报错也可以解释了————即使用let、const时都要先遍历栈内存，如果有重名变量则返回错误。  
