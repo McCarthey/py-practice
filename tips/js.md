@@ -40,6 +40,28 @@ function create() {
     return typeof result === 'object' ? result : obj
 }
 ```
+#### 自己实现一个instanceof
+通过判断对象的原型链中是不是能找到类型的prototype
+```javascript
+function myInstanceof(left, right) {
+    // 获取右侧类型的prototype，如Number.prototype, Bar.prototype
+    let prototype = right.prototype
+    // 获取左侧实例对象的内部[[prototype]]属性
+    left = left.__proto__
+    // 沿着原型链逐级查找，直到找到或者[[prototype]]为null
+    while(true) {
+        if (left === null) {
+            return false
+        }
+        if (left === prototype) {
+            return true
+        }
+        left = left.__proto__ // 继续查找
+    }
+}
+```
+
+
 #### 自己实现call
 ```javascript
 Function.prototype.myCall = function(context) {
