@@ -76,6 +76,25 @@ Function.prototype.myCall = function(context) {
 }
 ```
 
+#### 防抖实现
+定义：多次触发事件后，事件处理函数只执行一次，并且是在触发操作结束时执行。
+
+原理：对处理函数进行延时操作，若设定的延时到来之前，再次触发事件，则清除上一次的延时操作定时器，重新定时。
+```javascript
+// 示例：监听滚动事件
+let timer
+window.onscroll = function() {
+    if(timer) {
+        clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+        let scrollTop = document.body.scrollTop || document.documentElement.scrollTop
+        console.log(`滚动位置：${scrollTop}`)
+        timer = null
+    }, 500)
+}
+```
+
 #### 堆内存与栈内存
 JS引擎中对变量的存储主要有两种，**堆内存**和**栈内存**。
 
