@@ -94,6 +94,30 @@ window.onscroll = function() {
     }, 500)
 }
 ```
+抽象函数：
+```javascript
+const debounce = (func, delay) => {
+    let timer
+    return function() {
+        let _this = this
+        if(timer) {
+            clearTimeout(timer)
+        }
+        timer = setTimeout(() => {
+            func.apply(_this, arguments)
+            timer = null
+        }, delay)
+    }
+}
+```
+使用
+```javascript
+function onScroll() {
+	let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+    console.log('滚动条位置：' + scrollTop);
+}
+window.onscroll = debounce(onScroll, 500)
+```
 
 #### 堆内存与栈内存
 JS引擎中对变量的存储主要有两种，**堆内存**和**栈内存**。
