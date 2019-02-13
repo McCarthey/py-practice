@@ -116,7 +116,33 @@ function onScroll() {
 	let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
     console.log('滚动条位置：' + scrollTop);
 }
+
 window.onscroll = debounce(onScroll, 500)
+```
+
+#### 节流实现
+定义：触发函数事件后，短时间间隔内无法连续调用，只有上一次函数执行后，过了规定的时间间隔，才能进行下一次的函数调用。
+
+原理：对处理函数进行延时操作，若设定的延时到来之前，再次触发事件，则清除上一次的延时操作定时器，重新定时。
+
+```javascript
+// 示例：监听滚动事件
+let startTime = Date.now(); //开始时间
+let time = 500; //间隔时间
+let timer;
+window.onscroll = function throttle(){
+    let currentTime = Date.now();
+    if(currentTime - startTime >= time){
+        let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+        console.log('滚动条位置：' + scrollTop);
+        startTime = currentTime;
+    }else{
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            throttle()
+        }, 50);
+    }
+}
 ```
 
 #### 堆内存与栈内存
