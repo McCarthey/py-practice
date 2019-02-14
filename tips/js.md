@@ -144,6 +144,12 @@ window.onscroll = function throttle(){
     }
 }
 ```
+抽象函数：
+```javascript
+function throttle(method, delay) {
+    
+}
+```
 
 #### 堆内存与栈内存
 JS引擎中对变量的存储主要有两种，**堆内存**和**栈内存**。
