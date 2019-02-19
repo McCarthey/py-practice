@@ -9,3 +9,10 @@
         gulp --p luxy build && cp ./dist/luxy/index.html /d/onluxy/template/spa/home/index.html
     fi
     ```
+- nvm
+
+    切换nvm下载源
+    ```shell
+    nvm node_mirror http://npm.taobao.org/mirrors/node/ 
+    nvm npm_mirror https://npm.taobao.org/mirrors/npm/
+    ```

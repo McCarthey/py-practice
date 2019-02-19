@@ -1225,8 +1225,8 @@ var allElements = document.getElementsByTagName('*')
         Number.isFinite() 方法用来检测传入的参数是否是一个有穷数（finite number）。和全局的 isFinite() 函数相比，这个方法不会强制将一个非数值的参数转换成数值，这就意味着，只有数值类型的值，且是有穷的（finite），才返回 true。
 
 - 试图向数组添加数字字符串属性
-```javascript
-var myArray = ['test',1,2]
-myArray['3'] = 3
-```
-会导致myArray数组新增一个元素
+    ```javascript
+    var myArray = ['test',1,2]
+    myArray['3'] = 3
+    ```
+    会导致myArray数组新增一个元素
