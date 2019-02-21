@@ -99,12 +99,11 @@ window.onscroll = function() {
 const debounce = (func, delay) => {
     let timer
     return function() {
-        let _this = this
         if(timer) {
             clearTimeout(timer)
         }
         timer = setTimeout(() => {
-            func.apply(_this, arguments)
+            func.apply(this, arguments)
             timer = null
         }, delay)
     }
