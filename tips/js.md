@@ -145,8 +145,16 @@ window.onscroll = function throttle(){
 ```
 抽象函数：
 ```javascript
-function throttle(method, delay) {
-    
+function throttle(func, delay) {
+    let startTime = Date.now()
+    return function() {
+        let _this = this
+        let currentTime = Date.now()
+        if(currentTime - startTime >= delay) {
+            func.apply(_this, arguments)
+            startTime = currentTime
+        }
+    }
 }
 ```
 
