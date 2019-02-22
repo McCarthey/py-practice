@@ -1234,3 +1234,7 @@ var allElements = document.getElementsByTagName('*')
 - antd-vue
 
     [Ant Design of Vue](https://vue.ant.design/docs/vue/introduce-cn/)
+
+- BFC
+
+    BFC，即，**块格式化上下文**，是Web页面的可视化CSS渲染的一部分，是布局过程中生成块级盒子的区域，也是浮动元素与其他元素的交互限定区域。BFC是一个独立的布局环境，其中的元素布局是不受外界的影响，并且在一个BFC中，块盒与行盒（行盒由一行中所有的内联元素所组成）都会垂直的沿着其父元素的边框排列。
