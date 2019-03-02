@@ -204,3 +204,14 @@ for ( let i=1; i<=5; i++) {
 	}, i*1000 );
 }
 ```
+
+#### Promise的实现
+思路：利用setTimeout实现延迟fn中resolve和reject的执行
+```javascript
+function MyPromise(fn) {
+    this.value
+    this.resolveFunc = function() {}
+    this.rejectFunc = function() {}
+    fn(this.resolve.bind(this), this.reject.bind(this))
+}
+```
