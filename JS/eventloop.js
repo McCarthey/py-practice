@@ -80,4 +80,5 @@ while (true) {
  * 另外， 对于那些DOM的变动（ 尤其是涉及页面重新渲染的部分）， 通常不会立即执行， 而是每16毫秒执行一次。 
  * 这时使用requestAnimationFrame() 的效果要好于setTimeout()。
  */
- 
+
+node中的eventloop分为6个阶段 每个阶段执行完后再执行微任务队列 然后再进入下一个阶段
