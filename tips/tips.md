@@ -1,13 +1,13 @@
-# 记一些杂事儿
+- 判断 div 是否滚动到底部
 
 ```javascript
 // 用于判断div是否滚动到底部
 if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-    console.log('已经滚动到底')
+  console.log('已经滚动到底')
 }
 ```
 
-# 杂事儿
+- 行内元素空隙
 
 两个 width:50%的行内元素（inline-block）并排放置，中间会有间隙（这个间隙来自你的标记中行内元素间的空白），因此第二个元素会换到下一行
 要删除这个间隙，需要在 HTML 中通过注释删除空白（右）
@@ -19,24 +19,56 @@ if (element.scrollHeight - element.scrollTop === element.clientHeight) {
 <div class="half">50% wide</div>
 ```
 
-# 杂事儿
+- 善用 Array.prototype.every 和 filter 会节省很多代码
+- vue 中 computed 属性中默认只设置了 getter 函数，我们还可以添加 setter 函数
+- 以下样式可以在 webkit 浏览器中模拟 macOS 中的滚动条样式:
+- vuex 中的 getters 相当于其 state 的计算属性，常用于派生一些状态
+- 擅用 vue 中 mixins 选项，将重复的逻辑抽出，混入到需要的组件中:
 
--   善用 Array.prototype.every 和 filter 会节省很多代码 - vue 中 computed 属性中默认只设置了 getter 函数，我们还可以添加 setter 函数
-
--   以下样式可以在 webkit 浏览器中模拟 macOS 中的滚动条样式:
--   vuex 中的 getters 相当于其 state 的计算属性，常用于派生一些状态
-
-```css
-::-webkit-scrollbar {
-    width: 8px;
+```javascript
+// mixin 作为Modal,Tooltip组件的公共逻辑部分
+const toggle = {
+  data() {
+    return {
+      isShow: false
+    }
+  },
+  methods: {
+    toggleShow() {
+      this.isShow = !this.isShow
+    }
+  }
 }
-::-webkit-scrollbar-thumb {
-    background-color: #c1c1c1;
-    border-radius: 4px;
+
+// Modal组件
+const Modal = {
+  template: '#modal',
+  mixins: [toggle],
+  components: {
+    appChild: Child
+  }
+}
+// tooltip组件
+const Tooltip = {
+  template: '#tooltip',
+  mixins: [toggle],
+  components: {
+    appChild: Child
+  }
 }
 ```
 
--   最近 DOM API 中的 Element.scrollIntoView() 可以通过传入配置对象来实现平滑滚动（不再需要 jQuery 了）：
+```css
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+  border-radius: 4px;
+}
+```
+
+- 最近 DOM API 中的 Element.scrollIntoView() 可以通过传入配置对象来实现平滑滚动（不再需要 jQuery 了）：
 
 ```css
 elem.scrollIntoView({
@@ -48,22 +80,31 @@ elem.scrollIntoView({
 
 ```css
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 ```
 
--   position: sticky; 粘性定位 需要指定 top,bottom,left,right 之一才可以实现粘性效果 - 利用 css shape-outside 可以让内联元素以不规则的形状进行外部排列（可以实现刘海屏的适配）
-    且元素必须是浮动元素，以下是绕开刘海屏的实现
+- position: sticky; 粘性定位 需要指定 top,bottom,left,right 之一才可以实现粘性效果 - 利用 css shape-outside 可以让内联元素以不规则的形状进行外部排列（可以实现刘海屏的适配）
+  且元素必须是浮动元素，以下是绕开刘海屏的实现
 
 ```css
 .shape {
-    float: left;
-    shape-outside: polygon(0 0, 0 150px, 16px 154px, 30px 166px, 30px 314px, 16px 326px, 0 330px, 0 0);
+  float: left;
+  shape-outside: polygon(
+    0 0,
+    0 150px,
+    16px 154px,
+    30px 166px,
+    30px 314px,
+    16px 326px,
+    0 330px,
+    0 0
+  );
 }
 ```
 
--   多行省略
-    块级元素，webkit 浏览器有效，其他浏览器需指定最大高度
+- 多行省略
+  块级元素，webkit 浏览器有效，其他浏览器需指定最大高度
 
 ```css
 width: 308px;
@@ -76,23 +117,23 @@ word-break: break-word;
 word-wrap: normal;
 ```
 
--   placeholder 颜色
+- placeholder 颜色
 
 ```css
 element::-webkit-input-placeholder {
-    color: #cda777 !important;
+  color: #cda777 !important;
 }
 
 element::-moz-placeholder {
-    color: #cda777 !important;
+  color: #cda777 !important;
 }
 
 element:-moz-placeholder {
-    color: #cda777 !important;
+  color: #cda777 !important;
 }
 
 element::-ms-input-placeholder {
-    color: #cda777 !important;
+  color: #cda777 !important;
 }
 ```
 
@@ -109,23 +150,23 @@ word-break: break-word;
 word-wrap: normal;
 ```
 
--   window 对象
+- window 对象
 
 调用 window.close()，可以关闭当前页面
 
--   PWA
-    serviceWorker 除了由浏览器触发更新之外，还应用了特殊的缓存策略：如果该文件 24 小时没有更新，当触发更新时，会强制更新。也就意味着最坏情况下 service Worker 会每天更新一次。
-    serviceWorker 标准中给出了 ServiceWorkerRegistrantion.update()放法，调用该方法会导致立即调用 Service worker。但 chrome 貌似还是不会跳过 http 缓存，此处实现和标准尚存差异。
+- PWA
+  serviceWorker 除了由浏览器触发更新之外，还应用了特殊的缓存策略：如果该文件 24 小时没有更新，当触发更新时，会强制更新。也就意味着最坏情况下 service Worker 会每天更新一次。
+  serviceWorker 标准中给出了 ServiceWorkerRegistrantion.update()放法，调用该方法会导致立即调用 Service worker。但 chrome 貌似还是不会跳过 http 缓存，此处实现和标准尚存差异。
 
-*   判断对象是否为空{}
-    利用 Object.keys 遍历对象的可枚举属性，并返回一个由属性名组成的数组，通过判断这个数组的长度来检查对象是否是空
+* 判断对象是否为空{}
+  利用 Object.keys 遍历对象的可枚举属性，并返回一个由属性名组成的数组，通过判断这个数组的长度来检查对象是否是空
 
 ```
     const obj = {}
     Object.keys(obj).length === 0
 ```
 
--   边框渐变
+- 边框渐变
 
 ```
     border-image: linear-gradient()
@@ -133,9 +174,9 @@ word-wrap: normal;
 
 能够实现盒子边框的颜色渐变，但此时 border-radius 属性无效，故无法简单地实现一个圆角边框渐变效果
 
--   word-wrap 由于和 word-break 属性语意过于相似，故在 css3 规范中更名为 overflow-wrap，但只有 chrome/safari 支持
+- word-wrap 由于和 word-break 属性语意过于相似，故在 css3 规范中更名为 overflow-wrap，但只有 chrome/safari 支持
 
--   map
+- map
 
 ```javascript
 let list = [1, 3, 5, 76, 123, 412, 3]
@@ -143,17 +184,17 @@ let result = list.map(v => (v = v * 2))
 console.log(result) // [2, 6, 10, 152, 246, 824, 6]
 ```
 
--   node child processes 模块
-    利用 child_process 模块的 exec 对象写 shell 脚本，需要注意：
+- node child processes 模块
+  利用 child_process 模块的 exec 对象写 shell 脚本，需要注意：
 
 ```javascript
 exec('shell命令', (err, stdout, stderr) => {
-    if (err) throw err
-    // 命令执行成功后要做的事情
+  if (err) throw err
+  // 命令执行成功后要做的事情
 })
 ```
 
--   外链
+- 外链
 
 ```
 target="_blank"
@@ -168,44 +209,47 @@ target="_blank"
 <a href="https://examplepetstore.com" target="_blank" rel="noopener">...</a>
 ```
 
--   引用资源预加载
-    <link>元素的rel属性的属性值preload能够让你在你的<head>元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即可需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能。例如：
+- 引用资源预加载
+  <link>元素的rel属性的属性值preload能够让你在你的<head>元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即可需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能。例如：
 
 ```html
-<link rel="preload" href="style.css" as="style" /> <link rel="preload" href="main.js" as="script" />
+<link rel="preload" href="style.css" as="style" />
+<link rel="preload" href="main.js" as="script" />
 ```
 
 使用 as 来指定将要预加载的内容的类型，将使得浏览器能够： - 更精确地优化资源加载优先级。 - 匹配未来的加载需求，在适当的情况下，重复利用同一资源。 - 为资源应用正确的内容安全策略。 - 为资源设置正确的 Accept 请求头。
 
--   伪元素
-    :before 和:after 是在 CSS2.1 中发布的。起初伪元素的语法是使用一个冒号“:”，但是随着 web 的发展，在 CSS3 中伪元素使用两个冒号“::”——也就变成了::before 和::after——以便将它与伪类区分开（如:hover，:active 等）。然而，不管你使用单冒号还是双冒号，浏览器都能识别它们。但是**IE8 只支持单冒号的格式**，如果你想要保持广泛的浏览器兼容性，使用单冒号会更安全。
-    可以给伪元素添加任何样式。伪元素默认为**内联元素**，因此若要指定宽高，则需声明 display:block;。最好使用 background 属性来设置伪元素的背景图片，这比直接在 content 中使用 url()更容易控制。即使不使用 content 属性，也必须写上，可设置为空，否则伪元素无法正常工作。
+- 伪元素
+  :before 和:after 是在 CSS2.1 中发布的。起初伪元素的语法是使用一个冒号“:”，但是随着 web 的发展，在 CSS3 中伪元素使用两个冒号“::”——也就变成了::before 和::after——以便将它与伪类区分开（如:hover，:active 等）。然而，不管你使用单冒号还是双冒号，浏览器都能识别它们。但是**IE8 只支持单冒号的格式**，如果你想要保持广泛的浏览器兼容性，使用单冒号会更安全。
+  可以给伪元素添加任何样式。伪元素默认为**内联元素**，因此若要指定宽高，则需声明 display:block;。最好使用 background 属性来设置伪元素的背景图片，这比直接在 content 中使用 url()更容易控制。即使不使用 content 属性，也必须写上，可设置为空，否则伪元素无法正常工作。
 
 我们可以结合使用伪元素和伪类：
 
 ```css
 blockquote:hover:after,
 blockquote:hover:before {
-    background-color: #555;
+  background-color: #555;
 }
 ```
 
 应用：
 参见本项目 html-css-js 目录下的 pseudo-element.html 中的卡片阴影样式
 
--   滚动到页底加载更多的实现
-    可以使用 intersectionObserver 实现
-    思路：
--   页面底部放置一个 id 为 load-more 的元素
--   使用 intersectionObserver.observer 监听这个元素，这个元素一旦出现，就将分页数+1，发送请求
-    注意：
--   因为一开始是没有数据的，因此 load-more 元素不显示，此时无法设置 intersectionObserver.observer 监听，会报错
--   注意开始监听的时机，不可重复监听，页面销毁/没有更多数据时，要取消监听
-    实现：
-    设置一个 load-more 元素，此时 showLoadMore===fasle ，即不显示加载更多
+- 滚动到页底加载更多的实现
+  可以使用 intersectionObserver 实现
+  思路：
+- 页面底部放置一个 id 为 load-more 的元素
+- 使用 intersectionObserver.observer 监听这个元素，这个元素一旦出现，就将分页数+1，发送请求
+  注意：
+- 因为一开始是没有数据的，因此 load-more 元素不显示，此时无法设置 intersectionObserver.observer 监听，会报错
+- 注意开始监听的时机，不可重复监听，页面销毁/没有更多数据时，要取消监听
+  实现：
+  设置一个 load-more 元素，此时 showLoadMore===fasle ，即不显示加载更多
 
 ```html
-<p id="next-page" class="load-text" v-if="showLoadMore">{{loading?'Loading...':'Load More'}}</p>
+<p id="next-page" class="load-text" v-if="showLoadMore">
+  {{loading?'Loading...':'Load More'}}
+</p>
 ```
 
 异步 ajax 函数如下：
@@ -260,42 +304,42 @@ this.intersectionObserver = intersectionObserver
 
 优势：
 
--   传统的交集检测涉及到事件监听以及 Element.getBoundingClientRect() 的使用，这个代码是运行在主线程中的，会造成性能问题
--   代码简洁，浏览器会对其做优化
-    缺点：
--   浏览器兼容性
--   规格写明，IntersectionObserver 的实现，应该采用 requestIdleCallback()，即只有线程空闲下来，才会执行观察器。这意味着，这个观察器的优先级非常低，只在其他任务执行完，浏览器有了空闲才会执行。
+- 传统的交集检测涉及到事件监听以及 Element.getBoundingClientRect() 的使用，这个代码是运行在主线程中的，会造成性能问题
+- 代码简洁，浏览器会对其做优化
+  缺点：
+- 浏览器兼容性
+- 规格写明，IntersectionObserver 的实现，应该采用 requestIdleCallback()，即只有线程空闲下来，才会执行观察器。这意味着，这个观察器的优先级非常低，只在其他任务执行完，浏览器有了空闲才会执行。
 
-*   css 实现弹框居中
+* css 实现弹框居中
 
 ```css
 .dialog_box {
-    /* 弹框样式 */
-    display: inline-block;
-    vertical-align: middle;
-    position: relative;
-    width: 400px;
-    height: 300px;
-    background: #fff;
+  /* 弹框样式 */
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  width: 400px;
+  height: 300px;
+  background: #fff;
 }
 .dialog_container {
-    /* 遮罩层 */
-    text-align: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.35);
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
+  /* 遮罩层 */
+  text-align: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.35);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
 }
 /* 垂直居中关键 */
 .dialog_container::after {
-    display: inline-block;
-    content: '';
-    width: 0;
-    height: 100%;
-    vertical-align: middle;
+  display: inline-block;
+  content: '';
+  width: 0;
+  height: 100%;
+  vertical-align: middle;
 }
 ```
 
@@ -304,27 +348,27 @@ this.intersectionObserver = intersectionObserver
 垂直居中：实现的关键在于遮罩容器的伪元素::after。该伪元素 display: inline-block; 使其与弹框同一行; 宽度为 0, 高度设置为 100%, 最最关键的属性就是 vertical-align: middle;
 这样弹框和伪元素就在同一行内实现了垂直居中。伪元素的宽度为 0，因此不会影响弹框的水平居中
 
--   font-display 属性:
+- font-display 属性:
 
 参考[文章](https://developers.google.com/web/updates/2016/02/font-display)戳这里
 大意：
 在网络字体没有加载完成时，页面字体的表现
 
--   cookie
-    服务器通过设置 cookie 属性为 httpOnly，则可以防止浏览器端使用 JS 访问
+- cookie
+  服务器通过设置 cookie 属性为 httpOnly，则可以防止浏览器端使用 JS 访问
 
--   v-show VS v-if
-    v-if 是真正的条件渲染，如果为 false 的话，DOM 元素不会渲染上。而且如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
-    v-show 不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+- v-show VS v-if
+  v-if 是真正的条件渲染，如果为 false 的话，DOM 元素不会渲染上。而且如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+  v-show 不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
 
--   vue 轮播动画效果实现
-    思路：
-    一个宽度固定的容器，作为用于展示轮播图的窗口；
-    容器里包裹着一个由将要展现的元素（通常是图片）组成的超长容器；
-    通过两个按钮来控制前一个/后一个元素；
-    维护一个 current 变量，用于记录当前元素展示的序号；
-    当前元素改变时，通过改变超长容器的类名来动态改变他的 left 值，以控制窗口展示的元素。
-    适当添加动画效果即可
+- vue 轮播动画效果实现
+  思路：
+  一个宽度固定的容器，作为用于展示轮播图的窗口；
+  容器里包裹着一个由将要展现的元素（通常是图片）组成的超长容器；
+  通过两个按钮来控制前一个/后一个元素；
+  维护一个 current 变量，用于记录当前元素展示的序号；
+  当前元素改变时，通过改变超长容器的类名来动态改变他的 left 值，以控制窗口展示的元素。
+  适当添加动画效果即可
 
 优势：
 配合 vue/react 以及 sass/less 使用，仅需少量代码即可实现轮播效果，简单
@@ -332,49 +376,49 @@ this.intersectionObserver = intersectionObserver
 劣势：
 可拓展性、可移植性不强
 
--   关于 table 布局？
-    td display: inline-block;
+- 关于 table 布局？
+  td display: inline-block;
 
--   p 元素文字强制不换行
+- p 元素文字强制不换行
 
 ```css
 white-space: nowrap;
 ```
 
--   图片 png 与 jpg
-    在无需透明度的情况下 可以抽离掉 png 图片的 alpha 通道以减少体积；或者换成 jpg，能有效缩减体积
+- 图片 png 与 jpg
+  在无需透明度的情况下 可以抽离掉 png 图片的 alpha 通道以减少体积；或者换成 jpg，能有效缩减体积
 
--   判断浏览器是否支持 webp 图片
+- 判断浏览器是否支持 webp 图片
 
 ```javascript
 var isSupportWebp =
-    !![].map &&
-    document
-        .createElement('canvas')
-        .toDataURL('image/webp')
-        .indexOf('data:image/webp') == 0
+  !![].map &&
+  document
+    .createElement('canvas')
+    .toDataURL('image/webp')
+    .indexOf('data:image/webp') == 0
 
 console.log(isSupportWebp)
 ```
 
--   对象扩展运算符...
+- 对象扩展运算符...
 
 ```javascript
-var player = {name: 'Jack', age: 24, job: 'engineer', country: 'china'}
-var newPlayer = {...player, name: 'Sam', age: 25}
+var player = { name: 'Jack', age: 24, job: 'engineer', country: 'china' }
+var newPlayer = { ...player, name: 'Sam', age: 25 }
 console.log(newPlayer) // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
 ```
 
 对象扩展运算符可以用以复制/继承另一个对象，并改写他的属性，类似于 Object.assign()，因此上下两部分代码等价:
 
 ```javascript
-var player = {name: 'Jack', age: 24, job: 'engineer', country: 'china'}
-var newPlayer = Object.assign({}, player, {name: 'Sam', age: 25})
+var player = { name: 'Jack', age: 24, job: 'engineer', country: 'china' }
+var newPlayer = Object.assign({}, player, { name: 'Sam', age: 25 })
 console.log(newPlayer) // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
 ```
 
--   构造函数模式的劣势
-    例如，本库中 data-structure 目录下的 stack.js 中，使用构造函数模式模拟了栈（具体实现请看代码，此处略）
+- 构造函数模式的劣势
+  例如，本库中 data-structure 目录下的 stack.js 中，使用构造函数模式模拟了栈（具体实现请看代码，此处略）
 
 ```javascript
 function Stack(){
@@ -393,7 +437,7 @@ console.log(stack1.pop === stack2.pop) // false
 
 因此，不同实例上的同名函数是不相等的。可将构造函数中的方法移动到全局，在构造函数内部引用，这样就可以使不同的实例共享相同的方法了。但是这种方式并不推荐，因为会增加很多全局函数，而且这些函数仅是为了给某个对象调用，显然不合理，因此构造函数模式比较适合单例场景。这些问题可由原型模式解决。
 
--   对称加密与非对称加密
+- 对称加密与非对称加密
 
 [浅显易懂](https://mp.weixin.qq.com/s/T0e-Zu-SPK0g_ng8Or-APg)
 对称加密：服务器与客户端使用同样的规则加密解密信息
@@ -404,14 +448,14 @@ console.log(stack1.pop === stack2.pop) // false
 
 非对称加密更慢，消耗更多性能，因此非对称加密只用来加密用于确定对称加密的密码信息（对称加密的规则）,剩下的使用更高效的对称加密通信
 
--   Git 多人协作工作模式
-    -   首先，可以试图用 git push origin branch-name 推送自己的修改；
-    -   如果推送失败，则因为远程分支比你的本地更新，需要先用 git pull 试图合并；
-    -   如果合并有冲突，则解决冲突，并在本地提交；
-    -   没有冲突或者解决掉冲突后，再用 git push origin branch-name 推送就能成功！
-    -   如果 git pull 提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令 git branch --set-upstream branch-name origin/branch-name。
+- Git 多人协作工作模式
+  - 首先，可以试图用 git push origin branch-name 推送自己的修改；
+  - 如果推送失败，则因为远程分支比你的本地更新，需要先用 git pull 试图合并；
+  - 如果合并有冲突，则解决冲突，并在本地提交；
+  - 没有冲突或者解决掉冲突后，再用 git push origin branch-name 推送就能成功！
+  - 如果 git pull 提示“no tracking information”，则说明本地分支和远程分支的链接关系没有创建，用命令 git branch --set-upstream branch-name origin/branch-name。
 
-*   元素滚动到底部
+* 元素滚动到底部
 
 场景：监听并打印新消息，假设消息窗口元素节点为 msgBox，只需在消息监听函数里加上 msgDiv.scrollTop = msgDiv.scrollHeight，即可实现滚动到底部
 
@@ -424,25 +468,25 @@ console.log(stack1.pop === stack2.pop) // false
     },
 ```
 
--   document 对象
+- document 对象
 
-    document 对象上有一些实用的属性：
+  document 对象上有一些实用的属性：
 
-    -   title: 可以通过 document.title 读取并设置页面标题，读取的即是`<title>`元素中的文本，但是不会改变页面中的`<title>`元素
-        ```javascript
-        const oldTitle = document.title
-        document.title = 'New page title'
-        ```
-    -   URL: URL 属性包含当前页面的完整标题，即地址栏中显示的 URL，读取时等同 window.location.href
-        ```javascript
-        document.URL === window.location.href
-        ```
-    -   domain: domain 属性值包含页面的域名
-    -   referrer： referrer 属性保存着链接到当前页面的那个页面的 URL。
+  - title: 可以通过 document.title 读取并设置页面标题，读取的即是`<title>`元素中的文本，但是不会改变页面中的`<title>`元素
+    ```javascript
+    const oldTitle = document.title
+    document.title = 'New page title'
+    ```
+  - URL: URL 属性包含当前页面的完整标题，即地址栏中显示的 URL，读取时等同 window.location.href
+    ```javascript
+    document.URL === window.location.href
+    ```
+  - domain: domain 属性值包含页面的域名
+  - referrer： referrer 属性保存着链接到当前页面的那个页面的 URL。
 
-    其中 title，domain 属性是可以设置的，但是出于安全限制，domain 不能被设置成 URL 中不包含的域
+  其中 title，domain 属性是可以设置的，但是出于安全限制，domain 不能被设置成 URL 中不包含的域
 
--   DOM 操作相关
+- DOM 操作相关
 
 getElementsByTagName()方法会返回一个 HTMLCollections 对象，该对象与 NodeList 非常相似。可以使用[]或 item()访问该对象中的项。其中[]中可以是数字索引，或字符串。字符串代表要查找的元素的 name 属性的值，方便查找已命名的元素，等同于调用 namedItem(name)方法。
 
@@ -452,8 +496,8 @@ getElementsByTagName()方法会返回一个 HTMLCollections 对象，该对象�
 var allElements = document.getElementsByTagName('*')
 ```
 
--   python 字符串模板
-    较新的 python 版本模板字符串可以这样写：
+- python 字符串模板
+  较新的 python 版本模板字符串可以这样写：
 
 ```python
     f'Your email is {email} , your password is ***'
@@ -461,780 +505,810 @@ var allElements = document.getElementsByTagName('*')
 
 简洁，类似于 ES6
 
--   css 动画小技巧
-    场景：想要做出动画持续 2s，停顿 2s 后再循环的效果
-    思路：设置好关键帧的位置
+- css 动画小技巧
+  场景：想要做出动画持续 2s，停顿 2s 后再循环的效果
+  思路：设置好关键帧的位置
 
 ```css
 .step-bar-line {
-    animation: 4s ease-in-out infinite grow;
+  animation: 4s ease-in-out infinite grow;
 }
 @keyframes grow {
-    0% {
-        width: 0;
-    }
-    50% {
-        width: 232px;
-    }
-    100% {
-        width: 232px;
-    }
+  0% {
+    width: 0;
+  }
+  50% {
+    width: 232px;
+  }
+  100% {
+    width: 232px;
+  }
 }
 ```
 
 让总时长等于 4s，那么前 2s 就是动画持续时间，后 2s 的状态和动画结束时状态一致（在这儿停顿 XD），这样就实现了停顿 2s 的效果
 
--   重排和重绘
-    -   部分渲染树（或者整个渲染树）需要重新分析并且节点尺寸需要重新计算。这被称为**重排**。注意这里至少会有一次重排-初始化页面布局。
-    -   由于节点的几何属性发生改变或者由于样式发生改变，例如改变元素背景色时，屏幕上的部分内容需要更新。这样的更新被称为**重绘**。
+- 重排和重绘
+  - 部分渲染树（或者整个渲染树）需要重新分析并且节点尺寸需要重新计算。这被称为**重排**。注意这里至少会有一次重排-初始化页面布局。
+  - 由于节点的几何属性发生改变或者由于样式发生改变，例如改变元素背景色时，屏幕上的部分内容需要更新。这样的更新被称为**重绘**。
     任何改变用来构建渲染树的信息都会导致一次重排或重绘
-    -   添加、删除、更新 DOM 节点
-    -   通过 display: none 隐藏一个 DOM 节点-触发重排和重绘
-    -   通过 visibility: hidden 隐藏一个 DOM 节点-只触发重绘，因为没有几何变化
-    -   移动或者给页面中的 DOM 节点添加动画
-    -   添加一个样式表，调整样式属性
-    -   用户行为，例如调整窗口大小，改变字号，或者滚动。
-    ```javascript
-    var bstyle = document.body.style // cache
-    bstyle.padding = '20px' // 重排+重绘
-    bstyle.border = '10px solid red' // 另一次重排+重绘
-    bstyle.color = 'blue' // 没有尺寸变化，只重绘
-    bstyle.backgroundColor = '#fad' // 重绘
-    bstyle.fontSize = '2em' // 重排+重绘
-    // 新的DOM节点 - 重排+重绘
-    document.body.appendChild(document.createTextNode('dude!'))
-    ```
--   最小化重排/重绘
+  - 添加、删除、更新 DOM 节点
+  - 通过 display: none 隐藏一个 DOM 节点-触发重排和重绘
+  - 通过 visibility: hidden 隐藏一个 DOM 节点-只触发重绘，因为没有几何变化
+  - 移动或者给页面中的 DOM 节点添加动画
+  - 添加一个样式表，调整样式属性
+  - 用户行为，例如调整窗口大小，改变字号，或者滚动。
+  ```javascript
+  var bstyle = document.body.style // cache
+  bstyle.padding = '20px' // 重排+重绘
+  bstyle.border = '10px solid red' // 另一次重排+重绘
+  bstyle.color = 'blue' // 没有尺寸变化，只重绘
+  bstyle.backgroundColor = '#fad' // 重绘
+  bstyle.fontSize = '2em' // 重排+重绘
+  // 新的DOM节点 - 重排+重绘
+  document.body.appendChild(document.createTextNode('dude!'))
+  ```
+- 最小化重排/重绘
 
-    -   不要逐个变样式。对于静态页面来说，明智且兼具可维护性的做法是改变类名而不是样式。对于动态改变的样式来说，相较每次微小修改都直接触及元素，更好的办法是统一在 cssText 变量中编辑。
+  - 不要逐个变样式。对于静态页面来说，明智且兼具可维护性的做法是改变类名而不是样式。对于动态改变的样式来说，相较每次微小修改都直接触及元素，更好的办法是统一在 cssText 变量中编辑。
 
-    ```javascript
-    // bad
-    var left = 10,
-        top = 10
-    el.style.left = left + 'px'
-    el.style.top = top + 'px'
-    // better
-    el.className += ' theclassname'
-    // 当top和left的值是动态计算而成时...
-    // better
-    el.style.cssText += '; left: ' + left + 'px; top: ' + top + 'px;'
-    ```
+  ```javascript
+  // bad
+  var left = 10,
+    top = 10
+  el.style.left = left + 'px'
+  el.style.top = top + 'px'
+  // better
+  el.className += ' theclassname'
+  // 当top和left的值是动态计算而成时...
+  // better
+  el.style.cssText += '; left: ' + left + 'px; top: ' + top + 'px;'
+  ```
 
-    -   通过 documentFragment 来保留临时变动
-    -   复制你即将更新的节点，在副本上工作，然后将之前的节点和新节点交换
-    -   通过 display:none 属性隐藏元素（只有一次重排重绘），添加足够多的变更后，通过 display 属性显示（另一次重排重绘）。通过这种方式即使大量变更也只触发两次重排。
-    -   不要频繁计算样式。如果你有一个样式需要计算，只取一次，将它缓存在一个变量中并且在这个变量上工作。看一下下面这个反例：
+  - 通过 documentFragment 来保留临时变动
+  - 复制你即将更新的节点，在副本上工作，然后将之前的节点和新节点交换
+  - 通过 display:none 属性隐藏元素（只有一次重排重绘），添加足够多的变更后，通过 display 属性显示（另一次重排重绘）。通过这种方式即使大量变更也只触发两次重排。
+  - 不要频繁计算样式。如果你有一个样式需要计算，只取一次，将它缓存在一个变量中并且在这个变量上工作。看一下下面这个反例：
 
-    ```javascript
-    // no-no!
-    for (big; loop; here) {
-        el.style.left = el.offsetLeft + 10 + 'px'
-        el.style.top = el.offsetTop + 10 + 'px'
-    }
-    // better
-    var left = el.offsetLeft,
-        top = el.offsetTop
-    esty = el.style
-    for (big; loop; here) {
-        left += 10
-        top += 10
-        esty.left = left + 'px'
-        esty.top = top + 'px'
-    }
-    ```
+  ```javascript
+  // no-no!
+  for (big; loop; here) {
+    el.style.left = el.offsetLeft + 10 + 'px'
+    el.style.top = el.offsetTop + 10 + 'px'
+  }
+  // better
+  var left = el.offsetLeft,
+    top = el.offsetTop
+  esty = el.style
+  for (big; loop; here) {
+    left += 10
+    top += 10
+    esty.left = left + 'px'
+    esty.top = top + 'px'
+  }
+  ```
 
-    -   通常情况下，考虑一下渲染树和变更后需要重新验证的消耗。举个例子，使用绝对定位会使得该元素单独成为渲染树中 body 的一个子元素，所以当你对其添加动画时，它不会对其它节点造成太多影响。当你在这些节点上放置这个元素时，一些其它在这个区域内的节点可能需要重绘，但是不需要重排。
+  - 通常情况下，考虑一下渲染树和变更后需要重新验证的消耗。举个例子，使用绝对定位会使得该元素单独成为渲染树中 body 的一个子元素，所以当你对其添加动画时，它不会对其它节点造成太多影响。当你在这些节点上放置这个元素时，一些其它在这个区域内的节点可能需要重绘，但是不需要重排。
 
--   网页生成的过程
+- 网页生成的过程
 
-    1. HTML 代码转化成 DOM
-    2. CSS 代码转化成 CSSOM（CSS Object Model）
-    3. 结合 DOM 和 CSSOM，生成一棵渲染树（包含每个节点的视觉信息）
-    4. 生成布局（layout），即将所有渲染树的所有节点进行平面合成 （**耗时**）
-    5. 将布局绘制（paint）在屏幕上 （**耗时**）
+  1. HTML 代码转化成 DOM
+  2. CSS 代码转化成 CSSOM（CSS Object Model）
+  3. 结合 DOM 和 CSSOM，生成一棵渲染树（包含每个节点的视觉信息）
+  4. 生成布局（layout），即将所有渲染树的所有节点进行平面合成 （**耗时**）
+  5. 将布局绘制（paint）在屏幕上 （**耗时**）
 
-    "**生成布局**"（flow）和"**绘制**"（paint）这两步，合称为"**渲染**"（render）。
+  "**生成布局**"（flow）和"**绘制**"（paint）这两步，合称为"**渲染**"（render）。
 
-    **网页生成的时候，至少会渲染一次。用户访问的过程中，还会不断重新渲染。**以下三种情况，会导致网页重新渲染：
+  **网页生成的时候，至少会渲染一次。用户访问的过程中，还会不断重新渲染。**以下三种情况，会导致网页重新渲染：
 
-          - 修改DOM
-          - 修改样式表
-          - 用户事件（比如鼠标悬停、页面滚动、输入框键入文字、改变窗口大小等等）
+        - 修改DOM
+        - 修改样式表
+        - 用户事件（比如鼠标悬停、页面滚动、输入框键入文字、改变窗口大小等等）
 
-    **重新渲染，就需要重新生成布局和重新绘制。前者叫做"重排"（reflow），后者叫做"重绘"（repaint）。**
+  **重新渲染，就需要重新生成布局和重新绘制。前者叫做"重排"（reflow），后者叫做"重绘"（repaint）。**
 
-    需要注意的是，**"重绘"不一定需要"重排"**，比如改变某个网页元素的颜色，就只会触发"重绘"，不会触发"重排"，因为布局没有改变。但是，**"重排"必然导致"重绘"**，比如改变一个网页元素的位置，就会同时触发"重排"和"重绘"，因为布局改变了。
+  需要注意的是，**"重绘"不一定需要"重排"**，比如改变某个网页元素的颜色，就只会触发"重绘"，不会触发"重排"，因为布局没有改变。但是，**"重排"必然导致"重绘"**，比如改变一个网页元素的位置，就会同时触发"重排"和"重绘"，因为布局改变了。
 
-    一般来说，样式的写操作之后，如果有下面这些属性的读操作，都会引发浏览器立即重新渲染:
+  一般来说，样式的写操作之后，如果有下面这些属性的读操作，都会引发浏览器立即重新渲染:
 
-    ```
-        offsetTop/offsetLeft/offsetWidth/offsetHeight
-        scrollTop/scrollLeft/scrollWidth/scrollHeight
-        clientTop/clientLeft/clientWidth/clientHeight
-        getComputedStyle()
-    ```
+  ```
+      offsetTop/offsetLeft/offsetWidth/offsetHeight
+      scrollTop/scrollLeft/scrollWidth/scrollHeight
+      clientTop/clientLeft/clientWidth/clientHeight
+      getComputedStyle()
+  ```
 
-    所以，从性能角度考虑，尽量不要把读操作和写操作，放在一个语句里面:
+  所以，从性能角度考虑，尽量不要把读操作和写操作，放在一个语句里面:
 
-    ```
-        // bad
-        div.style.left = div.offsetLeft + 10 + "px";
-        div.style.top = div.offsetTop + 10 + "px";
+  ```
+      // bad
+      div.style.left = div.offsetLeft + 10 + "px";
+      div.style.top = div.offsetTop + 10 + "px";
 
-        // good
-        var left = div.offsetLeft;
-        var top  = div.offsetTop;
-        div.style.left = left + 10 + "px";
-        div.style.top = top + 10 + "px";
-    ```
+      // good
+      var left = div.offsetLeft;
+      var top  = div.offsetTop;
+      div.style.left = left + 10 + "px";
+      div.style.top = top + 10 + "px";
+  ```
 
-    一般的规则是：
+  一般的规则是：
 
-    ```
-        样式表越简单，重排和重绘就越快。
-        重排和重绘的DOM元素层级越高，成本就越高。
-        table元素的重排和重绘成本，要高于div元素
-    ```
+  ```
+      样式表越简单，重排和重绘就越快。
+      重排和重绘的DOM元素层级越高，成本就越高。
+      table元素的重排和重绘成本，要高于div元素
+  ```
 
--   CentOS 7 下安装 python3
-    参考[CentOS 7 下安装 python3](https://segmentfault.com/a/1190000009922582)
+- CentOS 7 下安装 python3
+  参考[CentOS 7 下安装 python3](https://segmentfault.com/a/1190000009922582)
 
--   小程序、小游戏 Serverless
+- 小程序、小游戏 Serverless
 
--   水平垂直居中
-    -   已知高度宽度元素的水平垂直居中
-        -   绝对定位与负边距实现
-        ```css
-        #container {
-            position: relative;
-        }
+- 水平垂直居中
 
-        #center {
-            width: 100px;
-            height: 100px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin: -50px 0 0 -50px;
-        }
-        ```
-        -   绝对定位与 margin
-        ```css
-        #container {
-            position: relative;
-        }
+  - 已知高度宽度元素的水平垂直居中
 
-        #center {
-            position: absolute;
-            margin: auto;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
-        ```
-    -   未知高度和宽度元素的水平垂直居中
-        -   当要被居中的元素是 inline 或者 inline-block 元素
-        ```css
-        #container {
-            display: table-cell;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        #center {
-        }
-        ```
-        -   Css3 的 transform
-        ```css
-        #container {
-            position: relative;
-        }
-
-        #center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        ```
-        -   flex
-        ```css
-        #container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #center {
-        }
-        ```
--   弹出层弹出后背景不可滑动/滚动
+    - 绝对定位与负边距实现
 
     ```css
-    .no-scroll {
-        position: fixed;
-        overflow: hidden;
+    #container {
+      position: relative;
+    }
+
+    #center {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin: -50px 0 0 -50px;
     }
     ```
 
-    此时页面视窗固定，但是内容会返回到顶端，因此这里需要记录一下当前的滚动值，可以写在 vuex 的 mutation 中
+    - 绝对定位与 margin
 
-    ```javascript
-    let bodyEl = document.body
-    let top = 0
-    export default {
-        setShowingDlg(state, showing) {
-            state.isShowingDlg = showing
-            if (showing) {
-                top = window.scrollY
-                bodyEl.style.position = 'fixed'
-                bodyEl.style.top = `${-top}px`
-            } else {
-                bodyEl.style.position = ''
-                bodyEl.style.top = ''
-
-                window.scrollTo(0, top) // 回到原先的高度
-            }
-        }
-    }
-    ```
-
--   web 移动端调用自带短信功能
-    ```javascript
-    isIos() {
-        return this.$util.getBrowserVersion().isIos()
-    },
-    isAndroid() {
-        return this.$util.getBrowserVersion().isAndroid()
-    },
-    smsLink() {
-        let link = ''
-        if (this.isIos) {
-            link = `sms:&body=${this.inviteText}`
-        } else if (this.isAndroid) {
-            link = `sms:?body=${this.inviteText}`
-        } else {
-            link = `sms:;body=${this.inviteText}`
-        }
-        return link
-    },
-    ```
-
--   ios 设备 div 点击无反应的兼容措施
-    在 ios 设备中，div 这种语义化不强的标签，默认是没有点击事件的。因此需要给 div 添加一个空的 onlick=""事件监听，或者添加 css 属性：cursor:pointer; ios 设备才会处理他的点击事件
--   border 为 0.5px 的时候各个浏览器兼容性变现不同
--   设置父元素 height: 0; overflow: visiable; background: red;子元素负责撑开高度，但是父元素的兄弟元素则会紧跟排列，可以实现部分遮挡的效果
--   ios 的-webkit-tap-highlight-color 属性：当你点击一个链接或者通过 Javascript 定义的可点击元素的时候，它就会出现一个半透明的灰色背景。-webkit-tap-highlight-color: rgba(0, 0, 0, 0.5); 可以设置 alpha 为 0 来禁用该属性
--   iphoneX 底部充满适配
-    [参考](https://aotu.io/notes/2017/11/27/iphonex/index.html)
-    ```html
-    <!-- 新增 viweport-fit 属性，使得页面内容完全覆盖整个窗口： -->
-    <meta name="viewport" content="width=device-width, viewport-fit=cover" />
-    ```
     ```css
-    body {
-        padding-bottom: constant(safe-area-inset-bottom);
-        padding-bottom: env(safe-area-inset-bottom);
+    #container {
+      position: relative;
+    }
+
+    #center {
+      position: absolute;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
     }
     ```
--   HTTP 请求中的 form data 和 request payload
 
-    在使用 axios 时，axios 默认的 header 中 content-type: application/json，此时 post 请求传上去的数据是在 request payload 中的，后端需要在这里取；
-    当设置 content-type: application/x-www-form-urlencoded 时，此时 post 请求是以 Form data 方式上传的，需要对 form data 做序列化处理（如使用 qs 库），后端需要解析序列化后的数据
+  - 未知高度和宽度元素的水平垂直居中
 
--   判断空字符串" "
-    ```javascript
-    const message = ' '
-    if (message.replace(/(^\s*)|(\s*$)/g, '').length === 0) {
-        console.log('Message cannot be empty!')
+    - 当要被居中的元素是 inline 或者 inline-block 元素
+
+    ```css
+    #container {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    #center {
     }
     ```
--   facebook pixel
-    用法同 GA
--   属性描述符
-    对象里目前存在的属性描述符有两种主要形式：**数据描述符**和 **存取描述符**。数据描述符是一个具有值的属性，该值可能是可写的，也可能不是可写的。存取描述符是由 getter-setter 函数对描述的属性。描述符必须是这两种形式之一；不能同时是两者。
-    数据描述符和存取描述符均具有 configurable 和 enumerable
-    数据描述符具有 value，writable
-    存取描述符具有 get，set
-    如果一个描述符不具有 value,writable,get 和 set 任意一个关键字，那么它将被认为是一个数据描述符。如果一个描述符同时有(value 或 writable)和(get 或 set)关键字，将会产生一个异常。
-    ```javascript
-    let person = {name: 'Mike', age: 18}
-    Object.defineProperty(person, 'name', {
-        value: 'Lily'
+
+    - Css3 的 transform
+
+    ```css
+    #container {
+      position: relative;
+    }
+
+    #center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    ```
+
+    - flex
+
+    ```css
+    #container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #center {
+    }
+    ```
+
+- 弹出层弹出后背景不可滑动/滚动
+
+  ```css
+  .no-scroll {
+    position: fixed;
+    overflow: hidden;
+  }
+  ```
+
+  此时页面视窗固定，但是内容会返回到顶端，因此这里需要记录一下当前的滚动值，可以写在 vuex 的 mutation 中
+
+  ```javascript
+  let bodyEl = document.body
+  let top = 0
+  export default {
+    setShowingDlg(state, showing) {
+      state.isShowingDlg = showing
+      if (showing) {
+        top = window.scrollY
+        bodyEl.style.position = 'fixed'
+        bodyEl.style.top = `${-top}px`
+      } else {
+        bodyEl.style.position = ''
+        bodyEl.style.top = ''
+
+        window.scrollTo(0, top) // 回到原先的高度
+      }
+    }
+  }
+  ```
+
+- web 移动端调用自带短信功能
+
+  ```javascript
+  isIos() {
+      return this.$util.getBrowserVersion().isIos()
+  },
+  isAndroid() {
+      return this.$util.getBrowserVersion().isAndroid()
+  },
+  smsLink() {
+      let link = ''
+      if (this.isIos) {
+          link = `sms:&body=${this.inviteText}`
+      } else if (this.isAndroid) {
+          link = `sms:?body=${this.inviteText}`
+      } else {
+          link = `sms:;body=${this.inviteText}`
+      }
+      return link
+  },
+  ```
+
+- ios 设备 div 点击无反应的兼容措施
+  在 ios 设备中，div 这种语义化不强的标签，默认是没有点击事件的。因此需要给 div 添加一个空的 onlick=""事件监听，或者添加 css 属性：cursor:pointer; ios 设备才会处理他的点击事件
+- border 为 0.5px 的时候各个浏览器兼容性变现不同
+- 设置父元素 height: 0; overflow: visiable; background: red;子元素负责撑开高度，但是父元素的兄弟元素则会紧跟排列，可以实现部分遮挡的效果
+- ios 的-webkit-tap-highlight-color 属性：当你点击一个链接或者通过 Javascript 定义的可点击元素的时候，它就会出现一个半透明的灰色背景。-webkit-tap-highlight-color: rgba(0, 0, 0, 0.5); 可以设置 alpha 为 0 来禁用该属性
+- iphoneX 底部充满适配
+  [参考](https://aotu.io/notes/2017/11/27/iphonex/index.html)
+  ```html
+  <!-- 新增 viweport-fit 属性，使得页面内容完全覆盖整个窗口： -->
+  <meta name="viewport" content="width=device-width, viewport-fit=cover" />
+  ```
+  ```css
+  body {
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  ```
+- HTTP 请求中的 form data 和 request payload
+
+  在使用 axios 时，axios 默认的 header 中 content-type: application/json，此时 post 请求传上去的数据是在 request payload 中的，后端需要在这里取；
+  当设置 content-type: application/x-www-form-urlencoded 时，此时 post 请求是以 Form data 方式上传的，需要对 form data 做序列化处理（如使用 qs 库），后端需要解析序列化后的数据
+
+- 判断空字符串" "
+  ```javascript
+  const message = ' '
+  if (message.replace(/(^\s*)|(\s*$)/g, '').length === 0) {
+    console.log('Message cannot be empty!')
+  }
+  ```
+- facebook pixel
+  用法同 GA
+- 属性描述符
+  对象里目前存在的属性描述符有两种主要形式：**数据描述符**和 **存取描述符**。数据描述符是一个具有值的属性，该值可能是可写的，也可能不是可写的。存取描述符是由 getter-setter 函数对描述的属性。描述符必须是这两种形式之一；不能同时是两者。
+  数据描述符和存取描述符均具有 configurable 和 enumerable
+  数据描述符具有 value，writable
+  存取描述符具有 get，set
+  如果一个描述符不具有 value,writable,get 和 set 任意一个关键字，那么它将被认为是一个数据描述符。如果一个描述符同时有(value 或 writable)和(get 或 set)关键字，将会产生一个异常。
+
+  ```javascript
+  let person = { name: 'Mike', age: 18 }
+  Object.defineProperty(person, 'name', {
+    value: 'Lily'
+  })
+  console.log(person) /* {name: "Lily", age: 18} */
+
+  Object.defineProperty(person, 'fullName', {
+    get() {
+      return 'Lily White'
+    },
+    set(newVal) {
+      this.name = newVal
+    }
+  })
+
+  console.log(person.fullName) /* "Lily White" */
+  person.fullName = 'Mike White'
+  console.log(person) /* {name: "Mike White", age: 18} */
+  ```
+
+- Vue 响应式原理
+
+  ```javascript
+  let data = { price: 5, quantity: 2 }
+  let target = null
+  class Dep {
+    constructor() {
+      this.subscribers = []
+    }
+
+    depend() {
+      if (target && !this.subscribers.includes(target)) {
+        this.subscribers.push(target)
+      }
+    }
+
+    notify() {
+      this.subscribers.forEach(sub => sub())
+    }
+  }
+  Object.keys(data).forEach(key => {
+    let internalValue = data[key]
+
+    const dep = new Dep()
+
+    Object.defineProperty(data, key, {
+      get() {
+        dep.depend()
+        return internalValue
+      },
+      set(newVal) {
+        internalValue = newVal
+        dep.notify()
+      }
     })
-    console.log(person) /* {name: "Lily", age: 18} */
+  })
+  function watcher(myFun) {
+    target = myFun
+    target()
+    target = null
+  }
+  watcher(() => {
+    data.total = data.price * data.quantity
+  })
+  console.log('total = ' + data.total)
+  data.price = 20
+  console.log('total = ' + data.total)
+  data.quantity = 10
+  console.log('total = ' + data.total)
+  ```
 
-    Object.defineProperty(person, 'fullName', {
-        get() {
-            return 'Lily White'
-        },
-        set(newVal) {
-            this.name = newVal
-        }
-    })
+  使用 Proxy 实现响应式
 
-    console.log(person.fullName) /* "Lily White" */
-    person.fullName = 'Mike White'
-    console.log(person) /* {name: "Mike White", age: 18} */
-    ```
--   Vue 响应式原理
-
-    ```javascript
-    let data = {price: 5, quantity: 2}
-    let target = null
-    class Dep {
-        constructor() {
-            this.subscribers = []
-        }
-
-        depend() {
-            if (target && !this.subscribers.includes(target)) {
-                this.subscribers.push(target)
-            }
-        }
-
-        notify() {
-            this.subscribers.forEach(sub => sub())
-        }
+  ```javascript
+  let deps = new Map() /* 创建一个Map对象 */
+  Object.keys(data).forEach(key => {
+    /* 为每个属性都设置一个依赖实例 并放入deps中 */
+    deps.set(key, new Dep())
+  })
+  class Dep {
+    constructor() {
+      this.subscribers = []
     }
-    Object.keys(data).forEach(key => {
-        let internalValue = data[key]
 
-        const dep = new Dep()
+    depend() {
+      if (target && !this.subscribers.includes(target)) {
+        this.subscribers.push(target)
+      }
+    }
 
-        Object.defineProperty(data, key, {
-            get() {
-                dep.depend()
-                return internalValue
-            },
-            set(newVal) {
-                internalValue = newVal
-                dep.notify()
-            }
+    notify() {
+      this.subscribers.forEach(sub => sub())
+    }
+  }
+  let data_without_proxy = data /* 保存源对象 */
+  data = new Proxy(data_without_proxy, {
+    /* 重写数据以在中间创建一个代理 */
+    get(obj, key) {
+      deps.get(key).depend()
+      return obj[key]
+    },
+    set(obj, key, newVal) {
+      obj[key] = newVal
+      deps.get(key).notify()
+      return true
+    }
+  })
+  ```
+
+  如你所见，我们创建了一个变量 data_without_proxy 来作为源对象的副本，在覆盖源对象时来使用副本创建一个 Proxy 对象。第二个参数是包含了 get()和 set()这两个陷阱函数属性的 handler 对象。
+
+  get(obj, key) => 是在访问属性时调用的函数。第一个参数 obj 为原始对象（data_without_proxy），第二个参数是被访问属性的 key。这里面调用了与特定属性关联的特定方法（Dep class 中的 depend()）。最后，使用 return obj[key]返回与该 key 相关的值。
+
+  set(obj, key, newVal) => 中前两个参数与 get 的相同，第三个参数是新的修改值，然后，我们将新值设置给 obj[key] = newVal 修改的属性上，并调用 notify()方法。
+
+- 设置 animation-fill-mode
+  ```css
+  animation-fill-mode: none; 动画执行前后不改变任何样式，默认
+  animation-fill-mode: forwards; 目标保持动画最后一帧的样式，最后一帧是哪个取决于animation-direction和animation-iteration-count
+  animation-fill-mode: backwards; 动画采用相应第一帧的样式，保持animation-delay
+  animation-fill-mode: both; 动画将会执行 forwards 和 backwards 执行的动作
+  ```
+- microtask macrotask
+- 继承
+- 正则
+- http
+- apply,call,bind
+
+- 内联写在 html 属性中的 js 语句，如:
+  ```html
+  <div onclick="showUserInfo('Mike','25','I'm a boy')"></div>
+  <!-- 这里使用的单引号和双引号会引起bug，正确的做法是将I'm中的单引号转义成html转义字符&#39; 特别是当这些值都是由javascript动态传过来的时候，一定要注意使用html的转义字符-->
+  ```
+- 前后端跨域带 cookie 联调
+  前端：ajax 请求时，需要写明 withCredentials: true
+  后端：服务器(Nginx)需要配置 Access-Control-Allow-Credentials: true 才能获得前端的 cookie，但是此时 **Access-Control-Allow-Origin 不能为'\*'**，可以配置成前端的本地的开发服务器地址
+  这样设置后不知为何偶尔还是会带不上 cookie，因此开发环境可以再设置一个 proxy 代理
+- 原生图片懒加载
+
+  ```javascript
+  // 监听底部轮播 图片懒加载
+  var userWrap = document.querySelector('.users')
+  var intersectionObserver = new IntersectionObserver(function(entries) {
+    if (entries[0].intersectionRatio <= 0) return
+
+    console.log('Loaded swiper')
+    intersectionObserver.unobserve(userWrap)
+    var imgs = userWrap.querySelectorAll('img')
+    for (var i = 0; i < imgs.length; i++) {
+      var dataSrc = imgs[i].getAttribute('data-src')
+      imgs[i].setAttribute('src', dataSrc)
+    }
+  })
+  ```
+
+- vue 的 vm.\$nextTick()
+
+  将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。它跟全局方法 Vue.nextTick 一样，不同的是回调的 this 自动绑定到调用它的实例上。
+
+  ```javascript
+  new Vue({
+    // ...
+    methods: {
+      // ...
+      example: function() {
+        // 修改数据
+        this.message = 'changed'
+        // DOM 还没有更新
+        this.$nextTick(function() {
+          // DOM 现在更新了
+          // `this` 绑定到当前实例
+          this.doSomethingElse()
         })
-    })
-    function watcher(myFun) {
-        target = myFun
-        target()
-        target = null
+      }
     }
-    watcher(() => {
-        data.total = data.price * data.quantity
-    })
-    console.log('total = ' + data.total)
-    data.price = 20
-    console.log('total = ' + data.total)
-    data.quantity = 10
-    console.log('total = ' + data.total)
-    ```
+  })
+  ```
 
-    使用 Proxy 实现响应式
+- 判断是否是 iphoneX XR XS
 
-    ```javascript
-    let deps = new Map() /* 创建一个Map对象 */
-    Object.keys(data).forEach(key => {
-        /* 为每个属性都设置一个依赖实例 并放入deps中 */
-        deps.set(key, new Dep())
-    })
-    class Dep {
-        constructor() {
-            this.subscribers = []
-        }
+  ```javascript
+  /* iPhone X */
+  const isIPhoneX = /iphone/gi.test(window.navigator.userAgent) &&
+  &
+  2
+  /* iPhone XS Max */
+  const isIPhoneXSMax = /iphone/gi.test(window.navigator.userAgent) &&
+              window.devicePixelRatio && window.devicePixelRatio === 3 &&
+              window.screen.width === 414 && window.screen.height === 896
+  /* iPhone XR */
+  const isIPhoneXR = /iphone/gi.test(window.navigator.userAgent) &&
+              window.devicePixelRatio && window.devicePixelRatio === 2 &&
+              window.screen.width === 414 && window.screen.height === 896
 
-        depend() {
-            if (target && !this.subscribers.includes(target)) {
-                this.subscribers.push(target)
-            }
-        }
+  console.log('是否是iphoneX XR XS', isIPhoneX || isIPhoneXSMax || isIPhoneXR)
+  return isIPhoneX || isIPhoneXSMax || isIPhoneXR
+  ```
 
-        notify() {
-            this.subscribers.forEach(sub => sub())
-        }
-    }
-    let data_without_proxy = data /* 保存源对象 */
-    data = new Proxy(data_without_proxy, {
-        /* 重写数据以在中间创建一个代理 */
-        get(obj, key) {
-            deps.get(key).depend()
-            return obj[key]
-        },
-        set(obj, key, newVal) {
-            obj[key] = newVal
-            deps.get(key).notify()
-            return true
-        }
-    })
-    ```
+- 浏览器内核
 
-    如你所见，我们创建了一个变量 data_without_proxy 来作为源对象的副本，在覆盖源对象时来使用副本创建一个 Proxy 对象。第二个参数是包含了 get()和 set()这两个陷阱函数属性的 handler 对象。
+  - Trident(IE 内核)：
+    IE8 的 JavaScript 引擎是 Jscript，IE9 开始用 Chakra，这两个版本区别很大，Chakra 无论是速度和标准化方面都很出色。Edge 的是新内核 EdgeHTML。
+  - Gecko(Firefox 内核)：
 
-    get(obj, key) => 是在访问属性时调用的函数。第一个参数 obj 为原始对象（data_without_proxy），第二个参数是被访问属性的 key。这里面调用了与特定属性关联的特定方法（Dep class 中的 depend()）。最后，使用 return obj[key]返回与该 key 相关的值。
+    Netscape6 开始采用的内核，后来的 Mozilla FireFox(火狐浏览器) 也采用了该内核，Gecko 的特点是代码完全公开，其 JavaScript 引擎是 SpiderMonkey。
 
-    set(obj, key, newVal) => 中前两个参数与 get 的相同，第三个参数是新的修改值，然后，我们将新值设置给 obj[key] = newVal 修改的属性上，并调用 notify()方法。
+  - Presto(Opera 前内核) (已废弃)：
 
--   设置 animation-fill-mode
-    ```css
-    animation-fill-mode: none; 动画执行前后不改变任何样式，默认
-    animation-fill-mode: forwards; 目标保持动画最后一帧的样式，最后一帧是哪个取决于animation-direction和animation-iteration-count
-    animation-fill-mode: backwards; 动画采用相应第一帧的样式，保持animation-delay
-    animation-fill-mode: both; 动画将会执行 forwards 和 backwards 执行的动作
-    ```
--   microtask macrotask
--   继承
--   正则
--   http
--   apply,call,bind
+    Opera12.17 及更早版本曾经采用的内核，现已停止开发并废弃。
 
--   内联写在 html 属性中的 js 语句，如:
-    ```html
-    <div onclick="showUserInfo('Mike','25','I'm a boy')"></div>
-    <!-- 这里使用的单引号和双引号会引起bug，正确的做法是将I'm中的单引号转义成html转义字符&#39; 特别是当这些值都是由javascript动态传过来的时候，一定要注意使用html的转义字符-->
-    ```
--   前后端跨域带 cookie 联调
-    前端：ajax 请求时，需要写明 withCredentials: true
-    后端：服务器(Nginx)需要配置 Access-Control-Allow-Credentials: true 才能获得前端的 cookie，但是此时 **Access-Control-Allow-Origin 不能为'\*'**，可以配置成前端的本地的开发服务器地址
-    这样设置后不知为何偶尔还是会带不上 cookie，因此开发环境可以再设置一个 proxy 代理
--   原生图片懒加载
+  - Webkit(Safari 内核,Chrome 内核原型,开源):
+    它是苹果公司自己的内核，也是苹果的 Safari 浏览器使用的内核。 Webkit 引擎包含 WebCore 排版引擎及 JavaScriptCore 解析引擎，均是从 KDE 的 KHTML 及 KJS 引擎衍生而来。Google Chrome、360 极速浏览器以及搜狗高速浏览器高速模式也使用 Webkit 作为内核(在脚本理解方面，Chrome 使用自己研发的 V8 引擎)。WebKit 内核在手机上的应用也十分广泛，例如 Google 的手机 Gphone、 Apple 的 iPhone， Nokia’s Series 60 browser 等所使用的 Browser 内核引擎，都是基于 WebKit。
+    **很多人错误的把 Webkit 叫做 Chrome 内核，其实 Chrome 浏览器的内核一开始叫 Chromium，后来又变成了 Blink 了，苹果的 Safari 才是从一开始就叫 Webkit，后来又升级为 Webkit2 的。**
+  -
 
-    ```javascript
-    // 监听底部轮播 图片懒加载
-    var userWrap = document.querySelector('.users')
-    var intersectionObserver = new IntersectionObserver(function(entries) {
-        if (entries[0].intersectionRatio <= 0) return
+- ios clipboard.js 兼容性处理
 
-        console.log('Loaded swiper')
-        intersectionObserver.unobserve(userWrap)
-        var imgs = userWrap.querySelectorAll('img')
-        for (var i = 0; i < imgs.length; i++) {
-            var dataSrc = imgs[i].getAttribute('data-src')
-            imgs[i].setAttribute('src', dataSrc)
-        }
-    })
-    ```
+  - 在指定点击的元素时，如果是 button 元素，ios 默认是可以点击的，没有任何问题；如果是 div,p 等元素，ios 默认他们是不具备点击行为的，因此需要在这些元素上添加 onclick=""属性，让他们可以点击，否则无法完成点击复制的操作。或者指定 css 属性 cursor: pointer;也可以达到相同的目的
 
--   vue 的 vm.\$nextTick()
+- v-cloak 指令
 
-    将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。它跟全局方法 Vue.nextTick 一样，不同的是回调的 this 自动绑定到调用它的实例上。
+  这个指令保持在元素上直到关联实例结束编译。如可以设置 css:
 
-    ```javascript
-    new Vue({
-        // ...
-        methods: {
-            // ...
-            example: function() {
-                // 修改数据
-                this.message = 'changed'
-                // DOM 还没有更新
-                this.$nextTick(function() {
-                    // DOM 现在更新了
-                    // `this` 绑定到当前实例
-                    this.doSomethingElse()
-                })
-            }
-        }
-    })
-    ```
+  ```css
+  [v-cloak] {
+    display: none;
+  }
+  ```
 
--   判断是否是 iphoneX XR XS
-    ```javascript
-    /* iPhone X */
-    const isIPhoneX = /iphone/gi.test(window.navigator.userAgent) &&
-    &
-    2
-    /* iPhone XS Max */
-    const isIPhoneXSMax = /iphone/gi.test(window.navigator.userAgent) &&
-                window.devicePixelRatio && window.devicePixelRatio === 3 &&
-                window.screen.width === 414 && window.screen.height === 896
-    /* iPhone XR */
-    const isIPhoneXR = /iphone/gi.test(window.navigator.userAgent) &&
-                window.devicePixelRatio && window.devicePixelRatio === 2 &&
-                window.screen.width === 414 && window.screen.height === 896
+  这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕，也就是解决{{ 插值 }}闪烁的问题
 
-    console.log('是否是iphoneX XR XS', isIPhoneX || isIPhoneXSMax || isIPhoneXR)
-    return isIPhoneX || isIPhoneXSMax || isIPhoneXR
-    ```
--   浏览器内核
+  ```html
+  <div v-cloak>{{ message }}</div>
+  ```
 
-    -   Trident(IE 内核)：
-        IE8 的 JavaScript 引擎是 Jscript，IE9 开始用 Chakra，这两个版本区别很大，Chakra 无论是速度和标准化方面都很出色。Edge 的是新内核 EdgeHTML。
-    -   Gecko(Firefox 内核)：
+- indexedDB
 
-        Netscape6 开始采用的内核，后来的 Mozilla FireFox(火狐浏览器) 也采用了该内核，Gecko 的特点是代码完全公开，其 JavaScript 引擎是 SpiderMonkey。
+  localforage 库虽然好用，但是还需优化，比如可以维护一个数组，用于存放变化的键，同步到 indexedDB 后，数组清空
 
-    -   Presto(Opera 前内核) (已废弃)：
+- 滚动问题
 
-        Opera12.17 及更早版本曾经采用的内核，现已停止开发并废弃。
+  需求：一个可以滚动的<div>标签，里面有很多个子元素标签，需要滚动定位到特定的标签元素
 
-    -   Webkit(Safari 内核,Chrome 内核原型,开源):
-        它是苹果公司自己的内核，也是苹果的 Safari 浏览器使用的内核。 Webkit 引擎包含 WebCore 排版引擎及 JavaScriptCore 解析引擎，均是从 KDE 的 KHTML 及 KJS 引擎衍生而来。Google Chrome、360 极速浏览器以及搜狗高速浏览器高速模式也使用 Webkit 作为内核(在脚本理解方面，Chrome 使用自己研发的 V8 引擎)。WebKit 内核在手机上的应用也十分广泛，例如 Google 的手机 Gphone、 Apple 的 iPhone， Nokia’s Series 60 browser 等所使用的 Browser 内核引擎，都是基于 WebKit。
-        **很多人错误的把 Webkit 叫做 Chrome 内核，其实 Chrome 浏览器的内核一开始叫 Chromium，后来又变成了 Blink 了，苹果的 Safari 才是从一开始就叫 Webkit，后来又升级为 Webkit2 的。**
-    -
+  解决：
 
--   ios clipboard.js 兼容性处理
+  ```javascript
+  const scrollDiv = document.querySelector('.scrollDiv')
+  const targetDiv = document.querySelector('.target')
+  scrollDiv.scrollTo(0, target.offsetTop)
+  ```
 
-    -   在指定点击的元素时，如果是 button 元素，ios 默认是可以点击的，没有任何问题；如果是 div,p 等元素，ios 默认他们是不具备点击行为的，因此需要在这些元素上添加 onclick=""属性，让他们可以点击，否则无法完成点击复制的操作。或者指定 css 属性 cursor: pointer;也可以达到相同的目的
+  配合 css 平滑滚动效果更好
 
--   v-cloak 指令
+  ```css
+  .scrollDiv {
+    scroll-behavior: smooth;
+  }
+  ```
 
-    这个指令保持在元素上直到关联实例结束编译。如可以设置 css:
+- Object.entries()方法返回一个给定对象自身可枚举属性的键值对数组，其排列与使用 for...in 循环遍历该对象时返回的顺序一致（区别在于 for-in 循环也枚举原型链中的属性）。
+- Set 内部判断两个值是否不同，使用的算法类似于精确相等运算符(===)，不会发生类型转换，与 === 主要的区别在于 Set 判断 NaN 等于自身：
 
-    ```css
-    [v-cloak] {
-        display: none;
-    }
-    ```
+  ```javascript
+  let s = new Set([1, '5', 5, NaN, NaN, 'test'])
+  console.log(s) // Set(5) {1, "5", 5, NaN, "test"}
+  ```
 
-    这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕，也就是解决{{ 插值 }}闪烁的问题
+  另外，两个对象总是不相等的
 
-    ```html
-    <div v-cloak>{{ message }}</div>
-    ```
+  ```javascript
+  let s = new Set()
+  s.add({})
+  s.size // 1
 
--   indexedDB
+  s.add({})
+  s.size // 2
+  ```
 
-    localforage 库虽然好用，但是还需优化，比如可以维护一个数组，用于存放变化的键，同步到 indexedDB 后，数组清空
+  Array.from 方法可以将 Set 结构转为数组
 
--   滚动问题
+  ```javascript
+  const items = new Set([1, 2, 3, 4, 5])
+  let list = Array.from(items)
+  console.log(list) // [1, 2, 3, 4, 5]
+  ```
 
-    需求：一个可以滚动的<div>标签，里面有很多个子元素标签，需要滚动定位到特定的标签元素
+  因此，数组去重的方法还可以这样写：
 
-    解决：
+  ```javascript
+  function dedupe(array) {
+    return Array.from(new Set(array))
+  }
 
-    ```javascript
-    const scrollDiv = document.querySelector('.scrollDiv')
-    const targetDiv = document.querySelector('.target')
-    scrollDiv.scrollTo(0, target.offsetTop)
-    ```
+  dedupe([1, 1, 2, 3]) // [1,2,3]
+  ```
 
-    配合 css 平滑滚动效果更好
+- Set 的遍历操作
+  需要特别指出的是，Set 的遍历顺序就是插入顺序。这个特性有时非常有用，比如使用 Set 保存一个回调函数列表，调用时就能保证按照添加顺序调用。
+  由于 Set 结构没有键名，只有键值（或者说键名和键值是用一个值），所以 keys 方法和 values 方法的行为完全一致
+  ```javascript
+  let set = new Set(['red', 'green', 'blue'])
+  for (let i of set.keys()) {
+    // 返回键名的遍历器
+    console.log(i)
+  }
+  // red
+  // green
+  // blue
+  for (let i of set.values()) {
+    // 返回键值的遍历器
+    console.log(i)
+  }
+  // red
+  // green
+  // blue
+  for (let i of set.entries()) {
+    // 返回键值对的遍历器
+    console.log(i)
+  }
+  // ["red", "red"]
+  // ["green", "green"]
+  // ["blue", "blue"]
+  ```
+  Set 结构默认可遍历，它的默认遍历器生成函数就是它的 values 方法，因此可以直接 for...of 遍历 set
+  ```javascript
+  Set.prototype[Symbol.iterator] === Set.prototype.values // true
 
-    ```css
-    .scrollDiv {
-        scroll-behavior: smooth;
-    }
-    ```
-
--   Object.entries()方法返回一个给定对象自身可枚举属性的键值对数组，其排列与使用 for...in 循环遍历该对象时返回的顺序一致（区别在于 for-in 循环也枚举原型链中的属性）。
--   Set 内部判断两个值是否不同，使用的算法类似于精确相等运算符(===)，不会发生类型转换，与 === 主要的区别在于 Set 判断 NaN 等于自身：
-    ```javascript
-    let s = new Set([1, '5', 5, NaN, NaN, 'test'])
-    console.log(s) // Set(5) {1, "5", 5, NaN, "test"}
-    ```
-    另外，两个对象总是不相等的
-    ```javascript
-    let s = new Set()
-    s.add({})
-    s.size // 1
-    
-    s.add({})
-    s.size // 2
-    ```
-    Array.from方法可以将Set结构转为数组
-    ```javascript
-    const items = new Set([1,2,3,4,5])
-    let list = Array.from(items)
-    console.log(list) // [1, 2, 3, 4, 5]
-    ```
-    因此，数组去重的方法还可以这样写：
-    ```javascript
-    function dedupe(array) {
-        return Array.from(new Set(array))
-    }
-    
-    dedupe([1,1,2,3]) // [1,2,3]
-    ```
-- Set的遍历操作
-    
-    需要特别指出的是，Set的遍历顺序就是插入顺序。这个特性有时非常有用，比如使用 Set 保存一个回调函数列表，调用时就能保证按照添加顺序调用。
-    
-    由于Set结构没有键名，只有键值（或者说键名和键值是用一个值），所以keys方法和values方法的行为完全一致
-    ```javascript
-    let set = new Set(['red','green','blue'])
-    for(let i of set.keys()) { // 返回键名的遍历器
-        console.log(i)
-    }   
-    // red
-    // green
-    // blue
-    for(let i of set.values()) { // 返回键值的遍历器
-        console.log(i)
-    }
-    // red
-    // green
-    // blue
-    for(let i of set.entries()) { // 返回键值对的遍历器
-        console.log(i)
-    }
-    // ["red", "red"]
-    // ["green", "green"]
-    // ["blue", "blue"]
-    ```
-    Set 结构默认可遍历，它的默认遍历器生成函数就是它的 values 方法，因此可以直接for...of遍历set
-    ```javascript
-    Set.prototype[Symbol.iterator] === Set.prototype.values // true
-    
-    for(let i of set) {
-        console.log(i)
-    }
-    // red
-    // green
-    // blue
-    ```
-    
+  for (let i of set) {
+    console.log(i)
+  }
+  // red
+  // green
+  // blue
+  ```
 - WeakSet
 
-    WeakSet 结构与 Set 类似，也是不重复的值的集合。但是，它与 Set 有两个区别。
-    首先，WeakSet 的成员只能是对象，而不能是其他类型的值。
-    ```javascript
-    const ws = new WeakSet()
-    ws.add(1) // Uncaught TypeError: Invalid value used in weak set
-    ws.add(Symbol()) // Uncaught TypeError: Invalid value used in weak set
-    ```
-    WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用。WeakSet 的成员是不适合引用的，因为它会随时消失。另外，由于 WeakSet 内部有多少个成员，取决于垃圾回收机制有没有运行，运行前后很可能成员个数是不一样的，而垃圾回收机制何时运行是不可预测的，因此 ES6 规定 WeakSet 不可遍历。WeakMap同理。
-    
-    
+  WeakSet 结构与 Set 类似，也是不重复的值的集合。但是，它与 Set 有两个区别。
+  首先，WeakSet 的成员只能是对象，而不能是其他类型的值。
+
+  ```javascript
+  const ws = new WeakSet()
+  ws.add(1) // Uncaught TypeError: Invalid value used in weak set
+  ws.add(Symbol()) // Uncaught TypeError: Invalid value used in weak set
+  ```
+
+  WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用。WeakSet 的成员是不适合引用的，因为它会随时消失。另外，由于 WeakSet 内部有多少个成员，取决于垃圾回收机制有没有运行，运行前后很可能成员个数是不一样的，而垃圾回收机制何时运行是不可预测的，因此 ES6 规定 WeakSet 不可遍历。WeakMap 同理。
+
 - Map
 
-    为了解决对象中的键只能是字符串的问题，ES6引入了Map数据结构。类似于对象，也是键值对的集合，但是键的范围不限于字符串。
-    ```javascript
-    const m = new Map();
-    const o = {p: 'Hello World'};
+  为了解决对象中的键只能是字符串的问题，ES6 引入了 Map 数据结构。类似于对象，也是键值对的集合，但是键的范围不限于字符串。
 
-    m.set(o, 'content')
-    m.get(o) // "content"
+  ```javascript
+  const m = new Map()
+  const o = { p: 'Hello World' }
 
-    m.has(o) // true
-    m.delete(o) // true
-    m.has(o) // false
-    ```
-    使用 Map 结构的set方法，将对象o当作m的一个键，然后又用get方法读取这个键，接着用delete删除了这个键。
-    
-    Map 构造函数接受数组作为参数，该数组的成员是一个个表示键值对的数组：
-    ```javascript
-    const map = new Map([
-        ['name', '张三'],
-        ['title', 'Author']
-    ])
-    
-    map.size // 2
-    map.has('name') // true
-    map.get('name') // "张三"
-    ```
-    实际上执行的是下面的算法：
-    ```javascript
-    const items = [
-        ['name', '张三'],
-        ['title', 'Author']
-    ]
-    
-    const map = new Map()
-    items.forEach(
-        ([key, value]) => map.set(key, value)
-    )
-    ```
-    注意，只有对同一个对象的引用，Map 结构才将其视为同一个键：
-    ```javascript
-    const map = new Map()
-    
-    map.set(['a'], 555)
-    map.get(['a']) // undefined
-    ```
-    上面的set和get方法，表面是针对同一个键，但实际上这是两个值，内存地址是不一样的，因此get方法无法读取该键，返回undefined。
-    
-    同理，同样的值的两个实例，在 Map 结构中被视为两个键。
-    ```javascript
-    const map = new Map()
-    
-    const k1 = ['a']
-    const k2 = ['a']
-    
-    map.set(k1, 111)
-    map.set(k2, 222)
-    
-    map.get(k1) // 111
-    map.get(k2) // 222
-    ```
-    因此，Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就是为两个键。
-    
+  m.set(o, 'content')
+  m.get(o) // "content"
+
+  m.has(o) // true
+  m.delete(o) // true
+  m.has(o) // false
+  ```
+
+  使用 Map 结构的 set 方法，将对象 o 当作 m 的一个键，然后又用 get 方法读取这个键，接着用 delete 删除了这个键。
+
+  Map 构造函数接受数组作为参数，该数组的成员是一个个表示键值对的数组：
+
+  ```javascript
+  const map = new Map([['name', '张三'], ['title', 'Author']])
+
+  map.size // 2
+  map.has('name') // true
+  map.get('name') // "张三"
+  ```
+
+  实际上执行的是下面的算法：
+
+  ```javascript
+  const items = [['name', '张三'], ['title', 'Author']]
+
+  const map = new Map()
+  items.forEach(([key, value]) => map.set(key, value))
+  ```
+
+  注意，只有对同一个对象的引用，Map 结构才将其视为同一个键：
+
+  ```javascript
+  const map = new Map()
+
+  map.set(['a'], 555)
+  map.get(['a']) // undefined
+  ```
+
+  上面的 set 和 get 方法，表面是针对同一个键，但实际上这是两个值，内存地址是不一样的，因此 get 方法无法读取该键，返回 undefined。
+
+  同理，同样的值的两个实例，在 Map 结构中被视为两个键。
+
+  ```javascript
+  const map = new Map()
+
+  const k1 = ['a']
+  const k2 = ['a']
+
+  map.set(k1, 111)
+  map.set(k2, 222)
+
+  map.get(k1) // 111
+  map.get(k2) // 222
+  ```
+
+  因此，Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就是为两个键。
+
 - proxy
-    
-    ```javascript
-    let obj = {
-        a: 1
+  ```javascript
+  let obj = {
+    a: 1
+  }
+
+  let proxyObj = new Proxy(obj, {
+    get: function(target, prop) {
+      return prop in target ? target[prop] : 0
+    },
+    set: function(target, prop, value) {
+      target[prop] = 888
     }
-    
-    let proxyObj = new Proxy(obj, {
-        get: function(target, prop) {
-            return prop in target ? target[prop] : 0
-        },
-        set: function(target, prop, value) {
-            target[prop] = 888
-        }
-    })
-    
-    console.log(proxyObj.a) // 1
-    console.log(proxyObj.b) // 0
-    
-    proxyObj.a = 666
-    console.log(proxyObj.a) // 888
-    ```
-    设置handler拦截重写set, get方法
-    
+  })
+
+  console.log(proxyObj.a) // 1
+  console.log(proxyObj.b) // 0
+
+  proxyObj.a = 666
+  console.log(proxyObj.a) // 888
+  ```
+  设置 handler 拦截重写 set, get 方法
 - 离线 web push
-    
-    注册sw -> 询问通知权限 -> （同意后）获取订阅信息 -> 将订阅信息发送给服务器 -> 等待推送 
-    
-    - 获取订阅信息：
-    
-        浏览器向push service（google/firefox 或者其他提供了push service服务的服务商）请求订阅信息，生成的订阅信息包括 endpoint 、keys
-        
-    - 将订阅信息发送给服务器：
-    
-        将上一步的订阅信息（endpoint 、keys）发送个服务器，服务器将其与用户关联
-    
-    - service worker 中需要增加监听push的回调，通常是显示通知
-    
-    **注意：** 服务器push消息时一定要添加 ttl 参数，否则push service不会保存该信息，即浏览器关闭时是无法收到 ttl = 0 的消息通知的！
+
+  注册 sw -> 询问通知权限 -> （同意后）获取订阅信息 -> 将订阅信息发送给服务器 -> 等待推送
+
+  - 获取订阅信息：
+
+    浏览器向 push service（google/firefox 或者其他提供了 push service 服务的服务商）请求订阅信息，生成的订阅信息包括 endpoint 、keys
+
+  - 将订阅信息发送给服务器：
+
+    将上一步的订阅信息（endpoint 、keys）发送个服务器，服务器将其与用户关联
+
+  - service worker 中需要增加监听 push 的回调，通常是显示通知
+
+  **注意：** 服务器 push 消息时一定要添加 ttl 参数，否则 push service 不会保存该信息，即浏览器关闭时是无法收到 ttl = 0 的消息通知的！
 
 - 简单请求与非简单请求
 
-    [参见阮一峰老师的CORS博文](http://www.ruanyifeng.com/blog/2016/04/cors.html)
+  [参见阮一峰老师的 CORS 博文](http://www.ruanyifeng.com/blog/2016/04/cors.html)
 
+* 页面可见性 API
 
-- 页面可见性API
+  标签栏的显示隐藏会触发 visibilitychange 事件
 
-    标签栏的显示隐藏会触发 visibilitychange 事件
-    ```javascript
-    document.addEventListener('visibilitychange', () => { // 监听document的显隐，控制标题
-        if (!document.hidden) {
-            // ...
-        }
-    })
-    ```
-    
-- 判断数值是否有穷
+  ```javascript
+  document.addEventListener('visibilitychange', () => {
+    // 监听document的显隐，控制标题
+    if (!document.hidden) {
+      // ...
+    }
+  })
+  ```
 
-    - 全局 isFinite() 函数
-        
-        全局 isFinite() 函数用来判断被传入的参数值是否为一个有限数值（finite number）。在必要情况下，参数会首先转为一个数值。
-    
-    - Number.isFinite() 方法
+* 判断数值是否有穷
 
-        Number.isFinite() 方法用来检测传入的参数是否是一个有穷数（finite number）。和全局的 isFinite() 函数相比，这个方法不会强制将一个非数值的参数转换成数值，这就意味着，只有数值类型的值，且是有穷的（finite），才返回 true。
+  - 全局 isFinite() 函数
 
-- 试图向数组添加数字字符串属性
-    ```javascript
-    var myArray = ['test',1,2]
-    myArray['3'] = 3
-    ```
-    会导致myArray数组新增一个元素
+    全局 isFinite() 函数用来判断被传入的参数值是否为一个有限数值（finite number）。在必要情况下，参数会首先转为一个数值。
 
-- antd-vue
+  - Number.isFinite() 方法
 
-    [Ant Design of Vue](https://vue.ant.design/docs/vue/introduce-cn/)
+    Number.isFinite() 方法用来检测传入的参数是否是一个有穷数（finite number）。和全局的 isFinite() 函数相比，这个方法不会强制将一个非数值的参数转换成数值，这就意味着，只有数值类型的值，且是有穷的（finite），才返回 true。
 
-- BFC
+* 试图向数组添加数字字符串属性
 
-    BFC，即，**块格式化上下文**，是Web页面的可视化CSS渲染的一部分，是布局过程中生成块级盒子的区域，也是浮动元素与其他元素的交互限定区域。BFC是一个独立的布局环境，其中的元素布局是不受外界的影响，并且在一个BFC中，块盒与行盒（行盒由一行中所有的内联元素所组成）都会垂直的沿着其父元素的边框排列。
+  ```javascript
+  var myArray = ['test', 1, 2]
+  myArray['3'] = 3
+  ```
+
+  会导致 myArray 数组新增一个元素
+
+* antd-vue
+
+  [Ant Design of Vue](https://vue.ant.design/docs/vue/introduce-cn/)
+
+* BFC
+
+  BFC，即，**块格式化上下文**，是 Web 页面的可视化 CSS 渲染的一部分，是布局过程中生成块级盒子的区域，也是浮动元素与其他元素的交互限定区域。BFC 是一个独立的布局环境，其中的元素布局是不受外界的影响，并且在一个 BFC 中，块盒与行盒（行盒由一行中所有的内联元素所组成）都会垂直的沿着其父元素的边框排列。
