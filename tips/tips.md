@@ -57,6 +57,25 @@ const Tooltip = {
   }
 }
 ```
+```javascript
+// 可以合并mixin的生命周期: mixin的生命周期先执行，再执行vue实例的生命周期
+const hi = {
+    mounted() {
+        console.log('mixin mounted')
+    }
+}
+
+new Vue({
+    el: '#app',
+    mixins: [hi],
+    mounted() {
+        console.log('vue instance mounted')
+    }
+})
+
+// mixin mounted
+// vue instance mounted
+```
 
 ```css
 ::-webkit-scrollbar {
