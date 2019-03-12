@@ -57,20 +57,21 @@ const Tooltip = {
   }
 }
 ```
+
 ```javascript
 // 可以合并mixin的生命周期: mixin的生命周期先执行，再执行vue实例的生命周期
 const hi = {
-    mounted() {
-        console.log('mixin mounted')
-    }
+  mounted() {
+    console.log('mixin mounted')
+  }
 }
 
 new Vue({
-    el: '#app',
-    mixins: [hi],
-    mounted() {
-        console.log('vue instance mounted')
-    }
+  el: '#app',
+  mixins: [hi],
+  mounted() {
+    console.log('vue instance mounted')
+  }
 })
 
 // mixin mounted
@@ -177,8 +178,18 @@ word-wrap: normal;
   serviceWorker 除了由浏览器触发更新之外，还应用了特殊的缓存策略：如果该文件 24 小时没有更新，当触发更新时，会强制更新。也就意味着最坏情况下 service Worker 会每天更新一次。
   serviceWorker 标准中给出了 ServiceWorkerRegistrantion.update()放法，调用该方法会导致立即调用 Service worker。但 chrome 貌似还是不会跳过 http 缓存，此处实现和标准尚存差异。
 
-* 判断对象是否为空{}
+- 判断对象是否为空{}
   利用 Object.keys 遍历对象的可枚举属性，并返回一个由属性名组成的数组，通过判断这个数组的长度来检查对象是否是空
+
+- 判断是否是数组
+
+```javascript
+Array.isArray([]) // true
+// 不支持Array.isArray()方法的ployfill（不支持Array.isArray方法的宿主环境多半不支持箭头函数-_-||）：
+if(!Array.isArray) {
+    Array.isArray = arg => Object.prototype.toString.call(arg) === '[object Array]'
+}
+```
 
 ```
     const obj = {}
@@ -1137,6 +1148,7 @@ var allElements = document.getElementsByTagName('*')
 - Set 的遍历操作
   需要特别指出的是，Set 的遍历顺序就是插入顺序。这个特性有时非常有用，比如使用 Set 保存一个回调函数列表，调用时就能保证按照添加顺序调用。
   由于 Set 结构没有键名，只有键值（或者说键名和键值是用一个值），所以 keys 方法和 values 方法的行为完全一致
+
   ```javascript
   let set = new Set(['red', 'green', 'blue'])
   for (let i of set.keys()) {
@@ -1161,7 +1173,9 @@ var allElements = document.getElementsByTagName('*')
   // ["green", "green"]
   // ["blue", "blue"]
   ```
+
   Set 结构默认可遍历，它的默认遍历器生成函数就是它的 values 方法，因此可以直接 for...of 遍历 set
+
   ```javascript
   Set.prototype[Symbol.iterator] === Set.prototype.values // true
 
@@ -1172,6 +1186,7 @@ var allElements = document.getElementsByTagName('*')
   // green
   // blue
   ```
+
 - WeakSet
 
   WeakSet 结构与 Set 类似，也是不重复的值的集合。但是，它与 Set 有两个区别。
@@ -1251,6 +1266,7 @@ var allElements = document.getElementsByTagName('*')
   因此，Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就是为两个键。
 
 - proxy
+
   ```javascript
   let obj = {
     a: 1
@@ -1271,7 +1287,9 @@ var allElements = document.getElementsByTagName('*')
   proxyObj.a = 666
   console.log(proxyObj.a) // 888
   ```
+
   设置 handler 拦截重写 set, get 方法
+
 - 离线 web push
 
   注册 sw -> 询问通知权限 -> （同意后）获取订阅信息 -> 将订阅信息发送给服务器 -> 等待推送
