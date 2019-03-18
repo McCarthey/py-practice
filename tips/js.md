@@ -269,3 +269,18 @@ Array.prototype.map = function (cb) {
   return result 
 }
 ```
+
+#### 实现Array.prototype.filter
+```javascript
+Array.prototype.filter = function (cb) {
+  var result = []
+  this.forEach((item, index) => {
+    if(cb(item, index)) {
+      result.push(item)
+    }
+  })
+  return result
+}
+```
+
+####
