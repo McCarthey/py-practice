@@ -258,3 +258,14 @@ function MyPromise(fn) {
   fn(this.resolve.bind(this), this.reject.bind(this))
 }
 ```
+
+#### 实现Array.prototype.map
+```javascript
+Array.prototype.map = function (cb) {
+  var result = []
+  this.forEach(function(element, index) {
+    result.push(cb(element, index))
+  })
+  return result 
+}
+```
