@@ -28,18 +28,34 @@ class IteratorFromArray {
             { value: this._array[this._cursor++], done: false } :
             { done: true }
     }
+
+    map(callback) {
+        const iterator = new IteratorFromArray(this._array)
+
+        return {
+            next: () => {
+                const { value, done } = iterator.next()
+                return {
+                    done: done,
+                    value: done ? undefined : callback(value)
+                }
+            }
+        }
+    }
 }
 
-const it = new IteratorFromArray([1, 2, 3, 4, 5])
-it.next()
-// {value: 1, done: false}
-it.next()
-// {value: 2, done: false}
-it.next()
-// {value: 3, done: false}
-it.next()
-// {value: 4, done: false}
-it.next()
-// {value: 5, done: false}
-it.next()
-// {done: true}
+const iterator = new IteratorFromArray([1,2,3,4,5]);
+const newIterator = iterator.map(v => v + 3)
+
+newIterator.next()
+// {done: false, value: 4}
+newIterator.next()
+// {done: false, value: 5}
+newIterator.next()
+// {done: false, value: 6}
+newIterator.next()
+// {done: false, value: 7}
+newIterator.next()
+// {done: false, value: 8}
+newIterator.next()
+// {done: true, value: undefined}
