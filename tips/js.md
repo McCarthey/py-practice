@@ -282,5 +282,3 @@ Array.prototype.filter = function (cb) {
   return result
 }
 ```
-
-####
