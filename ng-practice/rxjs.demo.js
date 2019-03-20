@@ -17,7 +17,7 @@ const Rx = require('rxjs/Rx')
  * Observable被称为可观察对象
  */
 /**
- * 创建Observable: create, from, of, fromEvent, fromPromise
+ * 创建Observable: create, from, of, fromEvent, fromPromise，never，empty，throw，interval，timer等
  */
 // var observable = Rx.Observable
 //     .create(function (observer) {
@@ -33,17 +33,43 @@ const Rx = require('rxjs/Rx')
 /**
  * Observer被成为观察者，有next error complete三个方法
  */
-var observable = Rx.Observable
-    .create(function (observer) {
-        observer.next('Jerry')
-        observer.next('Tom')
-        observer.complete()
-        observer.next('not work')
-    })
+// var observable = Rx.Observable
+//     .create(function (observer) {
+//         observer.next('Jerry')
+//         observer.next('Tom')
+//         observer.complete()
+//         observer.next('not work')
+//     })
 
-var observer = {
-    next: function(val) {
-        console.log(val)
+// var observer = {
+//     next: function(val) {
+//         console.log(val)
+//     },
+//     error: function(err) {
+//         console.log(err)
+//     },
+//     complete: function() {
+//         console.log('complete')
+//     }
+// }
+
+// observable.subscribe(observer) // Jerry => Anna => complete
+// 或者直接写在subscribe()中
+// observable.subscribe(
+//     value => {console.log(value)},
+//     error => {console.log(error)},
+//     () => {console.log('complete')}
+// )
+// 另外，观察者可以是不完整的，可以只具有next这一个方法
+
+/**
+ * of：可以同步地传递几个值，如上述代码等同于：
+ */
+var source = Rx.Observable.of('Jerry', 'Tom')
+
+source.subscribe({
+    next: function(value) {
+        console.log(value)
     },
     error: function(err) {
         console.log(err)
@@ -51,15 +77,10 @@ var observer = {
     complete: function() {
         console.log('complete')
     }
-}
+}) // Jerry => Anna => complete
 
-observable.subscribe(observer) // Jerry => Anna => complete
-// 或者直接写在subscribe()中
-// observable.subscribe(
-//     value => {console.log(value)},
-//     error => {console.log(error)},
-//     () => {console.log('complete')}
-// )
+
+
 
 
 /**
