@@ -59,3 +59,21 @@ newIterator.next()
 // {done: false, value: 8}
 newIterator.next()
 // {done: true, value: undefined}
+
+/**
+ * 迭代器模式实现延迟计算
+ */
+function *getNumbers(words) {
+    for(let word of words) {
+        if(/^[0-9]+$/.test(word)) {
+            yield parseInt(word, 10)
+        }
+    }
+}
+
+const iterator = getNumbers('30天精通RxJs (04)')
+iterator.next() // {value: 3, done: false}
+iterator.next() // {value: 0, done: false}
+iterator.next() // {value: 0, done: false}
+iterator.next() // {value: 4, done: false}
+iterator.next() // {value: undefined, done: true}
