@@ -54,6 +54,12 @@ var observer = {
 }
 
 observable.subscribe(observer) // Jerry => Anna => complete
+// 或者直接写在subscribe()中
+// observable.subscribe(
+//     value => {console.log(value)},
+//     error => {console.log(error)},
+//     () => {console.log('complete')}
+// )
 
 
 /**
