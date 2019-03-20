@@ -14,7 +14,23 @@
 
 const Rx = require('rxjs/Rx')
 /** 
- * Observable被称为可观察对象，简单来说数据就在Observable中流动，你可以使用各种operator对流处理，例如：
+ * Observable被称为可观察对象
+ */
+/**
+ * 创建Observable: create, from, of, fromEvent, fromPromise
+ */
+var observable = Rx.Observable
+    .create(function (observer) {
+        observer.next('Jerry')
+        observer.next('Tom')
+    })
+console.log('start')
+observable.subscribe((val) => {
+    console.log(val)
+})
+console.log('end') // 'start'=> 'Jerry' => 'Tom' => 'end' 证明此处是同步的
+/**
+ * 简单来说数据就在Observable中流动，你可以使用各种operator对流处理，例如：
  */
 // const ob = Rx.Observable.interval(1000)
 // ob.take(3).map(n => n * 2).filter(n => n >= 2).subscribe({
@@ -42,7 +58,7 @@ const Rx = require('rxjs/Rx')
 
 /**
  * 合并序列之Observable.merge() ：
- * 所有的输入 Observable 都完成了，输出 Observable 才能完成。该 Observable 发出的项是每个输入 Observable 的结果。 
+ * 所有的输入 Observable 都完成了，输出 Observable 才能完成。该 Observable 发出的项是每个输入 Observable 的结果。
  */
 // exp2-1
 // var timer1 = Rx.Observable.interval(1000).take(10);
