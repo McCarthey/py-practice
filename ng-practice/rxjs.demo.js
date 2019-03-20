@@ -65,19 +65,59 @@ const Rx = require('rxjs/Rx')
 /**
  * of：可以同步地传递几个值，如上述代码等同于：
  */
-var source = Rx.Observable.of('Jerry', 'Tom')
+// var source = Rx.Observable.of('Jerry', 'Tom')
+
+// source.subscribe({
+//     next: function(value) {
+//         console.log(value)
+//     },
+//     error: function(err) {
+//         console.log(err)
+//     },
+//     complete: function() {
+//         console.log('complete')
+//     }
+// }) // Jerry => Anna => complete
+
+/**
+ * from：接受任何可枚举的参数:
+ */
+// var arr = ['Jerry', 'Tom', 2016, 2017, '30 days']
+// var source = Rx.Observable.from(arr)
+
+// source.subscribe({
+//     next: function (value) {
+//         console.log(value)
+//     },
+//     error: function (err) {
+//         console.log(err)
+//     },
+//     complete: function () {
+//         console.log('complete')
+//     }
+// }) // "Jerry" "Tom" 2016 2017 "30 days" "complete"
+
+/**
+ * from也可接受字符串：
+ */
+var source = Rx.Observable.from('铁人赛');
 
 source.subscribe({
     next: function(value) {
         console.log(value)
     },
-    error: function(err) {
-        console.log(err)
-    },
     complete: function() {
-        console.log('complete')
+        console.log('complete!');
+    },
+    error: function(error) {
+        console.log(error)
     }
-}) // Jerry => Anna => complete
+});
+
+// 铁
+// 人
+// 赛
+// complete!
 
 
 
