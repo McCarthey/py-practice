@@ -19,16 +19,43 @@ const Rx = require('rxjs/Rx')
 /**
  * 创建Observable: create, from, of, fromEvent, fromPromise
  */
+// var observable = Rx.Observable
+//     .create(function (observer) {
+//         observer.next('Jerry')
+//         observer.next('Tom')
+//     })
+// console.log('start')
+// observable.subscribe((val) => {
+//     console.log(val)
+// })
+// console.log('end') // 'start'=> 'Jerry' => 'Tom' => 'end' 证明此处是同步的
+
+/**
+ * Observer被成为观察者，有next error complete三个方法
+ */
 var observable = Rx.Observable
     .create(function (observer) {
         observer.next('Jerry')
         observer.next('Tom')
+        observer.complete()
+        observer.next('not work')
     })
-console.log('start')
-observable.subscribe((val) => {
-    console.log(val)
-})
-console.log('end') // 'start'=> 'Jerry' => 'Tom' => 'end' 证明此处是同步的
+
+var observer = {
+    next: function(val) {
+        console.log(val)
+    },
+    error: function(err) {
+        console.log(err)
+    },
+    complete: function() {
+        console.log('complete')
+    }
+}
+
+observable.subscribe(observer) // Jerry => Anna => complete
+
+
 /**
  * 简单来说数据就在Observable中流动，你可以使用各种operator对流处理，例如：
  */
