@@ -268,6 +268,20 @@ source.map(e => {
 })
 
 
+// skip：略过前几个送出的元素
+var source  = Rx.Observable.interval(1000)
+var example = source.skip(3)
+
+example.subscribe(console.log) // 等待4s后 输出3
+
+// takelast：取最后几个元素
+var source  = Rx.Observable.interval(1000).take(6)
+var example = source.takeLast(3)
+
+example.subscribe(console.log) // 等待3s后 输出3,4,5, takeLast必须等到Observable完成，才执行，并且是同步送出
+
+
+
 
 
 
