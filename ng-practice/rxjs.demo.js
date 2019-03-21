@@ -263,8 +263,8 @@ source.map(e => {
   }
 })
 .subscribe(pos => {
-  dragEle.style.left = pos.x + 'px'
-  dragEle.style.top = pos.y + 'px'
+  dragEle.style.left = pos.x - 50 + 'px'
+  dragEle.style.top = pos.y - 50 + 'px' // 横纵左边减去元素的变长（假设100px）的一半，使光标始终在元素的中点
 })
 
 
