@@ -247,6 +247,26 @@ example.subscribe({
     complete: () => {console.log('complete')}
 })
 
+// 结合Dom事件练习operators：拖动一个id=drag的元素
+var dragEle = document.getElementById('drag')
+var body = document.body
+
+var mouseDown = Rx.Observable.fromEvent(dragEle, 'mousedown')
+var mouseUp = Rx.Observable.fromEvent(body, 'mouseup')
+var mouseMove = Rx.Observable.fromEvent(body, 'mousemove')
+var source = mouseDown.map(event => mouseMove.takeUntil(mouseUp)).concatAll()
+
+source.map(e => {
+  return {
+    x: e.clientX,
+    y: e.clientY
+  }
+})
+.subscribe(pos => {
+  dragEle.style.left = pos.x + 'px'
+  dragEle.style.top = pos.y + 'px'
+})
+
 
 
 
