@@ -100,25 +100,45 @@ const Rx = require('rxjs/Rx')
 /**
  * from也可接受字符串：
  */
-var source = Rx.Observable.from('铁人赛');
+// var source = Rx.Observable.from('铁人赛');
 
-source.subscribe({
-    next: function(value) {
-        console.log(value)
-    },
-    complete: function() {
-        console.log('complete!');
-    },
-    error: function(error) {
-        console.log(error)
-    }
-});
+// source.subscribe({
+//     next: function(value) {
+//         console.log(value)
+//     },
+//     complete: function() {
+//         console.log('complete!');
+//     },
+//     error: function(error) {
+//         console.log(error)
+//     }
+// });
 
 // 铁
 // 人
 // 赛
 // complete!
 
+/**
+ * from: 也可以传入一个promise (也可使用fromPromise)
+ */
+var source = Rx.Observable.from(new Promise((resolve, reject) => {
+    setTimeout(() => {
+        resolve('Hello RxJs')
+    }, 3000)
+}))
+
+source.subscribe({
+    next: function (value) {
+        console.log(value)
+    },
+    complete: function () {
+        console.log('complete!');
+    },
+    error: function (error) {
+        console.log(error)
+    }
+})
 
 
 
