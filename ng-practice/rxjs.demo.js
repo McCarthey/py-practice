@@ -122,11 +122,28 @@ const Rx = require('rxjs/Rx')
 /**
  * from: 也可以传入一个promise (也可使用fromPromise)
  */
-var source = Rx.Observable.from(new Promise((resolve, reject) => {
-    setTimeout(() => {
-        resolve('Hello RxJs')
-    }, 3000)
-}))
+// var source = Rx.Observable.from(new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         resolve('Hello RxJs')
+//     }, 3000)
+// }))
+
+// source.subscribe({
+//     next: function (value) {
+//         console.log(value)
+//     },
+//     complete: function () {
+//         console.log('complete!');
+//     },
+//     error: function (error) {
+//         console.log(error)
+//     }
+// })
+
+/**
+ * fromEvent: 第一个参数是DOM对象，第二个传入要监听的事件名称
+ */
+var source = Rx.Observable.fromEvent(document.body, 'click')
 
 source.subscribe({
     next: function (value) {
@@ -140,8 +157,27 @@ source.subscribe({
     }
 })
 
+/**
+ * empty,never,throw
+ */
 
+/**
+ * interval
+ */
+// var source = Rx.Observable.create(function(observer) {
+//     var i = 0;
+//     setInterval(() => {
+//         observer.next(i++);
+//     }, 1000)
+// }); // 订阅上述observable后会每隔一秒输出0,1,2...，等同于：
+// var source = Rx.Observable.interval(1000)
 
+/**
+ * timer：接受两个参数，第一个参数代表要发出第一个值的等待时间(ms)，第二个参数代表第一次之后发送值的间隔时间
+ */
+// var source = Rx.Observable.timer(1000, 5000)
+
+// var source = Rx.Observable.timer(1000); // 也可接受一个参数，订阅后等待1s，然后结束(complete)
 
 /**
  * 简单来说数据就在Observable中流动，你可以使用各种operator对流处理，例如：
