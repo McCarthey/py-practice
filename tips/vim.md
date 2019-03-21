@@ -13,3 +13,8 @@ x,X - del the following letter
 {n}x - del next {n} following letters
 dd - del current line
 {n}dd - del next {n} lines
+
+v - 进入可视模式，执行字符的选中，剪切，复制，粘贴
+d - 剪切
+y - 复制
+p - 粘贴
