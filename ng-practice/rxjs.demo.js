@@ -179,6 +179,30 @@ source.subscribe({
 
 // var source = Rx.Observable.timer(1000); // 也可接受一个参数，订阅后等待1s，然后结束(complete)
 
+
+/**
+ * Subsciption: 订阅Observable后会返回一个Subscription，可以在执行subscription.unsubscribe()方法取消订阅
+ */
+// var source = Rx.Observable.interval(1000)
+
+// var subsciption = source.subscribe({
+//     next(val) {
+//         console.log(val)
+//     },
+//     error(err) {
+//         console.log(err)
+//     },
+//     complete() {
+//         console.log('complete')
+//     }
+// })
+
+// setTimeout(() => {
+//     subsciption.unsubscribe()
+// }, 5000)
+
+
+
 /**
  * 简单来说数据就在Observable中流动，你可以使用各种operator对流处理，例如：
  */
