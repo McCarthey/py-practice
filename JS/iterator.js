@@ -44,7 +44,7 @@ class IteratorFromArray {
     }
 }
 
-const iterator = new IteratorFromArray([1,2,3,4,5]);
+const iterator = new IteratorFromArray([1, 2, 3, 4, 5]);
 const newIterator = iterator.map(v => v + 3)
 
 newIterator.next()
@@ -63,9 +63,9 @@ newIterator.next()
 /**
  * 迭代器模式实现延迟计算
  */
-function *getNumbers(words) {
-    for(let word of words) {
-        if(/^[0-9]+$/.test(word)) {
+function* getNumbers(words) {
+    for (let word of words) {
+        if (/^[0-9]+$/.test(word)) {
             yield parseInt(word, 10)
         }
     }

@@ -202,6 +202,27 @@ source.subscribe({
 // }, 5000)
 
 
+/**
+ * Operators：接收当前Observable，并返回另一个Observable的函数，如map,mapTo
+ */
+// map: 类似数组的map方法
+// var source = Rx.Observable.interval(1000)
+// var newest = source.map(v => v + 1)
+
+// newest.subscribe(console.log)
+
+// mapTo: mapTo 可以把传进来的值改成一个固定的值
+// var source = Rx.Observable.interval(1000)
+// var newest = source.mapTo(3)
+
+// newest.subscribe(console.log)
+
+// filter: 类似数组的filter方法
+// var source = Rx.Observable.interval(1000)
+// var newest = source.filter(x => x % 2 === 0)
+
+// newest.subscribe(console.log)
+
 
 /**
  * 简单来说数据就在Observable中流动，你可以使用各种operator对流处理，例如：
