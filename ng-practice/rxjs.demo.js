@@ -42,13 +42,13 @@ var observable = Rx.Observable
     })
 
 var observer = {
-    next: function(val) {
+    next: function (val) {
         console.log(val)
     },
-    error: function(err) {
+    error: function (err) {
         console.log(err)
     },
-    complete: function() {
+    complete: function () {
         console.log('complete')
     }
 }
@@ -56,9 +56,9 @@ var observer = {
 observable.subscribe(observer) // Jerry => Anna => complete
 // 或者直接写在subscribe()中
 observable.subscribe(
-    value => {console.log(value)},
-    error => {console.log(error)},
-    () => {console.log('complete')}
+    value => { console.log(value) },
+    error => { console.log(error) },
+    () => { console.log('complete') }
 )
 // 另外，观察者可以是不完整的，可以只具有next这一个方法
 
@@ -68,13 +68,13 @@ observable.subscribe(
 var source = Rx.Observable.of('Jerry', 'Tom')
 
 source.subscribe({
-    next: function(value) {
+    next: function (value) {
         console.log(value)
     },
-    error: function(err) {
+    error: function (err) {
         console.log(err)
     },
-    complete: function() {
+    complete: function () {
         console.log('complete')
     }
 }) // Jerry => Anna => complete
@@ -103,13 +103,13 @@ source.subscribe({
 var source = Rx.Observable.from('铁人赛');
 
 source.subscribe({
-    next: function(value) {
+    next: function (value) {
         console.log(value)
     },
-    complete: function() {
+    complete: function () {
         console.log('complete!');
     },
-    error: function(error) {
+    error: function (error) {
         console.log(error)
     }
 });
@@ -164,7 +164,7 @@ source.subscribe({
 /**
  * interval
  */
-var source = Rx.Observable.create(function(observer) {
+var source = Rx.Observable.create(function (observer) {
     var i = 0;
     setInterval(() => {
         observer.next(i++);
@@ -242,9 +242,9 @@ var click = Rx.Observable.fromEvent(document.body, 'click')
 var example = source.takeUntil(click)
 
 example.subscribe({
-    next: (val) => {console.log(val)},
-    error:(err) => {console.log(err)},
-    complete: () => {console.log('complete')}
+    next: (val) => { console.log(val) },
+    error: (err) => { console.log(err) },
+    complete: () => { console.log('complete') }
 })
 
 // 结合Dom事件练习operators：拖动一个id=drag的元素
@@ -257,25 +257,25 @@ var mouseMove = Rx.Observable.fromEvent(body, 'mousemove')
 var source = mouseDown.map(event => mouseMove.takeUntil(mouseUp)).concatAll()
 
 source.map(e => {
-  return {
-    x: e.clientX,
-    y: e.clientY
-  }
+    return {
+        x: e.clientX,
+        y: e.clientY
+    }
 })
-.subscribe(pos => {
-  dragEle.style.left = pos.x - 50 + 'px'
-  dragEle.style.top = pos.y - 50 + 'px' // 横纵左边减去元素的变长（假设100px）的一半，使光标始终在元素的中点
-})
+    .subscribe(pos => {
+        dragEle.style.left = pos.x - 50 + 'px'
+        dragEle.style.top = pos.y - 50 + 'px' // 横纵左边减去元素的变长（假设100px）的一半，使光标始终在元素的中点
+    })
 
 
 // skip：略过前几个送出的元素
-var source  = Rx.Observable.interval(1000)
+var source = Rx.Observable.interval(1000)
 var example = source.skip(3)
 
 example.subscribe(console.log) // 等待4s后 输出3
 
 // takelast：取最后几个元素
-var source  = Rx.Observable.interval(1000).take(6)
+var source = Rx.Observable.interval(1000).take(6)
 var example = source.takeLast(3)
 
 example.subscribe(console.log) // 等待3s后 输出3,4,5, takeLast必须等到Observable完成，才执行，并且是同步送出
@@ -286,6 +286,37 @@ var example = source.startWith(0)
 
 example.subscribe(console.log) // 0 0 1 2 3...
 
+// combineLatest：取得各个Observabele最后送出的值，再输出一个值。
+var source = Rx.Observable.interval(500).take(3)
+var newest = Rx.Observable.interval(300).take(6)
+
+var example = source.combineLatest(newest, (x, y) => x + y)
+example.subscribe(console.log) // 0 1 2 3 4 5 6 7
+// source : ----0----1----2|
+// newest : --0--1--2--3--4--5|
+
+//     combineLatest(newest, (x, y) => x + y);
+
+// example: ----01--23-4--(56)--7|
+
+// zip：会将每个Observable的相同序号的元素传入回调中
+var source = Rx.Observable.interval(500).take(3)
+var newest = Rx.Observable.interval(300).take(6)
+
+var example = source.zip(newest, (x, y) => x + y)
+
+example.subscribe(console.log) // 0 2 4
+// zip可以将原本同步送出的资料变成非同步的（请不要随便使用zip，比如当两个Observable，一个快，一个慢时，zip会cache住很多未处理的元素，影响内存）
+var source = Rx.Observable.from('hello')
+var source2 = Rx.Observable.interval(1000)
+
+var example = source.zip(source2, (x, y) => x)
+
+example.subscribe({
+    next: val => console.log(val),
+    error: err => console.log(err),
+    complete: () => console.log('complete')
+}) // 'h' 'e' 'l' 'l' 'o''complete'
 
 
 
@@ -297,7 +328,7 @@ ob.take(3).map(n => n * 2).filter(n => n >= 2).subscribe({
     next: n => console.log(n),
     error: err => console.log(err),
     complete: () => console.log('complete')
-}) 
+})
 
 // /**
 //  * 合并序列之Observable.concat() ： 
@@ -328,16 +359,16 @@ var merged = timer1.merge(timer2, timer3);
 merged.subscribe(x => console.log(x));
 
 // Observable 懒执行
-var source = Rx.Observable.from([1,2,3,4,5]);
+var source = Rx.Observable.from([1, 2, 3, 4, 5]);
 var example = source.map(x => x + 1); // 此处不会执行
 
 example.subscribe(console.log) // 只有订阅后才会执行
 
 // Observable 渐进式运算
-var source = Rx.Observable.from([1,2,3]);
+var source = Rx.Observable.from([1, 2, 3]);
 var example = source
-              .filter(x => x % 2 === 0)
-              .map(x => x + 1)
+    .filter(x => x % 2 === 0)
+    .map(x => x + 1)
 
 example.subscribe(console.log);
 
@@ -426,7 +457,7 @@ example.subscribe({
 // 这三个 operators 可以把第一个参数返回的 promise 直接转成 observable，这样我们就不用再用 Rx.Observable.from 转一次
 function getPersonData() {
     return fetch('https://jsonplaceholder.typicode.com/posts/1')
-    .then(res => res.json())
+        .then(res => res.json())
 }
 var source = Rx.Observable.fromEvent(document.body, 'click');
 
@@ -436,7 +467,7 @@ example.subscribe({
     next: (value) => { console.log(value); },
     error: (err) => { console.log('Error: ' + err); },
     complete: () => { console.log('complete'); }
-}); 
+});
 
 // concatMap, switchMap, mergeMap的使用场景：
 // - 建议初学者不确定选哪一个时，使用 switchMap
