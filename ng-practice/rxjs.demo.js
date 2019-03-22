@@ -525,7 +525,33 @@ numberState.subscribe(
     () => console.log('complete')
 )
 
+// buffer有5个相关的operators: buffer,bufferCount,bufferTime,bufferToggle,buffer
+// buffer
+var source = Rx.Observable.interval(300)
+var source2 = Rx.Observable.interval(1000)
+var example = source.buffer(source2)
 
+example.subscribe(console.log)
+
+// bufferTime
+var source = Rx.Observable.interval(300);
+var example = source.bufferTime(1000);
+
+example.subscribe({
+    next: (value) => { console.log(value); },
+    error: (err) => { console.log('Error: ' + err); },
+    complete: () => { console.log('complete'); }
+});
+
+// bufferCount
+var source = Rx.Observable.interval(300);
+var example = source.bufferCount(3);
+
+example.subscribe({
+    next: (value) => { console.log(value); },
+    error: (err) => { console.log('Error: ' + err); },
+    complete: () => { console.log('complete'); }
+});
 
 /**
  * ======================================================================
