@@ -179,7 +179,7 @@ var source = Rx.Observable.timer(1000, 5000)
 
 var source = Rx.Observable.timer(1000); // 也可接受一个参数，订阅后等待1s，然后结束(complete)
 
-
+i
 /**
  * Subsciption: 订阅Observable后会返回一个Subscription，可以在执行subscription.unsubscribe()方法取消订阅
  */
@@ -318,8 +318,15 @@ example.subscribe({
     complete: () => console.log('complete')
 }) // 'h' 'e' 'l' 'l' 'o''complete'
 
+// withLatestFrom：类似于combineLatestFrom，只有在主要的Observable送出新值时，才会执行callback：
+var main = Rx.Observable.from('hello').zip(Rx.Observable.interval(500), (x,y) => x)
+var some = Rx.Observable.from([0,1,0,0,0,1]).zip(Rx.Observable.interval(300), (x,y) => x)
 
+var example = main.withLatestFrom(some, (x,y) => {
+    return y === i ? x.toUpperCase(): x
+})
 
+example.subscribe(console.log)
 /**
  * 简单来说数据就在Observable中流动，你可以使用各种operator对流处理，例如：
  */
@@ -482,3 +489,12 @@ const timer1 = Rx.Observable.timer(0, 1000)
 const timer2 = Rx.Observable.timer(500, 1000)
 const combineTimer = Rx.Observable.combineLatest(timer1, timer2)
 combineTimer.subscribe(x => console.log(x)) // 将两个observable结合，顺序输出
+
+
+/**
+ * ======================================================================
+ */
+
+/**
+ * Subject 
+ */
