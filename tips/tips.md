@@ -1352,4 +1352,11 @@ var allElements = document.getElementsByTagName('*')
 
 * Element.classList
 
-  Element.classList是一个只读属性，是替代element.className作为空格分隔的字符串访问元素的类列表的一种方便的方法。可以是调用add()，和remove()方法修改它
+  Element.classList是一个只读属性，是替代element.className作为空格分隔的字符串访问元素的类列表的一种方便的方法。可以是调用add()，和remove()方法修改它。
+
+    - add: 添加指定的类
+    - remove：删除的指定的类
+    - item：按集合中的索引返回类值
+    - toggle：当只有一个参数时：切换 class value; 即如果类存在，则删除它并返回false，如果不存在，则添加它并返回true；当存在第二个参数时：如果第二个参数的计算结果为true，则添加指定的类值，如果计算结果为false，则删除它。
+    - contains：检查元素的类属性中是否存在指定的类值
+    - replace：用一个新类代替已有类
