@@ -280,7 +280,11 @@ var example = source.takeLast(3)
 
 example.subscribe(console.log) // 等待3s后 输出3,4,5, takeLast必须等到Observable完成，才执行，并且是同步送出
 
+// startWith：可以在Observable一开始塞入要发送的元素。startWith的值是一开始就同步发出的，常被用来保存起始状态
+var source = Rx.Observable.interval(1000)
+var example = source.startWith(0)
 
+example.subscribe(console.log) // 0 0 1 2 3...
 
 
 
