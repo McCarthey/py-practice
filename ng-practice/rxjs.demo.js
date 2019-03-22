@@ -553,6 +553,51 @@ example.subscribe({
     complete: () => { console.log('complete'); }
 });
 
+
+// delay: 延迟发送第一个元素 
+var source = Rx.Observable.interval(300).take(5);
+
+var example = source.delay(500);
+
+example.subscribe({
+    next: (value) => { console.log(value); },
+    error: (err) => { console.log('Error: ' + err); },
+    complete: () => { console.log('complete'); }
+});
+
+// delayWhen：类似delay，可以影响每个元素，需要传入一个回调，返回一个Obserable
+var source = Rx.Observable.interval(300).take(5)
+var example = source.delayWhen(
+    x => Rx.Observable.empty().delay(100 * x * x)
+)
+
+example.subscribe({
+    next: (value) => { console.log(value); },
+    error: (err) => { console.log('Error: ' + err); },
+    complete: () => { console.log('complete'); }
+});
+
+// debounce：防抖，在防抖时间间隔内多次接收到元素，则只输出最后一次触发的元素（debounce和debounceTime）
+var source = Rx.Observable.interval(300).take(5)
+var example = source.debounceTime(1000)
+
+example.subscribe({
+    next: (value) => { console.log(value); },
+    error: (err) => { console.log('Error: ' + err); },
+    complete: () => { console.log('complete'); }
+}); // 4 'complete'
+
+// throttle：节流（throttle和throttleTime）
+var source = Rx.Observable.interval(300).take(5)
+var example = source.throttleTime(1000)
+
+example.subscribe({
+    next: (value) => { console.log(value); },
+    error: (err) => { console.log('Error: ' + err); },
+    complete: () => { console.log('complete'); }
+}); // 0 4 'complete'
+
+
 /**
  * ======================================================================
  */
