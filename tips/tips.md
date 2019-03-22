@@ -1349,3 +1349,7 @@ var allElements = document.getElementsByTagName('*')
 * BFC
 
   BFC，即，**块格式化上下文**，是 Web 页面的可视化 CSS 渲染的一部分，是布局过程中生成块级盒子的区域，也是浮动元素与其他元素的交互限定区域。BFC 是一个独立的布局环境，其中的元素布局是不受外界的影响，并且在一个 BFC 中，块盒与行盒（行盒由一行中所有的内联元素所组成）都会垂直的沿着其父元素的边框排列。
+
+* Element.classList
+
+  Element.classList是一个只读属性，是替代element.className作为空格分隔的字符串访问元素的类列表的一种方便的方法。可以是调用add()，和remove()方法修改它
