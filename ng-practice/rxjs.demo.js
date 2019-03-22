@@ -319,11 +319,11 @@ example.subscribe({
 }) // 'h' 'e' 'l' 'l' 'o''complete'
 
 // withLatestFrom：类似于combineLatestFrom，只有在主要的Observable送出新值时，才会执行callback：
-var main = Rx.Observable.from('hello').zip(Rx.Observable.interval(500), (x,y) => x)
-var some = Rx.Observable.from([0,1,0,0,0,1]).zip(Rx.Observable.interval(300), (x,y) => x)
+var main = Rx.Observable.from('hello').zip(Rx.Observable.interval(500), (x, y) => x)
+var some = Rx.Observable.from([0, 1, 0, 0, 0, 1]).zip(Rx.Observable.interval(300), (x, y) => x)
 
-var example = main.withLatestFrom(some, (x,y) => {
-    return y === i ? x.toUpperCase(): x
+var example = main.withLatestFrom(some, (x, y) => {
+    return y === i ? x.toUpperCase() : x
 })
 
 example.subscribe(console.log)
@@ -491,7 +491,7 @@ const combineTimer = Rx.Observable.combineLatest(timer1, timer2)
 combineTimer.subscribe(x => console.log(x)) // 将两个observable结合，顺序输出
 
 // scan：Observable版本的reduce，最后返回Observable实例，例如：
-var source = Rx.Observable.from('hello').zip(Rx.Observable.interval(600), (x ,y) => x)
+var source = Rx.Observable.from('hello').zip(Rx.Observable.interval(600), (x, y) => x)
 
 var example = source.scan((acc, cur) => acc + cur, '')
 
@@ -520,7 +520,7 @@ const numberState = Rx.Observable.empty()
     .scan((acc, cur) => acc + cur, 0)
 
 numberState.subscribe(
-    val => {state.innerHTML = val},
+    val => { state.innerHTML = val },
     err => console.log(err),
     () => console.log('complete')
 )
@@ -595,7 +595,39 @@ example.subscribe({
     next: (value) => { console.log(value); },
     error: (err) => { console.log('Error: ' + err); },
     complete: () => { console.log('complete'); }
-}); // 0 4 'complete'
+}); // 0 4 'complete' ：跟 debounce 的不同是 throttle 会先开放送出元素，等到有元素被送出就会沉默一段时间，等到时间过了又会开放发送元素
+
+// distinct：过滤重复的值
+var source = Rx.Observable.from(['a', 'b', 'c', 'a', 'b'])
+    .zip(Rx.Observable.interval(300), (x, y) => x)
+var example = source.distinct()
+
+example.subscribe({
+    next: (value) => console.log(value),
+    error: (err) => console.log(err),
+    complete: () => console.log('complete')
+})
+
+// distinct可以传入一个函数,该函数接受一个参数，并返回我们希望对比的值，比如下述代码对比各个对象是否重复，如果不穿入函数，则始终不会
+var source = Rx.Observable.from([{ value: 'a' }, { value: 'b' }, { value: 'c' }, { value: 'a' }, { value: 'b' }])
+    .zip(Rx.Observable.interval(300), (x, y) => x)
+var example = source.distinct(x => {
+    return x.value
+})
+
+example.subscribe({
+    next: (value) => console.log(value),
+    error: (err) => console.log(err),
+    complete: () => console.log('complete')
+})
+
+// distinctUntilChanged只会暂存一个元素(只会跟最后一次送出的元素比较)，并在收到元素时候跟暂存的元素对比，如果相同就不送出，如果不同就把暂存的元素换成刚接收到的新元素并送出
+var source = Rx.Observable.from(['a','b','c','c','b'])
+    .zip(Rx.Observable.interval(300), (x, y) => x)
+var example = source.distinctUntilChanged()
+
+example.subscribe(console.log)
+
 
 
 /**
@@ -603,5 +635,5 @@ example.subscribe({
  */
 
 /**
- * Subject 
+ * Subject
  */
