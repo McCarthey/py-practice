@@ -490,6 +490,42 @@ const timer2 = Rx.Observable.timer(500, 1000)
 const combineTimer = Rx.Observable.combineLatest(timer1, timer2)
 combineTimer.subscribe(x => console.log(x)) // 将两个observable结合，顺序输出
 
+// scan：Observable版本的reduce，最后返回Observable实例，例如：
+var source = Rx.Observable.from('hello').zip(Rx.Observable.interval(600), (x ,y) => x)
+
+var example = source.scan((acc, cur) => acc + cur, '')
+
+example.subscribe(
+    value => console.log(value),
+    error => console.log(error),
+    () => console.log('complete')
+)
+// h
+// he
+// hel
+// hell
+// hello
+// complete
+
+// 利用zip,mapTo,merge,scan实现加减计数器
+const state = document.getElementById('state')
+const addButton = document.getElementById('addButton')
+const minusButton = document.getElementById('minusButton')
+
+const addClick = Rx.Observable.fromEvent(addButton, 'click').mapTo(1)
+const minusClick = Rx.Observable.fromEvent(minusButton, 'click').mapTo(-1)
+const numberState = Rx.Observable.empty()
+    .startWith(0)
+    .merge(addClick, minusClick)
+    .scan((acc, cur) => acc + cur, 0)
+
+numberState.subscribe(
+    val => {state.innerHTML = val},
+    err => console.log(err),
+    () => console.log('complete')
+)
+
+
 
 /**
  * ======================================================================
