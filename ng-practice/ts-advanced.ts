@@ -61,3 +61,30 @@ Foo.bar() // 'hello', 静态方法可以和非静态方法重名
 
 class Bar extends Foo {}
 Bar.bar() // 'hello' 静态方法可以被子类继承，也可以通过super.classMethod()在子类上调用
+
+/**
+ * 实例属性：
+ * 之前是通过在构造函数中的this.XXX定义，现在可以直接定义在class的顶部：
+ */
+class Dog {
+    name = 'Jack';
+
+    constructor() {
+        // ...
+    }
+}
+
+let dog = new Dog();
+console.log(dog.name); // Jack   
+
+/**
+ * 静态属性：
+ * 静态属性指的是class本身的属性，而不是实例上的属性（js中目前是提案，ts中已经实现）
+ */
+class MyClass {
+    static myStaticProp = 42
+
+    constructor() {
+        console.log(MyClass.myStaticProp)
+    }
+} 
