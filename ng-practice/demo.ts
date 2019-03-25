@@ -3,9 +3,12 @@
  * @param target 
  */
 
-function Path(target:any) {
-    console.log("I am decorator.")
+function Path(p1: string, p2: string) {
+    return function (target) { //  这才是真正装饰器
+        // do something 
+        console.log(p1 + p2)
+    }
 }
 
-@Path
+@Path("/hello", "world")
 class HelloService {}

@@ -188,6 +188,30 @@ function throttle(func, delay) {
 }
 ```
 
+#### 函数柯里化
+函数柯里化只的是将一个多参数的函数拆分成一系列函数，每个拆分后的函数都只接受一个参数
+```javascript
+function add(a, b) {
+  return a + b
+}
+
+add(1, 2)
+```
+柯里化后，
+```javascript
+function add (a) {
+  return function (b) {
+    return a + b
+  }
+}
+
+add(1)(2)
+
+// 或者采用更简洁的箭头函数写法
+const add = a => b => a + b
+```
+
+
 #### 堆内存与栈内存
 
 JS 引擎中对变量的存储主要有两种，**堆内存**和**栈内存**。
