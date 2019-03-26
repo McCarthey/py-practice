@@ -252,6 +252,33 @@ var clicks = Rx.Observable.fromEvent(document, 'click')
 var resutl = clicks.takeWhile(ev => ev.clientX > 200)
 result.subscribe(x => console.log(x))
 
+// do (RxJs6以上用tap)：执行副作用，例如打印等
+const source = Rx.Observable.timer(1000)
+const example = source
+  .do(() => console.log('***SIDE EFFECT***'))
+  .mapTo('***RESULT***')
+
+const subscribe = example.subscribe(val => console.log(val));
+const subscribeTwo = example.subscribe(val => console.log(val));
+// "***SIDE EFFECT***"
+// "***RESULT***"
+// "***SIDE EFFECT***"
+// "***RESULT***"
+
+// share：在多个订阅者之间共享observable。如上例，可以使用share只打印一次
+const sharedExample = example.share()
+const subscribeThree = sharedExample.subscribe(val => console.log(val));
+const subscribeFour = sharedExample.subscribe(val => console.log(val));
+// "***SIDE EFFECT***"
+// "***RESULT***"
+// "***RESULT***"
+
+// count： 计算源的发送数量，并当源完成时发出该数值。
+var numbers = Rx.Observable.range(1, 7);
+var result = numbers.count(i => i % 2 === 1);
+result.subscribe(x => console.log(x)); // 4
+
+
 // 结合Dom事件练习operators：拖动一个id=drag的元素
 var dragEle = document.getElementById('drag')
 var body = document.body
@@ -679,7 +706,7 @@ const loadButton = document.getElementById('load')
 const progressBar = document.getElementById('progress')
 const content = document.getElementById('data')
 
-const updateProgress = progressRatio => {
+const updateProgress = progressRatio => { // 添加/移除css类名，改变进度条长度
     console.log('Progress ratio, ', progressRatio)
     progressBar.style.width = 100 * progressRatio
     if (progressRatio === 1) {
@@ -693,7 +720,7 @@ const updateContent = newContent => {
     content.innerHTML += newContent
 }
 
-const displayData = data => {
+const displayData = data => { // 更新dom视图
     updateContent(`<div class="content">${data}</div>`)
 }
 
@@ -705,12 +732,12 @@ const observables = [
     requestFive
 ]
 
-const array$ = Rx.Observable.from(observables)
-const request$ = array$.concatAll()
-const clicks$ = Rx.Observable.fromEvent(loadButton, 'click')
+const array$ = Rx.Observable.from(observables) // from将数组转为流
+const request$ = array$.concatAll() // 将上一步的流打平，串行输出
+const clicks$ = Rx.Observable.fromEvent(loadButton, 'click') // 将按钮click事件转为流
 
-const progress$ = click$.switchMapTo(request$).share()
-const count$ = array$.count()
+const progress$ = clicks$.switchMapTo(request$).share() // 每次点击返回一个request Observable，并且多个订阅者共享源observable
+const count$ = array$.count() // 计算源的发送数量，并当源完成时发出该数值。
 const ratio$ = progress$.scan(cur => cur + 1, 0).withLatestFrom(count$, (current, count) => current / count)
 
 clicks$.switchMapTo(ratio$).subscribe(updateProgress)
