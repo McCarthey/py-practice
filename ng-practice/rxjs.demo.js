@@ -250,7 +250,7 @@ example.subscribe({
 // takeWhile：接受一个函数，返回源值是否满足条件的布尔值，直到返回了false，Observable才完成
 var clicks = Rx.Observable.fromEvent(document, 'click')
 var resutl = clicks.takeWhile(ev => ev.clientX > 200)
-result.subscribe(x => console.log(x)) 
+result.subscribe(x => console.log(x))
 
 // 结合Dom事件练习operators：拖动一个id=drag的元素
 var dragEle = document.getElementById('drag')
@@ -635,28 +635,35 @@ example.subscribe(console.log)
 
 /**
  * 结合各个操作符实现计数器(HTML部分省略)
+ * TODO: 改变timer参数来改变速率，越来越慢
  */
-const positiveOrNegative = (endRange, currentNumber) => {
-    return endRange > currentNumber ? 1: -1
+const takeUntilFunc = (endRange, currentNumber) => {
+    return endRange > currentNumber
+        ? val => val <= endRange
+        : val => val >= endRange
 }
 
-const updateHTML = id => val => (document.getElementById(id).innerHTML = val)
+const positiveOrNegative = (endRange, currentNumber) => {
+    return endRange > currentNumber ? 1 : -1
+}
+
+const updateHTML = id => val => document.getElementById(id).innerHTML = val
 const input = document.getElementById('range')
 const updateButton = document.getElementById('update')
 
 const subsciption = (function (currentNumber) {
-    return fromEvent(updateButton, 'click').pipe(
-        map(_ => parseInt(input.value)),
-        switchMap(endRange => {
-            return timer(0, 20).pipe(
-                mapTo(positiveOrNegative(endRange, currentNumber)),
-                startWith(currentNumber),
-                scan((acc, cur) => acc + cur),
-
-            )
+    return Rx.Observable.fromEvent(updateButton, 'click')
+        .map(_ => parseInt(input.value))
+        .switchMap(endRange => {
+            return Rx.Observable.timer(0, 20)
+                .mapTo(positiveOrNegative(endRange, currentNumber))
+                .startWith(currentNumber)
+                .scan((acc, cur) => acc + cur)
+                .takeWhile(takeUntilFunc(endRange, currentNumber))
         })
-
-    )
+        .do(v => currentNumber = v)
+        .startWith(currentNumber)
+        .subscribe(updateHTML('display'))
 })(0)
 
 
