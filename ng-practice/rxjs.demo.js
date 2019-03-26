@@ -666,7 +666,55 @@ const subsciption = (function (currentNumber) {
         .subscribe(updateHTML('display'))
 })(0)
 
+/**
+ * 模拟请求，实现进度条
+ */
+const requestOne = Rx.Observable.of('first').delay(500)
+const requestTwo = Rx.Observable.of('second').delay(800)
+const requestThree = Rx.Observable.of('third').delay(1100)
+const requestFour = Rx.Observable.of('fourth').delay(1400)
+const requestFive = Rx.Observable.of('fifth').delay(1700)
 
+const loadButton = document.getElementById('load')
+const progressBar = document.getElementById('progress')
+const content = document.getElementById('data')
+
+const updateProgress = progressRatio => {
+    console.log('Progress ratio, ', progressRatio)
+    progressBar.style.width = 100 * progressRatio
+    if (progressRatio === 1) {
+        progressBar.className += 'finished'
+    } else {
+        progressBar.className.replace(' finished', '')
+    }
+}
+
+const updateContent = newContent => {
+    content.innerHTML += newContent
+}
+
+const displayData = data => {
+    updateContent(`<div class="content">${data}</div>`)
+}
+
+const observables = [
+    requestOne,
+    requestTwo,
+    requestThree,
+    requestFour,
+    requestFive
+]
+
+const array$ = Rx.Observable.from(observables)
+const request$ = array$.concatAll()
+const clicks$ = Rx.Observable.fromEvent(loadButton, 'click')
+
+const progress$ = click$.switchMapTo(request$).share()
+const count$ = array$.count()
+const ratio$ = progress$.scan(cur => cur + 1, 0).withLatestFrom(count$, (current, count) => current / count)
+
+clicks$.switchMapTo(ratio$).subscribe(updateProgress)
+progress$.subscribe(displayData);
 /**
  * ======================================================================
  */
