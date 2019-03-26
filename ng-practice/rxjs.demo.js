@@ -247,6 +247,11 @@ example.subscribe({
     complete: () => { console.log('complete') }
 })
 
+// takeWhile：接受一个函数，返回源值是否满足条件的布尔值，直到返回了false，Observable才完成
+var clicks = Rx.Observable.fromEvent(document, 'click')
+var resutl = clicks.takeWhile(ev => ev.clientX > 200)
+result.subscribe(x => console.log(x)) 
+
 // 结合Dom事件练习operators：拖动一个id=drag的元素
 var dragEle = document.getElementById('drag')
 var body = document.body
@@ -622,12 +627,37 @@ example.subscribe({
 })
 
 // distinctUntilChanged只会暂存一个元素(只会跟最后一次送出的元素比较)，并在收到元素时候跟暂存的元素对比，如果相同就不送出，如果不同就把暂存的元素换成刚接收到的新元素并送出
-var source = Rx.Observable.from(['a','b','c','c','b'])
+var source = Rx.Observable.from(['a', 'b', 'c', 'c', 'b'])
     .zip(Rx.Observable.interval(300), (x, y) => x)
 var example = source.distinctUntilChanged()
 
 example.subscribe(console.log)
 
+/**
+ * 结合各个操作符实现计数器(HTML部分省略)
+ */
+const positiveOrNegative = (endRange, currentNumber) => {
+    return endRange > currentNumber ? 1: -1
+}
+
+const updateHTML = id => val => (document.getElementById(id).innerHTML = val)
+const input = document.getElementById('range')
+const updateButton = document.getElementById('update')
+
+const subsciption = (function (currentNumber) {
+    return fromEvent(updateButton, 'click').pipe(
+        map(_ => parseInt(input.value)),
+        switchMap(endRange => {
+            return timer(0, 20).pipe(
+                mapTo(positiveOrNegative(endRange, currentNumber)),
+                startWith(currentNumber),
+                scan((acc, cur) => acc + cur),
+
+            )
+        })
+
+    )
+})(0)
 
 
 /**
