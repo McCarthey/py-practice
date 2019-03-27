@@ -255,8 +255,8 @@ result.subscribe(x => console.log(x))
 // do (RxJs6以上用tap)：执行副作用，例如打印等
 const source = Rx.Observable.timer(1000)
 const example = source
-  .do(() => console.log('***SIDE EFFECT***'))
-  .mapTo('***RESULT***')
+    .do(() => console.log('***SIDE EFFECT***'))
+    .mapTo('***RESULT***')
 
 const subscribe = example.subscribe(val => console.log(val));
 const subscribeTwo = example.subscribe(val => console.log(val));
@@ -662,7 +662,6 @@ example.subscribe(console.log)
 
 /**
  * 结合各个操作符实现计数器(HTML部分省略)
- * TODO: 改变timer参数来改变速率，越来越慢
  */
 const takeUntilFunc = (endRange, currentNumber) => {
     return endRange > currentNumber
@@ -682,7 +681,7 @@ const subsciption = (function (currentNumber) {
     return Rx.Observable.fromEvent(updateButton, 'click')
         .map(_ => parseInt(input.value))
         .switchMap(endRange => {
-            return Rx.Observable.timer(0, 20)
+            return Rx.Observable.timer(0, 1)
                 .mapTo(positiveOrNegative(endRange, currentNumber))
                 .startWith(currentNumber)
                 .scan((acc, cur) => acc + cur)
