@@ -1,6 +1,7 @@
 
 /**
- * 本文件内代码段均可使用在线JSBin测试
+ * 本文件内代码段均可使用在线JSBin测试　在Rx.Observable上的方法均为v5版本下运行。
+ * v6版本下不可直接链式调用，需要使用pipe()方法：https://rxjs-cn.github.io/learn-rxjs-operators/concepts/operator-imports.html
  * https://jsbin.com/nuhita/5/edit?js,console,output
  */
 
