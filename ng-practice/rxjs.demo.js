@@ -661,6 +661,12 @@ var example = source.distinctUntilChanged()
 
 example.subscribe(console.log)
 
+// defaultIfEmpty：如果在完成前没有发出任何通知，那么发出给定的值
+var empty = Rx.Observable.of()
+var example = empty.defaultIfEmpty('Observable.of() is empty')
+
+example.subscribe(console.log) // 'Observable.of() is empty'
+
 /**
  * 结合各个操作符实现计数器(HTML部分省略)
  */
