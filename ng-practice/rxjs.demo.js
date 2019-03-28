@@ -218,6 +218,12 @@ var newest = source.mapTo(3)
 
 newest.subscribe(console.log)
 
+// every：类似数组的every方法
+var source = Rx.Observable.of(1,2,3,4,5)
+var example = source.every(v => v % 2 === 1)
+
+example.subscribe(console.log) // false
+
 // filter: 类似数组的filter方法
 var source = Rx.Observable.interval(1000)
 var newest = source.filter(x => x % 2 === 0)

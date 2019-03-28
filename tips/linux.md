@@ -1,3 +1,5 @@
+# 禁止root远程登录
+每天都有很多人在尝试root全程登录你的服务器，为安全起见，[参考](https://www.cnblogs.com/jianz/p/7979250.html)文章，新建用户登录，然后禁止root远程登录。
 # Linux相关
 - unzip解压
 
