@@ -6,6 +6,6 @@ module.exports = function createApp(context) {
 		data: {
 			url: context.url
 		},
-		template: `<div>访问的URL是：{{ url }}</div>`
+		template: `<div>Current router is: {{ url }}</div>`
 	})
 }

@@ -12,9 +12,9 @@ renderer.renderToString(app, (err, html) => {
 	if (err) throw err
 	console.log(html)
 })
-
-renderer.renderToString(app).then(html => {
-	console.log(html)
-}).catch(err => {
-	console.log(err)
-})
+// 在2.5.0+ ，也可返回promise
+// renderer.renderToString(app).then(html => {
+// 	console.log(html)
+// }).catch(err => {
+// 	console.log(err)
+// })

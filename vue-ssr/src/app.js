@@ -13,5 +13,6 @@ export function createApp() {
 		router,
 		render: h => h(App)
 	})
+	// 返回app, router
 	return { app ,router }
 }
