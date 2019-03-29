@@ -1382,4 +1382,22 @@ var allElements = document.getElementsByTagName('*')
 
   负载平衡（Load balancing）是一种计算机技术，用来在多个计算机（计算机集群）、网络连接、CPU、磁盘驱动器或其他资源中分配负载，以达到最优化资源使用、最大化吞吐率、最小化响应时间、同时避免过载的目的。 使用带有负载平衡的多个服务器组件，取代单一的组件，可以通过冗余提高可靠性。负载平衡服务通常是由专用软件和硬件来完成。 主要作用是将大量作业合理地分摊到多个操作单元上进行执行，用于解决互联网架构中的高并发和高可用的问题。
 
+
+* npx
+
+  原理：运行的时候，会到node_modules/.bin路径和环境变量$PATH里面，检查命令是否存在。
   
+  npx 可以调用项目内部安装的模块。
+  老方法：
+  ```
+  $ node-modules/.bin/mocha --version
+  ```
+  用npx：
+  ```
+  $ npx mocha --version
+  ```
+  npx 可以避免全局安装模块。
+  ```
+  $ npx create-react-app my-react-app
+  ```
+  上面代码运行时，npx 将create-react-app下载到一个临时目录，使用以后再删除。所以，以后再次执行上面的命令，会重新下载create-react-app。

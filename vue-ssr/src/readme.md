@@ -21,3 +21,10 @@ src
 - 只有beforeCreate 和 created 钩子会在ssr过程中被调用。其他的生命周期钩子将在客户端进行。因此避免在beforeCraete 和 created 中产生全局副作用代码，如setTimeout，因为这个timer会一直保留下来，不会销毁。请将类似副作用逻辑移动到beforeMount 或 mounted 中。
 - 注意特定平台的API。纯客户端的API，如document，window等，仅在客户端可用的生命周期中使用，勿放入通用代码中。
 
+### 数据预取和动态
+- 数据预取存储容器（Data Store）：
+    
+    使用Vuex:
+    首先，在服务器端，我们可以在渲染之前预取数据，并将数据填充到 store 中。
+    此外，我们将在 HTML 中序列化(serialize)和内联预置(inline)状态。这样，在挂载(mount)到客户端应用程序之前，可以直接从 store 获取到内联预置(inline)状态。
+    
