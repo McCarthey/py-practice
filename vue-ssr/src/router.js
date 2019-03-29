@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 const Foo = () => import('./components/Foo.vue')
 const Bar = () => import('./components/Bar.vue')
-const Baz = () => import('./components/Baz.vue')
+const Item = () => import('./components/Item.vue')
 
 Vue.use(Router)
 
@@ -12,16 +12,16 @@ export function createRouter() {
 		mode: 'history',
 		routes: [{
 			name: 'foo',
-			path: 'foo',
+			path: '/',
 			component: Foo,
 		}, {
 			name: 'bar',
-			path: 'bar',
+			path: '/bar',
 			component: Bar
 		}, {
-			name: 'baz',
-			path: 'baz',
-			component: Baz
+			name: 'item',
+			path: '/item/:id',
+			component: Item
 		}]
 	})
 }
