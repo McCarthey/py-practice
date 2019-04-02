@@ -1401,3 +1401,12 @@ var allElements = document.getElementsByTagName('*')
   $ npx create-react-app my-react-app
   ```
   上面代码运行时，npx 将create-react-app下载到一个临时目录，使用以后再删除。所以，以后再次执行上面的命令，会重新下载create-react-app。
+
+* 位移操作符
+
+    按位移动会先将操作数转换为大端字节序顺序(big-endian order)的32位整数,并返回与左操作数相同类型的结果。**右操作数应小于 32位，否则只有最低 5 个字节会被使用**。    
+    ```javascript
+    1 << 32 // 1
+    1 << 31 // -2147483648
+    1 << 30 // 1073741824
+    ```
