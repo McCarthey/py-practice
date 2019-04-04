@@ -1410,3 +1410,26 @@ var allElements = document.getElementsByTagName('*')
     1 << 31 // -2147483648
     1 << 30 // 1073741824
     ```
+* Math.sign()
+
+    Math.sign() 函数返回一个数字的符号, 指示数字是正数，负数还是零。
+    ```javascript
+    Math.sign(3);     //  1
+    Math.sign(-3);    // -1
+    Math.sign("-3");  // -1
+    Math.sign(0);     //  0
+    Math.sign(-0);    // -0
+    Math.sign(NaN);   // NaN
+    Math.sign("foo"); // NaN
+    Math.sign();      // NaN
+    ```
+    ployfill:
+    ```javascript
+    function sign(x) {
+        x = +x // 转换为数字
+        if(x === 0 || Number.isNaN(x)) { // 0或NaN都返回自身，-0 === 0
+            return x
+        }
+        return x > 0 ? 1 : -1 // 整数返回1, 负数返回-1
+    } 
+    ```
