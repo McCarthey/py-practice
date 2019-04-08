@@ -168,3 +168,31 @@ function reverse(x: number | string): number | string {
     }
 }
 // 上例中我们重复定义了多次函数reverse，前两次是函数定义，最后一次是函数实现
+
+
+/** 
+ * 声明语句: 当我们使用第三方库的时候，需要告诉ts编译器，库的全局变量是什么，例如jQuery
+*/
+declare var jQuery: (selector: string) => any;
+jQuery('#foo')
+// 上例中，declare var 并没有真的定义一个变量，只是定义了全局变量 jQuery 的类型，仅仅会用于编译时的检查，在编译结果中会被删除。
+// 也可以使用let / const关键字声明，一般来说，全局变量都是禁止修改的常量，所以大部分都应该使用const 而不是let 或者 var
+
+
+/**
+ * 声明文件：通常我们会把声明语句放到一个单独的文件（jQuery.d.ts）中，这就是声明文件，例如：
+ * // src/jQuery.d.ts
+ * declare var jQuery: (selector: string) => any;
+ * // 声明文件必需以 .d.ts 为后缀。
+ * 除了声明全局变量之外，我们可以通过interface / type来声明一个全局类型，方便在其他文件中使用：
+ * interface AjaxSettings {
+ *  methods?: 'GET' || 'POST',
+ *  data?: any;
+ * }
+ * declare namespace jQuery {
+ *  function ajax(url: string, settings?: AjaxSettings): void
+ * }
+ */
+
+
+

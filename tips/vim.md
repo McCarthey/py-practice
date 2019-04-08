@@ -27,3 +27,6 @@
 - 删除：di' di" di( di[ di{ di<
 - 复制：yi[*]
 - 选中：vi[*]
+
+# undo撤销
+- u
