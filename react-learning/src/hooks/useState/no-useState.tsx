@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import '../style.css'
+import '../style.scss'
 
 interface countProps {}
 interface countState {
