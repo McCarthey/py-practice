@@ -1,0 +1,119 @@
+$startColor: #409eff;
+$endColor: #faad14;
+$shellColor: #673ab7;
+$rancherColor: #67c23a;
+$pythonColor: #f56c6c;
+
+canvas {
+    border: 1px solid rgb(217, 217, 217);
+    border-radius: 4px;
+}
+.g6-page {
+    text-align: left;
+    background-color: #fff;
+}
+.basic-info-wrapper {
+    .input-item {
+        margin: 10px 6px;
+        p {
+            width: 120px;
+            display: inline-block;
+        }
+        input,
+        textarea {
+            max-width: 832px;
+            vertical-align: top;
+        }
+    }
+}
+
+.g6-tooltip {
+    padding: 10px 6px;
+    color: #444;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #e2e2e2;
+    border-radius: 4px;
+}
+.menu-wrapper {
+    position: absolute;
+    width: 100px;
+    background-color: #fbfbfb;
+    border: 1px solid #dedede;
+    border-radius: 6px;
+    overflow: hidden;
+    color: #7b7b7b;
+    div {
+        padding: 6px 4px;
+        transition: 0.3s;
+        cursor: pointer;
+        &:hover {
+            background-color: #efefef;
+        }
+    }
+    .btn-delete:hover {
+        color: #fff;
+        background-color: #f56c6c;
+    }
+}
+
+.op-wrapper {
+    margin-top: 10px;
+    display: flex;
+    height: 80px;
+    button {
+        margin: 0 6px;
+    }
+    .module-list {
+        display: flex;
+        .module {
+            height: 60px;
+            width: 80px;
+            margin: 0 6px;
+            background-color: red;
+            color: #fff;
+            text-align: center;
+            line-height: 60px;
+            transition: 0.2s;
+            cursor: pointer;
+            border: 2px solid transparent;
+            &:hover {
+                opacity: 0.8;
+                border-color: #444;
+            }
+        }
+        .module-start {
+            background-color: $startColor;
+            display: none;
+        }
+        .module-end {
+            background-color: $endColor;
+            display: none;
+        }
+        .module-shell {
+            background-color: $shellColor;
+        }
+        .module-python {
+            background-color: $pythonColor;
+        }
+        .module-rancher {
+            background-color: $rancherColor;
+        }
+        span {
+            line-height: 70px;
+            font-style: italic;
+            color: #b9b9b9;
+            margin-left: 20px;
+        }
+    }
+}
+
+.modal-input-group {
+    input {
+        margin: 8px 0;
+    }
+}
+
+.info {
+    font-style: italic;
+    color: #b9b9b9;
+}
