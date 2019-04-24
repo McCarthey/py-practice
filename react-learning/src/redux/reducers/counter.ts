@@ -1,4 +1,9 @@
-const counter = (state = 0, action) => {
+interface CounterType {
+    type: string
+}
+
+
+const counter = (state = 0, action: CounterType) => {
   switch (action.type) {
     case "INCREMENT":
       return state + 1;

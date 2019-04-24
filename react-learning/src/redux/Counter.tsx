@@ -1,6 +1,12 @@
-import * as React from 'react'
+import * as React from "react";
 
-export default class Counter extends React.Component {
+interface CounterProp {
+  value: number;
+  onIncrement?: () => any;
+  onDecrement?: () => any;
+}
+
+export default class Counter extends React.Component<CounterProp> {
   incrementIfOdd = () => {
     if (this.props.value % 2 !== 0) {
       this.props.onIncrement();
@@ -24,5 +30,3 @@ export default class Counter extends React.Component {
     );
   }
 }
-
-
