@@ -57,3 +57,44 @@ reducer 是一个接受两个参数的纯函数：前一个状态，和一个act
 - 改变参数
 - 调用api或者路由跳转等副作用
 - 调用如Date.now() 或 Math.random() 等非纯函数
+
+即，给定同样的参数，reducer 将计算并返回下一个state。没有副作用，没有API的调用，不做改变，仅仅做计算。
+
+我们需要在开始后制定state的初始状态：
+```javascript
+import { VisibilityFilters } from './actions'
+
+const initialState = {
+    visibilityFilter: VisibilityFilters.SHOW_ALL,
+    todos: [] 
+}
+
+function todoApp(state, action) {
+    if(typeof state === 'undefined') {
+        return initialState
+    }
+    
+    return state
+}
+/** 
+ * 可以使用默认参数简化上述函数
+ * function todoApp(state=initialState, action) {
+ *      return state
+ * }
+*/
+```
+
+接下来处理 SET_VISIBILITY_FILTER ：
+```javascript
+function todoApp(state = initialState, action) {
+    switch(action.type) {
+        case SET_VISIBILITY_FILTER:
+            return Object.assign({}, state, {
+                visibilityFilter: action.filter
+            })
+        default: 
+            return state // 返回之前的 state
+    }
+}
+```
+对于任何未知的action，都要返回之前的 state
