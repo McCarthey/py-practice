@@ -192,6 +192,9 @@ jQuery('#foo')
  * declare namespace jQuery {
  *  function ajax(url: string, settings?: AjaxSettings): void
  * }
+ * 例如，在ts中使用g6时候，可以声明一个*.d.ts文件：
+ * declare module '@antv/g6'
+ * 这样在其他模块中引入'@antv/g6'时，都会拥有 any 的类型
  */
 
 
