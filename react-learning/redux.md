@@ -194,3 +194,15 @@ function todoApp(state={}, action) {
   }
 }
 ```
+最后，Redux 提供了 combineReducers() 方法，和上述todoApp函数功能相同，因此可以将todoApp重写成：
+```javascript
+import { combineReducers } from 'redux'
+
+const todoApp = combineReducers({
+  visibilityFilter,
+  todos
+})
+
+export default todoApp
+```
+combineReducers 方法最后会生成一个函数，根据key值选取相应的state，去调用reducer，最后将结果合并成一个对象
