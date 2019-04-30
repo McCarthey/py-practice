@@ -1433,3 +1433,7 @@ var allElements = document.getElementsByTagName('*')
         return x > 0 ? 1 : -1 // 整数返回1, 负数返回-1
     } 
     ```
+
+- throw
+
+  throw 后可以跟任意类型，适合在请求时候，抛出服务器的响应，在catch中捕获，当成错误处理，拿到错误信息、错误码等。

@@ -206,3 +206,41 @@ const todoApp = combineReducers({
 export default todoApp
 ```
 combineReducers 方法最后会生成一个函数，根据key值选取相应的state，去调用reducer，最后将结果合并成一个对象
+
+## Store
+Store的作用：
+- 保存应用的 state
+- 允许通过 getState() 获取 state
+- 允许通过 dispatch(action) 更新 state
+- 通过 subscribe(listerner) 注册listener
+- 取消对 subscribe(listerner) 函数返回的listener的订阅
+
+通过一个reducer创建store非常简单，我们引入上一步中combineReducer()合并出的reducer:
+```javascript
+import {createStore } from 'redux'
+import todoApp from './reducers'
+const store = createStore(todoApp)
+```
+
+#### 分发 actions
+```javascript
+import {
+  addTodo,
+  toggleTodo,
+  setVisibilityFilter,
+  VisibilityFilters
+} from './reducers'
+
+console.log(store.getState())
+
+const unsubscribe = store.subscible(() => console.log(store.getState()))
+
+store.dispatch(addTodo('Learn about actions'))
+store.dispatch(addTodo('Learn about reducers'))
+store.dispatch(addTodo('Learn about store'))
+store.dispatch(toggleTodo(0))
+store.dispatch(toggleTodo(1))
+store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED))
+
+unsubscribe()
+```
