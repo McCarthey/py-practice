@@ -9,3 +9,5 @@
 /react-learning/node_modules/
 /react-learning/.cache/
 /react-learning/dist/
+/ML/venv/*
+!/ML/venv/*.py
