@@ -11,4 +11,5 @@
 /react-learning/dist/
 /ML/venv/*
 !/ML/venv/*.py
-/ML/env1/
+/ML/env1/*
+!/ML/env1/*.py
