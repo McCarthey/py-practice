@@ -7,6 +7,14 @@ if (element.scrollHeight - element.scrollTop === element.clientHeight) {
 }
 ```
 
+- 页面滚动
+
+  - window.scrollBy(x-coord, y-coord): 在窗口中按指定的偏移量滚动文档
+  - window.scrollBy(options): options 是一个包含三个属性的对象：top, left, behavior(可选'smooth', 'instant')
+  - Element.scrollHeight 这个只读属性是一个元素内容高度的度量，包括由于溢出导致的视图中不可见内容。
+  - Element.clientHeight 只读属性，对于没有定义CSS或者内联布局盒子的元素为0，否则，它是元素内部的高度(单位像素)，包含内边距，但不包括水平滚动条、边框和外边距。
+
+
 - 行内元素空隙
 
 两个 width:50%的行内元素（inline-block）并排放置，中间会有间隙（这个间隙来自你的标记中行内元素间的空白），因此第二个元素会换到下一行
