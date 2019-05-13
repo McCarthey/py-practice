@@ -13,3 +13,4 @@
 !/ML/venv/*.py
 /ML/env1/*
 !/ML/env1/*.py
+!/ML/env1/*.sh
