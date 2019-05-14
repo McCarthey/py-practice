@@ -23,6 +23,15 @@ const server = app.listen(port, () => {
     console.log(`Server on port http://localhost:${port}/!`)
 })
 
+
+const allowCrossDomain = function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'http://mccarthey.top');
+    res.header('Access-Control-Allow-Headers', 'content-type');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    next();
+};
+   
+app.use(allowCrossDomain);//运用跨域的中间件
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(session({
@@ -47,10 +56,6 @@ app.get('/checkLogin', (req, res) => {
         });
     }
 });
-
-app.post('/upload', upload.single('file'), (req, res, next) => {
-    res.send(`http://10.0.21.16:8770/uploads/${req.file.filename}`);
-})
 
 // 注册
 app.post('/signUp', async (req, res) => {
@@ -150,14 +155,3 @@ function generateId(data) {
     hash.update(data)
     return hash.digest('hex')
 }
-
-io.on('connection', socket => {
-    console.log('a user connected!')
-    socket.on('disconnect', () => {
-        console.log('user disconnected')
-    })
-    socket.on('chat message', (from, msg, avatar) => {
-        console.log('I received a message by ', from, ' saying ', msg, avatar);
-        socket.broadcast.emit('chat message', from, msg, avatar)
-    })
-})
