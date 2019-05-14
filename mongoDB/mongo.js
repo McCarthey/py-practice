@@ -39,7 +39,7 @@ app.use(session({
     name: 'note_app_sid',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: null }
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }
 })) // using session
 
 // 检查是否已经登录过
