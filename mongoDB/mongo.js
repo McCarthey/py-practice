@@ -3,15 +3,17 @@ const path = require('path')
 const app = express()
 
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const crypto = require('crypto')
 
+const config = require('./config')
 
 /**
  * 连接mongodb，将数据库对象存放在全局变量db中
  */
 const MongoClient = require('mongodb').MongoClient
-const url = '' // 不暴露服务器地址和mongodb端口
+const url = config.dbUrl // 不暴露服务器地址和mongodb端口
 let db
 
 MongoClient.connect(url, (err, client) => {
@@ -30,8 +32,9 @@ const allowCrossDomain = function (req, res, next) {
     res.header('Access-Control-Allow-Credentials', 'true');
     next();
 };
-   
+
 app.use(allowCrossDomain);//运用跨域的中间件
+app.use(cookieParser()) // use cookie-parser
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(session({
@@ -39,20 +42,16 @@ app.use(session({
     name: 'note_app_sid',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }
+    cookie: { maxAge: 2 * 60 * 1000 }
 })) // using session
 
 // 检查是否已经登录过
 app.get('/checkLogin', (req, res) => {
-    if (req.session.login) {
+    const isLogin = checkLoginStatus(req, res)
+    if (isLogin) {
         res.send({
             code: 0,
             msg: 'You have logged in'
-        });
-    } else {
-        res.send({
-            code: 999,
-            msg: 'Please log in first'
         });
     }
 });
@@ -73,7 +72,8 @@ app.post('/signUp', async (req, res) => {
         const dbResult = await db.collection('users').insertOne({
             username: data.username,
             password: pwdMd5,
-            uid
+            uid,
+            notes: ''
         })
         res.send({
             code: 0,
@@ -101,7 +101,7 @@ app.post('/login', async (req, res) => {
         const { username, password, uid } = dbResult
         if (password === pwdMd5) {
             req.session.login = 'Logged'
-            res.cookie('uid', uid)
+            res.cookie('uid', uid ,{ maxAge: 2 * 60 * 1000})
             res.send({
                 code: 0,
                 msg: 'Login successfully'
@@ -126,11 +126,62 @@ app.post('/logout', async (req, res) => {
             return
         }
         res.clearCookie('uid')
-         res.send({
-             code: 0,
-             msg: 'Log out successfully'
-         })
+        res.send({
+            code: 0,
+            msg: 'Log out successfully'
+        })
     })
+})
+
+// 获取用户数据
+app.get('/getNotes', async (req, res) => {
+    const isLogin = checkLoginStatus(req, res)
+    if(!isLogin) return false
+    if (isLogin) {
+        try {
+            const uid = req.cookies.uid
+            const dbResult = await db.collection('users').findOne({
+                uid,
+            })
+            const { notes } = dbResult
+            res.send({
+                code: 0,
+                msg: 'success',
+                data: notes
+            })
+        } catch (e) {
+            res.send({
+                code: 201,
+                msg: 'Get data failed'
+            })
+        }
+    }
+})
+
+// 更新用户数据
+app.post('/updateNotes', async (req, res) => {
+    const isLogin = checkLoginStatus(req, res)
+    if(!isLogin) return false
+    let { notes } = req.body
+    try {
+        const uid = req.cookies.uid
+        const dbResult = await db.collection('users').updateOne(
+            { uid },
+            {
+                $set: { notes },
+                $currentDate: { lastModified: true }
+            }
+        )
+        res.send({
+            code: 0,
+            msg: 'success',
+        })
+    } catch (e) {
+        res.send({
+            code: 202,
+            msg: 'Post data failed'
+        })
+    }
 })
 
 app.get('/test', (req, res) => {
@@ -155,3 +206,16 @@ function generateId(data) {
     hash.update(data)
     return hash.digest('hex')
 }
+
+// 检查登录状态
+function checkLoginStatus(req, res) {
+    if (req.session.login) {
+        return true
+    }
+    res.send({
+        code: 999,
+        msg: 'Please log in first'
+    })
+    return false
+}
+
