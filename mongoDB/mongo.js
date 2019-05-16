@@ -42,7 +42,7 @@ app.use(session({
     name: 'note_app_sid',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 2 * 60 * 1000 }
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }
 })) // using session
 
 // 检查是否已经登录过
@@ -101,7 +101,7 @@ app.post('/login', async (req, res) => {
         const { username, password, uid } = dbResult
         if (password === pwdMd5) {
             req.session.login = 'Logged'
-            res.cookie('uid', uid ,{ maxAge: 2 * 60 * 1000})
+            res.cookie('uid', uid, { maxAge: 7 * 24 * 60 * 60 * 1000 })
             res.send({
                 code: 0,
                 msg: 'Login successfully'
@@ -136,7 +136,7 @@ app.post('/logout', async (req, res) => {
 // 获取用户数据
 app.get('/getNotes', async (req, res) => {
     const isLogin = checkLoginStatus(req, res)
-    if(!isLogin) return false
+    if (!isLogin) return false
     if (isLogin) {
         try {
             const uid = req.cookies.uid
@@ -158,10 +158,38 @@ app.get('/getNotes', async (req, res) => {
     }
 })
 
+// 更新单条数据
+app.post('/update/:noteId', async (req, res) => {
+    const isLogin = checkLoginStatus(req, res)
+    if (!isLogin) return false
+    console.log(req.params.noteId)
+    let { note, order } = req.body
+    const noteId = req.params.noteId
+    try {
+        const uid = req.cookies.uid
+        const dbResult = await db.collection('users').updateOne(
+            { uid },
+            {
+                $set: { [`notes.${noteId}`]: note, order },
+                $currentDate: { lastModified: true }
+            }
+        )
+        res.send({
+            code: 0,
+            msg: 'success',
+        })
+    } catch (e) {
+        res.send({
+            code: 202,
+            msg: 'Post data failed'
+        })
+    }
+})
+
 // 更新用户数据
 app.post('/updateNotes', async (req, res) => {
     const isLogin = checkLoginStatus(req, res)
-    if(!isLogin) return false
+    if (!isLogin) return false
     let { notes } = req.body
     try {
         const uid = req.cookies.uid
