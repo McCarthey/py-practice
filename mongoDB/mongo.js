@@ -5,6 +5,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')(session);
 const crypto = require('crypto')
 
 const config = require('./config')
@@ -42,7 +43,9 @@ app.use(session({
     name: 'note_app_sid',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 }
+    cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 },
+    store: new MongoStore({ url: `${config.dbUrl}/session` })
+
 })) // using session
 
 // 检查是否已经登录过
@@ -73,7 +76,7 @@ app.post('/signUp', async (req, res) => {
             username: data.username,
             password: pwdMd5,
             uid,
-            notes: ''
+            notes: []
         })
         res.send({
             code: 0,
