@@ -161,6 +161,30 @@ app.get('/getNotes', async (req, res) => {
     }
 })
 
+app.post('/create', async (req, res) => {
+    const isLogin = checkLoginStatus(req, res)
+    if (!isLogin) return false
+    const { id, content, done } = req.body
+    try {
+        const uid = req.cookies.uid
+        const dbResult = await db.collection('users').updateOne(
+            { uid },
+            {
+                $push: { notes: { id, content, done } },
+            }
+        )
+        res.send({
+            code: 0,
+            msg: 'success',
+        })
+    } catch (e) {
+        res.send({
+            code: 202,
+            msg: 'Post data failed'
+        })
+    }
+})
+
 // 更新单条数据状态
 app.post('/update/:noteId', async (req, res) => {
     const isLogin = checkLoginStatus(req, res)
@@ -170,9 +194,9 @@ app.post('/update/:noteId', async (req, res) => {
     try {
         const uid = req.cookies.uid
         const dbResult = await db.collection('users').updateOne(
-            { uid , "notes.id": noteId},
+            { uid, "notes.id": noteId },
             {
-                $set: { "notes.$.done":  done },
+                $set: { "notes.$.done": done },
                 $currentDate: { lastModified: true }
             }
         )
