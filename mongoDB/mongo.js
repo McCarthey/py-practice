@@ -158,19 +158,17 @@ app.get('/getNotes', async (req, res) => {
     }
 })
 
-// 更新单条数据
-app.post('/update/:noteId', async (req, res) => {
+// 删除单条数据
+app.post('/delete/:noteId', async (req, res) => {
     const isLogin = checkLoginStatus(req, res)
     if (!isLogin) return false
-    console.log(req.params.noteId)
-    let { note, order } = req.body
     const noteId = req.params.noteId
     try {
         const uid = req.cookies.uid
         const dbResult = await db.collection('users').updateOne(
             { uid },
             {
-                $set: { [`notes.${noteId}`]: note, order },
+                $pull: { notes: { id: noteId } },
                 $currentDate: { lastModified: true }
             }
         )
