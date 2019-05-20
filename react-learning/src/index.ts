@@ -5,4 +5,5 @@
 // import './hooks/useReducer/useReducer.tsx'
 // import './hooks/useRef/useRef.tsx'
 // import './redux/Counter/index'
-import './hoc/index.tsx'
+// import './hoc/index.tsx'
+import './command/dialog.tsx'
