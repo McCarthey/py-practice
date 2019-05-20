@@ -24,6 +24,10 @@
 
 - git config --global user.email mccarthey123@outlook.com
 
+- git config --global alias.st status
+
+(或者将一下配置复制粘贴到 ~/.gitconfig 文件中)
+
 - [alias]
 st = status -sb
 co = checkout
