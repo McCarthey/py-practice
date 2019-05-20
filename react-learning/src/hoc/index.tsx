@@ -14,6 +14,7 @@ interface HocState {
     data: any
 }
 
+// Normal components
 // class Comment extends React.Component<any, CommentState> {
 //     constructor(props: any) {
 //         super(props)
@@ -85,6 +86,8 @@ interface HocState {
 //     }
 // }
 
+
+// Use HOC
 function withSubscription(WrappedComponent: any, selectData: any) {
     return class extends React.Component<any, HocState> {
         constructor(props: any) {
