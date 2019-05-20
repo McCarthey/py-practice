@@ -4,4 +4,5 @@
 // import './hooks/useContext/useContext.tsx'
 // import './hooks/useReducer/useReducer.tsx'
 // import './hooks/useRef/useRef.tsx'
-import './redux/Counter/index'
+// import './redux/Counter/index'
+import './hoc/index.tsx'
