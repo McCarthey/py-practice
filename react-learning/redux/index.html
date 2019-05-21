@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <title>
+        Redux basic example
+    </title>
+    <script src="https://cdn.bootcss.com/redux/4.0.1/redux.min.js"></script>
+</head>
+
+<body>
+    <p>Clicked: <span id="value">0</span>
+        <br />
+        <button id="increment">+</button>
+        <button id="decrement">-</button>
+        <button id="incrementIfOdd">Increment if odd</button>
+        <button id="incrementAsync">Increment async</button>
+    </p>
+    <script>
+        function reducer(state = 0, action) {
+            switch (action.type) {
+                case 'INCREMENT':
+                    return state + 1
+                case 'DECREMENT':
+                    return state - 1
+                default:
+                    return state
+            }
+        }
+
+        const store = Redux.createStore(reducer)
+        const valueEl = document.querySelector('#value')
+
+        function render() {
+            valueEl.innerHTML = store.getState()
+        }
+
+        render()
+        store.subscribe(render)
+
+        document.querySelector('#increment').addEventListener('click', function () {
+            store.dispatch({ type: 'INCREMENT' })
+        })
+
+        document.querySelector('#decrement').addEventListener('click', function() {
+            store.dispatch({ type: 'DECREMENT' })
+        })
+
+        document.querySelector('#incrementIfOdd').addEventListener('click', function() {
+            if(store.getState() % 2 === 1) {
+                store.dispatch({ type: 'INCREMENT' })
+            }
+        })
+
+        document.querySelector('#incrementAsync').addEventListener('click', function() {
+            setTimeout(() => {
+                store.dispatch({ type: 'INCREMENT' })
+            }, 1000)
+        })
+
+    </script>
+</body>
+
+</html>
