@@ -306,3 +306,38 @@ Array.prototype.filter = function (cb) {
   return result
 }
 ```
+
+#### 实现一个深拷贝函数deepClone
+```javascript
+// 判断数据类型
+const type = obj => {
+  const typeString = Object.prototype.toString.call(obj)
+  const map = {
+    '[object Array]': 'array',
+    '[object Object]': 'object'
+  }
+
+  return map[typeString]
+}
+
+// 深拷贝
+const deepClone = data => {
+  const typeString = type(data)
+  let r
+  if(typeString === 'array') {
+    r = []
+    for(let i = 0; i < data.length; i++) {
+      r.push(deepClone(data[i]))
+    }
+    return r
+  } else if (typeString === 'object') {
+    r = {}
+    for(let i in data) {
+      r[i] = deepClone(data[i])
+    }
+    return r
+  } else {
+    return data
+  }
+}
+```

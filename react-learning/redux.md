@@ -286,3 +286,35 @@ const updateArrayReducer = (array, action) => {
   ]
 }
 ```
+
+- 对象操作
+
+更新/新增对象的属性
+```javascript
+const setItemReducer = (item, action) => {
+  return Object.assign({}, item, {
+    [action.propName]: action.propValue
+  })
+}
+```
+或者使用对象扩展运算符
+```javascript
+const setItemReducer = (item, action) => {
+  return {
+    ...item,
+    [action.propName]: action.propValue
+  }
+}
+```
+
+删除对象属性
+```javascript
+const deleteItemReducer = (item, action) => {
+  Object.keys(item).reduce((obj, key) => {
+    if(key !== action.key) {
+      return { ...obj, [key]: item[key]}
+    }
+    return obj
+  }, {})
+}
+```
