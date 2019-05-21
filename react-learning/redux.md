@@ -1,3 +1,6 @@
+## Redux整体流程
+createStore(reducer, initState, enhancer)创建store实例 -> store.dispatch(action) -> reducer根据action和prevState计算并返回nextState -> store.subscribe(render) 使得在每次状态更新之后被调用，以更新视图。 
+
 ## Actions
 
 Actions 是纯 js 对象，必须包含 type 属性，来表明是哪种类型的 action 。type 是 string 类型，当项目变大时，通常需要将其放入一个单独的文件：
@@ -23,7 +26,7 @@ function addTodo(text) {
     type: ADD_TODO,
     text
   };
-}
+A}
 ```
 
 使用 store.dispatch() 发送 action
@@ -243,4 +246,43 @@ store.dispatch(toggleTodo(1))
 store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED))
 
 unsubscribe()
+```
+
+## 不可变性
+- 数组操作：使用slice, concat以生成新的数组；禁用push, splice, 因为他们会在原数组基础上进行修改
+
+数组末尾增加一项
+```javascript
+const addArrayReducer = (array, action) => {
+  return array.concat(action.data)
+}
+```
+数组中间增加一项(action: {index: number, data: any})
+```javascript
+const insertArrayReducer = (array, action) => {
+  return [
+    ...array.slice(0, action.index),
+    action.data,
+    ...array.slice(action.index)
+  ]
+}
+```
+数组删除一项
+```javascript
+const deleteArrayReducer = (array, index) => {
+  return [
+    ...array.slice(0, index),
+    ...array.slice(index + 1)
+  ]
+}
+```
+更新数组中的一项
+```javascript
+const updateArrayReducer = (array, action) => {
+  return [
+    ...array.slice(0, action.index),
+    action.data,
+    ...array.slice(action.index + 1)
+  ]
+}
 ```
