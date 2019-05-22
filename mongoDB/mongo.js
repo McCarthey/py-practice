@@ -1,10 +1,13 @@
 const express = require('express')
 const path = require('path')
+const fs = require('fs')
 const app = express()
 
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
+// const compression = require('compression')
+const morgan = require('morgan')
 const MongoStore = require('connect-mongo')(session);
 const crypto = require('crypto')
 
@@ -34,7 +37,11 @@ const allowCrossDomain = function (req, res, next) {
     next();
 };
 
-app.use(allowCrossDomain);//运用跨域的中间件
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+
+app.use(allowCrossDomain) //运用跨域的中间件
+// app.use(compression({level: 9})) // 运用gzip压缩中间件。如果使用了nginx的gzip压缩，则无需使用该中间件了
+app.use(morgan('combined', { stream: accessLogStream }))
 app.use(cookieParser()) // use cookie-parser
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
