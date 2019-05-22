@@ -327,3 +327,38 @@ Redux中间件作用域派发action和执行reducer这两步之间。可以在cr
 ```javascript
 const store = createStore(reducer, initState, applyMiddleware(middleware))
 ```
+例如处理异步场景的redux-thunk中间件。
+因为dispatch默认参数只能是一个JS对象，所以必须借助中间件，允许dispatch的参数为一个函数，在函数体内进行异步操作，完成后再怕发相应的action，才能实现异步。
+```javascript
+import thunk from 'redux-thunk'
+
+const store = createStore(reducer, applyMiddleware(thunk))
+
+store.dispatch(fetchNewBook('learnRedux'))
+
+function fetchNewBook(book) {
+  return dispatch => {
+    dispatch({
+      type: 'START_FETCH_NEW_BOOK',
+      data: book
+    })
+    ajax({
+      url: `/API/${book}.json`,
+      type: 'POST',
+      data: {}
+    })
+    .then(bookData => {
+      dispatch({
+        type: 'FETCH_NEW_BOOK_SUCCESS',
+        data: bookData
+      })
+    }).
+    catch(err => {
+      dispatch({
+        type: 'FETCH_NEW_BOOK_FAIL',
+        data: err
+      })
+    })
+  }
+}
+```
