@@ -1,6 +1,9 @@
 ## Redux整体流程
 createStore(reducer, initState, enhancer)创建store实例 -> store.dispatch(action) -> reducer根据action和prevState计算并返回nextState -> store.subscribe(render) 使得在每次状态更新之后被调用，以更新视图。 
 
+## react-redux的整体流程
+createStore(reducer, initState, enhancer)创建store实例 -> Provider包裹在最外层并注入store -> 定义mapStateToProps和mapDispatchToProps函数来决定将store中哪些状态、action传递下去 -> 用connect柯里化函数包裹展示组件并返回一个容器组件（相当于HOC）；
+
 ## Actions
 
 Actions 是纯 js 对象，必须包含 type 属性，来表明是哪种类型的 action 。type 是 string 类型，当项目变大时，通常需要将其放入一个单独的文件：
@@ -317,4 +320,10 @@ const deleteItemReducer = (item, action) => {
     return obj
   }, {})
 }
+```
+
+## Redux中间件
+Redux中间件作用域派发action和执行reducer这两步之间。可以在createStore的enhancer参数位置插入中间件。
+```javascript
+const store = createStore(reducer, initState, applyMiddleware(middleware))
 ```
