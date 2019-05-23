@@ -3,7 +3,7 @@
 ```javascript
 // 用于判断div是否滚动到底部
 if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-  console.log('已经滚动到底')
+  console.log("已经滚动到底");
 }
 ```
 
@@ -12,10 +12,9 @@ if (element.scrollHeight - element.scrollTop === element.clientHeight) {
   - window.scrollBy(x-coord, y-coord): 在窗口中按指定的偏移量滚动文档
   - window.scrollBy(options): options 是一个包含三个属性的对象：top, left, behavior(可选'smooth', 'instant')
   - Element.scrollHeight 这个只读属性是一个元素内容高度的度量，包括由于溢出导致的视图中不可见内容。
-  - Element.clientHeight 只读属性，对于没有定义CSS或者内联布局盒子的元素为0，否则，它是元素内部的高度(单位像素)，包含内边距，但不包括水平滚动条、边框和外边距。
+  - Element.clientHeight 只读属性，对于没有定义 CSS 或者内联布局盒子的元素为 0，否则，它是元素内部的高度(单位像素)，包含内边距，但不包括水平滚动条、边框和外边距。
 
-
-- 行内元素空隙
+* 行内元素空隙
 
 两个 width:50%的行内元素（inline-block）并排放置，中间会有间隙（这个间隙来自你的标记中行内元素间的空白），因此第二个元素会换到下一行
 要删除这个间隙，需要在 HTML 中通过注释删除空白（右）
@@ -39,48 +38,48 @@ const toggle = {
   data() {
     return {
       isShow: false
-    }
+    };
   },
   methods: {
     toggleShow() {
-      this.isShow = !this.isShow
+      this.isShow = !this.isShow;
     }
   }
-}
+};
 
 // Modal组件
 const Modal = {
-  template: '#modal',
+  template: "#modal",
   mixins: [toggle],
   components: {
     appChild: Child
   }
-}
+};
 // tooltip组件
 const Tooltip = {
-  template: '#tooltip',
+  template: "#tooltip",
   mixins: [toggle],
   components: {
     appChild: Child
   }
-}
+};
 ```
 
 ```javascript
 // 可以合并mixin的生命周期: mixin的生命周期先执行，再执行vue实例的生命周期
 const hi = {
   mounted() {
-    console.log('mixin mounted')
+    console.log("mixin mounted");
   }
-}
+};
 
 new Vue({
-  el: '#app',
+  el: "#app",
   mixins: [hi],
   mounted() {
-    console.log('vue instance mounted')
+    console.log("vue instance mounted");
   }
-})
+});
 
 // mixin mounted
 // vue instance mounted
@@ -192,10 +191,11 @@ word-wrap: normal;
 - 判断是否是数组
 
 ```javascript
-Array.isArray([]) // true
+Array.isArray([]); // true
 // 不支持Array.isArray()方法的ployfill（不支持Array.isArray方法的宿主环境多半不支持箭头函数-_-||）：
-if(!Array.isArray) {
-    Array.isArray = arg => Object.prototype.toString.call(arg) === '[object Array]'
+if (!Array.isArray) {
+  Array.isArray = arg =>
+    Object.prototype.toString.call(arg) === "[object Array]";
 }
 ```
 
@@ -217,19 +217,19 @@ if(!Array.isArray) {
 - map
 
 ```javascript
-let list = [1, 3, 5, 76, 123, 412, 3]
-let result = list.map(v => (v = v * 2))
-console.log(result) // [2, 6, 10, 152, 246, 824, 6]
+let list = [1, 3, 5, 76, 123, 412, 3];
+let result = list.map(v => (v = v * 2));
+console.log(result); // [2, 6, 10, 152, 246, 824, 6]
 ```
 
 - node child processes 模块
   利用 child_process 模块的 exec 对象写 shell 脚本，需要注意：
 
 ```javascript
-exec('shell命令', (err, stdout, stderr) => {
-  if (err) throw err
+exec("shell命令", (err, stdout, stderr) => {
+  if (err) throw err;
   // 命令执行成功后要做的事情
-})
+});
 ```
 
 - 外链
@@ -374,7 +374,7 @@ this.intersectionObserver = intersectionObserver
 /* 垂直居中关键 */
 .dialog_container::after {
   display: inline-block;
-  content: '';
+  content: "";
   width: 0;
   height: 100%;
   vertical-align: middle;
@@ -432,27 +432,27 @@ white-space: nowrap;
 var isSupportWebp =
   !![].map &&
   document
-    .createElement('canvas')
-    .toDataURL('image/webp')
-    .indexOf('data:image/webp') == 0
+    .createElement("canvas")
+    .toDataURL("image/webp")
+    .indexOf("data:image/webp") == 0;
 
-console.log(isSupportWebp)
+console.log(isSupportWebp);
 ```
 
 - 对象扩展运算符...
 
 ```javascript
-var player = { name: 'Jack', age: 24, job: 'engineer', country: 'china' }
-var newPlayer = { ...player, name: 'Sam', age: 25 }
-console.log(newPlayer) // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
+var player = { name: "Jack", age: 24, job: "engineer", country: "china" };
+var newPlayer = { ...player, name: "Sam", age: 25 };
+console.log(newPlayer); // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
 ```
 
 对象扩展运算符可以用以复制/继承另一个对象，并改写他的属性，类似于 Object.assign()，因此上下两部分代码等价:
 
 ```javascript
-var player = { name: 'Jack', age: 24, job: 'engineer', country: 'china' }
-var newPlayer = Object.assign({}, player, { name: 'Sam', age: 25 })
-console.log(newPlayer) // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
+var player = { name: "Jack", age: 24, job: "engineer", country: "china" };
+var newPlayer = Object.assign({}, player, { name: "Sam", age: 25 });
+console.log(newPlayer); // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
 ```
 
 - 构造函数模式的劣势
@@ -470,7 +470,7 @@ const stack2 = new Stack()
 此处初始化两个栈的实例对象。单看代码是没有问题的，简单明了。但是，这两个实例的方法是不同的函数引用，也就是说构造函数的每个方法都要在每个实例上重新创建一遍，可如此检验：
 
 ```javascript
-console.log(stack1.pop === stack2.pop) // false
+console.log(stack1.pop === stack2.pop); // false
 ```
 
 因此，不同实例上的同名函数是不相等的。可将构造函数中的方法移动到全局，在构造函数内部引用，这样就可以使不同的实例共享相同的方法了。但是这种方式并不推荐，因为会增加很多全局函数，而且这些函数仅是为了给某个对象调用，显然不合理，因此构造函数模式比较适合单例场景。这些问题可由原型模式解决。
@@ -512,12 +512,12 @@ console.log(stack1.pop === stack2.pop) // false
 
   - title: 可以通过 document.title 读取并设置页面标题，读取的即是`<title>`元素中的文本，但是不会改变页面中的`<title>`元素
     ```javascript
-    const oldTitle = document.title
-    document.title = 'New page title'
+    const oldTitle = document.title;
+    document.title = "New page title";
     ```
   - URL: URL 属性包含当前页面的完整标题，即地址栏中显示的 URL，读取时等同 window.location.href
     ```javascript
-    document.URL === window.location.href
+    document.URL === window.location.href;
     ```
   - domain: domain 属性值包含页面的域名
   - referrer： referrer 属性保存着链接到当前页面的那个页面的 URL。
@@ -531,7 +531,7 @@ getElementsByTagName()方法会返回一个 HTMLCollections 对象，该对象�
 要想获得全部元素组成的 HTMLCollection，如下：
 
 ```javascript
-var allElements = document.getElementsByTagName('*')
+var allElements = document.getElementsByTagName("*");
 ```
 
 - python 字符串模板
@@ -577,14 +577,14 @@ var allElements = document.getElementsByTagName('*')
   - 添加一个样式表，调整样式属性
   - 用户行为，例如调整窗口大小，改变字号，或者滚动。
   ```javascript
-  var bstyle = document.body.style // cache
-  bstyle.padding = '20px' // 重排+重绘
-  bstyle.border = '10px solid red' // 另一次重排+重绘
-  bstyle.color = 'blue' // 没有尺寸变化，只重绘
-  bstyle.backgroundColor = '#fad' // 重绘
-  bstyle.fontSize = '2em' // 重排+重绘
+  var bstyle = document.body.style; // cache
+  bstyle.padding = "20px"; // 重排+重绘
+  bstyle.border = "10px solid red"; // 另一次重排+重绘
+  bstyle.color = "blue"; // 没有尺寸变化，只重绘
+  bstyle.backgroundColor = "#fad"; // 重绘
+  bstyle.fontSize = "2em"; // 重排+重绘
   // 新的DOM节点 - 重排+重绘
-  document.body.appendChild(document.createTextNode('dude!'))
+  document.body.appendChild(document.createTextNode("dude!"));
   ```
 - 最小化重排/重绘
 
@@ -593,14 +593,14 @@ var allElements = document.getElementsByTagName('*')
   ```javascript
   // bad
   var left = 10,
-    top = 10
-  el.style.left = left + 'px'
-  el.style.top = top + 'px'
+    top = 10;
+  el.style.left = left + "px";
+  el.style.top = top + "px";
   // better
-  el.className += ' theclassname'
+  el.className += " theclassname";
   // 当top和left的值是动态计算而成时...
   // better
-  el.style.cssText += '; left: ' + left + 'px; top: ' + top + 'px;'
+  el.style.cssText += "; left: " + left + "px; top: " + top + "px;";
   ```
 
   - 通过 documentFragment 来保留临时变动
@@ -611,18 +611,18 @@ var allElements = document.getElementsByTagName('*')
   ```javascript
   // no-no!
   for (big; loop; here) {
-    el.style.left = el.offsetLeft + 10 + 'px'
-    el.style.top = el.offsetTop + 10 + 'px'
+    el.style.left = el.offsetLeft + 10 + "px";
+    el.style.top = el.offsetTop + 10 + "px";
   }
   // better
   var left = el.offsetLeft,
-    top = el.offsetTop
-  esty = el.style
+    top = el.offsetTop;
+  esty = el.style;
   for (big; loop; here) {
-    left += 10
-    top += 10
-    esty.left = left + 'px'
-    esty.top = top + 'px'
+    left += 10;
+    top += 10;
+    esty.left = left + "px";
+    esty.top = top + "px";
   }
   ```
 
@@ -777,23 +777,23 @@ var allElements = document.getElementsByTagName('*')
   此时页面视窗固定，但是内容会返回到顶端，因此这里需要记录一下当前的滚动值，可以写在 vuex 的 mutation 中
 
   ```javascript
-  let bodyEl = document.body
-  let top = 0
+  let bodyEl = document.body;
+  let top = 0;
   export default {
     setShowingDlg(state, showing) {
-      state.isShowingDlg = showing
+      state.isShowingDlg = showing;
       if (showing) {
-        top = window.scrollY
-        bodyEl.style.position = 'fixed'
-        bodyEl.style.top = `${-top}px`
+        top = window.scrollY;
+        bodyEl.style.position = "fixed";
+        bodyEl.style.top = `${-top}px`;
       } else {
-        bodyEl.style.position = ''
-        bodyEl.style.top = ''
+        bodyEl.style.position = "";
+        bodyEl.style.top = "";
 
-        window.scrollTo(0, top) // 回到原先的高度
+        window.scrollTo(0, top); // 回到原先的高度
       }
     }
-  }
+  };
   ```
 
 - web 移动端调用自带短信功能
@@ -842,9 +842,9 @@ var allElements = document.getElementsByTagName('*')
 
 - 判断空字符串" "
   ```javascript
-  const message = ' '
-  if (message.replace(/(^\s*)|(\s*$)/g, '').length === 0) {
-    console.log('Message cannot be empty!')
+  const message = " ";
+  if (message.replace(/(^\s*)|(\s*$)/g, "").length === 0) {
+    console.log("Message cannot be empty!");
   }
   ```
 - facebook pixel
@@ -857,113 +857,113 @@ var allElements = document.getElementsByTagName('*')
   如果一个描述符不具有 value,writable,get 和 set 任意一个关键字，那么它将被认为是一个数据描述符。如果一个描述符同时有(value 或 writable)和(get 或 set)关键字，将会产生一个异常。
 
   ```javascript
-  let person = { name: 'Mike', age: 18 }
-  Object.defineProperty(person, 'name', {
-    value: 'Lily'
-  })
-  console.log(person) /* {name: "Lily", age: 18} */
+  let person = { name: "Mike", age: 18 };
+  Object.defineProperty(person, "name", {
+    value: "Lily"
+  });
+  console.log(person); /* {name: "Lily", age: 18} */
 
-  Object.defineProperty(person, 'fullName', {
+  Object.defineProperty(person, "fullName", {
     get() {
-      return 'Lily White'
+      return "Lily White";
     },
     set(newVal) {
-      this.name = newVal
+      this.name = newVal;
     }
-  })
+  });
 
-  console.log(person.fullName) /* "Lily White" */
-  person.fullName = 'Mike White'
-  console.log(person) /* {name: "Mike White", age: 18} */
+  console.log(person.fullName); /* "Lily White" */
+  person.fullName = "Mike White";
+  console.log(person); /* {name: "Mike White", age: 18} */
   ```
 
 - Vue 响应式原理
 
   ```javascript
-  let data = { price: 5, quantity: 2 }
-  let target = null
+  let data = { price: 5, quantity: 2 };
+  let target = null;
   class Dep {
     constructor() {
-      this.subscribers = []
+      this.subscribers = [];
     }
 
     depend() {
       if (target && !this.subscribers.includes(target)) {
-        this.subscribers.push(target)
+        this.subscribers.push(target);
       }
     }
 
     notify() {
-      this.subscribers.forEach(sub => sub())
+      this.subscribers.forEach(sub => sub());
     }
   }
   Object.keys(data).forEach(key => {
-    let internalValue = data[key]
+    let internalValue = data[key];
 
-    const dep = new Dep()
+    const dep = new Dep();
 
     Object.defineProperty(data, key, {
       get() {
-        dep.depend()
-        return internalValue
+        dep.depend();
+        return internalValue;
       },
       set(newVal) {
-        internalValue = newVal
-        dep.notify()
+        internalValue = newVal;
+        dep.notify();
       }
-    })
-  })
+    });
+  });
   function watcher(myFun) {
-    target = myFun
-    target()
-    target = null
+    target = myFun;
+    target();
+    target = null;
   }
   watcher(() => {
-    data.total = data.price * data.quantity
-  })
-  console.log('total = ' + data.total)
-  data.price = 20
-  console.log('total = ' + data.total)
-  data.quantity = 10
-  console.log('total = ' + data.total)
+    data.total = data.price * data.quantity;
+  });
+  console.log("total = " + data.total);
+  data.price = 20;
+  console.log("total = " + data.total);
+  data.quantity = 10;
+  console.log("total = " + data.total);
   ```
 
   使用 Proxy 实现响应式
 
   ```javascript
-  let deps = new Map() /* 创建一个Map对象 */
+  let deps = new Map(); /* 创建一个Map对象 */
   Object.keys(data).forEach(key => {
     /* 为每个属性都设置一个依赖实例 并放入deps中 */
-    deps.set(key, new Dep())
-  })
+    deps.set(key, new Dep());
+  });
   class Dep {
     constructor() {
-      this.subscribers = []
+      this.subscribers = [];
     }
 
     depend() {
       if (target && !this.subscribers.includes(target)) {
-        this.subscribers.push(target)
+        this.subscribers.push(target);
       }
     }
 
     notify() {
-      this.subscribers.forEach(sub => sub())
+      this.subscribers.forEach(sub => sub());
     }
   }
-  let data_without_proxy = data /* 保存源对象 */
+  let data_without_proxy = data; /* 保存源对象 */
   data = new Proxy(data_without_proxy, {
     /* 重写数据以在中间创建一个代理 */
     get(obj, key) {
-      deps.get(key).depend()
-      return obj[key]
+      deps.get(key).depend();
+      return obj[key];
     },
     set(obj, key, newVal) {
-      obj[key] = newVal
-      deps.get(key).notify()
-      return true
+      obj[key] = newVal;
+      deps.get(key).notify();
+      return true;
     }
-  })
+  });
   ```
 
   如你所见，我们创建了一个变量 data_without_proxy 来作为源对象的副本，在覆盖源对象时来使用副本创建一个 Proxy 对象。第二个参数是包含了 get()和 set()这两个陷阱函数属性的 handler 对象。
@@ -998,18 +998,18 @@ var allElements = document.getElementsByTagName('*')
 
   ```javascript
   // 监听底部轮播 图片懒加载
-  var userWrap = document.querySelector('.users')
+  var userWrap = document.querySelector(".users");
   var intersectionObserver = new IntersectionObserver(function(entries) {
-    if (entries[0].intersectionRatio <= 0) return
+    if (entries[0].intersectionRatio <= 0) return;
 
-    console.log('Loaded swiper')
-    intersectionObserver.unobserve(userWrap)
-    var imgs = userWrap.querySelectorAll('img')
+    console.log("Loaded swiper");
+    intersectionObserver.unobserve(userWrap);
+    var imgs = userWrap.querySelectorAll("img");
     for (var i = 0; i < imgs.length; i++) {
-      var dataSrc = imgs[i].getAttribute('data-src')
-      imgs[i].setAttribute('src', dataSrc)
+      var dataSrc = imgs[i].getAttribute("data-src");
+      imgs[i].setAttribute("src", dataSrc);
     }
-  })
+  });
   ```
 
 - vue 的 vm.\$nextTick()
@@ -1023,16 +1023,16 @@ var allElements = document.getElementsByTagName('*')
       // ...
       example: function() {
         // 修改数据
-        this.message = 'changed'
+        this.message = "changed";
         // DOM 还没有更新
         this.$nextTick(function() {
           // DOM 现在更新了
           // `this` 绑定到当前实例
-          this.doSomethingElse()
-        })
+          this.doSomethingElse();
+        });
       }
     }
-  })
+  });
   ```
 
 - 判断是否是 iphoneX XR XS
@@ -1103,9 +1103,9 @@ var allElements = document.getElementsByTagName('*')
   解决：
 
   ```javascript
-  const scrollDiv = document.querySelector('.scrollDiv')
-  const targetDiv = document.querySelector('.target')
-  scrollDiv.scrollTo(0, target.offsetTop)
+  const scrollDiv = document.querySelector(".scrollDiv");
+  const targetDiv = document.querySelector(".target");
+  scrollDiv.scrollTo(0, target.offsetTop);
   ```
 
   配合 css 平滑滚动效果更好
@@ -1120,37 +1120,37 @@ var allElements = document.getElementsByTagName('*')
 - Set 内部判断两个值是否不同，使用的算法类似于精确相等运算符(===)，不会发生类型转换，与 === 主要的区别在于 Set 判断 NaN 等于自身：
 
   ```javascript
-  let s = new Set([1, '5', 5, NaN, NaN, 'test'])
-  console.log(s) // Set(5) {1, "5", 5, NaN, "test"}
+  let s = new Set([1, "5", 5, NaN, NaN, "test"]);
+  console.log(s); // Set(5) {1, "5", 5, NaN, "test"}
   ```
 
   另外，两个对象总是不相等的
 
   ```javascript
-  let s = new Set()
-  s.add({})
-  s.size // 1
+  let s = new Set();
+  s.add({});
+  s.size; // 1
 
-  s.add({})
-  s.size // 2
+  s.add({});
+  s.size; // 2
   ```
 
   Array.from 方法可以将 Set 结构转为数组
 
   ```javascript
-  const items = new Set([1, 2, 3, 4, 5])
-  let list = Array.from(items)
-  console.log(list) // [1, 2, 3, 4, 5]
+  const items = new Set([1, 2, 3, 4, 5]);
+  let list = Array.from(items);
+  console.log(list); // [1, 2, 3, 4, 5]
   ```
 
   因此，数组去重的方法还可以这样写：
 
   ```javascript
   function dedupe(array) {
-    return Array.from(new Set(array))
+    return Array.from(new Set(array));
   }
 
-  dedupe([1, 1, 2, 3]) // [1,2,3]
+  dedupe([1, 1, 2, 3]); // [1,2,3]
   ```
 
 - Set 的遍历操作
@@ -1158,24 +1158,24 @@ var allElements = document.getElementsByTagName('*')
   由于 Set 结构没有键名，只有键值（或者说键名和键值是用一个值），所以 keys 方法和 values 方法的行为完全一致
 
   ```javascript
-  let set = new Set(['red', 'green', 'blue'])
+  let set = new Set(["red", "green", "blue"]);
   for (let i of set.keys()) {
     // 返回键名的遍历器
-    console.log(i)
+    console.log(i);
   }
   // red
   // green
   // blue
   for (let i of set.values()) {
     // 返回键值的遍历器
-    console.log(i)
+    console.log(i);
   }
   // red
   // green
   // blue
   for (let i of set.entries()) {
     // 返回键值对的遍历器
-    console.log(i)
+    console.log(i);
   }
   // ["red", "red"]
   // ["green", "green"]
@@ -1185,10 +1185,10 @@ var allElements = document.getElementsByTagName('*')
   Set 结构默认可遍历，它的默认遍历器生成函数就是它的 values 方法，因此可以直接 for...of 遍历 set
 
   ```javascript
-  Set.prototype[Symbol.iterator] === Set.prototype.values // true
+  Set.prototype[Symbol.iterator] === Set.prototype.values; // true
 
   for (let i of set) {
-    console.log(i)
+    console.log(i);
   }
   // red
   // green
@@ -1201,9 +1201,9 @@ var allElements = document.getElementsByTagName('*')
   首先，WeakSet 的成员只能是对象，而不能是其他类型的值。
 
   ```javascript
-  const ws = new WeakSet()
-  ws.add(1) // Uncaught TypeError: Invalid value used in weak set
-  ws.add(Symbol()) // Uncaught TypeError: Invalid value used in weak set
+  const ws = new WeakSet();
+  ws.add(1); // Uncaught TypeError: Invalid value used in weak set
+  ws.add(Symbol()); // Uncaught TypeError: Invalid value used in weak set
   ```
 
   WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用。WeakSet 的成员是不适合引用的，因为它会随时消失。另外，由于 WeakSet 内部有多少个成员，取决于垃圾回收机制有没有运行，运行前后很可能成员个数是不一样的，而垃圾回收机制何时运行是不可预测的，因此 ES6 规定 WeakSet 不可遍历。WeakMap 同理。
@@ -1213,15 +1213,15 @@ var allElements = document.getElementsByTagName('*')
   为了解决对象中的键只能是字符串的问题，ES6 引入了 Map 数据结构。类似于对象，也是键值对的集合，但是键的范围不限于字符串。
 
   ```javascript
-  const m = new Map()
-  const o = { p: 'Hello World' }
+  const m = new Map();
+  const o = { p: "Hello World" };
 
-  m.set(o, 'content')
-  m.get(o) // "content"
+  m.set(o, "content");
+  m.get(o); // "content"
 
-  m.has(o) // true
-  m.delete(o) // true
-  m.has(o) // false
+  m.has(o); // true
+  m.delete(o); // true
+  m.has(o); // false
   ```
 
   使用 Map 结构的 set 方法，将对象 o 当作 m 的一个键，然后又用 get 方法读取这个键，接着用 delete 删除了这个键。
@@ -1229,29 +1229,29 @@ var allElements = document.getElementsByTagName('*')
   Map 构造函数接受数组作为参数，该数组的成员是一个个表示键值对的数组：
 
   ```javascript
-  const map = new Map([['name', '张三'], ['title', 'Author']])
+  const map = new Map([["name", "张三"], ["title", "Author"]]);
 
-  map.size // 2
-  map.has('name') // true
-  map.get('name') // "张三"
+  map.size; // 2
+  map.has("name"); // true
+  map.get("name"); // "张三"
   ```
 
   实际上执行的是下面的算法：
 
   ```javascript
-  const items = [['name', '张三'], ['title', 'Author']]
+  const items = [["name", "张三"], ["title", "Author"]];
 
-  const map = new Map()
-  items.forEach(([key, value]) => map.set(key, value))
+  const map = new Map();
+  items.forEach(([key, value]) => map.set(key, value));
   ```
 
   注意，只有对同一个对象的引用，Map 结构才将其视为同一个键：
 
   ```javascript
-  const map = new Map()
+  const map = new Map();
 
-  map.set(['a'], 555)
-  map.get(['a']) // undefined
+  map.set(["a"], 555);
+  map.get(["a"]); // undefined
   ```
 
   上面的 set 和 get 方法，表面是针对同一个键，但实际上这是两个值，内存地址是不一样的，因此 get 方法无法读取该键，返回 undefined。
@@ -1259,16 +1259,16 @@ var allElements = document.getElementsByTagName('*')
   同理，同样的值的两个实例，在 Map 结构中被视为两个键。
 
   ```javascript
-  const map = new Map()
+  const map = new Map();
 
-  const k1 = ['a']
-  const k2 = ['a']
+  const k1 = ["a"];
+  const k2 = ["a"];
 
-  map.set(k1, 111)
-  map.set(k2, 222)
+  map.set(k1, 111);
+  map.set(k2, 222);
 
-  map.get(k1) // 111
-  map.get(k2) // 222
+  map.get(k1); // 111
+  map.get(k2); // 222
   ```
 
   因此，Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就是为两个键。
@@ -1278,22 +1278,22 @@ var allElements = document.getElementsByTagName('*')
   ```javascript
   let obj = {
     a: 1
-  }
+  };
 
   let proxyObj = new Proxy(obj, {
     get: function(target, prop) {
-      return prop in target ? target[prop] : 0
+      return prop in target ? target[prop] : 0;
     },
     set: function(target, prop, value) {
-      target[prop] = 888
+      target[prop] = 888;
     }
-  })
+  });
 
-  console.log(proxyObj.a) // 1
-  console.log(proxyObj.b) // 0
+  console.log(proxyObj.a); // 1
+  console.log(proxyObj.b); // 0
 
-  proxyObj.a = 666
-  console.log(proxyObj.a) // 888
+  proxyObj.a = 666;
+  console.log(proxyObj.a); // 888
   ```
 
   设置 handler 拦截重写 set, get 方法
@@ -1323,12 +1323,12 @@ var allElements = document.getElementsByTagName('*')
   标签栏的显示隐藏会触发 visibilitychange 事件
 
   ```javascript
-  document.addEventListener('visibilitychange', () => {
+  document.addEventListener("visibilitychange", () => {
     // 监听document的显隐，控制标题
     if (!document.hidden) {
       // ...
     }
-  })
+  });
   ```
 
 * 判断数值是否有穷
@@ -1344,8 +1344,8 @@ var allElements = document.getElementsByTagName('*')
 * 试图向数组添加数字字符串属性
 
   ```javascript
-  var myArray = ['test', 1, 2]
-  myArray['3'] = 3
+  var myArray = ["test", 1, 2];
+  myArray["3"] = 3;
   ```
 
   会导致 myArray 数组新增一个元素
@@ -1360,88 +1360,114 @@ var allElements = document.getElementsByTagName('*')
 
 * Element.classList
 
-  Element.classList是一个只读属性，是替代element.className作为空格分隔的字符串访问元素的类列表的一种方便的方法。可以是调用add()，和remove()方法修改它。
+  Element.classList 是一个只读属性，是替代 element.className 作为空格分隔的字符串访问元素的类列表的一种方便的方法。可以是调用 add()，和 remove()方法修改它。
 
-    - add: 添加指定的类
-    - remove：删除的指定的类
-    - item：按集合中的索引返回类值
-    - toggle：当只有一个参数时：切换 class value; 即如果类存在，则删除它并返回false，如果不存在，则添加它并返回true；当存在第二个参数时：如果第二个参数的计算结果为true，则添加指定的类值，如果计算结果为false，则删除它。
-    - contains：检查元素的类属性中是否存在指定的类值
-    - replace：用一个新类代替已有类
+  - add: 添加指定的类
+  - remove：删除的指定的类
+  - item：按集合中的索引返回类值
+  - toggle：当只有一个参数时：切换 class value; 即如果类存在，则删除它并返回 false，如果不存在，则添加它并返回 true；当存在第二个参数时：如果第二个参数的计算结果为 true，则添加指定的类值，如果计算结果为 false，则删除它。
+  - contains：检查元素的类属性中是否存在指定的类值
+  - replace：用一个新类代替已有类
 
-* Nginx反向代理
+* Nginx 反向代理
 
-  在计算机网络中，反向代理是代理服务器的一种。服务器根据客户端的请求，从其关系的一组或多组后端服务器（如Web服务器）上获取资源，然后再将这些资源返回给客户端，客户端只会得知反向代理的IP地址，而不知道在代理服务器后面的服务器集群的存在[1]。
+  在计算机网络中，反向代理是代理服务器的一种。服务器根据客户端的请求，从其关系的一组或多组后端服务器（如 Web 服务器）上获取资源，然后再将这些资源返回给客户端，客户端只会得知反向代理的 IP 地址，而不知道在代理服务器后面的服务器集群的存在[1]。
 
   主要作用：
-  - 对客户端隐藏服务器（集群）的IP地址
-  - 安全：作为应用层防火墙，为网站提供对基于Web的攻击行为（例如DoS/DDoS）的防护，更容易排查恶意软件等
-  - 为后端服务器（集群）统一提供加密和SSL加速（如SSL终端代理）
-  - 负载均衡，若服务器集群中有负荷较高者，反向代理通过URL重写，根据连线请求从负荷较低者获取与所需相同的资源或备援
+
+  - 对客户端隐藏服务器（集群）的 IP 地址
+  - 安全：作为应用层防火墙，为网站提供对基于 Web 的攻击行为（例如 DoS/DDoS）的防护，更容易排查恶意软件等
+  - 为后端服务器（集群）统一提供加密和 SSL 加速（如 SSL 终端代理）
+  - 负载均衡，若服务器集群中有负荷较高者，反向代理通过 URL 重写，根据连线请求从负荷较低者获取与所需相同的资源或备援
   - 对于静态内容及短时间内有大量访问请求的动态内容提供缓存服务
   - 对一些内容进行压缩，以节约带宽或为网络带宽不佳的网络提供服务
   - 减速上传
-  - 为在私有网络下（如局域网）的服务器集群提供NAT穿透及外网发布服务
-  - 提供HTTP访问认证[2]
-  - 突破互联网封锁（不常用，因为反向代理与客户端之间的连线不一定是加密连线，非加密连线仍有遭内容审查进而遭封禁的风险；此外面对针对域名的关键字过滤、DNS缓存污染/投毒攻击乃至深度数据包检测也无能为力）
+  - 为在私有网络下（如局域网）的服务器集群提供 NAT 穿透及外网发布服务
+  - 提供 HTTP 访问认证[2]
+  - 突破互联网封锁（不常用，因为反向代理与客户端之间的连线不一定是加密连线，非加密连线仍有遭内容审查进而遭封禁的风险；此外面对针对域名的关键字过滤、DNS 缓存污染/投毒攻击乃至深度数据包检测也无能为力）
 
-
-* 负载均衡
+- 负载均衡
 
   负载平衡（Load balancing）是一种计算机技术，用来在多个计算机（计算机集群）、网络连接、CPU、磁盘驱动器或其他资源中分配负载，以达到最优化资源使用、最大化吞吐率、最小化响应时间、同时避免过载的目的。 使用带有负载平衡的多个服务器组件，取代单一的组件，可以通过冗余提高可靠性。负载平衡服务通常是由专用软件和硬件来完成。 主要作用是将大量作业合理地分摊到多个操作单元上进行执行，用于解决互联网架构中的高并发和高可用的问题。
 
-
 * npx
 
-  原理：运行的时候，会到node_modules/.bin路径和环境变量$PATH里面，检查命令是否存在。
-  
+  原理：运行的时候，会到 node_modules/.bin 路径和环境变量\$PATH 里面，检查命令是否存在。
+
   npx 可以调用项目内部安装的模块。
   老方法：
+
   ```
   $ node-modules/.bin/mocha --version
   ```
-  用npx：
+
+  用 npx：
+
   ```
   $ npx mocha --version
   ```
+
   npx 可以避免全局安装模块。
+
   ```
   $ npx create-react-app my-react-app
   ```
-  上面代码运行时，npx 将create-react-app下载到一个临时目录，使用以后再删除。所以，以后再次执行上面的命令，会重新下载create-react-app。
+
+  上面代码运行时，npx 将 create-react-app 下载到一个临时目录，使用以后再删除。所以，以后再次执行上面的命令，会重新下载 create-react-app。
 
 * 位移操作符
 
-    按位移动会先将操作数转换为大端字节序顺序(big-endian order)的32位整数,并返回与左操作数相同类型的结果。**右操作数应小于 32位，否则只有最低 5 个字节会被使用**。    
-    ```javascript
-    1 << 32 // 1
-    1 << 31 // -2147483648
-    1 << 30 // 1073741824
-    ```
+  按位移动会先将操作数转换为大端字节序顺序(big-endian order)的 32 位整数,并返回与左操作数相同类型的结果。**右操作数应小于 32 位，否则只有最低 5 个字节会被使用**。
+
+  ```javascript
+  1 << 32; // 1
+  1 << 31; // -2147483648
+  1 << 30; // 1073741824
+  ```
+
 * Math.sign()
 
-    Math.sign() 函数返回一个数字的符号, 指示数字是正数，负数还是零。
-    ```javascript
-    Math.sign(3);     //  1
-    Math.sign(-3);    // -1
-    Math.sign("-3");  // -1
-    Math.sign(0);     //  0
-    Math.sign(-0);    // -0
-    Math.sign(NaN);   // NaN
-    Math.sign("foo"); // NaN
-    Math.sign();      // NaN
-    ```
-    ployfill:
-    ```javascript
-    function sign(x) {
-        x = +x // 转换为数字
-        if(x === 0 || Number.isNaN(x)) { // 0或NaN都返回自身，-0 === 0
-            return x
-        }
-        return x > 0 ? 1 : -1 // 整数返回1, 负数返回-1
-    } 
-    ```
+  Math.sign() 函数返回一个数字的符号, 指示数字是正数，负数还是零。
+
+  ```javascript
+  Math.sign(3); //  1
+  Math.sign(-3); // -1
+  Math.sign("-3"); // -1
+  Math.sign(0); //  0
+  Math.sign(-0); // -0
+  Math.sign(NaN); // NaN
+  Math.sign("foo"); // NaN
+  Math.sign(); // NaN
+  ```
+
+  ployfill:
+
+  ```javascript
+  function sign(x) {
+    x = +x; // 转换为数字
+    if (x === 0 || Number.isNaN(x)) {
+      // 0或NaN都返回自身，-0 === 0
+      return x;
+    }
+    return x > 0 ? 1 : -1; // 整数返回1, 负数返回-1
+  }
+  ```
 
 - throw
 
-  throw 后可以跟任意类型，适合在请求时候，抛出服务器的响应，在catch中捕获，当成错误处理，拿到错误信息、错误码等。
+  throw 后可以跟任意类型，适合在请求时候，抛出服务器的响应，在 catch 中捕获，当成错误处理，拿到错误信息、错误码等。
+
+- textarea 的样式
+
+  为textarea设置以下样式，可以去掉其默认边框、默认右下角小三角符号、选中时的外边框，使其看起来像是一个内容创作区域
+  ```css
+  textarea: {
+    overflow: visible;
+    height: calc(100vh - 80px);
+    font-size: 18px;
+    padding: 16px;
+    resize: none;
+    border: none;
+    outline: none;
+  }
+  ```
