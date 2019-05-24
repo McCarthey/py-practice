@@ -362,3 +362,38 @@ function fetchNewBook(book) {
   }
 }
 ```
+
+## Dva的使用
+使用dva时，与使用react-redux和react-thunk类似，不同的地方在于dva使用react-saga处理异步操作等副作用，并使用生成器来操作异步流程。
+
+常用的effect类型：call, put。
+
+- call: 调用既定的函数
+- put: dispatch一个action
+
+```javascript
+// 这是umi项目下的一个model，用于处理登录注册逻辑
+state: { isLoggedIn: false },
+reducers: {
+    changeLogState(state, { payload: { isLoggedIn }}) {
+       return { ...state, isLoggedIn }
+    },
+},
+effects: {
+    *login({ payload: { email, password }},{ call, put }) {
+       const res = yield call(api_sign.signInByEmail, { email, password })
+       yield put({ type: 'changeLogState', payload: { isLoggedIn: true } })
+       message.success(res.msg)
+       router.push('/home')
+    },
+}
+```
+
+视图层依然需要使用connect(mapStateToProps)(SignIn)包裹成高阶组件，将model的state映射成组件所需要的props（可以在mapStateToProps中返回loading: state.loading.models.sign，来调用dva-loading，省去了每次loading的show/hide逻辑），在视图层中只需要在登录按钮的地方触发
+```javascript
+this.props.dispatch({
+  type: 'sign/signIn',
+  payload: { email, password }
+})
+```
+即可实现异步操作，操作成功/失败的提示完全可以放在effect中处理
