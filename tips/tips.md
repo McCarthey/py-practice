@@ -1471,3 +1471,10 @@ var allElements = document.getElementsByTagName("*");
     outline: none;
   }
   ```
+- 为第三方页面添加jQuery方便调试
+
+```javascript
+const s = document.createElement('script')
+s.src = 'https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js'
+document.body.appendChild(s)
+```
