@@ -5,28 +5,28 @@
 每个函数都有 prototype 属性（除了 let fun = Function.prototype.bind()以外）,该属性的值是一个对象，只有一个 constructor 属性，对应着构造函数
 
 ```javascript
-Foo.prototype.constructor === Foo // true
+Foo.prototype.constructor === Foo; // true
 ```
 
 每个对象都有**proto**属性，指向了创建该对象的构造函数的原型。其实指向的是内部属性[[prototype]]。对象可以通过**proto**来寻找不属于该对象的属性，**proto**将对象链接成了原型链。
 
 ```javascript
 function Foo() {
-  console.log('Foo')
+  console.log("Foo");
 }
-let foo = new Foo()
+let foo = new Foo();
 // 获取foo对象的原型
-Object.getPrototypeOf(foo) === Foo.prototype // true
+Object.getPrototypeOf(foo) === Foo.prototype; // true
 // 判断一个对象是否是另一个对象的原型
-Foo.prototype.isPrototypeOf(foo) // true
+Foo.prototype.isPrototypeOf(foo); // true
 // 因为Foo没有这个方法isPrototypeOf 因此Foo需要沿着原型继续查找，因此相当于
-Foo.prototype.__proto__.isPrototypeOf(foo) // true
+Foo.prototype.__proto__.isPrototypeOf(foo); // true
 // 通过在构造函数的原型上添加同名属性改写原生方法
 Foo.prototype.valueOf = function() {
-  console.log('Cunstom valueOf method')
-}
+  console.log("Cunstom valueOf method");
+};
 
-foo.valueOf() // 'Cunstom valueOf method' 屏蔽了Object上的原生valueOf方法
+foo.valueOf(); // 'Cunstom valueOf method' 屏蔽了Object上的原生valueOf方法
 ```
 
 #### 自己实现一个 new
@@ -34,15 +34,15 @@ foo.valueOf() // 'Cunstom valueOf method' 屏蔽了Object上的原生valueOf方�
 ```javascript
 function create() {
   // 创建一个空对象
-  let obj = new Object()
+  let obj = new Object();
   // 获取构造函数
-  let Con = [].shift.call(arguments)
+  let Con = [].shift.call(arguments);
   // 链接到原型
-  obj.__proto__ = Con.prototype
+  obj.__proto__ = Con.prototype;
   // 绑定this，执行构造函数
-  let result = Con.apply(obj, arguments)
+  let result = Con.apply(obj, arguments);
   // 确保new出来的是个对象
-  return typeof result === 'object' ? result : obj
+  return typeof result === "object" ? result : obj;
 }
 ```
 
@@ -50,11 +50,11 @@ function create() {
 // Or
 var objFactory = function() {
   var obj = {},
-    Constructor = [].shift.call(arguments)
-  obj.__proto__ = Constructor.prototype
-  var ret = Constructor.apply(obj, arguments)
-  return typeof ret === 'object' ? ret : obj
-}
+    Constructor = [].shift.call(arguments);
+  obj.__proto__ = Constructor.prototype;
+  var ret = Constructor.apply(obj, arguments);
+  return typeof ret === "object" ? ret : obj;
+};
 ```
 
 #### 自己实现一个 instanceof
@@ -64,18 +64,18 @@ var objFactory = function() {
 ```javascript
 function myInstanceof(left, right) {
   // 获取右侧类型的prototype，如Number.prototype, Bar.prototype
-  let prototype = right.prototype
+  let prototype = right.prototype;
   // 获取左侧实例对象的内部[[prototype]]属性
-  left = left.__proto__
+  left = left.__proto__;
   // 沿着原型链逐级查找，直到找到或者[[prototype]]为null
   while (true) {
     if (left === null) {
-      return false
+      return false;
     }
     if (left === prototype) {
-      return true
+      return true;
     }
-    left = left.__proto__ // 继续查找
+    left = left.__proto__; // 继续查找
   }
 }
 ```
@@ -84,15 +84,15 @@ function myInstanceof(left, right) {
 
 ```javascript
 Function.prototype.myCall = function(context) {
-  var context = context || window
+  var context = context || window;
   // 给context添加一个属性
-  context.fn = this
+  context.fn = this;
   // 将context后面的参数取出来
-  var args = [...arguments].slice(1)
-  var result = context.fn(...args)
-  delete context.fn
-  return result
-}
+  var args = [...arguments].slice(1);
+  var result = context.fn(...args);
+  delete context.fn;
+  return result;
+};
 ```
 
 #### 防抖实现
@@ -103,46 +103,46 @@ Function.prototype.myCall = function(context) {
 
 ```javascript
 // 示例：监听滚动事件
-let timer
+let timer;
 window.onscroll = function() {
   if (timer) {
-    clearTimeout(timer)
+    clearTimeout(timer);
   }
   timer = setTimeout(() => {
     let scrollTop =
-      document.body.scrollTop || document.documentElement.scrollTop
-    console.log(`滚动位置：${scrollTop}`)
-    timer = null
-  }, 500)
-}
+      document.body.scrollTop || document.documentElement.scrollTop;
+    console.log(`滚动位置：${scrollTop}`);
+    timer = null;
+  }, 500);
+};
 ```
 
 抽象函数：
 
 ```javascript
 const debounce = (func, delay) => {
-  let timer
+  let timer;
   return function() {
     if (timer) {
-      clearTimeout(timer)
+      clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      func.apply(this, arguments)
-      timer = null
-    }, delay)
-  }
-}
+      func.apply(this, arguments);
+      timer = null;
+    }, delay);
+  };
+};
 ```
 
 使用
 
 ```javascript
 function onScroll() {
-  let scrollTop = document.body.scrollTop || document.documentElement.scrollTop
-  console.log('滚动条位置：' + scrollTop)
+  let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+  console.log("滚动条位置：" + scrollTop);
 }
 
-window.onscroll = debounce(onScroll, 500)
+window.onscroll = debounce(onScroll, 500);
 ```
 
 #### 节流实现
@@ -153,64 +153,67 @@ window.onscroll = debounce(onScroll, 500)
 
 ```javascript
 // 示例：监听滚动事件
-let startTime = Date.now() //开始时间
-let time = 500 //间隔时间
-let timer
+let startTime = Date.now(); //开始时间
+let time = 500; //间隔时间
+let timer;
 window.onscroll = function throttle() {
-  let currentTime = Date.now()
+  let currentTime = Date.now();
   if (currentTime - startTime >= time) {
     let scrollTop =
-      document.body.scrollTop || document.documentElement.scrollTop
-    console.log('滚动条位置：' + scrollTop)
-    startTime = currentTime
+      document.body.scrollTop || document.documentElement.scrollTop;
+    console.log("滚动条位置：" + scrollTop);
+    startTime = currentTime;
   } else {
-    clearTimeout(timer)
+    clearTimeout(timer);
     timer = setTimeout(function() {
-      throttle()
-    }, 50)
+      throttle();
+    }, 50);
   }
-}
+};
 ```
 
 抽象函数：
 
 ```javascript
 function throttle(func, delay) {
-  let startTime = Date.now()
+  let startTime = Date.now();
   return function() {
-    let _this = this
-    let currentTime = Date.now()
+    let _this = this;
+    let currentTime = Date.now();
     if (currentTime - startTime >= delay) {
-      func.apply(_this, arguments)
-      startTime = currentTime
+      func.apply(_this, arguments);
+      startTime = currentTime;
     }
-  }
+  };
 }
 ```
 
 #### 函数柯里化
+
 函数柯里化只的是将一个多参数的函数拆分成一系列函数，每个拆分后的函数都只接受一个参数
+
 ```javascript
 function add(a, b) {
-  return a + b
+  return a + b;
 }
 
-add(1, 2)
+add(1, 2);
 ```
+
 柯里化后，
+
 ```javascript
-function add (a) {
-  return function (b) {
-    return a + b
-  }
+function add(a) {
+  return function(b) {
+    return a + b;
+  };
 }
 
-add(1)(2)
+add(1)(2);
 
 // 或者采用更简洁的箭头函数写法
-const add = a => b => a + b
+const add = a => b => a + b;
 ```
-
 
 #### 堆内存与栈内存
 
@@ -229,8 +232,8 @@ JS 引擎中对变量的存储主要有两种，**堆内存**和**栈内存**。
 ```javascript
 for (var i = 1; i <= 5; i++) {
   setTimeout(function timer() {
-    console.log(i)
-  }, i * 1000)
+    console.log(i);
+  }, i * 1000);
 }
 ```
 
@@ -239,11 +242,11 @@ for (var i = 1; i <= 5; i++) {
 ```javascript
 // 闭包
 for (var i = 1; i <= 5; i++) {
-  ;(function(j) {
+  (function(j) {
     setTimeout(function() {
-      console.log(j)
-    }, j * 1000)
-  })(i)
+      console.log(j);
+    }, j * 1000);
+  })(i);
 }
 ```
 
@@ -253,11 +256,11 @@ for (var i = 1; i <= 5; i++) {
 for (var i = 1; i <= 5; i++) {
   setTimeout(
     function(j) {
-      console.log(j)
+      console.log(j);
     },
     i * 1000,
     i
-  )
+  );
 }
 ```
 
@@ -265,79 +268,104 @@ for (var i = 1; i <= 5; i++) {
 // let 创建块级作用域
 for (let i = 1; i <= 5; i++) {
   setTimeout(function timer() {
-    console.log(i)
-  }, i * 1000)
+    console.log(i);
+  }, i * 1000);
 }
 ```
 
 #### Promise 的实现
 
-思路：利用 setTimeout 实现延迟 fn 中 resolve 和 reject 的执行
-
 ```javascript
-function MyPromise(fn) {
-  this.value
-  this.resolveFunc = function() {}
-  this.rejectFunc = function() {}
-  fn(this.resolve.bind(this), this.reject.bind(this))
-}
-```
+function Promise(callback) {
+  var self = this;
+  self.status = "PENDING";
+  self.data = undefined;
+  self.onResolvedCallback = [];
+  self.onRejectedCallback = [];
+  callback(resolve, reject);
 
-#### 实现Array.prototype.map
-```javascript
-Array.prototype.map = function (cb) {
-  var result = []
-  this.forEach(function(element, index) {
-    result.push(cb(element, index))
-  })
-  return result 
-}
-```
-
-#### 实现Array.prototype.filter
-```javascript
-Array.prototype.filter = function (cb) {
-  var result = []
-  this.forEach((item, index) => {
-    if(cb(item, index)) {
-      result.push(item)
+  function resolve(value) {
+    if (self.status === "PENDING") {
+      self.status = "FULFILLED";
+      self.data = value;
+      for (var i = 0; i < self.onResolvedCallback.length; i++) {
+        self.onResolvedCallback[i](value);
+      }
     }
-  })
-  return result
+  }
+
+  function reject(error) {
+    if (self.status === "PENDING") {
+      self.status = "REJECTED";
+      self.data = error;
+      for (var i = 0; i < self.onRejectedCallback.length; i++) {
+        self.onRejectedCallback[i](error);
+      }
+    }
+  }
 }
+
+Promise.prototype.then = function() {};
 ```
 
-#### 实现一个深拷贝函数deepClone
+#### 实现 Array.prototype.map
+
+```javascript
+Array.prototype.map = function(cb) {
+  var result = [];
+  this.forEach(function(element, index) {
+    result.push(cb(element, index));
+  });
+  return result;
+};
+```
+
+#### 实现 Array.prototype.filter
+
+```javascript
+Array.prototype.filter = function(cb) {
+  var result = [];
+  this.forEach((item, index) => {
+    if (cb(item, index)) {
+      result.push(item);
+    }
+  });
+  return result;
+};
+```
+
+#### 实现一个深拷贝函数 deepClone
+
 ```javascript
 // 判断数据类型
 const type = obj => {
-  const typeString = Object.prototype.toString.call(obj)
+  const typeString = Object.prototype.toString.call(obj);
   const map = {
-    '[object Array]': 'array',
-    '[object Object]': 'object'
-  }
+    "[object Array]": "array",
+    "[object Object]": "object"
+  };
 
-  return map[typeString]
-}
+  return map[typeString];
+};
 
 // 深拷贝
 const deepClone = data => {
-  const typeString = type(data)
-  let r
-  if(typeString === 'array') {
-    r = []
-    for(let i = 0; i < data.length; i++) {
-      r.push(deepClone(data[i]))
+  const typeString = type(data);
+  let r;
+  if (typeString === "array") {
+    r = [];
+    for (let i = 0; i < data.length; i++) {
+      r.push(deepClone(data[i]));
     }
-    return r
-  } else if (typeString === 'object') {
-    r = {}
-    for(let i in data) {
-      r[i] = deepClone(data[i])
+    return r;
+  } else if (typeString === "object") {
+    r = {};
+    for (let i in data) {
+      r[i] = deepClone(data[i]);
     }
-    return r
+    return r;
   } else {
-    return data
+    return data;
   }
-}
+};
 ```

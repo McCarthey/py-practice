@@ -7,3 +7,13 @@ git fetch --all
 git reset origin --hard origin/[branchName]
 git pull
 ```
+
+清空git add .
+```bash
+git reset 
+```
+
+设置git源地址,实现https/ssh的切换
+```bash
+git remote set-url origin XXXXXXX
+```
