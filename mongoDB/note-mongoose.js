@@ -1,18 +1,16 @@
 const express = require('express')
-const path = require('path')
-const fs = require('fs')
 const app = express()
 
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
-const session = require('express-session')
 // const compression = require('compression')
-const morgan = require('morgan')
-const MongoStore = require('connect-mongo')(session);
-const crypto = require('crypto')
 
 const config = require('./config')
+
+/**
+ * 本文件仅仅用来练习 mongoose 的使用，因此只保留了几个接口/路由，
+ * 同时也去除了 cookie-session 机制，因操作 username: Randall 的文档
+ */
 
 /**
  * 连接mongoDB
@@ -21,6 +19,10 @@ const config = require('./config')
 mongoose.connect(`${config.dbUrl}/note`)
 const db = mongoose.connection
 const Schema = mongoose.Schema
+
+/** 1.可以定义子Schema，最好指定子Schema的 _id: false，否则会在子文档中自动被添加_id属性
+ *  2.定义Schema时可以指定 collection: 'XXX' 来给collection命名，或者可以直接访问该名称的collection
+ */
 
 const noteSchema = new Schema({
     id: String,
@@ -54,7 +56,6 @@ const allowCrossDomain = function (req, res, next) {
 
 
 app.use(allowCrossDomain) //运用跨域的中间件
-// app.use(cookieParser()) // use cookie-parser
 app.use(bodyParser.json()) // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
@@ -68,83 +69,6 @@ app.get('/checklogin', (req, res) => {
         });
     }
 });
-
-// // 注册
-// app.post('/signup', async (req, res) => {
-//     let data = req.body
-//     const isexisted = await checkusername(data.username)
-//     if (isexisted) {
-//         res.send({
-//             code: 101,
-//             msg: 'username already exists'
-//         })
-//     } else {
-//         const md5 = crypto.createhash('md5')
-//         const pwdmd5 = md5.update(data.password).digest('hex') // 得到加密后的密码
-//         const uid = generateid(data.username)
-//         const dbresult = await db.collection('users').insertone({
-//             username: data.username,
-//             password: pwdmd5,
-//             uid,
-//             notes: []
-//         })
-//         res.send({
-//             code: 0,
-//             msg: 'success!'
-//         })
-//     }
-// })
-
-// // 登录
-// app.post('/login', async (req, res) => {
-//     let data = req.body
-//     const isexisted = await checkusername(data.username)
-//     if (!isexisted) {
-//         res.send({
-//             code: 102,
-//             msg: 'no such user, please sign up first'
-//         })
-//     } else {
-//         const md5 = crypto.createhash('md5')
-//         const pwdmd5 = md5.update(data.password).digest('hex') // 得到加密后的密码
-//         const dbresult = await db.collection('users').findone({
-//             username: data.username,
-//         })
-//         // console.log(dbresult.username)
-//         const { username, password, uid } = dbresult
-//         if (password === pwdmd5) {
-//             req.session.login = 'logged'
-//             res.cookie('uid', uid, { maxage: 7 * 24 * 60 * 60 * 1000 })
-//             res.send({
-//                 code: 0,
-//                 msg: 'login successfully'
-//             })
-//         } else {
-//             res.send({
-//                 code: 103,
-//                 msg: 'invalid username or password'
-//             })
-//         }
-//     }
-// })
-
-// // 退出登录
-// app.post('/logout', async (req, res) => {
-//     req.session.destroy(err => {
-//         if (err) {
-//             res.send({
-//                 code: 998,
-//                 msg: 'log out failed'
-//             })
-//             return
-//         }
-//         res.clearcookie('uid')
-//         res.send({
-//             code: 0,
-//             msg: 'log out successfully'
-//         })
-//     })
-// })
 
 // 获取用户数据
 app.get('/getNotes', (req, res) => {
@@ -172,33 +96,6 @@ app.post('/create', async (req, res) => {
     })
 })
 
-// // 更新单条数据状态
-// app.post('/update/:noteId', async (req, res) => {
-//     const isLogin = checkLoginStatus(req, res)
-//     if (!isLogin) return false
-//     const noteId = req.params.noteId
-//     const { done } = req.body
-//     try {
-//         const uid = req.cookies.uid
-//         const dbResult = await db.collection('users').updateOne(
-//             { uid, "notes.id": noteId },
-//             {
-//                 $set: { "notes.$.done": done },
-//                 $currentDate: { lastModified: true }
-//             }
-//         )
-//         res.send({
-//             code: 0,
-//             msg: 'success',
-//         })
-//     } catch (e) {
-//         res.send({
-//             code: 202,
-//             msg: 'Post data failed'
-//         })
-//     }
-// })
-
 // 删除单条数据
 app.post('/delete/:noteId', async (req, res) => {
     const isLogin = checkLoginStatus(req, res)
@@ -214,55 +111,6 @@ app.post('/delete/:noteId', async (req, res) => {
         })
     })
 })
-
-// // 更新用户数据
-// app.post('/updateNotes', async (req, res) => {
-//     const isLogin = checkLoginStatus(req, res)
-//     if (!isLogin) return false
-//     let { notes } = req.body
-//     try {
-//         const uid = req.cookies.uid
-//         const dbResult = await db.collection('users').updateOne(
-//             { uid },
-//             {
-//                 $set: { notes },
-//                 $currentDate: { lastModified: true }
-//             }
-//         )
-//         res.send({
-//             code: 0,
-//             msg: 'success',
-//         })
-//     } catch (e) {
-//         res.send({
-//             code: 202,
-//             msg: 'Post data failed'
-//         })
-//     }
-// })
-
-// app.get('/test', (req, res) => {
-//     res.send({
-//         code: 0,
-//         msg: 'Hello this is a test'
-//     })
-// })
-
-// // 检查用户名
-// async function checkUsername(username) {
-//     let queryRes = await db.collection('users').find({ username }).toArray()
-//     let isExisted = queryRes.some(i => {
-//         return i.username === username
-//     })
-//     return isExisted
-// }
-
-// 生成唯一的userId
-function generateId(data) {
-    const hash = crypto.createHash('sha256')
-    hash.update(data)
-    return hash.digest('hex')
-}
 
 // 检查登录状态
 function checkLoginStatus(req, res) {
