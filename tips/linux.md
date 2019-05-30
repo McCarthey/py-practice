@@ -76,3 +76,15 @@ dfault = simple
 - chgrp：改变文件所属用户组。
 - chown：改变文件所有者。（也可以修改文件所属用户组）
 - chmod：改变文件的权限。
+
+比如，当你要复制一个文件时，cp命令会复制执行者的属性和权限，因此可以通过 chown user:group filename 命令来修改新文件的权限
+
+修改权限命令：chomd [-R] xyz filename/dirname
+
+其中xyz代表三组rwx的加权和
+
+- r：4
+- w: 2
+- x: 1
+
+
