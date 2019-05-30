@@ -1,6 +1,6 @@
-# 禁止root远程登录
+## 禁止root远程登录
 每天都有很多人在尝试root全程登录你的服务器，为安全起见，[参考](https://www.cnblogs.com/jianz/p/7979250.html)文章，新建用户登录，然后禁止root远程登录。
-# Linux相关
+## Linux相关
 - unzip解压
 
 - rz模块
@@ -48,3 +48,31 @@ lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s
 autocrlf = true
 [push]
 dfault = simple
+
+## Linux权限
+以为例 drwxr-xr-x 
+
+第一个字符表示文件的类型：
+- d：目录
+- -：文件
+- l：连接文件
+- b：表示设备文件里面的可供存储的接口设备
+- c：表示设备文件里面的串行端口设备，例如键盘、鼠标
+
+接下来的字符串中，每三个为一组，均为rwx-
+- r：代表可读
+- w：代表可写
+- x：代表可执行
+- -：无权限
+
+第一组为“文件所有者的权限”
+
+第二组为“同用户组的权限”
+
+第三组为“其他非本用户组的权限”
+
+## Linux文件权限修改
+
+- chgrp：改变文件所属用户组。
+- chown：改变文件所有者。（也可以修改文件所属用户组）
+- chmod：改变文件的权限。
