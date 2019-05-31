@@ -177,7 +177,12 @@ app.post('/create', async (req, res) => {
         const dbResult = await db.collection('users').updateOne(
             { uid },
             {
-                $push: { notes: { id, content, done } },
+                $push: {
+                    notes: {
+                        $each: [{ id, content, done }],
+                        $position: 0
+                    }
+                },
             }
         )
         res.send({
@@ -197,16 +202,27 @@ app.post('/update/:noteId', async (req, res) => {
     const isLogin = checkLoginStatus(req, res)
     if (!isLogin) return false
     const noteId = req.params.noteId
-    const { done } = req.body
+    const { done, content } = req.body
     try {
         const uid = req.cookies.uid
-        const dbResult = await db.collection('users').updateOne(
-            { uid, "notes.id": noteId },
-            {
-                $set: { "notes.$.done": done },
-                $currentDate: { lastModified: true }
-            }
-        )
+        if (!content) {
+            const dbResult = await db.collection('users').updateOne(
+                { uid, "notes.id": noteId },
+                {
+                    $set: { "notes.$.done": done },
+                    $currentDate: { lastModified: true }
+                }
+            )
+        }
+        else {
+            const dbResult = await db.collection('users').updateOne(
+                { uid, "notes.id": noteId },
+                {
+                    $set: { "notes.$.content": content },
+                    $currentDate: { lastModified: true }
+                }
+            )
+        }
         res.send({
             code: 0,
             msg: 'success',
