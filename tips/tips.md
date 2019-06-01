@@ -1478,3 +1478,19 @@ const s = document.createElement('script')
 s.src = 'https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js'
 document.body.appendChild(s)
 ```
+
+- egg.js简介
+
+    - 控制器：负责解析用户的输入，处理后返回相应的结果。
+
+      框架推荐 Controller 层主要对用户的请求参数进行处理（校验、转换），然后调用对应的 service 方法处理业务，得到业务结果后封装并返回：
+
+      - 获取用户通过 HTTP 传递过来的请求参数
+      - 校验、组装参数
+      - 调用 Service 进行业务处理，必要时处理转换 Service 的返回结果，让它适应用户的需求
+      - 通过 HTTP 将结果响应给用户
+    - 服务：服务就是在复杂业务场景下用于做业务逻辑封装的一个抽象层，提供这个抽象有以下几个好处：
+
+      - 保持 Controller 中的逻辑更加简洁
+      - 保持业务逻辑的独立性，抽象出来的 Service 可以被多个 Controller 重复调用
+      - 将逻辑和展现分离，更容易编写测试用例
