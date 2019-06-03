@@ -44,8 +44,13 @@
 
     在上一步包含Dockerfile的目录中执行：
     ```bash
-    docker build -t nginx:v3
+    docker build -t nginx:v3 .
     ```
+    命令末尾的 . 表示构建镜像的上下文路径，docker build 命令会将这个路径下的所有内容打包，上传给Docker引擎，Docker来构建镜像。（Docker引擎提供了一组REST API，客户端的Docker工具通过这些API与Docker引擎交互，因此实际上执行docker命令是在调用Docker的远程服务）
+- .dockerignore文件
+
+    如.gitignore文件语法一样，用来指定不需要作为上下文传递给Docker引擎的文件。
+
 ### 容器
 - 启动容器：
     ```bash
