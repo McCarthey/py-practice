@@ -4,6 +4,7 @@
 /Flask-practice/flask-demo/11env/
 /Flask-practice/flaskr/flaskrenv/
 *.sqlite
+*.class
 /AwesomeProjectNative/android/
 /AwesomeProjectNative/ios/
 /react-learning/node_modules/
