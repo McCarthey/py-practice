@@ -4,23 +4,25 @@ import {
   Post,
   Put,
   Delete,
-  Req,
   Header,
   Param,
   Body,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { CreateCatDto, UpdateCatDto } from './dto';
+import { CatsService } from './cats.service';
+import { Cat } from './interfaces/cat.interface';
 @Controller('cats')
 export class CatsController {
+  constructor(private readonly catsService: CatsService) {}
+
   @Post()
-  create(@Body() createCatDto: CreateCatDto): string {
-    return 'This action adds a new cat\n';
+  async create(@Body() createCatDto: CreateCatDto) {
+    this.catsService.create(createCatDto);
   }
   @Get()
   @Header('Cache-Control', 'none')
-  findAll(@Req() request: Request): string {
-    return 'This action returns all cats with webpack\n';
+  async findAll(): Promise<Cat[]> {
+    return this.catsService.findAll();
   }
   @Get('ab*cd')
   findByWildcard(): string {
