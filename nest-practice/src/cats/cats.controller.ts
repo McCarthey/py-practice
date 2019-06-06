@@ -4,25 +4,26 @@ import {
   Post,
   Put,
   Delete,
+  Req,
   Header,
   Param,
   Body,
 } from '@nestjs/common';
 import { CreateCatDto, UpdateCatDto } from './dto';
 import { CatsService } from './cats.service';
-import { Cat } from './interfaces/cat.interface';
+import { Cat} from './interfaces/cat.interface'
 @Controller('cats')
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Post()
   async create(@Body() createCatDto: CreateCatDto) {
-    this.catsService.create(createCatDto);
+      this.catsService.create(createCatDto)
   }
   @Get()
   @Header('Cache-Control', 'none')
   async findAll(): Promise<Cat[]> {
-    return this.catsService.findAll();
+      return this.catsService.findAll()
   }
   @Get('ab*cd')
   findByWildcard(): string {
