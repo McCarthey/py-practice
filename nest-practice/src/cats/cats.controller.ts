@@ -11,7 +11,7 @@ export class CatsController {
   @Get()
   @Header('Cache-Control', 'none')
   findAll(@Req() request: Request): string {
-    return 'This action returns all cats\n'
+    return 'This action returns all cats with webpack\n'
   }
   @Get('ab*cd')
   findWildCat():string {
