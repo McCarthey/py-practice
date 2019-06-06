@@ -369,3 +369,54 @@ const deepClone = data => {
   }
 };
 ```
+
+#### 内存泄漏
+
+定义：内存泄漏指的是，程序之前需要用到部分内存，而这部分内存在用完之后并没有返回到内存池。
+
+常见的内存泄漏：
+
+- 全局变量
+
+  不断地创建全局变量，不管有没有用到，它们都将滞留在程序的执行过程中，如果它们是深层嵌套对象，更会浪费大量内存；
+  ```javascript
+  var a = { ... }
+  var b = { ... }
+  function hello() {
+    c = a // 隐式地创建了一个全局变量
+  }
+  ```
+- 事件监听器
+
+  当在组件中创建事件监听器，在销毁组件时却没有移除事件监听的话，那么当再次加载该组件时，就又会注册新的事件监听，导致事件监听的不断增加，浪费内存；
+  ```javascript
+  var element = document.getElementById('button')
+  element.addEventListener('click', onClick)
+  ```
+- 计时器
+
+  当计时器不再使用时，如忘记清除，会导致内存被持续占用
+  ```javascript
+  setInterval(() => {
+    ...
+  }, 1000)
+  ```
+- 移除DOM元素
+
+  类似于全局变量导致的内存泄漏。当dom从视图上移除时，要注意其引用是否被监听器等保存，否则该内存不会被释放：
+  ```javascript
+  var terminator = document.getElementById('terminator')
+  var badEle = document.getElementById('badEle')
+  terminator.addEventListener('click', function () {
+    badEle.remove()
+  })
+  ```
+  当点击了terminator的按钮后，badEle会从DOM中移除，但是由于它被监听器引用，因此这个对象分配的内存并不会被释放。
+  ```javascript
+  var terminator = document.getElementById('terminator')
+  terminator.addEventListener('click', function () {
+    var badEle = document.getElementById('badEle')
+    badEle.remove()
+  })
+  ```
+  改动后，badEle变成了局部变量，在移除操作完成之后，内存将会被垃圾回收。
