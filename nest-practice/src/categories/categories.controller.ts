@@ -9,4 +9,9 @@ export class CategoriesController {
   async findAll(): Promise<Category[]> {
     return this.categoriesService.findAll();
   }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    return this.categoriesService.findOne(id)
+  }
 }

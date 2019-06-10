@@ -7,4 +7,7 @@ export class CategoriesService {
   async findAll(): Promise<Category[]> {
     return await dubbo.service.CategoryService.list();
   }
+  async findOne(id: string) {
+    return await dubbo.service.CategoryService.get(id);
+  }
 }

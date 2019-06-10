@@ -4,6 +4,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { CatsModule } from './cats/cats.module';
 import { CatsController } from './cats/cats.controller';
 import { CategoriesModule } from './categories/categories.module';
+import { GoodsModule } from './goods/goods.module';
 import {
   Module,
   NestModule,
@@ -12,7 +13,7 @@ import {
 } from '@nestjs/common';
 
 @Module({
-  imports: [CatsModule, CategoriesModule],
+  imports: [CatsModule, CategoriesModule, GoodsModule],
   controllers: [AppController],
   providers: [AppService],
 })

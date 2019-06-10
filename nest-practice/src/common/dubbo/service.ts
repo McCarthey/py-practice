@@ -1,10 +1,10 @@
 import { java } from 'dubbo2.js'
-
+import config from './dubbo.config'
 
 const provider = {
   CategoryService(dubbo) {
     return dubbo.proxyService({
-      dubboInterface: 'com.duomai.bigdata.erec.service.CategoryService',
+      dubboInterface: config.services.CategoryService,
       methods: {
         get(uid) {
         },
@@ -19,7 +19,7 @@ const provider = {
   },
   GoodsService(dubbo) {
     return dubbo.proxyService({
-      dubboInterface: 'com.duomai.bigdata.erec.service.GoodsService',
+      dubboInterface: config.services.GoodsService,
       methods: {
         get(uid) {
           return [
@@ -28,7 +28,7 @@ const provider = {
         },
         search() {
           return [
-            java.combine('com.duomai.bigdata.erec.service.GoodsSearchRequest',
+            java.combine(config.GoodsSearchRequest,
               {
                 'size': 1,
                 'query': '手机',
