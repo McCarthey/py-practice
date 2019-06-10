@@ -4,7 +4,6 @@ import {
   Post,
   Put,
   Delete,
-  Req,
   Header,
   Param,
   Body,

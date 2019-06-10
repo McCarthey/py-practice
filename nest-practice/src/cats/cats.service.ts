@@ -10,6 +10,6 @@ export class CatsService {
   }
 
   findAll(): Cat[] {
-    return this.cats;
+    return this.cats; // 直接返回Javascript对象或数组时，将自动解析为JSON
   }
 }
