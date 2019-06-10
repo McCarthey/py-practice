@@ -16,3 +16,6 @@
 !/ML/env1/*.py
 !/ML/env1/*.sh
 /mongoDB/config.js
+
+# nest-practice
+/nest-practice/src/common/dubbo/dubbo.config.ts
