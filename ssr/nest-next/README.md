@@ -1,0 +1,4 @@
+- nest-next-module
+- 修改next目录结构，将nest程序整合到此处（可以将nest项目中的src目录重命名为server，便于查找）
+- 为pages目录下的文件编写对应的controller
+- 修改package.json中的启动脚本 
