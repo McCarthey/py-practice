@@ -1494,3 +1494,14 @@ document.body.appendChild(s)
       - 保持 Controller 中的逻辑更加简洁
       - 保持业务逻辑的独立性，抽象出来的 Service 可以被多个 Controller 重复调用
       - 将逻辑和展现分离，更容易编写测试用例
+
+- npm常识
+
+  - npm ci：
+    
+    类似于npm install，但多用于自动化环境，如测试、持续集成和部署。比常规的npm install快很多，也更严格。特点：
+
+    - 项目必须有package-lock.json;
+    - npm ci 只能一次安装正个项目，无法添加单个依赖项；
+    - 如果已经存在node_modules，则在npm ci前将自动删除node_modules；
+    - 它不会写入package.json或package-lock.json，安装基本上是冻结的； 
