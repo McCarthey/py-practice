@@ -87,3 +87,8 @@
         }
     }
     ```
+
+
+    ## nest.js打包优化
+
+    [ncc](https://github.com/zeit/ncc)可以将node_modules中相关模块打包，从而让nest.js应用摆脱对node_modules的依赖.
