@@ -1505,3 +1505,7 @@ document.body.appendChild(s)
     - npm ci 只能一次安装正个项目，无法添加单个依赖项；
     - 如果已经存在node_modules，则在npm ci前将自动删除node_modules；
     - 它不会写入package.json或package-lock.json，安装基本上是冻结的； 
+
+- coverage
+
+  chrome59之后推出的css/js代码覆盖率检测工具，检查文件中未使用的代码，以优化性能。

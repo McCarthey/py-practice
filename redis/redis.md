@@ -32,7 +32,7 @@ const redisClient = redis.createClient({
   port: 6379,
   password: "XXXX"
 });
-
+ 
 try {
   const isExist = await redisClient.existsAsync(key);
   if (isExist) {
@@ -57,3 +57,5 @@ try {
 }
 ```
 上例以html缓存为例
+
+如果图方便省事儿，开发环境和生产环境使用同一个redis时，使用时注意key，一定要区分环境，否则数据会混乱不一致。 
