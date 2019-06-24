@@ -107,3 +107,10 @@ space是磁盘上的一块区域，可以是一个分区，也可以是一个文
 - 文件大小
 
 du -sh [filename] 
+
+- 解压后撤销
+
+解压后发现目录搞错了？没关系 撤销就完事儿了
+```bash
+zipinfo -1 [filepath].zip | xargs rm -rf
+```
