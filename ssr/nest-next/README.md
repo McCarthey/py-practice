@@ -91,4 +91,10 @@
 
     ## nest.js打包优化
 
-    [ncc](https://github.com/zeit/ncc)可以将node_modules中相关模块打包，从而让nest.js应用摆脱对node_modules的依赖.
+    [ncc](https://github.com/zeit/ncc)可以将node_modules中相关模块打包，从而让nest.js应用摆脱对node_modules的依赖。
+
+    根据这个issue：[ncc doesn't work with swagger in nest](https://github.com/zeit/ncc/issues/406)，需要在生产环境剔除swagger。
+
+    next.config.js中的next-css、next-sass、next-typescript等插件不应该在打包后的生产环境中存在，否则在nest.js应用启动时，会提示缺少依赖（ncc未将这些依赖打包，也不应该打包）。因此需要在next.config.js中做好环境的判断。
+
+    正式环境报错[Cannot find module '../core-js/object/define-property'](https://github.com/zeit/next.js/issues/6332)意思babel新版本的问题，需要手动安装core-js
