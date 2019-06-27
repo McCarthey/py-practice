@@ -38,3 +38,8 @@
     }
 </script>
 ```
+
+自定义组件上应用v-model：
+
+[参考](https://codesandbox.io/s/8nmy126xj9),使用model选项
+
