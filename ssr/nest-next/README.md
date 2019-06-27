@@ -97,4 +97,8 @@
 
     next.config.js中的next-css、next-sass、next-typescript等插件不应该在打包后的生产环境中存在，否则在nest.js应用启动时，会提示缺少依赖（ncc未将这些依赖打包，也不应该打包）。因此需要在next.config.js中做好环境的判断。
 
-    正式环境报错[Cannot find module '../core-js/object/define-property'](https://github.com/zeit/next.js/issues/6332)意思babel新版本的问题，需要手动安装core-js
+    正式环境报错[Cannot find module '../core-js/object/define-property'](https://github.com/zeit/next.js/issues/6332)应该是babel新版本的问题，需要手动安装core-js
+
+    next打包的css可能未被压缩，最好添加optimize-css-assets-webpack-plugin插件到webpack中，可以压缩css文件空格、删除注释，大约可以节省20%左右的体积
+
+    
