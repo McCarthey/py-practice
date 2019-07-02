@@ -17,3 +17,41 @@ handleClick(e) {
 # react hooks
 useEffect
 useState
+
+- useState
+
+绑定表单输入
+```jsx
+const [form, setForm] = useState({
+    leftQuery: '',
+    moreHref: '',
+    picTitle: '',
+    status: 0,
+    topQuery: '',
+})
+
+const handleChange = (e: any) => {
+    setForm({
+        ...form,
+        [e.target.name]: e.target.value
+    })
+}
+
+return (
+    <Form labelCol={{ span: 2 }} wrapperCol={{ span: 10 }} labelAlign="left">
+        <Form.Item label="Field A">
+            <Input
+                placeholder="input placeholder"
+                name="picTitle"
+                onChange={handleChange}
+            />
+        </Form.Item>
+        <Form.Item label="Field B">
+            <Input placeholder="input placeholder" />
+        </Form.Item>
+        <Form.Item>
+            <Button type="primary">创建</Button>
+        </Form.Item>
+    </Form>
+)
+```
