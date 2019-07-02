@@ -55,3 +55,14 @@ return (
     </Form>
 )
 ```
+
+Switch组件，当设置了defaultChecked={fetchData.status}，在获取数据后，它是不会根据当前的state来更新自己的状态的，因此建议当loading状态结束后再渲染Switch组件
+```jsx
+<Form.Item label="状态">
+    {isLoading ? (
+        'loading'
+    ) : (
+        <Switch defaultChecked={Boolean(form.status)} onChange={handleSwitch} />
+    )}
+</Form.Item>
+```
