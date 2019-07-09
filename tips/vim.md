@@ -4,9 +4,10 @@
 - K - up
 - L - righet
 - enter - next line first no empty char
-- w - next word first char
+- W w - next word first char
 - {n}w - next {n} word first char
-- e - next word last char
+- E e - next word last char
+- B b - last word first char
 - {n}e - next {n} word last char
 - G - last line this document
 - x,X - del the following letter
@@ -42,4 +43,4 @@
 
     - 在选中的区域内查找：在Visual模式下选中段落后按 : 然后输入s/{目标}/{替换}/{替换标志}。如：:'<,'>s/:/?:/g
     - 当前行：:s/foo/bar/g
-    - 全文: :%s/foo/bar/g
+    - 全文: :%s/foo/bar/
