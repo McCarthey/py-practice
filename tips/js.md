@@ -420,3 +420,12 @@ const deepClone = data => {
   })
   ```
   改动后，badEle变成了局部变量，在移除操作完成之后，内存将会被垃圾回收。
+
+  - numObj.toString([radix])
+
+  将返回指定Number对象的字符串表示方法,其中基数radix参数可选,未指定的话默认是10.
+  ```javascript
+  let count = 10
+  console.log(count.toString()) // '10'
+  console.log(count.toString(2)) // '1010'
+  ```
