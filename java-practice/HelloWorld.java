@@ -1,10 +1,18 @@
 public class HelloWorld {
     public static void main(String[] args) {
-        System.out.println("Hello world");
-        System.out.println(0.1 + 0.2 != 0.3);
-        System.out.println(Byte.SIZE);
-        System.out.println(Byte.MIN_VALUE);
-        System.out.println(Byte.MAX_VALUE);
+        int n = 100; // 定义int类型变量x,并赋初始值100. 如果不写初始值,则默认值为0
+        System.out.println("n = " + n);
+        n = 200; // 变量可重新赋值
+        System.out.println("n = " + n);
+
+        int x = n; // 将n赋值给变量x
+        System.out.println("x = " + x);
+        x = x + 100;
+        System.out.println("x = " + x);
+        System.out.println("n = " + n);
     }
 }
 
+// class用于定义一个类，public表示这个类是公开的，HelloWorld是类名，大小写敏感
+// 这里的main方法有一个参数，参数类型是String[]，参数名是args，public，static用于修饰方法，表示其是一个公开的静态方法，void是方法的返回类型，每行代码用；结束，但缩进不是必须的
+// Java规定，main方法是程序的固定入口，Java程序总是从main方法开始执行
