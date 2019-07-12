@@ -53,8 +53,57 @@ java HelloWorld.java
 - double: 8
 - char: 2
 
-整形类型,Java只定义了带符号的整型,因此,最高位的bit表示符号位(0正1负),根据各个类型占据的字节数可推算其能表示的最大范围:
+整形类型:
+
+Java只定义了带符号的整型,因此,最高位的bit表示符号位(0正1负),根据各个类型占据的字节数可推算其能表示的最大范围:
 - byte: 2^(8-1): -128 ~ 127
 - short: 2^(16-1): -32768 ~ 32767
 - int: 2^(32-1): -2147483648 ~ 2147483647
 - long: 2^(64-1): -9223372036854775808‬ ~ 92233720368547758087
+
+注意,同一个数的不同进制的表示是完全相同的,例如15 = 0xf = 0b1111
+
+
+浮点类型:
+
+- float类型,需要加上f后缀,可最大表示3.4*10^38,
+- double类型,可最大表示1.79*10^308
+```java
+float f1 = 3.14f;
+float f2 = 3.14e38f;
+double d = 1.79e308;
+double d2 = -1.79e308;
+double d3 = 4.9e-324;
+```
+
+布尔类型:
+
+只有true和false两个值,布尔类型理论上只需要1bit,但是通常JVM内部会把boolean表示为4字节整数
+```java
+boolean b1 = true;
+boolean b2 = false;
+boolean isGreater = 5 > 3; // true
+int age = 12;
+boolean isAdult = age >= 18; // false
+```
+
+字符类型:
+
+Java的char类型除了可以表示标准的ASCII外,还可以表示一个Unicode字符:
+```java
+public class Main {
+    public static void main(String[] args) {
+        char a = 'A';
+        char zh = '中';
+        System.out.println(a);
+        System.out.println(zh);
+    }
+}
+```
+注意,**char类型使用单引号', 且仅有一个字符, 要和使用双引号"的String类型区分开**
+
+常量:
+
+定义变量的时候,如果加上final修饰符,变量就成了常量:
+```java
+```

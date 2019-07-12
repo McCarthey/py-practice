@@ -13,6 +13,16 @@ public class HelloWorld {
 
         int i3 = 2_000_000_000; // 加下划线更容易识别
         System.out.println(i3);
+
+        char a = 'A';
+        char zh = '中';
+        System.out.println(a);
+        System.out.println(zh);
+
+        final double PI = 3.14; // 根据习惯,常量名通常全部大写
+        double r = 5.0;
+        double area = PI * r * r;
+        System.out.println(area);
     }
 }
 
