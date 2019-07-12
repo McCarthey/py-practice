@@ -10,6 +10,9 @@ public class HelloWorld {
         x = x + 100;
         System.out.println("x = " + x);
         System.out.println("n = " + n);
+
+        int i3 = 2_000_000_000; // 加下划线更容易识别
+        System.out.println(i3);
     }
 }
 
