@@ -15,14 +15,23 @@ public class HelloWorld {
         System.out.println(i3);
 
         char a = 'A';
-        char zh = '中';
+        // char zh = '中';
         System.out.println(a);
-        System.out.println(zh);
+        // System.out.println(zh);
 
         final double PI = 3.14; // 根据习惯,常量名通常全部大写
         double r = 5.0;
         double area = PI * r * r;
         System.out.println(area);
+
+        int nx = 2147483640;
+        int ny = 15;
+        int sum = nx + ny;
+        System.out.println(sum); // -2147483641 换算成二进制后相加，结果进1导致最高位变成1,即变为负数。因此应使用long类型以表示范围更广的整数
+
+        int t = 7;
+        int t2 = t << 3;
+        System.out.println(t2 - t); // 位移求整数的七倍 
     }
 }
 
