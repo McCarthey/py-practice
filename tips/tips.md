@@ -1519,3 +1519,21 @@ document.body.appendChild(s)
   - 无损：删除EXIF数据、优化图像的Huffman表或者重新扫描图像可达到无损压缩的目的。
 
   渐进式的优势在于用户可以很快看到一张模糊的图片，然后决定是否继续等待加载，比基线加载的用户体验好很多。
+
+- BigInt
+
+  在JavaScript中，Number 可以准确表达的最大数字是253-1，大于等于253的所有数字可以使用BigInt表达。
+
+  定义BigInt变量时，可以在一个整数后面加n，如10n；或者调用BigInt()函数
+  ```javascript
+  const theBiggestInt = 9007199254740991n;
+  // ↪ 9007199254740991n
+  
+  const alsoHuge = BigInt(9007199254740991);
+  // ↪ 9007199254740991n
+
+  const hugeButString = BigInt('9007199254740991');
+  // ↪ 9007199254740991n
+  ```
+  BigInt不能和Number一起混合运算，两者必须转换成同一种类型。当BigInt转成Number时小心丢失精度。
+  
