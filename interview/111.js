@@ -20,12 +20,12 @@ var output = {
     'a.e': 'ae'
 }
 
-function flatObj(obj, parentKey = '', result = {}) {
+function flatObj(obj, propKey = '', result = {}) {
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
-            let keyStr = `${parentKey}${key}`
-            if (Object.prototype.toString.call(obj[key]) === '[object Object]') {
-                flatObj(obj[key], keyStr + '.', result)
+            let keyStr = `${propKey}${key}`
+            if(Object.prototype.toString.call(obj[key]) === '[object Object]') {
+                flatObj(obj[key], keyStr+'.', result)
             } else {
                 result[keyStr] = obj[key]
             }
