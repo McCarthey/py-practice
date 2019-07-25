@@ -31,21 +31,31 @@ function dedup(array) {
 }
 
 
-// 不使用JSON.stringify版本: 低配版对象深层比较
+// 不使用JSON.stringify版本: 低配版对象深层比较 
+// 注意使用instanceof判断是否是对象时需要注意该对象是否是通过Object.create(null)得到的。
 function isEqual(obj1, obj2) {
-    if (obj1 === null && obj2 !== null || obj1 !== null && obj2 === null) return false
-    if (typeof obj1 !== 'object' || typeof obj2 !== 'object') return false
+    const type1 = obj1 instanceof Object
+    const type2 = obj2 instanceof Object
+    if (!type1 || !type2) {
+        return obj1 === obj2
+    }
+
+    if (Object.keys(obj1).length !== Object.keys(obj2).length) {
+        return false
+    }
+
     for (const key in obj1) {
         if (obj1.hasOwnProperty(key) && obj2.hasOwnProperty(key)) {
-            if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
-                isEqual(obj1[key], obj2[key])
-            } else if (obj1[key] === obj2[key]) {
-                continue
-            } else {
+            const t1 = obj1[key] instanceof Object
+            const t2 = obj2[key] instanceof Object
+            if(t1 && t2) {
+              const equal = isEqual(obj1[key], obj2[key])
+              if(!equal) {
+                  return equal
+              }
+            } else if (obj1[key] !== obj2[key]){
                 return false
             }
-        } else {
-            return false
         }
     }
     return true
