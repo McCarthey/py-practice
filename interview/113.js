@@ -7,6 +7,8 @@ import { type } from "os";
     3.   如传入的数组元素为[123, {a: 1}, {a: {b: 1}}, {a: "1"}, {a: {b: 1}}, "meili"]，则输出：[123, {a: 1}, {a: {b: 1}}, {a: "1"}, "meili"]
  * 
  */
+
+// 使用JSON.stringify的弊端就是属性顺序的问题，如{a:1, b:2} 和 {b:2, a:1}
 function dedup(array) {
     const result = []
     const temp = []
@@ -28,17 +30,16 @@ function dedup(array) {
     return result
 }
 
-// 使用JSON.stringify的弊端就是属性顺序的问题，如{a:1, b:2} 和 {b:2, a:1}
 
 // 不使用JSON.stringify版本: 低配版对象深层比较
 function isEqual(obj1, obj2) {
-    if(obj1 === null && obj2 !== null || obj1 !== null && obj2 === null ) return false 
-    if(typeof obj1 !== 'object' || typeof obj2 !== 'object') return false
+    if (obj1 === null && obj2 !== null || obj1 !== null && obj2 === null) return false
+    if (typeof obj1 !== 'object' || typeof obj2 !== 'object') return false
     for (const key in obj1) {
         if (obj1.hasOwnProperty(key) && obj2.hasOwnProperty(key)) {
             if (typeof obj1[key] === 'object' && typeof obj2[key] === 'object') {
                 isEqual(obj1[key], obj2[key])
-            } else if(obj1[key] === obj2[key]) {
+            } else if (obj1[key] === obj2[key]) {
                 continue
             } else {
                 return false
@@ -54,22 +55,19 @@ function dedup(array) {
     const result = []
     for (let i = 0; i < array.length; i++) {
         const item = array[i];
-        if (typeof item !== 'object') {
-            if (!result.includes(item)) {
-                result.push(item)
-            }
+        if (typeof item !== 'object' && !result.includes(item)) {
+            result.push(item)
         } else {
             for (let index = 0; index < result.length; index++) {
-                const ele = result[index] 
-                console.log(ele, item)
-                if(!isEqual(ele, item)) {
-                    if(index === result.length - 1) {
+                const ele = result[index]
+                if (!isEqual(ele, item)) {
+                    if (index === result.length - 1) {
                         result.push(item)
                         break
                     }
-                    continue 
+                    continue
                 } else {
-                   break 
+                    break
                 }
             }
         }
