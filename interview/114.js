@@ -37,3 +37,17 @@ function continuous(str) {
 }
 
 // O(n)
+
+// 正则版
+function regVersion(str) {
+    const reg = /(\w)\1*/g
+    const arr = str.match(reg)
+    const max = Math.max(...arr.map(item => item.length))
+    const result = arr.reduce((acc, cur) => {
+        if(cur.length === max) {
+            acc[cur[0]] = cur.length
+        }
+        return acc
+    }, {})
+    return result
+}
