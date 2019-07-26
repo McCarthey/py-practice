@@ -32,11 +32,15 @@ function dedup(array) {
 
 // 不使用JSON.stringify版本: 低配版对象深层比较 
 // 注意使用instanceof判断是否是对象时需要注意该对象是否是通过Object.create(null)得到的。
-function isEqual(obj1, obj2) { // TODO: isEqual([], {})
-    const type1 = obj1 instanceof Object
-    const type2 = obj2 instanceof Object
+function isEqual(obj1, obj2) {
+    const type1 = isObject(obj1)
+    const type2 = isObject(obj2)
     if (!type1 || !type2) {
         return obj1 === obj2
+    }
+
+    if ((typeof obj1.length === 'undefined' && typeof obj2.length === 'number') || (typeof obj1.length === 'number' && typeof obj2.length === 'undefined')) {
+        return false
     }
 
     if (Object.keys(obj1).length !== Object.keys(obj2).length) {
@@ -45,19 +49,23 @@ function isEqual(obj1, obj2) { // TODO: isEqual([], {})
 
     for (const key in obj1) {
         if (obj1.hasOwnProperty(key) && obj2.hasOwnProperty(key)) {
-            const t1 = obj1[key] instanceof Object
-            const t2 = obj2[key] instanceof Object
-            if(t1 && t2) {
-              const equal = isEqual(obj1[key], obj2[key])
-              if(!equal) {
-                  return equal
-              }
-            } else if (obj1[key] !== obj2[key]){
+            const t1 = isObject(obj1[key])
+            const t2 = isObject(obj2[key])
+            if (t1 && t2) {
+                const equal = isEqual(obj1[key], obj2[key])
+                if (!equal) {
+                    return equal
+                }
+            } else if (obj1[key] !== obj2[key]) {
                 return false
             }
         }
     }
     return true
+}
+
+function isObject(val) {
+    return val !== null && typeof val === 'object'
 }
 
 function dedup(array) {
