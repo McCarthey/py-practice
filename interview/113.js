@@ -1,4 +1,3 @@
-import { type } from "os";
 
 /**
     第 113 题：编程题，根据以下要求，写一个数组去重函数（蘑菇街）
@@ -33,7 +32,7 @@ function dedup(array) {
 
 // 不使用JSON.stringify版本: 低配版对象深层比较 
 // 注意使用instanceof判断是否是对象时需要注意该对象是否是通过Object.create(null)得到的。
-function isEqual(obj1, obj2) {
+function isEqual(obj1, obj2) { // TODO: isEqual([], {})
     const type1 = obj1 instanceof Object
     const type2 = obj2 instanceof Object
     if (!type1 || !type2) {
