@@ -2,7 +2,7 @@ class LinkList {
     constructor() {
         this.head = null
     }
-    // 单链表的整表创建
+    // 单链表的整表创建 O(n)
     create(n) {
         this.head = new Node()
         let current = this.head
