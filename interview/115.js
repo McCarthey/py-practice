@@ -1,9 +1,10 @@
 class LinkList {
     constructor() {
-        this.head = new Node()
+        this.head = null
     }
-    // 单链表的创建
+    // 单链表的整表创建
     create(n) {
+        this.head = new Node()
         let current = this.head
         for (let i = 0; i < n; i++) {
             const newNode = new Node()
@@ -36,8 +37,8 @@ class LinkList {
         node.next = current.next
         current.next = node
     }
-    // 单链表的删除
-    remove(index) {
+    // 单链表的删除某一结点
+    removeAt(index) {
         let current = this.head
         let j = 1
         if(index === 0) {
@@ -54,9 +55,20 @@ class LinkList {
         current.next = current.next.next
 
     }
+    // 单链表的整表删除
+    remove() {
+        let current = this.head
+        while(current) {
+            const next = current.next
+            current = null
+            current = next
+        }
+        this.head = null
+    }
     // 打印结果
     toString() {
         let current = this.head
+        if(!current) return ''
         const result = []
         while (current.next) {
             result.push(current.data)
