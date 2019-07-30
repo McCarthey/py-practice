@@ -70,15 +70,15 @@ function DoubleLinkedList() {
             let current = head,
                 previous,
                 index = 0
-            if (position === 0) {
+            if (position === 0) { // 移除第一项
                 head = current.next
 
-                if (length === 1) {
+                if (length === 1) { // 如果只有一项，更新tail
                     tail = null
                 } else {
                     head.prev = null
                 }
-            } else if (position === length - 1) {
+            } else if (position === length - 1) { // 最后一项
                 current = tail
                 tail = current.prev
                 tail.next = null
@@ -102,6 +102,8 @@ function DoubleLinkedList() {
             length--
 
             return current.element
+        } else {
+            return null
         }
     }
     this.getLen = function () {
