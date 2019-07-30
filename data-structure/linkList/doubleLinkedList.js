@@ -65,8 +65,44 @@ function DoubleLinkedList() {
             return false
         }
     }
-    this.removeAt = function (position, element) {
+    this.removeAt = function (position) {
+        if (position >= 0 && position < length) {
+            let current = head,
+                previous,
+                index = 0
+            if (position === 0) {
+                head = current.next
 
+                if (length === 1) {
+                    tail = null
+                } else {
+                    head.prev = null
+                }
+            } else if (position === length - 1) {
+                current = tail
+                tail = current.prev
+                tail.next = null
+            } else if (position <= length / 2) {
+                while (index++ < position) {
+                    previous = current
+                    current = current.next
+                }
+                previous.next = current.next
+                current.next.prev = previous
+            } else {
+                current = tail
+                while(index++ < length - position - 1) {
+                    previous = current
+                    current = current.prev
+                }
+                previous.prev = current.prev
+                current.prev.next = previous
+            }
+
+            length--
+
+            return current.element
+        }
     }
     this.getLen = function () {
         return length
