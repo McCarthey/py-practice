@@ -41,16 +41,18 @@ function DoubleLinkedList() {
                     previous = current
                     current = current.next
                 }
+                console.log(`正向循环了${index - 1}次`)
                 node.next = current
                 previous.next = node
                 current.prev = node
                 node.prev = previous
-            } else { // 当position大于长度的一半的时候从尾部开始遍历，减少查找次数 TODO:
+            } else { // 当position大于长度的一半的时候从尾部开始遍历，减少查找次数
                 current = tail
-                while(index++ < length - position) {
+                while (index++ < length - position) {
                     previous = current
                     current = current.prev
                 }
+                console.log(`反向循环了${index - 1}次`)
                 node.next = previous
                 previous.prev = node
                 current.next = node
@@ -68,5 +70,15 @@ function DoubleLinkedList() {
     }
     this.getLen = function () {
         return length
+    }
+    this.toString = function () {
+        let current = head,
+            string = ''
+
+        while (current) {
+            string += "," + current.element
+            current = current.next
+        }
+        return string.slice(1)
     }
 }
