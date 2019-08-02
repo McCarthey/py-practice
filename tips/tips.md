@@ -1537,3 +1537,10 @@ document.body.appendChild(s)
   ```
   BigInt不能和Number一起混合运算，两者必须转换成同一种类型。当BigInt转成Number时小心丢失精度。
   
+- Web Component
+
+    可以使用[polymer](https://github.com/Polymer/polymer)体验wc组件
+    ```
+    polymer serve --npm
+    ```
+    然后将其Readme中的代码片段复制成一个html文件即可
