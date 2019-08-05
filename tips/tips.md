@@ -1540,7 +1540,13 @@ document.body.appendChild(s)
 - Web Component
 
     可以使用[polymer](https://github.com/Polymer/polymer)体验wc组件
+
+    或者用[stencil](https://github.com/ionic-team/stencil)，支持tsx写法，不必写原生的html字符串
     ```
     polymer serve --npm
     ```
     然后将其Readme中的代码片段复制成一个html文件即可
+
+- for循环嵌套顺序
+
+  当循环次数相同时，外层循环次数越少的性能越好。
