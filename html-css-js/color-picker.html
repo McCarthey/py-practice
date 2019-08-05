@@ -1,0 +1,20 @@
+<html>
+
+<body>
+    <input id="colorPicker" type="color" value="#ff0000">
+    <p>当前颜色: <span id="curColor"></span></p>
+</body>
+<script>
+    var colorPicker = document.querySelector('#colorPicker')
+    var curColor = document.querySelector('#curColor')
+    colorPicker.addEventListener("change", watchColorPicker, false);
+
+    function watchColorPicker(event) {
+        document.querySelectorAll("p").forEach(function (p) {
+            p.style.color = event.target.value;
+            curColor.innerHTML = event.target.value
+        });
+    }
+</script>
+
+</html>
