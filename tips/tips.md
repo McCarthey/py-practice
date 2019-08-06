@@ -1550,3 +1550,11 @@ document.body.appendChild(s)
 - for循环嵌套顺序
 
   当循环次数相同时，外层循环次数越少的性能越好。
+
+- parseInt(招行2019/03笔试题)
+
+  ```javascript
+  ['10', '10', '10', '10', '10'].map(parseInt)
+  // [ 10, NaN, 2, 3, 4 ]
+  ```
+  传入parseInt的是map的两个参数curValue, index, 即parseInt('10', 0), parseInt('10', 1), parseInt('10', 2) ...
