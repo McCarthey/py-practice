@@ -1558,3 +1558,7 @@ document.body.appendChild(s)
   // [ 10, NaN, 2, 3, 4 ]
   ```
   传入parseInt的是map的两个参数curValue, index, 即parseInt('10', 0), parseInt('10', 1), parseInt('10', 2) ...
+
+- github中使用emoji
+
+  直接在issue, commit中使用即可[emoji](https://www.webfx.com/tools/emoji-cheat-sheet/)
