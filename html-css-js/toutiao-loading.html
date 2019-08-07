@@ -1,0 +1,44 @@
+<html>
+
+<head>
+    <style>
+        p {
+            /*background: linear-gradient(60deg, #ccc, #fff, #fff, #fff, #fff);*/
+            background: rgb(255, 255, 255);
+            background-image: linear-gradient(90deg, rgba(102, 102, 102, 0.15) 25%, transparent 25%);
+            background-size: 20rem 20rem;
+            font: 900 1.2em sans-serif;
+            animation: stripes 3s linear infinite
+        }
+
+        @keyframes stripes {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 50em 0;
+            }
+        }
+
+        .text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: rgba(0, 0, 0, .08);
+        }
+
+        .title {
+            font-size: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <p class="text">
+        <span class="title">Vivo钱包</span>
+        <br />
+        快速办卡 便捷支付 享受信用生活
+    </p>
+</body>
+
+</html>
