@@ -4,6 +4,11 @@
     svg {
         overflow: hidden;
     }
+
+    .path-demo {
+        width: 1000px;
+        height: 1000px;
+    }
 </style>
 
 <body>
@@ -65,8 +70,20 @@
     </svg>
 
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-        <path d="M150 0 L75 200 L0 0 Z" stroke="purple" />
+        <path d="M150 0 L75 200 L0 0 Z" stroke="red" />
     </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="path-demo">
+        <path id="path" fill="none" stroke="#000" stroke-width="1px" d="M452,293c0,0,0-61,72-44c0,0-47,117,81,57
+    s5-110,10-67s-51,77.979-50,33.989" />
+    </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="path-demo">
+        <path d="M10 10 H90 V90 H10 Z" fill="transparent" stroke="black" />
+        <!-- 也可以使用相对坐标表示 -->
+        <path d="M20 20 h80 v80 h-80 z" fill="transparent" stroke="black" />
+    </svg>
+
 </body>
 
 </html>
