@@ -173,12 +173,19 @@
                 <stop offset="100%" stop-color="#5c2392" />
             </linearGradient>
         </defs>
-        <mask id="shadeText">
+        <mask id="fillText">
             <text x="0" y="70%" font-size="120" fill="#fff">今日头条</text>
         </mask>
-        <g mask="url(#shadeText)">
+        <mask id="strokeText">
+            <text x="0" y="30%" font-size="120" fill="#000" stroke="#fff" stroke-width="2">今日头条</text>
+        </mask>
+        <g mask="url(#fillText)">
             <rect x="0" y="0" width="3800" height="3600" fill="url(#dream)" class="dream-rect" />
         </g>
+        <g mask="url(#strokeText)">
+            <rect x="0" y="0" width="3800" height="3600" fill="url(#dream)" class="dream-rect" />
+        </g>
+
     </svg>
 
 </body>
