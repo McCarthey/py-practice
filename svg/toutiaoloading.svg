@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1000" height="400">
+    <defs>
+        <linearGradient id="textGradient">
+            <stop offset="0" stop-color="#111" />
+            <stop offset="50%" stop-color="#444" />
+            <stop offset="100%" stop-color="#111" />
+        </linearGradient>
+    </defs>
+    <defs>
+        <mask id="textMask">
+            <rect x="0" y="0" width="1000" height="400" fill="#111">
+            </rect>
+            <rect x="0" y="0" width="100" height="400" fill="url(#textGradient)">
+                <animate attributeName="x" from="-200" to="600" dur="1.5s" repeatCount="indefinite" />
+            </rect>
+        </mask>
+    </defs>
+    <text x="0" y="70%" font-size="120" fill="#000" mask="url(#textMask)">今日头条</text>
+</svg>
