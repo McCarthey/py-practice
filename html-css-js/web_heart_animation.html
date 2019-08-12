@@ -1,0 +1,43 @@
+<html>
+<title>Heart</title>
+<style>
+    .heart-wrap {
+        width: 100px;
+        height: 100px;
+        background-image: url(./web_heart_animation_edge.png);
+        cursor: pointer;
+    }
+
+    .heart-wrap__active {
+        animation: move .6s steps(28, end) forwards;
+    }
+
+    @keyframes move {
+        from {
+            background-position-x: 0%;
+        }
+
+        to {
+            background-position-x: 100%;
+        }
+    }
+</style>
+
+<body>
+    <div class="heart-wrap" id="heart">
+    </div>
+
+    <script>
+        const heart = document.getElementById('heart')
+        const classList = heart.classList
+        heart.addEventListener('click', () => {
+            if (classList.length === 1) {
+                classList.add('heart-wrap__active')
+            } else {
+                classList.remove('heart-wrap__active')
+            }
+        })
+    </script>
+</body>
+
+</html>
