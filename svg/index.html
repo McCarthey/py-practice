@@ -374,6 +374,67 @@
         <rect width="10" height="10" fill="red" id="shape5">
         </rect>
     </svg>
+
+    <svg viewBox="0 0 1320 300" style="background-color: #000;">
+        <style>
+            .text {
+                fill: none;
+                font-size: 15em;
+                stroke-width: 5;
+                stroke-dasharray: 0 300;
+                animation-timing-function: linear;
+                animation-duration: 6s;
+                animation-fill-mode: forwards;
+            }
+
+            .text:nth-child(3n + 1) {
+                stroke: #f6680a;
+                animation-name: stroke;
+            }
+
+            .text:nth-child(3n + 2) {
+                stroke: #f2ff14;
+                animation-name: stroke1;
+            }
+
+            .text:nth-child(3n + 3) {
+                stroke: #05ff05;
+                animation-name: stroke2;
+            }
+
+            @keyframes stroke {
+                100% {
+                    stroke-dashoffset: 1000;
+                    stroke-dasharray: 80 160;
+                }
+            }
+
+            @keyframes stroke1 {
+                100% {
+                    stroke-dashoffset: 1080;
+                    stroke-dasharray: 80 160;
+                }
+            }
+
+            @keyframes stroke2 {
+                100% {
+                    stroke-dashoffset: 1160;
+                    stroke-dasharray: 80 160;
+                }
+            }
+        </style>
+        <!-- Symbol -->
+        <symbol id="s-text">
+            <text text-anchor="middle" x="50%" y="50%" dy=".35em">
+                McCarthey
+            </text>
+        </symbol>
+
+        <!-- Duplicate symbols -->
+        <use xlink:href="#s-text" class="text"></use>
+        <use xlink:href="#s-text" class="text"></use>
+        <use xlink:href="#s-text" class="text"></use>
+    </svg>
 </body>
 
 </html>
