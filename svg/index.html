@@ -332,7 +332,7 @@
                 87.5% {
                     d: paht("M 100,0 C 100, 50 100, 50 100, 100 50, 100 50, 100 0, 100 0, 50 0, 50 0, 0 50, 0 50, 0 100, 0 Z");
                 }
-                
+
                 100% {
                     d: path("M 0,0 C 50, 0 50, 0 100, 0 100, 50 100, 50 100, 100 50, 100 50, 100 0, 100 0, 50 0, 50 0, 0 Z");
                     fill: red;
@@ -344,6 +344,35 @@
         <rect x="10" y="150" width="20" height="20" id="rect6">
         </rect>
         <path fill="#1EB287" id="path5"></path>
+
+    </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+        <style>
+            #circle5 {
+                offset-path: path('M10,110 A120,120 -45 0,1 110 10 A120,120 -45 0,1 10,110');
+                animation: move 3s linear infinite;
+            }
+
+            @keyframes move {
+                0% {
+                    offset-distance: 0%;
+                }
+
+                100% {
+                    offset-distance: 100%;
+                }
+            }
+        </style>
+
+        <path d="M10,110 A120,120 -45 0,1 110 10 A120,120 -45 0,1 10,110" stroke="lightgrey" stroke-width="2"
+            fill="none" id="theMotionPath" />
+        <circle cx="10" cy="110" r="3" fill="lightgrey" />
+        <circle cx="110" cy="10" r="3" fill="lightgrey" />
+
+        <!-- Red circle which will be moved along the motion path. -->
+        <circle cx="" cy="" r="5" fill="red" id="circle5">
+        </circle>
     </svg>
 </body>
 
