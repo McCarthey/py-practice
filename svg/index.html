@@ -249,7 +249,32 @@
     </svg>
 
     <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
-        <path id="pathAni1" fill="none" stroke="#78EADF" stroke-width="30" stroke-linecap="round" stroke-miterlimit="10" />
+        <path id="pathAni1" fill="none" stroke="#78EADF" stroke-width="30" stroke-linecap="round"
+            stroke-miterlimit="10" />
+    </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+        <style>
+            #rect5 {
+                animation: changeWidth 10s infinite;
+            }
+
+            @keyframes changeWidth {
+                0% {
+                    width: 200px
+                }
+
+                50% {
+                    width: 20px
+                }
+
+                100% {
+                    width: 200px
+                }
+            }
+        </style>
+        <rect x="10" y="10" width="200" height="20" stroke="black" fill="none" id="rect5">
+        </rect>
     </svg>
 </body>
 
