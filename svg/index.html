@@ -272,8 +272,28 @@
                     width: 200px
                 }
             }
+
+            #rect6 {
+                fill: #ff9;
+                stroke: black;
+                animation: scaleSize 4s infinite;
+            }
+
+            @keyframes scaleSize {
+                0% {
+                    transform: scale(1)
+                }
+                50% {
+                    transform: scale(4, 2)
+                }
+                100% {
+                    transform: scale(1)
+                }
+            }
         </style>
         <rect x="10" y="10" width="200" height="20" stroke="black" fill="none" id="rect5">
+        </rect>
+        <rect x="10" y="50" width="20" height="20" id="rect6">
         </rect>
     </svg>
 </body>
