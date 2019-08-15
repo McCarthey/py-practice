@@ -5,30 +5,35 @@
 
     问：原来那堆牌的顺序，用函数实现。
  */
-function sort(arr) {
+
+/**
+ * 逆向恢复手中的牌
+ * @param {*} 逆向序列 桌牌 arr 
+ */
+function recover(arr) {
     const res = []
-    let mid = Math.floor(arr.length / 2)
-    res.push(arr[mid])
-    if (arr.length % 2 === 1) {
-        for (let j = 1; j <= mid; j++) {
-            res.push(arr[mid + j])
-            res.push(arr[mid - j])
+    while (arr.length > 0) {
+        if (res.length) {
+            res.push(res.shift())
         }
-    } else {
-        for (let j = 1; j < mid; j++) {
-            res.push(arr[mid - j])
-            arr[mid + j] && res.push(arr[mid + j])
-        }
+        const item = arr.pop()
+        res.push(item)
     }
     return res
 }
 
-// 7, 8, 6, 9, 5, 10, 4, 11, 3, 12, 2, 13, 1  -> 1   13, 7, 8, 6, 9, 5, 10, 4, 11, 3, 12, 2 => 1,2  12, 13, 7, 8, 6, 9, 5, 10, 4, 11, 3 => ... 1,2,3,...,13
-// 1,2,3,4,5 -> 5   4,1,2,3
-// 4,1,2,3 -> 5,3  2,4,1
-// 2,4,1 -> 5,3,1 4,2
-// 4,2 -> 5,3,1,2,4
-
-// a0 ,a1, a2, a3, a4 => a4,a2,a0,a1,a3    mid = 2
-// a0 ,a1, a2, a3, a4, a5 => a5   a4,a0,a1,a2,a3 => a5, a3   a2,a4,a0,a1 ... =>  a5, a3, a1, a0, a2, a4   mid = 3
-
+/**
+ * 正向生成桌上的牌
+ * @param {*} 正向序列 手牌 arr 
+ */
+function positive(arr) {
+    const res = []
+    while (arr.length > 0) {
+        const item = arr.pop()
+        res.push(item)
+        if (arr.length) {
+            arr.unshift(arr.pop())
+        }
+    }
+    return res
+}
