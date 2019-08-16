@@ -1562,3 +1562,13 @@ document.body.appendChild(s)
 - github中使用emoji
 
   直接在issue, commit中使用即可[emoji](https://www.webfx.com/tools/emoji-cheat-sheet/)
+
+- npm-script在mac和win平台的差异
+
+  如要在一段npm脚本中执行多个项目的启动，例如:
+  ```json
+  "start": "npm run pro1 & npm run pro2 & npm run pro3"
+  ```
+  在Mac上，这样做的没问题的，但是到了win上，就只会执行npm run pro1，因为cmd.exe不认得‘&’程序后台执行的符号。
+
+  解决办法：使用npm-run-all库即可完美结局win上无法执行的问题
