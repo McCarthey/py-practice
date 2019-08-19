@@ -98,7 +98,15 @@
         var regex = /\1\2\3\4\5\6\7\8\9/
         regex.test('\1\2\3\4\5\6\7\8\9')
         ```
+    - 连字符转成驼峰式：
 
+        ```javascript
+        const target = 'action-sheet'
+        let result = target.replace(/-(\w)/g, ($, $1) => {
+            return $1.toUpperCase()
+        })
+        console.log(result) // "actionSheet"
+        ```
 - 非捕获分组
 
     上面出现的分组都会捕获它们匹配到的数据，以便后续引用，因此也称他们是捕获型分组。
