@@ -82,7 +82,7 @@ Switch组件，当设置了defaultChecked={fetchData.status}，在获取数据�
 import 'omi'
 import 'omi-wc-demo/dist/header'
 
-export default class SignIn extends React.Component {
+export default class Header extends React.Component {
     componentDidMount() {
         this.el.addEventListener("logout", this.handleLogout)
     }
@@ -95,6 +95,26 @@ export default class SignIn extends React.Component {
         return (
             <div>
                 <dm-header ref={elem => this.el = elem} />
+            </div>
+        )
+    }
+}
+```
+或者可以使用[jsx-native-events](https://github.com/calebdwilliams/jsx-native-events#readme)来实现自定义事件。
+```jsx
+/** @jsx nativeEvents */
+import nativeEvents from 'jsx-native-events'
+import 'omi-wc-demo/dist/header'
+
+export default class Demo extends React.Component {
+    handleLogout = () => {
+        // logoutAPI
+    }
+
+    render() {
+        return (
+            <div>
+                <dm-header onEventLogout={this.handleLogout} />
             </div>
         )
     }
