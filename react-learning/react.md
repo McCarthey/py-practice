@@ -72,3 +72,31 @@ Switch组件，当设置了defaultChecked={fetchData.status}，在获取数据�
 问题：input后re-render，导致失去焦点
 
 解决：将子组件定义在最外层（或单独的文件中），完全解耦
+
+- react的自定义事件
+
+要实现自定义事件，需要在生命周期中绑定，并通过ref获取需要绑定事件的元素。
+
+下面以web-component为例，dm-header元素支持logout事件:
+```jsx
+import 'omi'
+import 'omi-wc-demo/dist/header'
+
+export default class SignIn extends React.Component {
+    componentDidMount() {
+        this.el.addEventListener("logout", this.handleLogout)
+    }
+
+    componentWillUnmount() {
+        this.el.removeEventListener("logout", this.handleLogout)
+    }
+
+    render() {
+        return (
+            <div>
+                <dm-header ref={elem => this.el = elem} />
+            </div>
+        )
+    }
+}
+```
