@@ -50,3 +50,13 @@ Pod安排在节点上，包含一组容器和卷。同一个Pod里的容器共�
 
 - 会为Service创建一个本地集群的DNS入口，因此前端Pod只需要DNS查找主机名为 ‘backend-service’，就能够解析出前端应用程序可用的IP地址。
 - 现在前端已经得到了后台服务的IP地址，但是它应该访问2个后台Pod的哪一个呢？Service在这2个后台Pod之间提供透明的负载均衡，会将请求分发给其中的任意一个（如下面的动画所示）。通过每个Node上运行的代理（kube-proxy）完成。
+
+## Pod与Node
+
+Pod总是运行在Node节点上。Node是Kubernetes的工作机器，可以是虚拟机或物理机。每个节点由Master管理，一个节点上可以有多个Pod，K8s master 会自动处理调度集群各个节点上的 Pod
+
+## Port、NodePort、TargetPort
+
+- port：表示service暴露在cluster ip 上的端口。<clusterIp>:port 是提供给集群内部客户访问service的入口。
+- nodePort: nodePort是kubernetes提供给集群外部客户访问service入口的一种方式。所以，<nodeIP>:nodePort 是提供给集群外部客户访问service的入口。
+- targetPort：targetPort是pod上的端口，从port和nodePort上到来的数据最终经过kube-proxy流入到后端pod的targetPort上进入容器。
