@@ -1582,3 +1582,13 @@ document.body.appendChild(s)
   解决办法：将中文的id进行encodeURI编码后，即可正常使用锚点跳转。
 
   **注：**在vuePress中进行锚点跳转时，发现其元素id为中文的情况下，依然正常，有待研究。 
+
+- HTTP PATCH方法
+
+  patch方法时，当要传入的data是json类型时，请求头中的content-type可以写成 application/merge-patch+json 
+  ```
+  methods: 'PATCH',
+  headers: {
+    'content-type': 'application/merge-patch+json'
+  }
+  ```
