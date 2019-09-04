@@ -21,3 +21,13 @@ function sortBalls(balls) {
     });
     return yellowArr.concat(redArr).concat(blueArr).join('')
 }
+
+/** 善于使用sort/map  */
+function sortBalls2(balls) {
+    const map = {
+        '黄': 0,
+        '红': 1,
+        '蓝': 2
+    }
+    return balls.split('').sort((a,b) => map[a] - map[b]).join('')
+}
