@@ -8,6 +8,17 @@ const totalUpvotes = posts.reduce((totalUpvotes, currentPost) => {
     totalUpvotes + currentPost.upVotes, 0
 })
 
+// 利用reduce统计每个名字出现的次数
+const names = ['Alice', 'Bob', 'Tiff', 'Bruce', 'Alice']
+const countedNames = names.reduce((allnames, name) => {
+    if(name in allnames) {
+        allnames[name]++
+    } else {
+        allnames[name] = 1
+    }
+    return allnames
+},{})
+
 console.log(totalUpvotes)
 
 
