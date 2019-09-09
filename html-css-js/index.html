@@ -19,7 +19,8 @@
     <!-- 当有itemprop,http-equiv或者charset时，就不应该设置meta的name属性 -->
     <meta name="author" content="mccarthey">
     <meta name="description" content="this is for test">
-    <meta name="generator" content="containing, in a free format, the identifier to the software that generated the page">
+    <meta name="generator"
+        content="containing, in a free format, the identifier to the software that generated the page">
     <meta name="keywords" content="html,css,js,python,base">
     <!-- 控制所有从该文档发出的 HTTP 请求中HTTP Referer 首部的内容，referrer可取的content有：
         - no-referrer：不要发送http referrer首部
@@ -37,8 +38,13 @@
         - maximum-scale：一个0.0到10.0之间的正数，定义缩放比率的最大值，它必须大于等于minimum-scale的值
         - minimum-scale：一个0.0到10.0之间的正数，定义缩放比率的最小值，它必须小于等于maximum-scale的值 
         - user-scalable：一个布尔值（yes or no），如果设置为no，用户将不能缩放该页面。默认为yes -->
-    <meta name="viewport" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        p {
+            font-size: 18px;
+            line-height: 40px;
+        }
+
         #countDown {
             text-decoration: underline;
             color: blueviolet;
@@ -47,22 +53,41 @@
         .lazy-img {
             margin-top: 200vh;
         }
+
+        .comment {
+            position: relative;
+        }
+
+        .comment:after {
+            content: "单页应用";
+            position: absolute;
+            display: inline-block;
+            width: 80px;
+            top: -22px;
+            left: -20px;
+            font-size: 16px;
+            transform: scale(0.5);
+            text-align: left;
+            background: #fff;
+            height: 32px;
+        }
     </style>
 </head>
 
 <body>
-    <div contenteditable="true">这是一个可以编辑的div</div>
+    <!-- <div contenteditable="true">这是一个可以编辑的div</div>
     测试meta标签的重定向
     <span id="countDown">5</span>s后到百度
     <p>这是一个emoji：&#x1F49C;</p>
     <p>test</p>
     <p>test 新的</p>
     <button class="btn-close">close WebSocket</button>
-    <button class="init">send init info</button>
-    <a href="https://www.google.com" onclick="test()">测试</a>
-    <a href="mailto:support@onluxy.com?subject=The_subject_of_the_mail">support@onluxy.com</a>
+    <button class="init">send init info</button> -->
+    <p>这是一个<span class="comment">SPA</span></p>
+    <!-- <a href="https://www.google.com" onclick="test()">测试</a>
+    <a href="mailto:support@onluxy.com?subject=The_subject_of_the_mail">support@onluxy.com</a> -->
     <!-- <img class="lazy-img" data-src="./vaas.jpg" height="400"> -->
-    <script src="../ts/built/greeter.js"></script>
+    <!-- <script src="../ts/built/greeter.js"></script>
     <script src="https://cdn.bootcss.com/lodash.js/4.17.10/lodash.min.js"></script>
     <script src="../html-css-js/index.js"></script>
     <script src="https://cdn.bootcss.com/vanilla-lazyload/10.6.0/lazyload.min.js"></script>
@@ -74,22 +99,22 @@
         function test() {
             console.log('clicked')
         }
-        
+
         window.Highlighter = Highlighter
-    </script>
-    <script>
+    </script> -->
+    <!-- <script>
         let socket = new WebSocket('ws://54.187.101.185:8050/ws');
 
-        if('serviceWorker' in navigator && 'PushManager' in window) {
+        if ('serviceWorker' in navigator && 'PushManager' in window) {
             console.log('Service Worker and Push is supported')
             navigator.serviceWorker.register('sw.js').then((swReg) => {
-                console.log('Service Worker is registered'. swReg)
-                
+                console.log('Service Worker is registered'.swReg)
+
                 swRegistration = swReg
             })
-            .catch((error) => {
-                console.log('Service Worker Error', error)
-            })
+                .catch((error) => {
+                    console.log('Service Worker Error', error)
+                })
         } else {
             console.warn('Push messaging is not supported')
             pushButton.textContent = 'Push Not Supported'
@@ -100,13 +125,13 @@
         // let socket = new WebSocket('ws://10.0.0.14:8777');
 
         // Connection opened
-        socket.addEventListener('open', function(event) {
+        socket.addEventListener('open', function (event) {
             socket.send('Hello Server!');
             console.log('opened')
         });
 
         // Listen for messages
-        socket.addEventListener('message', function(event) {
+        socket.addEventListener('message', function (event) {
             console.log('Message from server ', event.data);
         });
 
@@ -125,7 +150,7 @@
         function initServer() {
             socket.send('172.31.0.232|lovechat_account')
         }
-    </script>
+    </script> -->
 </body>
 
 </html>
