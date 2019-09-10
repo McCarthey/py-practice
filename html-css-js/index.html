@@ -85,6 +85,15 @@
     <button class="init">send init info</button> -->
     <p>这是一个<span class="comment">SPA</span></p>
     <ruby>Hello<rt>你好</rt></ruby>
+    <div>
+        <input type="file" id="uploadFile" accept="" style="display: none;">
+        <button id="btnUpload">upload</button>
+    </div>
+    <script>
+        const uploadFile = document.querySelector('#uploadFile')
+        const btnUpload = document.querySelector('#btnUpload')
+        btnUpload.addEventListener('click', () => uploadFile.click())
+    </script>
     <!-- <a href="https://www.google.com" onclick="test()">测试</a>
     <a href="mailto:support@onluxy.com?subject=The_subject_of_the_mail">support@onluxy.com</a> -->
     <!-- <img class="lazy-img" data-src="./vaas.jpg" height="400"> -->
