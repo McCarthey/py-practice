@@ -1597,3 +1597,9 @@ document.body.appendChild(s)
   如果没有指定inset，默认阴影在边框外，即阴影向外扩散。
 
   使用inset关键字会使得阴影落在盒子内部，这样看起来就像是内容被压低了。 此时阴影会在边框之内 (即使是透明边框）、背景之上、内容之下。
+
+- prefetch VS preload
+
+  [参考](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Link_prefetching_FAQ)。
+
+  经测试，如果prefetch的资源放在了head中，会比webp(图片)资源先加载，会阻塞图片的渲染。
