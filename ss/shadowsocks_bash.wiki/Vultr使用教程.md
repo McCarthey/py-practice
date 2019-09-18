@@ -50,7 +50,7 @@
 
 > 注意：两者不能同时安装，大家根据自己的喜好选择其中一个安装即可！
 
-1、安装锐速请使用[《CentOS6/7 专用破解版锐速一键安装脚本》](https://www.vultrcn.com/7.html)进行。**（推荐这个）**
+1、安装锐速请使用[《CentOS6/7 专用破解版锐速一键安装脚本》](https://www.stackcc.com/2019/01/04/centos67ruisu/#h4)进行。**（推荐这个）**
 
 2、安装 BBR 请按照[《一键安装原版 & 魔改版 Google BBR 拥塞控制算法教程》](https://www.vultrcn.com/5.html)进行。
 
