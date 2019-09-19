@@ -1603,3 +1603,9 @@ document.body.appendChild(s)
   [参考](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Link_prefetching_FAQ)。
 
   经测试，如果prefetch的资源放在了head中，会比webp(图片)资源先加载，会阻塞图片的渲染。
+
+- win10多桌面
+
+  打游戏时偶尔误触win键（+不知道哪个键）就悲剧地切到了第二个桌面。
+
+  按win+Tab可以呼出多桌面管理。
