@@ -1459,7 +1459,8 @@ var allElements = document.getElementsByTagName("*");
 
 - textarea 的样式
 
-  为textarea设置以下样式，可以去掉其默认边框、默认右下角小三角符号、选中时的外边框，使其看起来像是一个内容创作区域
+  为 textarea 设置以下样式，可以去掉其默认边框、默认右下角小三角符号、选中时的外边框，使其看起来像是一个内容创作区域
+
   ```css
   textarea: {
     overflow: visible;
@@ -1471,142 +1472,153 @@ var allElements = document.getElementsByTagName("*");
     outline: none;
   }
   ```
-- 为第三方页面添加jQuery方便调试
+
+- 为第三方页面添加 jQuery 方便调试
 
 ```javascript
-const s = document.createElement('script')
-s.src = 'https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js'
-document.body.appendChild(s)
+const s = document.createElement("script");
+s.src = "https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js";
+document.body.appendChild(s);
 ```
 
-- egg.js简介
+- egg.js 简介
 
-    - 控制器：负责解析用户的输入，处理后返回相应的结果。
+  - 控制器：负责解析用户的输入，处理后返回相应的结果。
 
-      框架推荐 Controller 层主要对用户的请求参数进行处理（校验、转换），然后调用对应的 service 方法处理业务，得到业务结果后封装并返回：
+    框架推荐 Controller 层主要对用户的请求参数进行处理（校验、转换），然后调用对应的 service 方法处理业务，得到业务结果后封装并返回：
 
-      - 获取用户通过 HTTP 传递过来的请求参数
-      - 校验、组装参数
-      - 调用 Service 进行业务处理，必要时处理转换 Service 的返回结果，让它适应用户的需求
-      - 通过 HTTP 将结果响应给用户
-    - 服务：服务就是在复杂业务场景下用于做业务逻辑封装的一个抽象层，提供这个抽象有以下几个好处：
+    - 获取用户通过 HTTP 传递过来的请求参数
+    - 校验、组装参数
+    - 调用 Service 进行业务处理，必要时处理转换 Service 的返回结果，让它适应用户的需求
+    - 通过 HTTP 将结果响应给用户
 
-      - 保持 Controller 中的逻辑更加简洁
-      - 保持业务逻辑的独立性，抽象出来的 Service 可以被多个 Controller 重复调用
-      - 将逻辑和展现分离，更容易编写测试用例
+  - 服务：服务就是在复杂业务场景下用于做业务逻辑封装的一个抽象层，提供这个抽象有以下几个好处：
 
-- npm常识
+    - 保持 Controller 中的逻辑更加简洁
+    - 保持业务逻辑的独立性，抽象出来的 Service 可以被多个 Controller 重复调用
+    - 将逻辑和展现分离，更容易编写测试用例
+
+- npm 常识
 
   - npm ci：
-    
-    类似于npm install，但多用于自动化环境，如测试、持续集成和部署。比常规的npm install快很多，也更严格。特点：
 
-    - 项目必须有package-lock.json;
+    类似于 npm install，但多用于自动化环境，如测试、持续集成和部署。比常规的 npm install 快很多，也更严格。特点：
+
+    - 项目必须有 package-lock.json;
     - npm ci 只能一次安装正个项目，无法添加单个依赖项；
-    - 如果已经存在node_modules，则在npm ci前将自动删除node_modules；
-    - 它不会写入package.json或package-lock.json，安装基本上是冻结的； 
+    - 如果已经存在 node_modules，则在 npm ci 前将自动删除 node_modules；
+    - 它不会写入 package.json 或 package-lock.json，安装基本上是冻结的；
 
 - coverage
 
-  chrome59之后推出的css/js代码覆盖率检测工具，检查文件中未使用的代码，以优化性能。
+  chrome59 之后推出的 css/js 代码覆盖率检测工具，检查文件中未使用的代码，以优化性能。
 
-- JPEG压缩模式
+- JPEG 压缩模式
 
   分为基线（顺序）、渐进式和无损
 
   - baseline（基线，又叫顺序）:最常见的简单的自上而下的方式编码和解码，也就是你常常看到一张图片从上倒下慢慢显示出来的情形。
   - 渐进式：将图像划分为多个扫描区域。第一次扫描以模糊或低质量设置显示图像，后续扫描可提高图像质量，也就是常常看到有些图片由模糊边高清的情形。
-  - 无损：删除EXIF数据、优化图像的Huffman表或者重新扫描图像可达到无损压缩的目的。
+  - 无损：删除 EXIF 数据、优化图像的 Huffman 表或者重新扫描图像可达到无损压缩的目的。
 
   渐进式的优势在于用户可以很快看到一张模糊的图片，然后决定是否继续等待加载，比基线加载的用户体验好很多。
 
 - BigInt
 
-  在JavaScript中，Number 可以准确表达的最大数字是253-1，大于等于253的所有数字可以使用BigInt表达。
+  在 JavaScript 中，Number 可以准确表达的最大数字是 253-1，大于等于 253 的所有数字可以使用 BigInt 表达。
 
-  定义BigInt变量时，可以在一个整数后面加n，如10n；或者调用BigInt()函数
+  定义 BigInt 变量时，可以在一个整数后面加 n，如 10n；或者调用 BigInt()函数
+
   ```javascript
   const theBiggestInt = 9007199254740991n;
   // ↪ 9007199254740991n
-  
+
   const alsoHuge = BigInt(9007199254740991);
   // ↪ 9007199254740991n
 
-  const hugeButString = BigInt('9007199254740991');
+  const hugeButString = BigInt("9007199254740991");
   // ↪ 9007199254740991n
   ```
-  BigInt不能和Number一起混合运算，两者必须转换成同一种类型。当BigInt转成Number时小心丢失精度。
-  
+
+  BigInt 不能和 Number 一起混合运算，两者必须转换成同一种类型。当 BigInt 转成 Number 时小心丢失精度。
+
 - Web Component
 
-    可以使用[polymer](https://github.com/Polymer/polymer)体验wc组件
+  可以使用[polymer](https://github.com/Polymer/polymer)体验 wc 组件
 
-    或者用[stencil](https://github.com/ionic-team/stencil)，支持tsx写法，不必写原生的html字符串
-    ```
-    polymer serve --npm
-    ```
-    然后将其Readme中的代码片段复制成一个html文件即可
+  或者用[stencil](https://github.com/ionic-team/stencil)，支持 tsx 写法，不必写原生的 html 字符串
 
-- for循环嵌套顺序
+  ```
+  polymer serve --npm
+  ```
+
+  然后将其 Readme 中的代码片段复制成一个 html 文件即可
+
+- for 循环嵌套顺序
 
   当循环次数相同时，外层循环次数越少的性能越好。
 
-- parseInt(招行2019/03笔试题)
+- parseInt(招行 2019/03 笔试题)
 
   ```javascript
-  ['10', '10', '10', '10', '10'].map(parseInt)
+  ["10", "10", "10", "10", "10"].map(parseInt);
   // [ 10, NaN, 2, 3, 4 ]
   ```
-  传入parseInt的是map的两个参数curValue, index, 即parseInt('10', 0), parseInt('10', 1), parseInt('10', 2) ...
 
-- github中使用emoji
+  传入 parseInt 的是 map 的两个参数 curValue, index, 即 parseInt('10', 0), parseInt('10', 1), parseInt('10', 2) ...
 
-  直接在issue, commit中使用即可[emoji](https://www.webfx.com/tools/emoji-cheat-sheet/)
+- github 中使用 emoji
 
-- npm-script在mac和win平台的差异
+  直接在 issue, commit 中使用即可[emoji](https://www.webfx.com/tools/emoji-cheat-sheet/)
 
-  如要在一段npm脚本中执行多个项目的启动，例如:
+- npm-script 在 mac 和 win 平台的差异
+
+  如要在一段 npm 脚本中执行多个项目的启动，例如:
+
   ```json
   "start": "npm run pro1 & npm run pro2 & npm run pro3"
   ```
-  在Mac上，这样做的没问题的，但是到了win上，就只会执行npm run pro1，因为cmd.exe不认得‘&’程序后台执行的符号。
 
-  解决办法：使用npm-run-all库即可完美结局win上无法执行的问题
+  在 Mac 上，这样做的没问题的，但是到了 win 上，就只会执行 npm run pro1，因为 cmd.exe 不认得‘&’程序后台执行的符号。
+
+  解决办法：使用 npm-run-all 库即可完美结局 win 上无法执行的问题
 
 - HTML id
 
-  关于html中的id属性：使用除 ASCII 字母、数字、_、- 和 . 以外的字符可能会造成兼容性问题，因为 HTML 4 中不允许使用它们。虽然这个限制在 HTML5 中被解除了，但为兼容性考虑 ID 应该以字母开头。
+  关于 html 中的 id 属性：使用除 ASCII 字母、数字、\_、- 和 . 以外的字符可能会造成兼容性问题，因为 HTML 4 中不允许使用它们。虽然这个限制在 HTML5 中被解除了，但为兼容性考虑 ID 应该以字母开头。
 
-  在gatsby.js构建的文档页面中，发现在元素id为中文时，默认的设置无法使页面内锚点成功跳转，而id为英文时则一切正常。
+  在 gatsby.js 构建的文档页面中，发现在元素 id 为中文时，默认的设置无法使页面内锚点成功跳转，而 id 为英文时则一切正常。
 
-  解决办法：将中文的id进行encodeURI编码后，即可正常使用锚点跳转。
+  解决办法：将中文的 id 进行 encodeURI 编码后，即可正常使用锚点跳转。
 
-  **注：**在vuePress中进行锚点跳转时，发现其元素id为中文的情况下，依然正常，有待研究。 
+  **注：**在 vuePress 中进行锚点跳转时，发现其元素 id 为中文的情况下，依然正常，有待研究。
 
-- HTTP PATCH方法
+- HTTP PATCH 方法
 
-  patch方法时，当要传入的data是json类型时，请求头中的content-type可以写成 application/merge-patch+json 
+  patch 方法时，当要传入的 data 是 json 类型时，请求头中的 content-type 可以写成 application/merge-patch+json
+
   ```
   methods: 'PATCH',
   headers: {
     'content-type': 'application/merge-patch+json'
   }
   ```
-- box-shadow： inset
-  
-  如果没有指定inset，默认阴影在边框外，即阴影向外扩散。
 
-  使用inset关键字会使得阴影落在盒子内部，这样看起来就像是内容被压低了。 此时阴影会在边框之内 (即使是透明边框）、背景之上、内容之下。
+- box-shadow： inset
+
+  如果没有指定 inset，默认阴影在边框外，即阴影向外扩散。
+
+  使用 inset 关键字会使得阴影落在盒子内部，这样看起来就像是内容被压低了。 此时阴影会在边框之内 (即使是透明边框）、背景之上、内容之下。
 
 - prefetch VS preload
 
   [参考](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Link_prefetching_FAQ)。
 
-  经测试，如果prefetch的资源放在了head中，会比webp(图片)资源先加载，会阻塞图片的渲染。
+  经测试，如果 prefetch 的资源放在了 head 中，会比 webp(图片)资源先加载，会阻塞图片的渲染。
 
-- win10虚拟桌面
+- win10 虚拟桌面
 
-  现象：打游戏时偶尔误触win键（+其他键）就悲剧地切到了第二个桌面。
+  现象：打游戏时偶尔误触 win 键（+其他键）就悲剧地切到了第二个桌面。
 
   win + Tab：虚拟桌面的列表
 
@@ -1616,4 +1628,19 @@ document.body.appendChild(s)
 
   win + Ctrl + 左/右方向键：切换到相邻的虚拟桌面
 
-- 
+- css 非选择器
+
+  例如：
+
+  ```css
+  a.active {
+    border-radius: 100px;
+    box-shadow: 0 8px 16px 0 rgba(85, 188, 138, 0.36);
+    background-color: #55bc8a;
+    border-color: #55bc8a;
+  }
+  a:hover:not(.active) {
+    color: #55bc8a;
+  }
+  ```
+  即可排除类名为 active 的 <a> 标签的 hover 时的样式
