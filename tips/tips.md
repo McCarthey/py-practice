@@ -1644,3 +1644,7 @@ document.body.appendChild(s);
   }
   ```
   即可排除类名为 active 的 <a> 标签的 hover 时的样式
+
+- html缓存解决办法
+
+  [参考github上antd的issue](https://github.com/ant-design/ant-design-pro/issues/1365#issuecomment-384496088)
