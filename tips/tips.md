@@ -1643,8 +1643,17 @@ document.body.appendChild(s);
     color: #55bc8a;
   }
   ```
+
   即可排除类名为 active 的 <a> 标签的 hover 时的样式
 
-- html缓存解决办法
+- html 缓存解决办法
 
-  [参考github上antd的issue](https://github.com/ant-design/ant-design-pro/issues/1365#issuecomment-384496088)
+  [参考 github 上 antd 的 issue](https://github.com/ant-design/ant-design-pro/issues/1365#issuecomment-384496088)
+
+- encodeURI 和 encodeURIComponent 区别
+
+  两者都可以对 URI 进行编码，使用一到四个转义序列来表示字符串中的字符的 UTF-8 编码
+
+  encodeURI 不会替换以下字符：;、,、/、?、:、@、&、=、+、\$、字母、数字、-、\_、.、!、~、\*、'、(、)、#
+
+  encodeURIComponent 会转义除了字母、数字、(、)、.、!、~、\*、'、-和\_之外的所有字符。
