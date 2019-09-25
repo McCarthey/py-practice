@@ -386,6 +386,22 @@ this.intersectionObserver = intersectionObserver
 垂直居中：实现的关键在于遮罩容器的伪元素::after。该伪元素 display: inline-block; 使其与弹框同一行; 宽度为 0, 高度设置为 100%, 最最关键的属性就是 vertical-align: middle;
 这样弹框和伪元素就在同一行内实现了垂直居中。伪元素的宽度为 0，因此不会影响弹框的水平居中
 
+- 利用 flex 实现居中
+
+  ```css
+  .parent {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+  ```
+
+  ```html
+  <div class="parent">
+    <span>child</span>
+  </div>
+  ```
+
 - font-display 属性:
 
 参考[文章](https://developers.google.com/web/updates/2016/02/font-display)戳这里

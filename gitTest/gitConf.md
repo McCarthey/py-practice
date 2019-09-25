@@ -17,3 +17,5 @@ git reset
 ```bash
 git remote set-url origin XXXXXXX
 ```
+
+github搜索star数量最多：stars:>1000 
