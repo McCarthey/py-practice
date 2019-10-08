@@ -16,7 +16,7 @@
   /* Two values: flex-grow | flex-basis */
   flex: 1 30px;
 
-  /* Two values: flex-grow | flex-shrink */
+  /* Two values: flex-grow | flex-shrink (为0时，子元素的width不会被压缩，依然生效)*/
   flex: 2 2;
 
   /* Three values: flex-grow | flex-shrink | flex-basis */
