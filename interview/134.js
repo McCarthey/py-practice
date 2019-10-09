@@ -13,3 +13,7 @@ function getDates(startDate, endDate) {
     }
     return result
 }
+
+/* Date.prototype.toLocaleString()方法支持locales和options参数，能指定使用哪种语言的格式化规则
+参见MDN https://beta.developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString
+*/
