@@ -1697,3 +1697,49 @@ document.body.appendChild(s);
     - Interpreter 的优点是无需等待编译即可立即执行代码。这对浏览器中运行JS提供了极大的便利，因为所有用户都不想浪费时间在等待代码编译这件事上。但是，当有大量的JS代码需要执行时会运行地比较慢。比如一个两常数相加的函数被调用了10000次，他的输出始终是个常数，这时Interpreter还是逐行执行，就会比较慢。
 
       同样的情况下，Compiler可以通过用函数执行结果代替循环来进行一些优化，优化后的代码会使用更短的时间执行完。
+    
+  - JIT（Just In Time）Compiler
+
+    它是Interpreter 和 Compiler的结合，现今的大多数浏览器都在更快、更高效地实现此功能。
+
+  - Parser
+
+    Parser 是一种通过各种 JavaScript 关键字来识别、分析和分类程序各个部分的解析器。例如，它可以区分代码是一个方法还是一个变量。
+
+  - AST（抽象语法树）
+
+    AST 是基于 Parser 的分类构造树状结构。AST 将被提供给 Interpreter 生成 ByteCode 。ByteCode 可被执行，用户无需等待。
+
+  - Profiler （分析器）
+
+    Profiler 将查找可以被优化的代码，然后将它们传递给Compiler。Compiler 生成优化代码的同时，浏览器暂时用ByteCode执行操作。并且，一旦 Compiler 生成了优化代码，优化代码将完全替换掉临时的 ByteCode。
+
+  - ByteCode
+
+    作为机器代码，ByteCode不能被所有计算机理解及执行。它仍需要像虚拟机或V8 引擎这样的中间件才能将其转换为机器可读的语言。
+
+
+  - 所以 JavaScript是一门解释型语言吗
+
+    JavaScript是但不完全是一门解释型语言。JS诞生初只有Interpreter。但是现在的引擎不仅包括了Interpreter，还有Compiler。因此，严格来说，这完全取决于引擎是如何实现的。
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
