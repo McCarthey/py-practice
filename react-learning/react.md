@@ -22,6 +22,27 @@ useEffect
 useState
 useCallback
 
+- useEffect
+
+在 useEffect 中设定定时器，可以实现防抖功能，在 return 时（组件 unmount 时）清除定时器
+
+例如，在输入查询条件变化时，调用查询API：
+```jsx
+useEffect(() => {
+  let timer: any
+  if(timer) {
+    clearTimeout(timer)
+  }
+  timer = setTimeout(() => {
+    queryStringAPI(props.queryString)
+    timer = null
+  }, 500)
+  return {
+    clearTimeout(timer)
+  }
+}, [props.queryString])
+```
+
 - useState
 
 绑定表单输入
