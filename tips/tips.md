@@ -1674,13 +1674,13 @@ document.body.appendChild(s);
 
   encodeURIComponent 会转义除了字母、数字、(、)、.、!、~、\*、'、-和\_之外的所有字符。
 
-- VSCode中查找/替换字符串
+- VSCode 中查找/替换字符串
 
   可以点击使用‘正则表达式’来进行高级查找
 
-  比如，我需要将复制过来的JSON数据字符串转成TS的接口中的string："(\S+)" 替换成 string
+  比如，我需要将复制过来的 JSON 数据字符串转成 TS 的接口中的 string："(\S+)" 替换成 string
 
-- Javascript引擎
+- Javascript 引擎
 
   - Interpreter（解释器） VS Compiler（编译器）
 
@@ -1688,19 +1688,19 @@ document.body.appendChild(s);
     - Compiler 读取整个代码，进行一些优化，然后生成优化后的代码
 
     区别：
-    
+
     - Interpreter 逐行将源代码转换为等效的机器代码
     - Compiler 在一开始就将所有源代码转换为机器代码
-  
+
     优缺点：
 
-    - Interpreter 的优点是无需等待编译即可立即执行代码。这对浏览器中运行JS提供了极大的便利，因为所有用户都不想浪费时间在等待代码编译这件事上。但是，当有大量的JS代码需要执行时会运行地比较慢。比如一个两常数相加的函数被调用了10000次，他的输出始终是个常数，这时Interpreter还是逐行执行，就会比较慢。
+    - Interpreter 的优点是无需等待编译即可立即执行代码。这对浏览器中运行 JS 提供了极大的便利，因为所有用户都不想浪费时间在等待代码编译这件事上。但是，当有大量的 JS 代码需要执行时会运行地比较慢。比如一个两常数相加的函数被调用了 10000 次，他的输出始终是个常数，这时 Interpreter 还是逐行执行，就会比较慢。
 
-      同样的情况下，Compiler可以通过用函数执行结果代替循环来进行一些优化，优化后的代码会使用更短的时间执行完。
-    
+      同样的情况下，Compiler 可以通过用函数执行结果代替循环来进行一些优化，优化后的代码会使用更短的时间执行完。
+
   - JIT（Just In Time）Compiler
 
-    它是Interpreter 和 Compiler的结合，现今的大多数浏览器都在更快、更高效地实现此功能。
+    它是 Interpreter 和 Compiler 的结合，现今的大多数浏览器都在更快、更高效地实现此功能。
 
   - Parser
 
@@ -1712,34 +1712,56 @@ document.body.appendChild(s);
 
   - Profiler （分析器）
 
-    Profiler 将查找可以被优化的代码，然后将它们传递给Compiler。Compiler 生成优化代码的同时，浏览器暂时用ByteCode执行操作。并且，一旦 Compiler 生成了优化代码，优化代码将完全替换掉临时的 ByteCode。
+    Profiler 将查找可以被优化的代码，然后将它们传递给 Compiler。Compiler 生成优化代码的同时，浏览器暂时用 ByteCode 执行操作。并且，一旦 Compiler 生成了优化代码，优化代码将完全替换掉临时的 ByteCode。
 
   - ByteCode
 
-    作为机器代码，ByteCode不能被所有计算机理解及执行。它仍需要像虚拟机或V8 引擎这样的中间件才能将其转换为机器可读的语言。
+    作为机器代码，ByteCode 不能被所有计算机理解及执行。它仍需要像虚拟机或 V8 引擎这样的中间件才能将其转换为机器可读的语言。
 
+* 所以 JavaScript 是一门解释型语言吗
 
-  - 所以 JavaScript是一门解释型语言吗
+  JavaScript 是但不完全是一门解释型语言。JS 诞生初只有 Interpreter。但是现在的引擎不仅包括了 Interpreter，还有 Compiler。因此，严格来说，这完全取决于引擎是如何实现的。
 
-    JavaScript是但不完全是一门解释型语言。JS诞生初只有Interpreter。但是现在的引擎不仅包括了Interpreter，还有Compiler。因此，严格来说，这完全取决于引擎是如何实现的。
+* css 动画与硬件加速
 
+  如果要实现一个小球向左平移运动 200px，可以用改变 top 属性实现，也可以用 translate 来实现。但是两者实现效果在性能上的表现完全不同。
 
+  - layer（层）
 
+    层的意义在于，当我们改变一个容器的样式时，只影响它自己，无需重绘，直接通过在 GPU 中改变纹理的属性来改变样式。
 
+    因此，从层的角度来看浏览器的渲染过程：
 
+    1. 获取 DOM 并将其分割为多个层(RenderLayer)
+    2. 将每个层栅格化，并独立的绘制进位图中
+    3. 将这些位图作为纹理上传至 GPU
+    4. 复合多个层来生成最终的屏幕图像(终极 layer)
 
+    类似与 ps 中的图层。我们可以将某个 css 动画或某个 js 交互效果抽离到一个单独的渲染层，来达到加速渲染的目的。
 
-    
+    #### 创建层
 
+    - `3d transform`属性
+    - `backface-visibility`为`hidden`的元素
+    - 使用加速视频解码的 `<video>` 元素
+    - 拥有 3D (WebGL) 上下文或加速的 2D 上下文的 `<canvas>` 元素
+    - 混合插件(如 Flash)
+    - 对 opacity、transform、fliter、backdrop-filter 应用了 animation 或者 transition（需要是 active 的 animation 或者 transition，当 animation 或者 transition 效果未开始或结束后，合成层也会失效）
+    - will-change 设置为 opacity、transform、top、left、bottom、right（其中 top、left 等需要设置明确的定位属性，如 relative 等）
+    - 元素有一个包含复合层的后代节点(换句话说，就是一个元素拥有一个子元素，该子元素在自己的层里)
+    - 元素有一个 z-index 较低且包含一个复合层的兄弟元素(换句话说就是该元素在复合层上面渲染)
 
+    在 webkit 内核的浏览器中，如果有上述情况，就会创建一个独立的层(layer)。可以借助 chrome 浏览器开发者工具中的 layers 和 rendering 结合来查看页面中有哪些独立的层。
 
+  - 性能对比
 
+    通过改变 top 属性的方式每一帧的绘制都要经过不停的 rending 和 painting；
 
+    而通过改变 translate 的方式则不需要，因为它借助了 GPU 加速。
 
+  - 适当使用硬件加速
 
+    过度开启硬件加速会适得其反：
 
-
-
-
-
-
+    1. 内存。创建一个新的渲染层，需要消耗额外的内存和管理资源，如果渲染层的个数过多，很容易引起内存问题，这一点在移动端浏览器上尤为明显，可以引起电池耗电量的上升，降低电池的寿命。所以，一定要牢记不要让页面的每个元素都使用硬件加速，当且仅当需要的时候才为元素创建渲染层。
+    2. 使用 GPU 渲染会影响字体的抗锯齿效果。文本在动画期间有可能会显示的模糊。
