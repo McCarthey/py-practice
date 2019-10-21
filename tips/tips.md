@@ -616,7 +616,7 @@ var allElements = document.getElementsByTagName("*");
   el.className += " theclassname";
   // 当top和left的值是动态计算而成时...
   // better
-  el.style.cssText += "; left: " + left + "px; top: " + top + "px;";
+  el.style.cssText += "; left: " + left + "px; top: " + top + "px;"; // obj.style.cssText = '' 用于设置元素的css属性，提高页面渲染性能
   ```
 
   - 通过 documentFragment 来保留临时变动
