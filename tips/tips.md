@@ -616,7 +616,7 @@ var allElements = document.getElementsByTagName("*");
   el.className += " theclassname";
   // 当top和left的值是动态计算而成时...
   // better
-  el.style.cssText += "; left: " + left + "px; top: " + top + "px;"; // obj.style.cssText = '' 用于设置元素的css属性，提高页面渲染性能
+  el.style.cssText += "; left: " + left + "px; top: " + top + "px;"; // obj.style.cssText += '' 用于设置元素的css属性，提高页面渲染性能；注意要累加，否则会把之前的cssText覆盖掉
   ```
 
   - 通过 documentFragment 来保留临时变动
@@ -1765,3 +1765,11 @@ document.body.appendChild(s);
 
     1. 内存。创建一个新的渲染层，需要消耗额外的内存和管理资源，如果渲染层的个数过多，很容易引起内存问题，这一点在移动端浏览器上尤为明显，可以引起电池耗电量的上升，降低电池的寿命。所以，一定要牢记不要让页面的每个元素都使用硬件加速，当且仅当需要的时候才为元素创建渲染层。
     2. 使用 GPU 渲染会影响字体的抗锯齿效果。文本在动画期间有可能会显示的模糊。
+
+- Base64编码、解码
+
+  atob()，btoa()方法均在window对象上
+
+  **atob():** 解码一个Base64字符串。
+
+  **btoa():** 从一个字符串或者二进制数据编码一个Base64字符串。
