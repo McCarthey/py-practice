@@ -1662,6 +1662,27 @@ document.body.appendChild(s);
 
   即可排除类名为 active 的 <a> 标签的 hover 时的样式
 
+- css +选择器
+
+  B + E: 用于匹配 B 元素的下一个兄弟元素 E
+
+  例如：
+
+  ```css
+  .groupItem {
+    position: relative;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px 0 rgba(36, 46, 66, 0.06);
+    transition: all 0.3s ease-in-out;
+  }
+  .groupItem + .groupItem {
+    margin-top: 12px;
+  }
+  ```
+
+  即可设置除第一个 groupItem 元素外的其他所有 groupItem 元素的上外边距为 12px
+
 - html 缓存解决办法
 
   [参考 github 上 antd 的 issue](https://github.com/ant-design/ant-design-pro/issues/1365#issuecomment-384496088)
@@ -1766,10 +1787,10 @@ document.body.appendChild(s);
     1. 内存。创建一个新的渲染层，需要消耗额外的内存和管理资源，如果渲染层的个数过多，很容易引起内存问题，这一点在移动端浏览器上尤为明显，可以引起电池耗电量的上升，降低电池的寿命。所以，一定要牢记不要让页面的每个元素都使用硬件加速，当且仅当需要的时候才为元素创建渲染层。
     2. 使用 GPU 渲染会影响字体的抗锯齿效果。文本在动画期间有可能会显示的模糊。
 
-- Base64编码、解码
+- Base64 编码、解码
 
-  atob()，btoa()方法均在window对象上
+  atob()，btoa()方法均在 window 对象上
 
-  **atob():** 解码一个Base64字符串。
+  **atob():** 解码一个 Base64 字符串。
 
-  **btoa():** 从一个字符串或者二进制数据编码一个Base64字符串。
+  **btoa():** 从一个字符串或者二进制数据编码一个 Base64 字符串。
