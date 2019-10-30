@@ -40,6 +40,10 @@
         - user-scalable：一个布尔值（yes or no），如果设置为no，用户将不能缩放该页面。默认为yes -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        body {
+            background-color: #ccc;
+        }
+
         p {
             font-size: 18px;
             line-height: 40px;
@@ -83,6 +87,7 @@
             transition: .3s;
             cursor: pointer;
         }
+
         #btnUpload:hover {
             background: rgb(103, 105, 255);
             color: #fff;
@@ -104,6 +109,7 @@
     <div>
         <button id="btnUpload">upload</button>
         <input type="file" id="uploadFile" accept="" style="display: none;">
+        may not可表示 1.推测：可能不；2.准许：不可以（可理解为must not）
     </div>
     <script>
         const uploadFile = document.querySelector('#uploadFile')
