@@ -166,3 +166,6 @@ export default class Demo extends React.Component {
   }
 }
 ```
+- react-router没有命名路由
+
+  因此，在某些需要跳转的时候，特别是restful路由时，会比较麻烦：获取当前pathname => 截取 => 拼接
