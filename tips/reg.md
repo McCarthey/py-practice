@@ -117,4 +117,6 @@
     var string = "ababa abbb ababab"
     ```
 
-- 
+- 正则表达式 test() 方法
+
+    - 如果正则表达式设置了全局标志g，test() 的执行会改变正则表达式的 lastIndex 属性。连续的执行test()方法，后续的执行将会从 lastIndex 处开始匹配字符串，(exec() 同样改变正则本身的 lastIndex属性值).
