@@ -1289,6 +1289,22 @@ var allElements = document.getElementsByTagName("*");
 
   因此，Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就是为两个键。
 
+  不同于对象，Map 的键可以为任意类型
+
+  ```javascript
+  const PERMISSION_MAP = new Map([
+    [10, "Guest"],
+    [20, "Reporter"],
+    [30, "Developer"],
+    [40, "Maintainer"],
+    [50, "Owner"]
+  ]);
+
+  // 使用时
+  PERMISSION_MAP.get(10)
+  ```
+
+
 - proxy
 
   ```javascript
