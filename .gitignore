@@ -5,6 +5,7 @@
 /Flask-practice/flaskr/flaskrenv/
 *.sqlite
 *.class
+/.history/
 /AwesomeProjectNative/android/
 /AwesomeProjectNative/ios/
 /react-learning/node_modules/
