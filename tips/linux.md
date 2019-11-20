@@ -114,3 +114,19 @@ du -sh [filename]
 ```bash
 zipinfo -1 [filepath].zip | xargs rm -rf
 ```
+
+- grep
+
+    查找文件中出现的字符串
+    ```bash
+    $ grep "string" [选项] file
+    ```
+    例如
+    ```bash
+    $ grep "React" DetailLayout.tsx
+    ```
+    输出
+    ```
+    import React, { useState, useEffect } from 'react';
+    const Layout: React.FC = (props: any) => {
+    ```
