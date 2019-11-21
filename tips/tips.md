@@ -1715,7 +1715,7 @@ document.body.appendChild(s);
 
   可以点击使用‘正则表达式’来进行高级查找
 
-  比如，我需要将复制过来的 JSON 数据字符串转成 TS 的接口中的 string："(\S+)" 替换成 string
+  比如，我需要将复制过来的 JSON 数据字符串转成 TS 的接口中的 string："(\S+)" 替换成 string（改进版：'(?!@)(\S*)'，可以匹配''，而且不会匹配'@/type/xxxx'之类的引用文件）
 
 - Javascript 引擎
 
