@@ -1,11 +1,11 @@
 - 判断 div 是否滚动到底部
 
-```javascript
-// 用于判断div是否滚动到底部
-if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-  console.log("已经滚动到底");
-}
-```
+  ```javascript
+  // 用于判断div是否滚动到底部
+  if (element.scrollHeight - element.scrollTop === element.clientHeight) {
+    console.log("已经滚动到底");
+  }
+  ```
 
 - 页面滚动
 
@@ -16,15 +16,15 @@ if (element.scrollHeight - element.scrollTop === element.clientHeight) {
 
 * 行内元素空隙
 
-两个 width:50%的行内元素（inline-block）并排放置，中间会有间隙（这个间隙来自你的标记中行内元素间的空白），因此第二个元素会换到下一行
-要删除这个间隙，需要在 HTML 中通过注释删除空白（右）
-例如：
+  两个 width:50%的行内元素（inline-block）并排放置，中间会有间隙（这个间隙来自你的标记中行内元素间的空白），因此第二个元素会换到下一行
+  要删除这个间隙，需要在 HTML 中通过注释删除空白（右）
+  例如：
 
-```html
-<div class="half">50% wide</div>
-<!-- -->
-<div class="half">50% wide</div>
-```
+  ```html
+  <div class="half">50% wide</div>
+  <!-- -->
+  <div class="half">50% wide</div>
+  ```
 
 - 善用 Array.prototype.every 和 filter 会节省很多代码
 - vue 中 computed 属性中默认只设置了 getter 函数，我们还可以添加 setter 函数
@@ -32,154 +32,142 @@ if (element.scrollHeight - element.scrollTop === element.clientHeight) {
 - vuex 中的 getters 相当于其 state 的计算属性，常用于派生一些状态
 - 擅用 vue 中 mixins 选项，将重复的逻辑抽出，混入到需要的组件中:
 
-```javascript
-// mixin 作为Modal,Tooltip组件的公共逻辑部分
-const toggle = {
-  data() {
-    return {
-      isShow: false
-    };
-  },
-  methods: {
-    toggleShow() {
-      this.isShow = !this.isShow;
+  ```javascript
+  // mixin 作为Modal,Tooltip组件的公共逻辑部分
+  const toggle = {
+    data() {
+      return {
+        isShow: false
+      };
+    },
+    methods: {
+      toggleShow() {
+        this.isShow = !this.isShow;
+      }
     }
-  }
-};
+  };
 
-// Modal组件
-const Modal = {
-  template: "#modal",
-  mixins: [toggle],
-  components: {
-    appChild: Child
-  }
-};
-// tooltip组件
-const Tooltip = {
-  template: "#tooltip",
-  mixins: [toggle],
-  components: {
-    appChild: Child
-  }
-};
-```
+  // Modal组件
+  const Modal = {
+    template: "#modal",
+    mixins: [toggle],
+    components: {
+      appChild: Child
+    }
+  };
+  // tooltip组件
+  const Tooltip = {
+    template: "#tooltip",
+    mixins: [toggle],
+    components: {
+      appChild: Child
+    }
+  };
+  ```
 
-```javascript
-// 可以合并mixin的生命周期: mixin的生命周期先执行，再执行vue实例的生命周期
-const hi = {
-  mounted() {
-    console.log("mixin mounted");
+  ```javascript
+  // 可以合并mixin的生命周期: mixin的生命周期先执行，再执行vue实例的生命周期
+  const hi = {
+    mounted() {
+      console.log("mixin mounted");
+    }
+  };
+
+  new Vue({
+    el: "#app",
+    mixins: [hi],
+    mounted() {
+      console.log("vue instance mounted");
+    }
+  });
+
+  // mixin mounted
+  // vue instance mounted
+  ```
+
+- webkit内核模仿mac的滚动条样式
+  ```css
+  ::-webkit-scrollbar {
+    width: 8px;
   }
-};
-
-new Vue({
-  el: "#app",
-  mixins: [hi],
-  mounted() {
-    console.log("vue instance mounted");
+  ::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 4px;
   }
-});
-
-// mixin mounted
-// vue instance mounted
-```
-
-```css
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #c1c1c1;
-  border-radius: 4px;
-}
-```
+  ```
 
 - 最近 DOM API 中的 Element.scrollIntoView() 可以通过传入配置对象来实现平滑滚动（不再需要 jQuery 了）：
 
-```css
-elem.scrollIntoView({
-    behavior: 'smooth'
-});
-```
+  ```css
+  elem.scrollIntoView({
+      behavior: 'smooth'
+  });
+  ```
 
-有一个全新的 CSS 属性（仍在工作草案中），可以用简单的一行代码改变整个页面滚动的行为:
+  有一个全新的 CSS 属性（仍在工作草案中），可以用简单的一行代码改变整个页面滚动的行为:
 
-```css
-html {
-  scroll-behavior: smooth;
-}
-```
+  ```css
+  html {
+    scroll-behavior: smooth;
+  }
+  ```
 
 - position: sticky; 粘性定位 需要指定 top,bottom,left,right 之一才可以实现粘性效果 - 利用 css shape-outside 可以让内联元素以不规则的形状进行外部排列（可以实现刘海屏的适配）
   且元素必须是浮动元素，以下是绕开刘海屏的实现
 
-```css
-.shape {
-  float: left;
-  shape-outside: polygon(
-    0 0,
-    0 150px,
-    16px 154px,
-    30px 166px,
-    30px 314px,
-    16px 326px,
-    0 330px,
-    0 0
-  );
-}
-```
+  ```css
+  .shape {
+    float: left;
+    shape-outside: polygon(
+      0 0,
+      0 150px,
+      16px 154px,
+      30px 166px,
+      30px 314px,
+      16px 326px,
+      0 330px,
+      0 0
+    );
+  }
+  ```
 
 - 多行省略
   块级元素，webkit 浏览器有效，其他浏览器需指定最大高度
 
-```css
-width: 308px;
-text-overflow: ellipsis;
-display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 3;
-overflow: hidden;
-word-break: break-word;
-word-wrap: normal;
-```
+  ```css
+  width: 308px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  word-break: break-word;
+  word-wrap: normal;
+  ```
 
 - placeholder 颜色
 
-```css
-element::-webkit-input-placeholder {
-  color: #cda777 !important;
-}
+  ```css
+  element::-webkit-input-placeholder {
+    color: #cda777 !important;
+  }
 
-element::-moz-placeholder {
-  color: #cda777 !important;
-}
+  element::-moz-placeholder {
+    color: #cda777 !important;
+  }
 
-element:-moz-placeholder {
-  color: #cda777 !important;
-}
+  element:-moz-placeholder {
+    color: #cda777 !important;
+  }
 
-element::-ms-input-placeholder {
-  color: #cda777 !important;
-}
-```
-
-块级元素，webkit 浏览器有效，其他浏览器需指定最大高度
-
-```css
-width: 308px;
-text-overflow: ellipsis;
-display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 3;
-overflow: hidden;
-word-break: break-word;
-word-wrap: normal;
-```
+  element::-ms-input-placeholder {
+    color: #cda777 !important;
+  }
+  ```
 
 - window 对象
 
-调用 window.close()，可以关闭当前页面
+  调用 window.close()，可以关闭当前页面
 
 - PWA
   serviceWorker 除了由浏览器触发更新之外，还应用了特殊的缓存策略：如果该文件 24 小时没有更新，当触发更新时，会强制更新。也就意味着最坏情况下 service Worker 会每天更新一次。
@@ -190,88 +178,93 @@ word-wrap: normal;
 
 - 判断是否是数组
 
-```javascript
-Array.isArray([]); // true
-// 不支持Array.isArray()方法的ployfill（不支持Array.isArray方法的宿主环境多半不支持箭头函数-_-||）：
-if (!Array.isArray) {
-  Array.isArray = arg =>
-    Object.prototype.toString.call(arg) === "[object Array]";
-}
-```
+  ```javascript
+  Array.isArray([]); // true
+  // 不支持Array.isArray()方法的ployfill（不支持Array.isArray方法的宿主环境多半不支持箭头函数-_-||）：
+  if (!Array.isArray) {
+    Array.isArray = arg =>
+      Object.prototype.toString.call(arg) === "[object Array]";
+  }
+  ```
 
-```
-    const obj = {}
-    Object.keys(obj).length === 0
-```
+  ```javascript
+  const obj = {}
+  Object.keys(obj).length === 0
+  ```
 
 - 边框渐变
 
-```
-    border-image: linear-gradient()
-```
+  ```
+      border-image: linear-gradient()
+  ```
 
-能够实现盒子边框的颜色渐变，但此时 border-radius 属性无效，故无法简单地实现一个圆角边框渐变效果
+  能够实现盒子边框的颜色渐变，但此时 border-radius 属性无效，故无法简单地实现一个圆角边框渐变效果
 
 - word-wrap 由于和 word-break 属性语意过于相似，故在 css3 规范中更名为 overflow-wrap，但只有 chrome/safari 支持
 
 - map
 
-```javascript
-let list = [1, 3, 5, 76, 123, 412, 3];
-let result = list.map(v => (v = v * 2));
-console.log(result); // [2, 6, 10, 152, 246, 824, 6]
-```
+  ```javascript
+  let list = [1, 3, 5, 76, 123, 412, 3];
+  let result = list.map(v => (v = v * 2));
+  console.log(result); // [2, 6, 10, 152, 246, 824, 6]
+  ```
 
 - node child processes 模块
   利用 child_process 模块的 exec 对象写 shell 脚本，需要注意：
 
-```javascript
-exec("shell命令", (err, stdout, stderr) => {
-  if (err) throw err;
-  // 命令执行成功后要做的事情
-});
-```
+  ```javascript
+  exec("shell命令", (err, stdout, stderr) => {
+    if (err) throw err;
+    // 命令执行成功后要做的事情
+  });
+  ```
 
 - 外链
 
-```
-target="_blank"
-```
+  ```
+  target="_blank"
+  ```
 
-当使用 target="\_blank" 链接至另一个页面时，新页面将与您的页面在同一个进程上进行。如果新页面正在执行开销极大的 JavaScript，您的页面性能可能会受影响。
-此外，target="\_blank" 也是一个安全漏洞。新的页面可以通过 window.opener 访问您的窗口对象，并且它可以使用 window.opener.location = newURL 将您的页面导航至不同的网址。（可怕）
+  当使用 target="\_blank" 链接至另一个页面时，新页面将与您的页面在同一个进程上进行。如果新页面正在执行开销极大的 JavaScript，您的页面性能可能会受影响。
+  此外，target="\_blank" 也是一个安全漏洞。新的页面可以通过 window.opener 访问您的窗口对象，并且它可以使用 window.opener.location = newURL 将您的页面导航至不同的网址。（可怕）
 
-一般情况下，当您在新窗口或标签中打开一个外部链接时，始终添加 rel="noopener"
+  一般情况下，当您在新窗口或标签中打开一个外部链接时，始终添加 rel="noopener"
 
-```html
-<a href="https://examplepetstore.com" target="_blank" rel="noopener">...</a>
-```
+  ```html
+  <a href="https://examplepetstore.com" target="_blank" rel="noopener">...</a>
+  ```
 
 - 引用资源预加载
-  <link>元素的rel属性的属性值preload能够让你在你的<head>元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即可需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能。例如：
 
-```html
-<link rel="preload" href="style.css" as="style" />
-<link rel="preload" href="main.js" as="script" />
-```
+  ```<link>```元素的rel属性的属性值preload能够让你在你的<head>元素内部书写一些声明式的资源获取请求，可以指明哪些资源是在页面加载完成后即可需要的。对于这种即刻需要的资源，你可能希望在页面加载的生命周期的早期阶段就开始获取，在浏览器的主渲染机制介入前就进行预加载。这一机制使得资源可以更早的得到加载并可用，且更不易阻塞页面的初步渲染，进而提升性能。例如：
 
-使用 as 来指定将要预加载的内容的类型，将使得浏览器能够： - 更精确地优化资源加载优先级。 - 匹配未来的加载需求，在适当的情况下，重复利用同一资源。 - 为资源应用正确的内容安全策略。 - 为资源设置正确的 Accept 请求头。
+  ```html
+  <link rel="preload" href="style.css" as="style" />
+  <link rel="preload" href="main.js" as="script" />
+  ```
+
+  使用 as 来指定将要预加载的内容的类型，将使得浏览器能够： - 更精确地优化资源加载优先级。 - 匹配未来的加载需求，在适当的情况下，重复利用同一资源。 - 为资源应用正确的内容安全策略。 - 为资源设置正确的 Accept 请求头。
 
 - 伪元素
   :before 和:after 是在 CSS2.1 中发布的。起初伪元素的语法是使用一个冒号“:”，但是随着 web 的发展，在 CSS3 中伪元素使用两个冒号“::”——也就变成了::before 和::after——以便将它与伪类区分开（如:hover，:active 等）。然而，不管你使用单冒号还是双冒号，浏览器都能识别它们。但是**IE8 只支持单冒号的格式**，如果你想要保持广泛的浏览器兼容性，使用单冒号会更安全。
   可以给伪元素添加任何样式。伪元素默认为**内联元素**，因此若要指定宽高，则需声明 display:block;。最好使用 background 属性来设置伪元素的背景图片，这比直接在 content 中使用 url()更容易控制。即使不使用 content 属性，也必须写上，可设置为空，否则伪元素无法正常工作。
 
-我们可以结合使用伪元素和伪类：
+  我们可以结合使用伪元素和伪类：
 
-```css
-blockquote:hover:after,
-blockquote:hover:before {
-  background-color: #555;
-}
-```
+  ```css
+  blockquote:hover:after,
+  blockquote:hover:before {
+    background-color: #555;
+  }
+  ```
 
-应用：
-参见本项目 html-css-js 目录下的 pseudo-element.html 中的卡片阴影样式
+  :focus-whitin 伪元素表示一个元素获得焦点，或，该元素的后代元素获得焦点，即元素自身或者它的某个后代匹配:focus伪类。例如，当用户在表单中某个<input> 域上获得焦点，会高亮整个表单。
+
+  应用：
+  参见本项目 html-css-js 目录下的 pseudo-element.html 中的卡片阴影样式
+
+
 
 - 滚动到页底加载更多的实现
   可以使用 intersectionObserver 实现
