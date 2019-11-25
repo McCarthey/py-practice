@@ -95,7 +95,12 @@
     border-radius: 4px;
   }
   ```
+- 更新思想：
+  
+  当需要更新Objec中的数据(比如需要更新某一对key/value时)时，如果无法使用key来确定更新的数据，那么就可以采用先删除、再新增的策略
 
+  gitlab的variables API 同样如此，由于其开放API设计本身的问题，无法通过key来唯一更新某一variable，因此可以采取批量删除、批量创建的方式，达到更新的目的（事实上gitlab本身也是这样实现的）。
+ 
 - 最近 DOM API 中的 Element.scrollIntoView() 可以通过传入配置对象来实现平滑滚动（不再需要 jQuery 了）：
 
   ```css
