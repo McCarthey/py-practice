@@ -137,7 +137,7 @@
   匹配 x 仅当 x 前面是 y 时。例如可以匹配 restful 风格路由中的资源名称，如下即是匹配 cluster/后面的 clustername：
 
   ```javascript
-  const reg = /(?<=\/cluster\/)[\w-]+/;
+  const reg = /(?<=\/cluster\/)[\w-]+/; // ES2018引入，目前只有chrome支持
   const path = "/groups/354/cluster/kubernetes-admin/projects/demo/overview";
   const clustername = path.match(reg)[0];
   ```
