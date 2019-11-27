@@ -92,6 +92,42 @@
             background: rgb(103, 105, 255);
             color: #fff;
         }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            grid-template-rows: repeat(2, 100px);
+        }
+
+        .container>div {
+            margin: 5px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .container>div:nth-child(1) {
+            background-color: greenyellow;
+        }
+
+        .container>div:nth-child(2) {
+            background-color: orange;
+        }
+
+        .container>div:nth-child(3) {
+            background-color: skyblue;
+        }
+
+        .container>div:nth-child(4) {
+            background-color: pink;
+        }
+
+        .container>div:nth-child(5) {
+            background-color: green;
+        }
+
+        .container>div:nth-child(6) {
+            background-color: red;
+        }
     </style>
 </head>
 
@@ -183,6 +219,14 @@
             socket.send('172.31.0.232|lovechat_account')
         }
     </script> -->
+    <div class="container">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+    </div>
 </body>
 
 </html>
