@@ -1822,3 +1822,7 @@ document.body.appendChild(s)
     ```
     yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
     ```
+
+- antd table性能
+
+  antd(v3.x) table组件在dataSource量较大时(200左右)，性能表现较差，设置点击自带的rowSelection多选框时都会卡顿几百毫秒。据说计划在v4版本中优化table性能。
