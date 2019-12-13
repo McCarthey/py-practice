@@ -27,7 +27,8 @@ useMemo
 
 在 useEffect 中设定定时器，可以实现防抖功能，在 return 时（组件 unmount 时）清除定时器
 
-例如，在输入查询条件变化时，调用查询API：
+例如，在输入查询条件变化时，调用查询 API：
+
 ```jsx
 useEffect(() => {
   let timer: any
@@ -110,10 +111,43 @@ Switch 组件，当设置了 defaultChecked={fetchData.status}，在获取数据
 
   return <input onChange={handleSearch} />;
   ```
+
 - useMemo
 
   会缓存计算结果，在参数不变的情况下，不会触发重新计算/渲染；
 
+- React.memo
+
+  React.memo 为高阶组件。它与 React.PureComponent 非常相似，但它适用于函数组件，但不适用于 class 组件。
+
+  例如，当父组件引入子组件的情况下，往往会造成组件之间的一些不必要的浪费，这时就可以使用 React.memo，这样在count变化后，子组件不会更新：
+
+  ```jsx
+  const Child = props => {
+    console.log("子组件?");
+    return <div>我是一个子组件</div>;
+  };
+
+  const ChildMemo = React.memo(Child);
+
+  const Page = props => {
+    const [count, setCount] = useState(0);
+
+    return (
+      <>
+        <button
+          onClick={e => {
+            setCount(count + 1);
+          }}
+        >
+          加1
+        </button>
+        <p>count:{count}</p>
+        <ChildMemo />
+      </>
+    );
+  };
+  ```
 
 - 组件中 input 输入后 re-render 的问题
 
@@ -171,6 +205,7 @@ export default class Demo extends React.Component {
   }
 }
 ```
-- react-router没有命名路由
 
-  因此，在某些需要跳转的时候，特别是restful路由时，会比较麻烦：获取当前pathname => 截取 => 拼接
+- react-router 没有命名路由
+
+  因此，在某些需要跳转的时候，特别是 restful 路由时，会比较麻烦：获取当前 pathname => 截取 => 拼接
