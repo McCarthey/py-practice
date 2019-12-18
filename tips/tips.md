@@ -3,7 +3,7 @@
   ```javascript
   // 用于判断div是否滚动到底部
   if (element.scrollHeight - element.scrollTop === element.clientHeight) {
-    console.log('已经滚动到底')
+    console.log("已经滚动到底");
   }
   ```
 
@@ -38,48 +38,48 @@
     data() {
       return {
         isShow: false
-      }
+      };
     },
     methods: {
       toggleShow() {
-        this.isShow = !this.isShow
+        this.isShow = !this.isShow;
       }
     }
-  }
+  };
 
   // Modal组件
   const Modal = {
-    template: '#modal',
+    template: "#modal",
     mixins: [toggle],
     components: {
       appChild: Child
     }
-  }
+  };
   // tooltip组件
   const Tooltip = {
-    template: '#tooltip',
+    template: "#tooltip",
     mixins: [toggle],
     components: {
       appChild: Child
     }
-  }
+  };
   ```
 
   ```javascript
   // 可以合并mixin的生命周期: mixin的生命周期先执行，再执行vue实例的生命周期
   const hi = {
     mounted() {
-      console.log('mixin mounted')
+      console.log("mixin mounted");
     }
-  }
+  };
 
   new Vue({
-    el: '#app',
+    el: "#app",
     mixins: [hi],
     mounted() {
-      console.log('vue instance mounted')
+      console.log("vue instance mounted");
     }
-  })
+  });
 
   // mixin mounted
   // vue instance mounted
@@ -184,17 +184,17 @@
 - 判断是否是数组
 
   ```javascript
-  Array.isArray([]) // true
+  Array.isArray([]); // true
   // 不支持Array.isArray()方法的ployfill（不支持Array.isArray方法的宿主环境多半不支持箭头函数-_-||）：
   if (!Array.isArray) {
     Array.isArray = arg =>
-      Object.prototype.toString.call(arg) === '[object Array]'
+      Object.prototype.toString.call(arg) === "[object Array]";
   }
   ```
 
   ```javascript
-  const obj = {}
-  Object.keys(obj).length === 0
+  const obj = {};
+  Object.keys(obj).length === 0;
   ```
 
 - 边框渐变
@@ -210,19 +210,19 @@
 - map
 
   ```javascript
-  let list = [1, 3, 5, 76, 123, 412, 3]
-  let result = list.map(v => (v = v * 2))
-  console.log(result) // [2, 6, 10, 152, 246, 824, 6]
+  let list = [1, 3, 5, 76, 123, 412, 3];
+  let result = list.map(v => (v = v * 2));
+  console.log(result); // [2, 6, 10, 152, 246, 824, 6]
   ```
 
 - node child processes 模块
   利用 child_process 模块的 exec 对象写 shell 脚本，需要注意：
 
   ```javascript
-  exec('shell命令', (err, stdout, stderr) => {
-    if (err) throw err
+  exec("shell命令", (err, stdout, stderr) => {
+    if (err) throw err;
     // 命令执行成功后要做的事情
-  })
+  });
   ```
 
 - 外链
@@ -370,7 +370,7 @@ this.intersectionObserver = intersectionObserver
 /* 垂直居中关键 */
 .dialog_container::after {
   display: inline-block;
-  content: '';
+  content: "";
   width: 0;
   height: 100%;
   vertical-align: middle;
@@ -444,27 +444,27 @@ white-space: nowrap;
 var isSupportWebp =
   !![].map &&
   document
-    .createElement('canvas')
-    .toDataURL('image/webp')
-    .indexOf('data:image/webp') == 0
+    .createElement("canvas")
+    .toDataURL("image/webp")
+    .indexOf("data:image/webp") == 0;
 
-console.log(isSupportWebp)
+console.log(isSupportWebp);
 ```
 
 - 对象扩展运算符...
 
 ```javascript
-var player = { name: 'Jack', age: 24, job: 'engineer', country: 'china' }
-var newPlayer = { ...player, name: 'Sam', age: 25 }
-console.log(newPlayer) // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
+var player = { name: "Jack", age: 24, job: "engineer", country: "china" };
+var newPlayer = { ...player, name: "Sam", age: 25 };
+console.log(newPlayer); // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
 ```
 
 对象扩展运算符可以用以复制/继承另一个对象，并改写他的属性，类似于 Object.assign()，因此上下两部分代码等价:
 
 ```javascript
-var player = { name: 'Jack', age: 24, job: 'engineer', country: 'china' }
-var newPlayer = Object.assign({}, player, { name: 'Sam', age: 25 })
-console.log(newPlayer) // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
+var player = { name: "Jack", age: 24, job: "engineer", country: "china" };
+var newPlayer = Object.assign({}, player, { name: "Sam", age: 25 });
+console.log(newPlayer); // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
 ```
 
 - 构造函数模式的劣势
@@ -482,7 +482,7 @@ const stack2 = new Stack()
 此处初始化两个栈的实例对象。单看代码是没有问题的，简单明了。但是，这两个实例的方法是不同的函数引用，也就是说构造函数的每个方法都要在每个实例上重新创建一遍，可如此检验：
 
 ```javascript
-console.log(stack1.pop === stack2.pop) // false
+console.log(stack1.pop === stack2.pop); // false
 ```
 
 因此，不同实例上的同名函数是不相等的。可将构造函数中的方法移动到全局，在构造函数内部引用，这样就可以使不同的实例共享相同的方法了。但是这种方式并不推荐，因为会增加很多全局函数，而且这些函数仅是为了给某个对象调用，显然不合理，因此构造函数模式比较适合单例场景。这些问题可由原型模式解决。
@@ -524,12 +524,12 @@ console.log(stack1.pop === stack2.pop) // false
 
   - title: 可以通过 document.title 读取并设置页面标题，读取的即是`<title>`元素中的文本，但是不会改变页面中的`<title>`元素
     ```javascript
-    const oldTitle = document.title
-    document.title = 'New page title'
+    const oldTitle = document.title;
+    document.title = "New page title";
     ```
   - URL: URL 属性包含当前页面的完整标题，即地址栏中显示的 URL，读取时等同 window.location.href
     ```javascript
-    document.URL === window.location.href
+    document.URL === window.location.href;
     ```
   - domain: domain 属性值包含页面的域名
   - referrer： referrer 属性保存着链接到当前页面的那个页面的 URL。
@@ -543,7 +543,7 @@ getElementsByTagName()方法会返回一个 HTMLCollections 对象，该对象�
 要想获得全部元素组成的 HTMLCollection，如下：
 
 ```javascript
-var allElements = document.getElementsByTagName('*')
+var allElements = document.getElementsByTagName("*");
 ```
 
 - python 字符串模板
@@ -589,14 +589,14 @@ var allElements = document.getElementsByTagName('*')
   - 添加一个样式表，调整样式属性
   - 用户行为，例如调整窗口大小，改变字号，或者滚动。
   ```javascript
-  var bstyle = document.body.style // cache
-  bstyle.padding = '20px' // 重排+重绘
-  bstyle.border = '10px solid red' // 另一次重排+重绘
-  bstyle.color = 'blue' // 没有尺寸变化，只重绘
-  bstyle.backgroundColor = '#fad' // 重绘
-  bstyle.fontSize = '2em' // 重排+重绘
+  var bstyle = document.body.style; // cache
+  bstyle.padding = "20px"; // 重排+重绘
+  bstyle.border = "10px solid red"; // 另一次重排+重绘
+  bstyle.color = "blue"; // 没有尺寸变化，只重绘
+  bstyle.backgroundColor = "#fad"; // 重绘
+  bstyle.fontSize = "2em"; // 重排+重绘
   // 新的DOM节点 - 重排+重绘
-  document.body.appendChild(document.createTextNode('dude!'))
+  document.body.appendChild(document.createTextNode("dude!"));
   ```
 - 最小化重排/重绘
 
@@ -605,14 +605,14 @@ var allElements = document.getElementsByTagName('*')
   ```javascript
   // bad
   var left = 10,
-    top = 10
-  el.style.left = left + 'px'
-  el.style.top = top + 'px'
+    top = 10;
+  el.style.left = left + "px";
+  el.style.top = top + "px";
   // better
-  el.className += ' theclassname'
+  el.className += " theclassname";
   // 当top和left的值是动态计算而成时...
   // better
-  el.style.cssText += '; left: ' + left + 'px; top: ' + top + 'px;' // obj.style.cssText += '' 用于设置元素的css属性，提高页面渲染性能；注意要累加，否则会把之前的cssText覆盖掉
+  el.style.cssText += "; left: " + left + "px; top: " + top + "px;"; // obj.style.cssText += '' 用于设置元素的css属性，提高页面渲染性能；注意要累加，否则会把之前的cssText覆盖掉
   ```
 
   - 通过 documentFragment 来保留临时变动
@@ -623,18 +623,18 @@ var allElements = document.getElementsByTagName('*')
   ```javascript
   // no-no!
   for (big; loop; here) {
-    el.style.left = el.offsetLeft + 10 + 'px'
-    el.style.top = el.offsetTop + 10 + 'px'
+    el.style.left = el.offsetLeft + 10 + "px";
+    el.style.top = el.offsetTop + 10 + "px";
   }
   // better
   var left = el.offsetLeft,
-    top = el.offsetTop
-  esty = el.style
+    top = el.offsetTop;
+  esty = el.style;
   for (big; loop; here) {
-    left += 10
-    top += 10
-    esty.left = left + 'px'
-    esty.top = top + 'px'
+    left += 10;
+    top += 10;
+    esty.left = left + "px";
+    esty.top = top + "px";
   }
   ```
 
@@ -789,23 +789,23 @@ var allElements = document.getElementsByTagName('*')
   此时页面视窗固定，但是内容会返回到顶端，因此这里需要记录一下当前的滚动值，可以写在 vuex 的 mutation 中
 
   ```javascript
-  let bodyEl = document.body
-  let top = 0
+  let bodyEl = document.body;
+  let top = 0;
   export default {
     setShowingDlg(state, showing) {
-      state.isShowingDlg = showing
+      state.isShowingDlg = showing;
       if (showing) {
-        top = window.scrollY
-        bodyEl.style.position = 'fixed'
-        bodyEl.style.top = `${-top}px`
+        top = window.scrollY;
+        bodyEl.style.position = "fixed";
+        bodyEl.style.top = `${-top}px`;
       } else {
-        bodyEl.style.position = ''
-        bodyEl.style.top = ''
+        bodyEl.style.position = "";
+        bodyEl.style.top = "";
 
-        window.scrollTo(0, top) // 回到原先的高度
+        window.scrollTo(0, top); // 回到原先的高度
       }
     }
-  }
+  };
   ```
 
 - web 移动端调用自带短信功能
@@ -854,9 +854,9 @@ var allElements = document.getElementsByTagName('*')
 
 - 判断空字符串" "
   ```javascript
-  const message = ' '
-  if (message.replace(/(^\s*)|(\s*$)/g, '').length === 0) {
-    console.log('Message cannot be empty!')
+  const message = " ";
+  if (message.replace(/(^\s*)|(\s*$)/g, "").length === 0) {
+    console.log("Message cannot be empty!");
   }
   ```
 - facebook pixel
@@ -869,113 +869,113 @@ var allElements = document.getElementsByTagName('*')
   如果一个描述符不具有 value,writable,get 和 set 任意一个关键字，那么它将被认为是一个数据描述符。如果一个描述符同时有(value 或 writable)和(get 或 set)关键字，将会产生一个异常。
 
   ```javascript
-  let person = { name: 'Mike', age: 18 }
-  Object.defineProperty(person, 'name', {
-    value: 'Lily'
-  })
-  console.log(person) /* {name: "Lily", age: 18} */
+  let person = { name: "Mike", age: 18 };
+  Object.defineProperty(person, "name", {
+    value: "Lily"
+  });
+  console.log(person); /* {name: "Lily", age: 18} */
 
-  Object.defineProperty(person, 'fullName', {
+  Object.defineProperty(person, "fullName", {
     get() {
-      return 'Lily White'
+      return "Lily White";
     },
     set(newVal) {
-      this.name = newVal
+      this.name = newVal;
     }
-  })
+  });
 
-  console.log(person.fullName) /* "Lily White" */
-  person.fullName = 'Mike White'
-  console.log(person) /* {name: "Mike White", age: 18} */
+  console.log(person.fullName); /* "Lily White" */
+  person.fullName = "Mike White";
+  console.log(person); /* {name: "Mike White", age: 18} */
   ```
 
 - Vue 响应式原理
 
   ```javascript
-  let data = { price: 5, quantity: 2 }
-  let target = null
+  let data = { price: 5, quantity: 2 };
+  let target = null;
   class Dep {
     constructor() {
-      this.subscribers = []
+      this.subscribers = [];
     }
 
     depend() {
       if (target && !this.subscribers.includes(target)) {
-        this.subscribers.push(target)
+        this.subscribers.push(target);
       }
     }
 
     notify() {
-      this.subscribers.forEach(sub => sub())
+      this.subscribers.forEach(sub => sub());
     }
   }
   Object.keys(data).forEach(key => {
-    let internalValue = data[key]
+    let internalValue = data[key];
 
-    const dep = new Dep()
+    const dep = new Dep();
 
     Object.defineProperty(data, key, {
       get() {
-        dep.depend()
-        return internalValue
+        dep.depend();
+        return internalValue;
       },
       set(newVal) {
-        internalValue = newVal
-        dep.notify()
+        internalValue = newVal;
+        dep.notify();
       }
-    })
-  })
+    });
+  });
   function watcher(myFun) {
-    target = myFun
-    target()
-    target = null
+    target = myFun;
+    target();
+    target = null;
   }
   watcher(() => {
-    data.total = data.price * data.quantity
-  })
-  console.log('total = ' + data.total)
-  data.price = 20
-  console.log('total = ' + data.total)
-  data.quantity = 10
-  console.log('total = ' + data.total)
+    data.total = data.price * data.quantity;
+  });
+  console.log("total = " + data.total);
+  data.price = 20;
+  console.log("total = " + data.total);
+  data.quantity = 10;
+  console.log("total = " + data.total);
   ```
 
   使用 Proxy 实现响应式
 
   ```javascript
-  let deps = new Map() /* 创建一个Map对象 */
+  let deps = new Map(); /* 创建一个Map对象 */
   Object.keys(data).forEach(key => {
     /* 为每个属性都设置一个依赖实例 并放入deps中 */
-    deps.set(key, new Dep())
-  })
+    deps.set(key, new Dep());
+  });
   class Dep {
     constructor() {
-      this.subscribers = []
+      this.subscribers = [];
     }
 
     depend() {
       if (target && !this.subscribers.includes(target)) {
-        this.subscribers.push(target)
+        this.subscribers.push(target);
       }
     }
 
     notify() {
-      this.subscribers.forEach(sub => sub())
+      this.subscribers.forEach(sub => sub());
     }
   }
-  let data_without_proxy = data /* 保存源对象 */
+  let data_without_proxy = data; /* 保存源对象 */
   data = new Proxy(data_without_proxy, {
     /* 重写数据以在中间创建一个代理 */
     get(obj, key) {
-      deps.get(key).depend()
-      return obj[key]
+      deps.get(key).depend();
+      return obj[key];
     },
     set(obj, key, newVal) {
-      obj[key] = newVal
-      deps.get(key).notify()
-      return true
+      obj[key] = newVal;
+      deps.get(key).notify();
+      return true;
     }
-  })
+  });
   ```
 
   如你所见，我们创建了一个变量 data_without_proxy 来作为源对象的副本，在覆盖源对象时来使用副本创建一个 Proxy 对象。第二个参数是包含了 get()和 set()这两个陷阱函数属性的 handler 对象。
@@ -1010,18 +1010,18 @@ var allElements = document.getElementsByTagName('*')
 
   ```javascript
   // 监听底部轮播 图片懒加载
-  var userWrap = document.querySelector('.users')
+  var userWrap = document.querySelector(".users");
   var intersectionObserver = new IntersectionObserver(function(entries) {
-    if (entries[0].intersectionRatio <= 0) return
+    if (entries[0].intersectionRatio <= 0) return;
 
-    console.log('Loaded swiper')
-    intersectionObserver.unobserve(userWrap)
-    var imgs = userWrap.querySelectorAll('img')
+    console.log("Loaded swiper");
+    intersectionObserver.unobserve(userWrap);
+    var imgs = userWrap.querySelectorAll("img");
     for (var i = 0; i < imgs.length; i++) {
-      var dataSrc = imgs[i].getAttribute('data-src')
-      imgs[i].setAttribute('src', dataSrc)
+      var dataSrc = imgs[i].getAttribute("data-src");
+      imgs[i].setAttribute("src", dataSrc);
     }
-  })
+  });
   ```
 
 - vue 的 vm.\$nextTick()
@@ -1035,16 +1035,16 @@ var allElements = document.getElementsByTagName('*')
       // ...
       example: function() {
         // 修改数据
-        this.message = 'changed'
+        this.message = "changed";
         // DOM 还没有更新
         this.$nextTick(function() {
           // DOM 现在更新了
           // `this` 绑定到当前实例
-          this.doSomethingElse()
-        })
+          this.doSomethingElse();
+        });
       }
     }
-  })
+  });
   ```
 
 - 判断是否是 iphoneX XR XS
@@ -1115,9 +1115,9 @@ var allElements = document.getElementsByTagName('*')
   解决：
 
   ```javascript
-  const scrollDiv = document.querySelector('.scrollDiv')
-  const targetDiv = document.querySelector('.target')
-  scrollDiv.scrollTo(0, target.offsetTop)
+  const scrollDiv = document.querySelector(".scrollDiv");
+  const targetDiv = document.querySelector(".target");
+  scrollDiv.scrollTo(0, target.offsetTop);
   ```
 
   配合 css 平滑滚动效果更好
@@ -1132,37 +1132,37 @@ var allElements = document.getElementsByTagName('*')
 - Set 内部判断两个值是否不同，使用的算法类似于精确相等运算符(===)，不会发生类型转换，与 === 主要的区别在于 Set 判断 NaN 等于自身：
 
   ```javascript
-  let s = new Set([1, '5', 5, NaN, NaN, 'test'])
-  console.log(s) // Set(5) {1, "5", 5, NaN, "test"}
+  let s = new Set([1, "5", 5, NaN, NaN, "test"]);
+  console.log(s); // Set(5) {1, "5", 5, NaN, "test"}
   ```
 
   另外，两个对象总是不相等的
 
   ```javascript
-  let s = new Set()
-  s.add({})
-  s.size // 1
+  let s = new Set();
+  s.add({});
+  s.size; // 1
 
-  s.add({})
-  s.size // 2
+  s.add({});
+  s.size; // 2
   ```
 
   Array.from 方法可以将 Set 结构转为数组
 
   ```javascript
-  const items = new Set([1, 2, 3, 4, 5])
-  let list = Array.from(items)
-  console.log(list) // [1, 2, 3, 4, 5]
+  const items = new Set([1, 2, 3, 4, 5]);
+  let list = Array.from(items);
+  console.log(list); // [1, 2, 3, 4, 5]
   ```
 
   因此，数组去重的方法还可以这样写：
 
   ```javascript
   function dedupe(array) {
-    return Array.from(new Set(array))
+    return Array.from(new Set(array));
   }
 
-  dedupe([1, 1, 2, 3]) // [1,2,3]
+  dedupe([1, 1, 2, 3]); // [1,2,3]
   ```
 
 - Set 的遍历操作
@@ -1170,24 +1170,24 @@ var allElements = document.getElementsByTagName('*')
   由于 Set 结构没有键名，只有键值（或者说键名和键值是用一个值），所以 keys 方法和 values 方法的行为完全一致
 
   ```javascript
-  let set = new Set(['red', 'green', 'blue'])
+  let set = new Set(["red", "green", "blue"]);
   for (let i of set.keys()) {
     // 返回键名的遍历器
-    console.log(i)
+    console.log(i);
   }
   // red
   // green
   // blue
   for (let i of set.values()) {
     // 返回键值的遍历器
-    console.log(i)
+    console.log(i);
   }
   // red
   // green
   // blue
   for (let i of set.entries()) {
     // 返回键值对的遍历器
-    console.log(i)
+    console.log(i);
   }
   // ["red", "red"]
   // ["green", "green"]
@@ -1197,10 +1197,10 @@ var allElements = document.getElementsByTagName('*')
   Set 结构默认可遍历，它的默认遍历器生成函数就是它的 values 方法，因此可以直接 for...of 遍历 set
 
   ```javascript
-  Set.prototype[Symbol.iterator] === Set.prototype.values // true
+  Set.prototype[Symbol.iterator] === Set.prototype.values; // true
 
   for (let i of set) {
-    console.log(i)
+    console.log(i);
   }
   // red
   // green
@@ -1213,9 +1213,9 @@ var allElements = document.getElementsByTagName('*')
   首先，WeakSet 的成员只能是对象，而不能是其他类型的值。
 
   ```javascript
-  const ws = new WeakSet()
-  ws.add(1) // Uncaught TypeError: Invalid value used in weak set
-  ws.add(Symbol()) // Uncaught TypeError: Invalid value used in weak set
+  const ws = new WeakSet();
+  ws.add(1); // Uncaught TypeError: Invalid value used in weak set
+  ws.add(Symbol()); // Uncaught TypeError: Invalid value used in weak set
   ```
 
   WeakSet 中的对象都是弱引用，即垃圾回收机制不考虑 WeakSet 对该对象的引用。WeakSet 的成员是不适合引用的，因为它会随时消失。另外，由于 WeakSet 内部有多少个成员，取决于垃圾回收机制有没有运行，运行前后很可能成员个数是不一样的，而垃圾回收机制何时运行是不可预测的，因此 ES6 规定 WeakSet 不可遍历。WeakMap 同理。
@@ -1225,15 +1225,15 @@ var allElements = document.getElementsByTagName('*')
   为了解决对象中的键只能是字符串的问题，ES6 引入了 Map 数据结构。类似于对象，也是键值对的集合，但是键的范围不限于字符串。
 
   ```javascript
-  const m = new Map()
-  const o = { p: 'Hello World' }
+  const m = new Map();
+  const o = { p: "Hello World" };
 
-  m.set(o, 'content')
-  m.get(o) // "content"
+  m.set(o, "content");
+  m.get(o); // "content"
 
-  m.has(o) // true
-  m.delete(o) // true
-  m.has(o) // false
+  m.has(o); // true
+  m.delete(o); // true
+  m.has(o); // false
   ```
 
   使用 Map 结构的 set 方法，将对象 o 当作 m 的一个键，然后又用 get 方法读取这个键，接着用 delete 删除了这个键。
@@ -1242,34 +1242,34 @@ var allElements = document.getElementsByTagName('*')
 
   ```javascript
   const map = new Map([
-    ['name', '张三'],
-    ['title', 'Author']
-  ])
+    ["name", "张三"],
+    ["title", "Author"]
+  ]);
 
-  map.size // 2
-  map.has('name') // true
-  map.get('name') // "张三"
+  map.size; // 2
+  map.has("name"); // true
+  map.get("name"); // "张三"
   ```
 
   实际上执行的是下面的算法：
 
   ```javascript
   const items = [
-    ['name', '张三'],
-    ['title', 'Author']
-  ]
+    ["name", "张三"],
+    ["title", "Author"]
+  ];
 
-  const map = new Map()
-  items.forEach(([key, value]) => map.set(key, value))
+  const map = new Map();
+  items.forEach(([key, value]) => map.set(key, value));
   ```
 
   注意，只有对同一个对象的引用，Map 结构才将其视为同一个键：
 
   ```javascript
-  const map = new Map()
+  const map = new Map();
 
-  map.set(['a'], 555)
-  map.get(['a']) // undefined
+  map.set(["a"], 555);
+  map.get(["a"]); // undefined
   ```
 
   上面的 set 和 get 方法，表面是针对同一个键，但实际上这是两个值，内存地址是不一样的，因此 get 方法无法读取该键，返回 undefined。
@@ -1277,16 +1277,16 @@ var allElements = document.getElementsByTagName('*')
   同理，同样的值的两个实例，在 Map 结构中被视为两个键。
 
   ```javascript
-  const map = new Map()
+  const map = new Map();
 
-  const k1 = ['a']
-  const k2 = ['a']
+  const k1 = ["a"];
+  const k2 = ["a"];
 
-  map.set(k1, 111)
-  map.set(k2, 222)
+  map.set(k1, 111);
+  map.set(k2, 222);
 
-  map.get(k1) // 111
-  map.get(k2) // 222
+  map.get(k1); // 111
+  map.get(k2); // 222
   ```
 
   因此，Map 的键实际上是跟内存地址绑定的，只要内存地址不一样，就是为两个键。
@@ -1295,15 +1295,15 @@ var allElements = document.getElementsByTagName('*')
 
   ```javascript
   const PERMISSION_MAP = new Map([
-    [10, 'Guest'],
-    [20, 'Reporter'],
-    [30, 'Developer'],
-    [40, 'Maintainer'],
-    [50, 'Owner']
-  ])
+    [10, "Guest"],
+    [20, "Reporter"],
+    [30, "Developer"],
+    [40, "Maintainer"],
+    [50, "Owner"]
+  ]);
 
   // 使用时
-  PERMISSION_MAP.get(10)
+  PERMISSION_MAP.get(10);
   ```
 
 * proxy
@@ -1311,22 +1311,22 @@ var allElements = document.getElementsByTagName('*')
   ```javascript
   let obj = {
     a: 1
-  }
+  };
 
   let proxyObj = new Proxy(obj, {
     get: function(target, prop) {
-      return prop in target ? target[prop] : 0
+      return prop in target ? target[prop] : 0;
     },
     set: function(target, prop, value) {
-      target[prop] = 888
+      target[prop] = 888;
     }
-  })
+  });
 
-  console.log(proxyObj.a) // 1
-  console.log(proxyObj.b) // 0
+  console.log(proxyObj.a); // 1
+  console.log(proxyObj.b); // 0
 
-  proxyObj.a = 666
-  console.log(proxyObj.a) // 888
+  proxyObj.a = 666;
+  console.log(proxyObj.a); // 888
   ```
 
   设置 handler 拦截重写 set, get 方法
@@ -1356,12 +1356,12 @@ var allElements = document.getElementsByTagName('*')
   标签栏的显示隐藏会触发 visibilitychange 事件
 
   ```javascript
-  document.addEventListener('visibilitychange', () => {
+  document.addEventListener("visibilitychange", () => {
     // 监听document的显隐，控制标题
     if (!document.hidden) {
       // ...
     }
-  })
+  });
   ```
 
 - 判断数值是否有穷
@@ -1377,8 +1377,8 @@ var allElements = document.getElementsByTagName('*')
 - 试图向数组添加数字字符串属性
 
   ```javascript
-  var myArray = ['test', 1, 2]
-  myArray['3'] = 3
+  var myArray = ["test", 1, 2];
+  myArray["3"] = 3;
   ```
 
   会导致 myArray 数组新增一个元素
@@ -1453,9 +1453,9 @@ var allElements = document.getElementsByTagName('*')
   按位移动会先将操作数转换为大端字节序顺序(big-endian order)的 32 位整数,并返回与左操作数相同类型的结果。**右操作数应小于 32 位，否则只有最低 5 个字节会被使用**。
 
   ```javascript
-  1 << 32 // 1
-  1 << 31 // -2147483648
-  1 << 30 // 1073741824
+  1 << 32; // 1
+  1 << 31; // -2147483648
+  1 << 30; // 1073741824
   ```
 
 - Math.sign()
@@ -1463,26 +1463,26 @@ var allElements = document.getElementsByTagName('*')
   Math.sign() 函数返回一个数字的符号, 指示数字是正数，负数还是零。
 
   ```javascript
-  Math.sign(3) //  1
-  Math.sign(-3) // -1
-  Math.sign('-3') // -1
-  Math.sign(0) //  0
-  Math.sign(-0) // -0
-  Math.sign(NaN) // NaN
-  Math.sign('foo') // NaN
-  Math.sign() // NaN
+  Math.sign(3); //  1
+  Math.sign(-3); // -1
+  Math.sign("-3"); // -1
+  Math.sign(0); //  0
+  Math.sign(-0); // -0
+  Math.sign(NaN); // NaN
+  Math.sign("foo"); // NaN
+  Math.sign(); // NaN
   ```
 
   ployfill:
 
   ```javascript
   function sign(x) {
-    x = +x // 转换为数字
+    x = +x; // 转换为数字
     if (x === 0 || Number.isNaN(x)) {
       // 0或NaN都返回自身，-0 === 0
-      return x
+      return x;
     }
-    return x > 0 ? 1 : -1 // 整数返回1, 负数返回-1
+    return x > 0 ? 1 : -1; // 整数返回1, 负数返回-1
   }
   ```
 
@@ -1509,9 +1509,9 @@ var allElements = document.getElementsByTagName('*')
 * 为第三方页面添加 jQuery 方便调试
 
 ```javascript
-const s = document.createElement('script')
-s.src = 'https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js'
-document.body.appendChild(s)
+const s = document.createElement("script");
+s.src = "https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js";
+document.body.appendChild(s);
 ```
 
 - egg.js 简介
@@ -1563,13 +1563,13 @@ document.body.appendChild(s)
   定义 BigInt 变量时，可以在一个整数后面加 n，如 10n；或者调用 BigInt()函数
 
   ```javascript
-  const theBiggestInt = 9007199254740991n
+  const theBiggestInt = 9007199254740991n;
   // ↪ 9007199254740991n
 
-  const alsoHuge = BigInt(9007199254740991)
+  const alsoHuge = BigInt(9007199254740991);
   // ↪ 9007199254740991n
 
-  const hugeButString = BigInt('9007199254740991')
+  const hugeButString = BigInt("9007199254740991");
   // ↪ 9007199254740991n
   ```
 
@@ -1594,7 +1594,7 @@ document.body.appendChild(s)
 - parseInt(招行 2019/03 笔试题)
 
   ```javascript
-  ;['10', '10', '10', '10', '10'].map(parseInt)
+  ["10", "10", "10", "10", "10"].map(parseInt);
   // [ 10, NaN, 2, 3, 4 ]
   ```
 
@@ -1823,6 +1823,108 @@ document.body.appendChild(s)
     yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
     ```
 
-- antd table性能
+- antd table 性能
 
-  antd(v3.x) table组件在dataSource量较大时(200左右)，性能表现较差，设置点击自带的rowSelection多选框时都会卡顿几百毫秒。据说计划在v4版本中优化table性能。
+  antd(v3.x) table 组件在 dataSource 量较大时(200 左右)，性能表现较差，设置点击自带的 rowSelection 多选框时都会卡顿几百毫秒。据说计划在 v4 版本中优化 table 性能。
+
+- 覆盖 antd 样式
+
+  ```less
+  radioGroup__wrapper {
+    :global {
+      .ant-radio-button-wrapper-checked {
+        background: #36435c;
+      }
+    }
+  }
+  ```
+
+- antd tree可控，并支持onSelect选中
+
+  ```tsx
+  import React, { useEffect, ReactNode, useState } from 'react';
+  import { connect } from 'dva';
+  import { Tree } from 'antd';
+  import style from '../../Role.less';
+  import { RoleState, TreeNode } from '@/models/role';
+  import { RoleItem, RoleMap } from '@/type/role';
+  import { produce } from 'immer';
+  import _ from 'lodash';
+
+  const { TreeNode } = Tree;
+
+  const Permission = (props: { role: RoleState }) => {
+    const [treeData, setTreeData] = useState<TreeNode[]>([]);
+    const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+    const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
+
+    useEffect(() => {
+      setTreeData(props.role.formatPermissions);
+      setExpandedKeys(props.role.formatPermissions.map(p => p.key));
+    }, [props.role]);
+
+    const handleSelect = (selectedKeys: string[], info: any) => {
+      console.log('onSelect', checkedKeys, selectedKeys, info);
+      const key = _.get(info, ['node', 'props', 'eventKey'], '');
+      const childrenKeys = _.get(info, ['node', 'props', 'children'], []) as any[];
+      setCheckedKeys(
+        produce(checkedKeys, draft => {
+          if (draft.includes(key)) {
+            draft.splice(draft.findIndex(k => k === key), 1);
+            if (key.split('|').length > 1) {
+              const parentKey = key.split('|')[0];
+              draft.splice(draft.findIndex(k => k === parentKey), 1);
+            }
+            if (childrenKeys.length) {
+              childrenKeys.forEach(child => {
+                draft.splice(draft.findIndex(k => k === child.key), 1);
+              });
+            }
+          } else {
+            draft.push(key);
+            if (childrenKeys.length) {
+              childrenKeys.forEach(child => {
+                if (!draft.includes(child.key)) draft.push(child.key);
+              });
+            }
+          }
+        }),
+      );
+    };
+
+    const handleCheck = (checkedKeys: any) => {
+      console.log('onCheck', checkedKeys);
+      setCheckedKeys(checkedKeys);
+    };
+
+    return (
+      <div className={style.treeWrapper}>
+        <Tree
+          checkable
+          switcherIcon={<span />}
+          expandedKeys={expandedKeys}
+          onSelect={handleSelect}
+          checkedKeys={checkedKeys}
+          onCheck={handleCheck}
+        >
+          {treeData.map(p => {
+            return p.children ? (
+              <TreeNode title={RoleMap[p.title]} key={p.key}>
+                {p.children.map((pi: TreeNode) => (
+                  <TreeNode title={RoleMap[pi.title]} key={`${p.key}|${pi.key}`} />
+                ))}
+              </TreeNode>
+            ) : (
+              <TreeNode title={RoleMap[p.title]} key={p.key} />
+            );
+          })}
+        </Tree>
+      </div>
+    );
+  };
+
+  export default connect(({ role }: { role: RoleState }) => ({
+    role,
+  }))(Permission);
+
+  ```
