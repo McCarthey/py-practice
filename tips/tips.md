@@ -1830,3 +1830,9 @@ document.body.appendChild(s);
   let a = [[1], [2], [3], [4,5]]
   a.flatMap(i => i) // [1, 2, 3, 4, 5]
   ```
+
+- https证书安装
+
+  以Nginx为例：
+
+  在云服务器控制台下载证书，上传到服务器，如果nginx没有安装ssl模块，则需要在源目录出安装ssl模块，再配置conf文件，重启后生效
