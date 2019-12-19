@@ -1822,3 +1822,11 @@ document.body.appendChild(s);
     ```
     yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
     ```
+
+- Array.prototype.flatMap()
+
+  将数组内元素打平
+  ```javascript
+  let a = [[1], [2], [3], [4,5]]
+  a.flatMap(i => i) // [1, 2, 3, 4, 5]
+  ```
