@@ -34,12 +34,12 @@ foo.valueOf(); // 'Cunstom valueOf method' 屏蔽了Object上的原生valueOf方
 ```javascript
 function create() {
   // 创建一个空对象
-  let obj = new Object();
+  let obj = {};
   // 获取构造函数
   let Con = [].shift.call(arguments);
   // 链接到原型
   obj.__proto__ = Con.prototype;
-  // 绑定this，执行构造函数
+  // 绑定this，执行构造函数，即使新创建的 obj 对象作为this的上下文
   let result = Con.apply(obj, arguments);
   // 确保new出来的是个对象
   return typeof result === "object" ? result : obj;
