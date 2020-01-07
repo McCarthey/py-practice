@@ -27,3 +27,57 @@
   flex: initial;
   flex: unset;
 }
+
+/* 星星闪烁动画 */
+.content {
+  background: #242e42;
+  position: relative;
+  color: #fff;
+  margin-left: 12px;
+  border: 1px solid #242e42;
+  box-shadow: 0 8px 16px 0 rgba(35, 45, 65, 0.28);
+}
+.content:hover {
+  box-shadow: none;
+  background: #242e42;
+}
+.content:active {
+  box-shadow: 0 8px 16px 0 rgba(35, 45, 65, 0.28);
+  background: #242e42;
+}
+.content::before {
+  content: "";
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  transform: rotate(45deg);
+  animation: bling 0.8s ease-in-out 0.3s infinite;
+}
+.content::after {
+  content: "";
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  width: 60px;
+  height: 60px;
+  background-color: #fff;
+  transform: rotate(45deg);
+  animation: bling 0.8s ease-in-out infinite;
+}
+@keyframes bling {
+  0% {
+    transform: scale(0.5) rotate(45deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1) rotate(45deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.5) rotate(45deg);
+    opacity: 0;
+  }
+}
