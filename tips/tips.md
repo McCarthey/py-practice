@@ -1844,3 +1844,5 @@ document.body.appendChild(s);
   以Nginx为例：
 
   在云服务器控制台下载证书，上传到服务器，如果nginx没有安装ssl模块，则需要在源目录出安装ssl模块，再配置conf文件，重启后生效
+
+- 目前Javascript中共有7种基本类型：string, number, bigint, null, undefined, boolean, symbol
