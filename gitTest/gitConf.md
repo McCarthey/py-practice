@@ -18,6 +18,11 @@ git reset
 git remote set-url origin XXXXXXX
 ```
 
+git提交设置日期：
+```
+git commit --date="月 日 时间 年 +0800" -am "提交信息"
+```
+
 github搜索star数量最多：stars:>1000 
 
 github ssh_exchange_identification 报错，可能被运营商劫持，导致无法连接github 22端口，可在hosts里添加
