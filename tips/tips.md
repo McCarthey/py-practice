@@ -1431,6 +1431,13 @@ var allElements = document.getElementsByTagName("*");
     ```
     error_page 497  https://$host$uri\?$args\;
     ```
+
+- 域名
+
+  一级域名即为顶级域名，如catdogs.club，mccarthey.top等；
+
+  二级域名为www.catdogs.club，admin.mccarthey.top等；
+  
 - npx
 
   原理：运行的时候，会到 node_modules/.bin 路径和环境变量\$PATH 里面，检查命令是否存在。
