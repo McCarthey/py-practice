@@ -46,3 +46,15 @@ git 开启大小写敏感
 ```sh
 git config core.ignorecase false
 ```
+
+git 获取当前分支/Hash
+
+分支
+
+```
+git rev-parse --abbrev-ref HEAD
+```
+
+```
+git rev-parse --short HEAD
+```
