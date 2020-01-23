@@ -7,6 +7,7 @@
  * @param {number[]} nums
  * @return {number}
  */
+// 官方解答
 var maxSubArray = function (nums) {
   let pre = 0
   let maxAns = nums[0]
@@ -17,6 +18,8 @@ var maxSubArray = function (nums) {
   return maxAns
 }
 
+// 容易看懂的解答：如果当前和小于0，则抛弃，赋值为当前迭代的值；和大于0时，加和；
+// 当当前和大于记录的最大和值时，最大值更新；
 function findGreatestSumOfSubArray(nums) {
   if (Array.isArray(nums) && nums.length) {
     let sum = nums[0]
