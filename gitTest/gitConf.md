@@ -19,3 +19,9 @@ git remote set-url origin XXXXXXX
 ```
 
 github搜索star数量最多：stars:>1000 
+
+github ssh_exchange_identification 报错，可能被运营商劫持，导致无法连接github 22端口，可在hosts里添加
+```
+192.30.253.112 gitHub.com
+```
+即可
