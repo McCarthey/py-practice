@@ -1654,6 +1654,24 @@ document.body.appendChild(s);
 
     目的是提示宿主环境去安装满足插件 peerDependencies 所指定依赖的包，然后在插件 import 或 require 所依赖的包时，永远都引用宿主环境统一安装的 npm 包，最终解决插件与所依赖包不一致的问题。
 
+  - npm-check
+
+    用于检查项目目录下的依赖版本的库，可在终端里交互升级依赖版本。
+
+    安装 npm-check
+
+    ```
+    npm i -g npm-check
+    ```
+
+    根目录下运行
+
+    ```
+    npm-check -u
+    ```
+
+    空格切换选择，Enter 开始更新
+
 - coverage
 
   chrome59 之后推出的 css/js 代码覆盖率检测工具，检查文件中未使用的代码，以优化性能。
