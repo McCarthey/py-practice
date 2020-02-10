@@ -1853,3 +1853,11 @@ document.body.appendChild(s);
   在云服务器控制台下载证书，上传到服务器，如果nginx没有安装ssl模块，则需要在源目录出安装ssl模块，再配置conf文件，重启后生效
 
 - 目前Javascript中共有7种基本类型：string, number, bigint, null, undefined, boolean, symbol
+- Cmder修改默认打开路径：
+  - setting/Startup/Tasks
+  - 选择需要修改的task（比如{bash::bash}）
+  - 在参数后新增（前面有空格）,即可将默认打开路径修改为 /d/
+  
+    ```
+     -new_console:d:D:\
+    ```
