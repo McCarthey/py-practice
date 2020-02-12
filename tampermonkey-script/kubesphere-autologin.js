@@ -17,5 +17,6 @@
     const btnSubmit = document.querySelector("button[type='submit']")
     username.value = 'randall@duomai.com'
     password.value = 'Duomai123'
+    btnSubmit.disabled = false
     btnSubmit.click()
 })();
