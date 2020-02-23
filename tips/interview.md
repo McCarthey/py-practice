@@ -1,4 +1,5 @@
 typeof 
+instanceof
 节流防抖  
 瀑布流
 观察者

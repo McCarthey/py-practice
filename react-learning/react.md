@@ -16,6 +16,15 @@
   }
   ```
 
+- diff 算法简述
+
+  - 只对同级元素进行 diff ，如果一个 DOM 节点在前后两次更新中跨越了层级，那么 React 不会尝试复用它
+  - 两个不同类型的元素会产生出不同的树，如，元素由 div 变成 p，React 会销毁 div 及其子孙节点，并新建 p 及其子孙节点
+  - 开发者可以通过 key 来暗示哪些子元素在不同的渲染下保持稳定，对前后 key 相同的元素进行复用，避免重复地销毁、重建 DOM 树
+
+    - 不推荐使用 index 作为 key 的情形：受控组件，当数据变化时，会导致各个组件全部重新渲染（因为 key 还在，所以不是销毁，只是重新渲染）；非受控组件，不会重新渲染，导致状态混乱
+    - 推荐使用 index 的情况：列表翻页，key 不变，组件值发生改变，组件并不会被卸载，只发生更新
+
 # react hooks
 
 useEffect
@@ -787,7 +796,7 @@ useMemo
 
   负责将变化的组件渲染到页面上（管理一颗 React 树，使其根据底层平台进行不同的调用。主要的渲染器就是 React DOM Render 和 React Native Render。）
 
-  Renderer 根据 Reconciler 为虚拟 DOM（Fiber）打上标记，同步执行对应 DOM 操作，即 appendChild、insertBefore等。其中 Scheduler 和 Reconciler 的过程随时可能由以下原因被中断：
+  Renderer 根据 Reconciler 为虚拟 DOM（Fiber）打上标记，同步执行对应 DOM 操作，即 appendChild、insertBefore 等。其中 Scheduler 和 Reconciler 的过程随时可能由以下原因被中断：
 
   - 有其他更高优任务需要先更新
   - 当前帧没有剩余时间
