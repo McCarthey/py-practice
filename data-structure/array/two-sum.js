@@ -7,13 +7,22 @@
  * 所以返回 [0, 1]
  */
 
+/**
+ * 思路：使用map保存已经遍历的数、索引，在map中找到则返回，否则添加至map
+ */
+
 function twoSum(array, target) {
   const map = {}
   for (let i = 0; i < array.length; i++) {
-    if (map.hasOwnProperty(target - array[i])) {
+    if (map.hasOwnProperty(target - array[i])) { // 或者 map[target - array[i]] !== undefined
       return [map[target - array[i]], i]
     }
     map[array[i]] = i
   }
   return []
 }
+
+/**
+ * 时间复杂度 O(n)
+ * 空间复杂度 O(n)
+ */
