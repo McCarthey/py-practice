@@ -26,3 +26,15 @@ var rotate = function (nums, k) {
         }
     }
 }
+
+/**取余，分别填充新数组，要求改变原数组，因此最后需要将新数组值依次赋给原数组 */
+var rotateUsingAnotherArray = function (nums, k) {
+    const newArr = []
+    for (let i = 0; i < nums.length; i++) {
+        const newIndex = (i + k) % nums.length
+        newArr[newIndex] = nums[i]
+    }
+    for (let i = 0; i < nums.length; i++) {
+        nums[i] = newArr[i]
+    }
+}
