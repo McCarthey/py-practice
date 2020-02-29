@@ -19,3 +19,22 @@ Singleton.getInstance = (function () {
 const obj1 = Singleton.getInstance()
 const obj2 = Singleton.getInstance()
 console.log(obj1 === obj2) // true
+
+
+function SingleManage(manage) {
+  this.name = manage.name
+  this.level = manage.level
+  this.info = function () {
+    console.log('boss name is ' + this.name)
+  }
+}
+
+SingleManage.getInstance = function (manage) {
+  if (!this.instance) {
+    this.instance = new SingleManage(manage)
+  }
+  return this.instance
+}
+
+var boss1 = SingleManage.getInstance({ name: 'steve', level: 'p9' })
+var boss2 = SingleManage.getInstance({ name: 'cook', level: 'p8' })
