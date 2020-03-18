@@ -1,6 +1,6 @@
 ## 补充一些 js 基础
 
-#### 原型
+### 原型
 
 每个函数都有 prototype 属性（除了 let fun = Function.prototype.bind()以外）,该属性的值是一个对象，只有一个 constructor 属性，对应着构造函数
 
@@ -29,7 +29,7 @@ Foo.prototype.valueOf = function () {
 foo.valueOf(); // 'Cunstom valueOf method' 屏蔽了Object上的原生valueOf方法
 ```
 
-#### 自己实现一个 new
+### 自己实现一个 new
 
 ```javascript
 function create() {
@@ -57,7 +57,7 @@ var objFactory = function () {
 };
 ```
 
-#### 自己实现一个 instanceof
+### 自己实现一个 instanceof
 
 通过判断对象的原型链中是不是能找到类型的 prototype
 
@@ -80,7 +80,7 @@ function myInstanceof(left, right) {
 }
 ```
 
-#### 自己实现 call
+### 自己实现 call
 
 ```javascript
 Function.prototype.myCall = function (context) {
@@ -95,7 +95,22 @@ Function.prototype.myCall = function (context) {
 };
 ```
 
-#### 防抖实现
+### 自己实现 apply
+
+实现思路和 call 一样，保存 this 给一个函数属性，返回执行后的结果，最后删除
+
+```javascript
+Function.prototype.myApply = function (context) {
+  const ctx = context || window;
+  const resetArgs = [...arguments][1];
+  ctx.fn = this;
+  const result = ctx.fn(resetArgs);
+  delete ctx.fn;
+  return result;
+};
+```
+
+### 防抖实现
 
 定义：多次触发事件后，事件处理函数只执行一次，并且是在触发操作结束时执行。
 
@@ -145,7 +160,7 @@ function onScroll() {
 window.onscroll = debounce(onScroll, 500);
 ```
 
-#### 节流实现
+### 节流实现
 
 定义：触发函数事件后，短时间间隔内无法连续调用，只有上一次函数执行后，过了规定的时间间隔，才能进行下一次的函数调用。
 
@@ -188,7 +203,7 @@ function throttle(func, delay) {
 }
 ```
 
-#### 函数柯里化
+### 函数柯里化
 
 函数柯里化只的是将一个多参数的函数拆分成一系列函数，每个拆分后的函数都只接受一个参数
 
@@ -215,7 +230,7 @@ add(1)(2);
 const add = (a) => (b) => a + b;
 ```
 
-#### 堆内存与栈内存
+### 堆内存与栈内存
 
 JS 引擎中对变量的存储主要有两种，**堆内存**和**栈内存**。
 
@@ -225,7 +240,7 @@ JS 引擎中对变量的存储主要有两种，**堆内存**和**栈内存**。
 
 因此，使用 let、const 二次定义变量时的报错也可以解释了————即使用 let、const 时都要先遍历栈内存，如果有重名变量则返回错误。
 
-#### 定时器的第三个参数
+### 定时器的第三个参数
 
 经典面试题，循环中使用闭包解决 var 定义函数的问题
 
@@ -273,7 +288,7 @@ for (let i = 1; i <= 5; i++) {
 }
 ```
 
-#### Promise 的实现
+### Promise 的实现
 
 ```javascript
 function Promise(callback) {
@@ -308,7 +323,7 @@ function Promise(callback) {
 Promise.prototype.then = function () {};
 ```
 
-#### 实现 Array.prototype.map
+### 实现 Array.prototype.map
 
 ```javascript
 Array.prototype.map = function (cb) {
@@ -320,7 +335,7 @@ Array.prototype.map = function (cb) {
 };
 ```
 
-#### 实现 Array.prototype.filter
+### 实现 Array.prototype.filter
 
 ```javascript
 Array.prototype.filter = function (cb) {
@@ -334,7 +349,7 @@ Array.prototype.filter = function (cb) {
 };
 ```
 
-#### 实现一个深拷贝函数 deepClone
+### 实现一个深拷贝函数 deepClone
 
 ```javascript
 // 判断数据类型
@@ -370,7 +385,7 @@ const deepClone = (data) => {
 };
 ```
 
-#### 内存泄漏
+### 内存泄漏
 
 定义：内存泄漏指的是，程序之前需要用到部分内存，而这部分内存在用完之后并没有返回到内存池。
 
