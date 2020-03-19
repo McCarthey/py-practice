@@ -110,6 +110,37 @@ Function.prototype.myApply = function (context) {
 };
 ```
 
+### 自己实现 bind
+
+bind 和 call, apply 作用也是一致的，只是该方法会返回一个函数，我们可以用 apply 模拟实现 bind：
+
+```javascript
+Function.prototype.myBind = function (context) {
+  const func = this;
+  const restArgs = [...arguments].slice(1);
+
+  return function () {
+    const args = [...restArgs, ...arguments]; // 合并 bind时传入的参数 和 执行返回的函数时的参数，因此可以使用bind实现函数柯里化
+    return func.apply(context, args);
+  };
+};
+```
+
+柯里化实现，例如：
+
+```javascript
+let a = { value: 5 };
+function getValue(name, age) {
+  console.log(name);
+  console.log(age);
+  console.log(this.value);
+}
+
+getValue.myBind(a, "344", 56)(); // '344', 56 , 5
+getValue.myBind(a, "344")(56); // '344', 56 , 5
+getValue.myBind(a)("344", 56); // '344', 56 , 5
+```
+
 ### 防抖实现
 
 定义：多次触发事件后，事件处理函数只执行一次，并且是在触发操作结束时执行。
