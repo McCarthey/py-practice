@@ -1,0 +1,56 @@
+<html>
+
+<head>
+  <style>
+    /* 两栏布局：利用float + margin-left */
+    .box {
+      /* 创建bfc，防止后面的float元素与 */
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .left {
+      float: left;
+      height: 150px;
+      width: 200px;
+      background-color: gray;
+    }
+
+    .right {
+      height: 150px;
+      background-color: lightgray;
+      margin-left: 210px;
+    }
+
+    /* 两栏布局：利用flex + flex-grow */
+    .box2 {
+      display: flex;
+      height: 150px;
+    }
+
+    .left2 {
+      min-width: 200px;
+      background-color: gray;
+      margin-right: 10px;
+    }
+
+    .right2 {
+      background-color: lightgray;
+      flex-grow: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <div class="left">左侧</div>
+    <div class="right">右侧</div>
+  </div>
+
+  <div class="box2">
+    <div class="left2">左侧</div>
+    <div class="right2">右侧</div>
+  </div>
+</body>
+
+</html>
