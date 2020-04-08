@@ -37,14 +37,14 @@
   const toggle = {
     data() {
       return {
-        isShow: false
+        isShow: false,
       };
     },
     methods: {
       toggleShow() {
         this.isShow = !this.isShow;
-      }
-    }
+      },
+    },
   };
 
   // Modal组件
@@ -52,16 +52,16 @@
     template: "#modal",
     mixins: [toggle],
     components: {
-      appChild: Child
-    }
+      appChild: Child,
+    },
   };
   // tooltip组件
   const Tooltip = {
     template: "#tooltip",
     mixins: [toggle],
     components: {
-      appChild: Child
-    }
+      appChild: Child,
+    },
   };
   ```
 
@@ -70,7 +70,7 @@
   const hi = {
     mounted() {
       console.log("mixin mounted");
-    }
+    },
   };
 
   new Vue({
@@ -78,7 +78,7 @@
     mixins: [hi],
     mounted() {
       console.log("vue instance mounted");
-    }
+    },
   });
 
   // mixin mounted
@@ -187,7 +187,7 @@
   Array.isArray([]); // true
   // 不支持Array.isArray()方法的ployfill（不支持Array.isArray方法的宿主环境多半不支持箭头函数-_-||）：
   if (!Array.isArray) {
-    Array.isArray = arg =>
+    Array.isArray = (arg) =>
       Object.prototype.toString.call(arg) === "[object Array]";
   }
   ```
@@ -211,7 +211,7 @@
 
   ```javascript
   let list = [1, 3, 5, 76, 123, 412, 3];
-  let result = list.map(v => (v = v * 2));
+  let result = list.map((v) => (v = v * 2));
   console.log(result); // [2, 6, 10, 152, 246, 824, 6]
   ```
 
@@ -804,7 +804,7 @@ var allElements = document.getElementsByTagName("*");
 
         window.scrollTo(0, top); // 回到原先的高度
       }
-    }
+    },
   };
   ```
 
@@ -871,7 +871,7 @@ var allElements = document.getElementsByTagName("*");
   ```javascript
   let person = { name: "Mike", age: 18 };
   Object.defineProperty(person, "name", {
-    value: "Lily"
+    value: "Lily",
   });
   console.log(person); /* {name: "Lily", age: 18} */
 
@@ -881,7 +881,7 @@ var allElements = document.getElementsByTagName("*");
     },
     set(newVal) {
       this.name = newVal;
-    }
+    },
   });
 
   console.log(person.fullName); /* "Lily White" */
@@ -906,10 +906,10 @@ var allElements = document.getElementsByTagName("*");
     }
 
     notify() {
-      this.subscribers.forEach(sub => sub());
+      this.subscribers.forEach((sub) => sub());
     }
   }
-  Object.keys(data).forEach(key => {
+  Object.keys(data).forEach((key) => {
     let internalValue = data[key];
 
     const dep = new Dep();
@@ -922,7 +922,7 @@ var allElements = document.getElementsByTagName("*");
       set(newVal) {
         internalValue = newVal;
         dep.notify();
-      }
+      },
     });
   });
   function watcher(myFun) {
@@ -944,7 +944,7 @@ var allElements = document.getElementsByTagName("*");
 
   ```javascript
   let deps = new Map(); /* 创建一个Map对象 */
-  Object.keys(data).forEach(key => {
+  Object.keys(data).forEach((key) => {
     /* 为每个属性都设置一个依赖实例 并放入deps中 */
     deps.set(key, new Dep());
   });
@@ -960,7 +960,7 @@ var allElements = document.getElementsByTagName("*");
     }
 
     notify() {
-      this.subscribers.forEach(sub => sub());
+      this.subscribers.forEach((sub) => sub());
     }
   }
   let data_without_proxy = data; /* 保存源对象 */
@@ -974,7 +974,7 @@ var allElements = document.getElementsByTagName("*");
       obj[key] = newVal;
       deps.get(key).notify();
       return true;
-    }
+    },
   });
   ```
 
@@ -1011,7 +1011,7 @@ var allElements = document.getElementsByTagName("*");
   ```javascript
   // 监听底部轮播 图片懒加载
   var userWrap = document.querySelector(".users");
-  var intersectionObserver = new IntersectionObserver(function(entries) {
+  var intersectionObserver = new IntersectionObserver(function (entries) {
     if (entries[0].intersectionRatio <= 0) return;
 
     console.log("Loaded swiper");
@@ -1033,17 +1033,17 @@ var allElements = document.getElementsByTagName("*");
     // ...
     methods: {
       // ...
-      example: function() {
+      example: function () {
         // 修改数据
         this.message = "changed";
         // DOM 还没有更新
-        this.$nextTick(function() {
+        this.$nextTick(function () {
           // DOM 现在更新了
           // `this` 绑定到当前实例
           this.doSomethingElse();
         });
-      }
-    }
+      },
+    },
   });
   ```
 
@@ -1243,7 +1243,7 @@ var allElements = document.getElementsByTagName("*");
   ```javascript
   const map = new Map([
     ["name", "张三"],
-    ["title", "Author"]
+    ["title", "Author"],
   ]);
 
   map.size; // 2
@@ -1256,7 +1256,7 @@ var allElements = document.getElementsByTagName("*");
   ```javascript
   const items = [
     ["name", "张三"],
-    ["title", "Author"]
+    ["title", "Author"],
   ];
 
   const map = new Map();
@@ -1299,7 +1299,7 @@ var allElements = document.getElementsByTagName("*");
     [20, "Reporter"],
     [30, "Developer"],
     [40, "Maintainer"],
-    [50, "Owner"]
+    [50, "Owner"],
   ]);
 
   // 使用时
@@ -1310,16 +1310,16 @@ var allElements = document.getElementsByTagName("*");
 
   ```javascript
   let obj = {
-    a: 1
+    a: 1,
   };
 
   let proxyObj = new Proxy(obj, {
-    get: function(target, prop) {
+    get: function (target, prop) {
       return prop in target ? target[prop] : 0;
     },
-    set: function(target, prop, value) {
+    set: function (target, prop, value) {
       target[prop] = 888;
-    }
+    },
   });
 
   console.log(proxyObj.a); // 1
@@ -1405,11 +1405,13 @@ var allElements = document.getElementsByTagName("*");
 - Nginx 反向代理
 
   在计算机网络中，反向代理是代理服务器的一种。服务器根据客户端的请求，从其关系的一组或多组后端服务器（如 Web 服务器）上获取资源，然后再将这些资源返回给客户端，客户端只会得知反向代理的 IP 地址，而不知道在代理服务器后面的服务器集群的存在[1]。
+
   ```
   location /testapi/ {
       proxy_pass   http://127.0.0.1:8888/;
   }
   ```
+
   主要作用：
 
   - 对客户端隐藏服务器（集群）的 IP 地址
@@ -1426,18 +1428,20 @@ var allElements = document.getElementsByTagName("*");
 * 负载均衡
 
   负载平衡（Load balancing）是一种计算机技术，用来在多个计算机（计算机集群）、网络连接、CPU、磁盘驱动器或其他资源中分配负载，以达到最优化资源使用、最大化吞吐率、最小化响应时间、同时避免过载的目的。 使用带有负载平衡的多个服务器组件，取代单一的组件，可以通过冗余提高可靠性。负载平衡服务通常是由专用软件和硬件来完成。 主要作用是将大量作业合理地分摊到多个操作单元上进行执行，用于解决互联网架构中的高并发和高可用的问题。
-- nginx http请求重定向到https（方法众多）
-  - 497错误
+
+- nginx http 请求重定向到 https（方法众多）
+
+  - 497 错误
     ```
     error_page 497  https://$host$uri\?$args\;
     ```
 
 - 域名
 
-  一级域名即为顶级域名，如catdogs.club，mccarthey.top等；
+  一级域名即为顶级域名，如 catdogs.club，mccarthey.top 等；
 
-  二级域名为www.catdogs.club，admin.mccarthey.top等；
-  
+  二级域名为 www.catdogs.club，admin.mccarthey.top 等；
+
 - npx
 
   原理：运行的时候，会到 node_modules/.bin 路径和环境变量\$PATH 里面，检查命令是否存在。
@@ -1841,23 +1845,33 @@ document.body.appendChild(s);
 - Array.prototype.flatMap()
 
   将数组内元素打平
+
   ```javascript
-  let a = [[1], [2], [3], [4,5]]
-  a.flatMap(i => i) // [1, 2, 3, 4, 5]
+  let a = [[1], [2], [3], [4, 5]];
+  a.flatMap((i) => i); // [1, 2, 3, 4, 5]
   ```
 
-- https证书安装
+- https 证书安装
 
-  以Nginx为例：
+  以 Nginx 为例：
 
-  在云服务器控制台下载证书，上传到服务器，如果nginx没有安装ssl模块，则需要在源目录出安装ssl模块，再配置conf文件，重启后生效
+  在云服务器控制台下载证书，上传到服务器，如果 nginx 没有安装 ssl 模块，则需要在源目录出安装 ssl 模块，再配置 conf 文件，重启后生效
 
-- 目前Javascript中共有7种基本类型：string, number, bigint, null, undefined, boolean, symbol
-- Cmder修改默认打开路径：
+- 目前 Javascript 中共有 7 种基本类型：string, number, bigint, null, undefined, boolean, symbol
+- Cmder 修改默认打开路径：
+
   - setting/Startup/Tasks
-  - 选择需要修改的task（比如{bash::bash}）
+  - 选择需要修改的 task（比如{bash::bash}）
   - 在参数后新增（前面有空格）,即可将默认打开路径修改为 /d/
-  
+
     ```
      -new_console:d:D:\
     ```
+
+- JSON.stringify
+
+  参考[文章](https://mp.weixin.qq.com/s/X7pzcNo_CTM-syS-sfHwwg)
+
+  - 可传递第二个参数
+
+- JSON Merge Patch & JSON Patch
