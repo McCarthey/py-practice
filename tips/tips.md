@@ -1880,16 +1880,24 @@ document.body.appendChild(s);
 
   是 Math 的静态方法，判断参数是**正数、负数、正零、负零、NaN**。将对传入的参数隐式类型转换成数字类型。
 
-  Polyfill
+  - Polyfill
 
-  ```javascript
-  if(!Math.sign) {
-    Math.sign = function (x) {
-      x = +x // 转换为数字类型
-      if (x === 0 || isNaN(x)) { // 0, -0, NaN直接返回
-        return x
+    ```javascript
+    if(!Math.sign) {
+      Math.sign = function (x) {
+        x = +x // 转换为数字类型
+        if (x === 0 || isNaN(x)) { // 0, -0, NaN直接返回
+          return x
+        }
+        return x > 0 : 1 ? -1
       }
-      return x > 0 : 1 ? -1
     }
-  }
-  ```
+    ```
+
+  - 应用：翻转带符号的整数
+
+    ```javascript
+    const reverseNumber = (x) =>
+      Number((x * Math.sign(x)).toString().split("").reverse().join("")) *
+      Math.sign(x);
+    ```
