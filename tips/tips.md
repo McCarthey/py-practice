@@ -1896,7 +1896,7 @@ document.body.appendChild(s);
     优雅版：
     ```javascript
     Math.sign = function (x) {
-      return ((x > 0) - (x < 0>)) || +x // - 优先级高于 || ，因此可以不加最外层括号 
+      return ((x > 0) - (x < 0)) || +x // - 优先级高于 || ，因此可以不加最外层括号 
     }
     ```
 
