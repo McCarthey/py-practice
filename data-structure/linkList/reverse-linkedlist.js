@@ -52,3 +52,16 @@ function reverseLinkedListTail(head) {
   if (!head || !head.next) return head
   return handleReverse(null, head)
 }
+
+//  面试时的想法
+var reverseList = function (head) {
+  if (!head) return head
+  let cur = head
+  while (head.next) {
+    const next = head.next.next
+    head.next.next = cur
+    cur = head.next
+    head.next = next
+  }
+  return cur
+};
