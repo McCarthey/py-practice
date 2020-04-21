@@ -38,3 +38,17 @@ function findGreatestSumOfSubArray(nums) {
   }
   return 0
 }
+
+// 贪心法
+var maxSubArray = function (nums) {
+  let preSum = 0
+  let curSum = nums[0]
+  let maxSum = nums[0]
+  for (let i = 0; i < nums.length; i++) {
+    const current = nums[i];
+    curSum = preSum + current
+    maxSum = Math.max(maxSum, curSum)
+    preSum = Math.max(curSum, 0)
+  }
+  return maxSum
+};
