@@ -39,6 +39,20 @@ function findGreatestSumOfSubArray(nums) {
   return 0
 }
 
+// 最容易懂的解答
+// 截至到nums[i]元素的最大和是 sum[i] = max{sum[i-1] + nums[i], nums[i]}
+// 然后和记录中的最大值对比
+var maxSubArray = function (nums) {
+  if (!nums.length) return
+  let max_ending_here = nums[0] // 截至到当前元素的最大值
+  let max_sum = nums[0] // 最大值
+  for (let i = 1; i < nums.length; i++) {
+    max_ending_here = Math.max(max_ending_here + nums[i], nums[i]) // 计算截至到当前元素的最大值
+    max_sum = Math.max(max_sum, max_ending_here)
+  }
+  return max_sum
+};
+
 // 贪心法
 var maxSubArray = function (nums) {
   let preSum = 0
