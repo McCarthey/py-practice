@@ -40,3 +40,15 @@ function reverseLinkedListRecursive(head) {
   next.next = head
   return reverseHead
 }
+
+// 尾递归
+function reverseLinkedListTail(head) {
+  function handleReverse(prev, cur) {
+    if (!cur) return prev
+    let next = cur.next
+    cur.next = prev
+    return handleReverse(cur, next)
+  }
+  if (!head || !head.next) return head
+  return handleReverse(null, head)
+}
