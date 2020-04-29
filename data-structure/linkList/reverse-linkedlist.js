@@ -28,5 +28,15 @@ function reverseLinkedList(head) {
     prev = cur
     cur = temp
   }
-  return prev
+  return prev // 注意不要返回cur, 因为结束时，cur是null
+}
+
+// *递归法 难想
+function reverseLinkedListRecursive(head) {
+  if (!head || !head.next) return head
+  let next = head.next
+  let reverseHead = reverseLinkedListRecursive(next)
+  head.next = null
+  next.next = head
+  return reverseHead
 }
