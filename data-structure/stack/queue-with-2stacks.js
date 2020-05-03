@@ -69,3 +69,40 @@ MyQueue.prototype.empty = function () {
  */
 // @lc code=end
 
+/**
+ * 剑指offer 9. 用两个栈实现队列
+ */
+
+var CQueue = function () {
+  this.stackAdd = []
+  this.stackDelete = []
+};
+
+/** 
+* @param {number} value
+* @return {void}
+*/
+CQueue.prototype.appendTail = function (value) {
+  this.stackAdd.push(value)
+};
+
+/**
+* @return {number}
+*/
+CQueue.prototype.deleteHead = function () {
+  if (this.stackAdd.length) {
+    return this.stackAdd.pop()
+  }
+  while (this.stackAdd.length) {
+    const element = this.stackAdd.pop()
+    this.stackDelete.push(element)
+  }
+  return this.stackDelete.length ? this.stackDelete.pop() : -1
+};
+
+/**
+* Your CQueue object will be instantiated and called as such:
+* var obj = new CQueue()
+* obj.appendTail(value)
+* var param_2 = obj.deleteHead()
+*/
