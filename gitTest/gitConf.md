@@ -21,6 +21,7 @@ git remote set-url origin XXXXXXX
 git提交设置日期：
 ```
 git commit --date="月 日 时间 年 +0800" -am "提交信息"
+eg: "May 10 11:21:50 2020 +0800"
 ```
 
 github搜索star数量最多：stars:>1000 
