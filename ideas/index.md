@@ -21,3 +21,6 @@
 ## UI设计：
 字体：[思源](https://github.com/adobe-fonts/source-han-sans)，因中文字体文件过大，建议不要大篇幅使用动态字体，仅在标题、菜单等一些地方使用即可，需注册[typekit](https://www.typekit.com/)使用。
 ## 安全？
+
+# daily-music
+每次经典歌曲推荐（忍不了现在流行的多数破歌了-_-||）
