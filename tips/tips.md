@@ -1937,3 +1937,19 @@ document.body.appendChild(s);
     utf8_to_b64("I \u2661 Unicode!"); // "SSDimaEgVW5pY29kZSE="
     b64_to_utf8("SSDimaEgVW5pY29kZSE="); // "I ♡ Unicode!"
     ```
+
+    由于 escape / unescape 方法已被标准废弃，故不建议再使用，因此稳定增强版来了：
+
+    ```javascript
+    function b64DecodeUnicode(str) {
+      // Going backwards: from bytestream, to percent-encoding, to original string.
+      return decodeURIComponent(
+        atob(str)
+          .split("")
+          .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
+    }
+    ```
