@@ -1893,11 +1893,13 @@ document.body.appendChild(s);
       }
     }
     ```
+
     优雅版：
+
     ```javascript
     Math.sign = function (x) {
-      return ((x > 0) - (x < 0)) || +x // - 优先级高于 || ，因此可以不加最外层括号 
-    }
+      return (x > 0) - (x < 0) || +x; // - 优先级高于 || ，因此可以不加最外层括号
+    };
     ```
 
   - 应用：翻转带符号的整数
@@ -1906,4 +1908,32 @@ document.body.appendChild(s);
     const reverseNumber = (x) =>
       Number((x * Math.sign(x)).toString().split("").reverse().join("")) *
       Math.sign(x);
+    ```
+
+  - atob/btoa 中文转码问题
+
+    btoa 方法仅支持 ASCII 编码，我们在转换中文的时候就需要先将中文转换为 ASCII 字符序列，再通过 btoa 进行 base64 编码, 借助 encodeURIComponent 和 decodeURIComponent 方法:
+
+    ```javascript
+    window.btoa(encodeURIComponent("中文"));
+    // "JUU0JUI4JUFEJUU2JTk2JTg3"
+    decodeURIComponent(window.atob("JUU0JUI4JUFEJUU2JTk2JTg3"));
+    // "中文"
+    ```
+
+    以上方法仅支持中文转码，特殊字符仍旧是乱码，因此借助 unescape 和 escape 实现增强版：
+
+    ```javascript
+    function utf8_to_b64(str) {
+      return window.btoa(unescape(encodeURIComponent(str)));
+    }
+
+    function b64_to_utf8(str) {
+      return decodeURIComponent(escape(window.atob(str)));
+    }
+
+    utf8_to_b64("✓ à la mode"); // "4pyTIMOgIGxhIG1vZGU="
+    b64_to_utf8("4pyTIMOgIGxhIG1vZGU="); // "✓ à la mode"
+    utf8_to_b64("I \u2661 Unicode!"); // "SSDimaEgVW5pY29kZSE="
+    b64_to_utf8("SSDimaEgVW5pY29kZSE="); // "I ♡ Unicode!"
     ```
