@@ -1,78 +1,3 @@
-// 数据结构转换
-const lsStages = [
-  {
-    "task": [
-      {
-        "id": "0.04544260961166002",
-        "name": "",
-        "steps": []
-      }
-    ],
-    "name": "t1"
-  },
-  {
-    "name": "default-0",
-    "parallel": [
-      {
-        "task": [
-          {
-            "id": "0.2278022131175632",
-            "name": "",
-            "steps": []
-          }
-        ],
-        "name": "t21"
-      },
-      {
-        "task": [
-          {
-            "id": "0.8284162129597143",
-            "name": "",
-            "steps": []
-          }
-        ],
-        "name": "t22"
-      },
-      {
-        "task": [
-          {
-            "id": "0.408525882716652",
-            "name": "",
-            "steps": []
-          }
-        ],
-        "isActive": true,
-        "name": "t23"
-      }
-    ]
-  },
-  {
-    "name": "default-2",
-    "parallel": [
-      {
-        "task": [
-          {
-            "id": "0.8852757275511915",
-            "name": "",
-            "steps": []
-          }
-        ],
-        "name": "t31"
-      },
-      {
-        "task": [
-          {
-            "id": "0.9879143340018486",
-            "name": "",
-            "steps": []
-          }
-        ],
-        "name": "t32"
-      }
-    ]
-  }
-]
-
 let tasks = [
   {
     "name": "t1",
@@ -114,13 +39,56 @@ let tasks = [
 ]
 
 /**
-* 如果没有 runAfter 则为头节点、并行头节点中的一个；
+ *  如果task中不存在 id ，则先遍历 tasks 列表，为每个 task 增加一个 id ;
+* 如果没有 runAfter 则为头节点、并行分支头节点中的一个，即头节点为一个无 prevId 的普通节点或一个分支节点：
+  由于是嵌套结构，因此完全是由后面的节点来判断前一个节点是普通节点还是分支节点；
 */
+
+/**
+ * {
+ *  id: 1,
+ *  name: 't1',
+ *  prevId: null,
+ *  nextNode: {
+ *    id: 2,
+ *    prevId: 1,
+ *    nextId: null,
+ *    nextNode: {},
+ *    branches: []
+ *  },
+ *  nextId: 2,
+ *  branches: [],
+ * }
+ */
+
+const result = {}
+function convertTasksToFlow() {
+  for (let i = 0; i < tasks.length; i++) {
+    if (!tasks[i].id) {
+      tasks[i].id = Math.random()
+    }
+    if (!Object.keys(result).length) { // 头节点逻辑
+      if (headers.length === 1) { // 头节点是普通节点
+        result = {
+          id: headers[0].id,
+          data: headers[0],
+          nextId: null,
+          prevId: null,
+          nextNode: {},
+          branches: [],
+        }
+      } else {
+        // 头节点是分支节点
+      }
+    } else {
+
+    }
+  }
+}
 
 /**
  * 分步拆解
  */
-const result = []
 
 const headers = []
 const indexes = []
@@ -131,6 +99,8 @@ if (headers.length === 1) {
 } else {
   obj = { name: headers[0].name, parallel: headers.map(t => ({ name: t.name, task: [t] })) }
 }
+
+
 // result.push(obj)
 // length += headers.length
 
@@ -272,6 +242,7 @@ function convert(tasks) {
   console.log('[result]', result)
 }
 
+// 判断两个数组中的元素是否完全相同，顺序可不同
 function isArrayEqual(arr1 = [], arr2 = []) {
   let copy = JSON.parse(JSON.stringify(arr2))
   if (arr1.length === arr2.length) {
@@ -286,4 +257,9 @@ function isArrayEqual(arr1 = [], arr2 = []) {
     return true
   }
   return false
+}
+
+// 判断 数组A 是否是 数组B 的子集
+function isArrayInclude(source = [], target = []) {
+  source.every(i => target.includes(i))
 }
