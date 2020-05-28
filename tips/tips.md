@@ -1957,3 +1957,7 @@ document.body.appendChild(s);
   - form 中的 button 默认 type="submit"
 
     在 form 中的 button 元素，如果不指定 type 属性，则 type 默认为 submit，默认行为会将表单数据提交给服务器；如果不想默认提交，则应指定 button 的 type="button"，这样就不会有默认事件；
+
+  - CSS3 根据子元素数量为其定义不同样式
+
+    [参考](https://lightcss.com/styling-children-based-on-their-number-with-css3/)
