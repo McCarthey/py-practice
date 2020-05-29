@@ -1961,3 +1961,20 @@ document.body.appendChild(s);
   - CSS3 根据子元素数量为其定义不同样式
 
     [参考](https://lightcss.com/styling-children-based-on-their-number-with-css3/)
+
+  - 根据字符串生成唯一确定的 hex 颜色
+
+    ```javascript
+    export const stringToColor = (str: string) => {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      let color = "#";
+      for (let i = 0; i < 3; i++) {
+        let value = (hash >> (i * 8)) & 0xff;
+        color += ("00" + value.toString(16)).substr(-2);
+      }
+      return color;
+    };
+    ```
