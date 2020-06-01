@@ -227,6 +227,30 @@
         <div>5</div>
         <div>6</div>
     </div>
+
+    <style>
+        .outer-square {
+            overflow: hidden;
+            position: relative;
+            left: 200px;
+            width: 400px;
+            height: 600px;
+            background: #fff;
+        }
+
+        .inner-circle {
+            width: 600px;
+            height: 600px;
+            position: absolute;
+            left: -100px;
+            top: -400px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #e66465, #9198e5);
+        }
+    </style>
+    <div class="outer-square">
+        <div class="inner-circle"></div>
+    </div>
 </body>
 
 </html>
