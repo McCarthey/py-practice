@@ -55,13 +55,13 @@ const [form, setForm] = useState({
   moreHref: "",
   picTitle: "",
   status: 0,
-  topQuery: ""
+  topQuery: "",
 });
 
 const handleChange = (e: any) => {
   setForm({
     ...form,
-    [e.target.name]: e.target.value
+    [e.target.name]: e.target.value,
   });
 };
 
@@ -120,23 +120,23 @@ Switch 组件，当设置了 defaultChecked={fetchData.status}，在获取数据
 
   React.memo 为高阶组件。它与 React.PureComponent 非常相似，但它适用于函数组件，但不适用于 class 组件。
 
-  例如，当父组件引入子组件的情况下，往往会造成组件之间的一些不必要的浪费，这时就可以使用 React.memo，这样在count变化后，子组件不会更新：
+  例如，当父组件引入子组件的情况下，往往会造成组件之间的一些不必要的浪费，这时就可以使用 React.memo，这样在 count 变化后，子组件不会更新：
 
   ```jsx
-  const Child = props => {
+  const Child = (props) => {
     console.log("子组件?");
     return <div>我是一个子组件</div>;
   };
 
   const ChildMemo = React.memo(Child);
 
-  const Page = props => {
+  const Page = (props) => {
     const [count, setCount] = useState(0);
 
     return (
       <>
         <button
-          onClick={e => {
+          onClick={(e) => {
             setCount(count + 1);
           }}
         >
@@ -177,7 +177,7 @@ export default class Header extends React.Component {
   render() {
     return (
       <div>
-        <dm-header ref={elem => (this.el = elem)} />
+        <dm-header ref={(elem) => (this.el = elem)} />
       </div>
     );
   }
@@ -210,7 +210,7 @@ export default class Demo extends React.Component {
 
   因此，在某些需要跳转的时候，特别是 restful 路由时，会比较麻烦：获取当前 pathname => 截取 => 拼接
 
-- antd相关：
+- antd 相关：
 
   - antd table 性能
 
@@ -228,17 +228,17 @@ export default class Demo extends React.Component {
     }
     ```
 
-  - antd tree可控，并支持onSelect选中
+  - antd tree 可控，并支持 onSelect 选中
 
     ```tsx
-    import React, { useEffect, ReactNode, useState } from 'react';
-    import { connect } from 'dva';
-    import { Tree } from 'antd';
-    import style from '../../Role.less';
-    import { RoleState, TreeNode } from '@/models/role';
-    import { RoleItem, RoleMap } from '@/type/role';
-    import { produce } from 'immer';
-    import _ from 'lodash';
+    import React, { useEffect, ReactNode, useState } from "react";
+    import { connect } from "dva";
+    import { Tree } from "antd";
+    import style from "../../Role.less";
+    import { RoleState, TreeNode } from "@/models/role";
+    import { RoleItem, RoleMap } from "@/type/role";
+    import { produce } from "immer";
+    import _ from "lodash";
 
     const { TreeNode } = Tree;
 
@@ -249,40 +249,53 @@ export default class Demo extends React.Component {
 
       useEffect(() => {
         setTreeData(props.role.formatPermissions);
-        setExpandedKeys(props.role.formatPermissions.map(p => p.key));
+        setExpandedKeys(props.role.formatPermissions.map((p) => p.key));
       }, [props.role]);
 
       const handleSelect = (selectedKeys: string[], info: any) => {
-        console.log('onSelect', checkedKeys, selectedKeys, info);
-        const key = _.get(info, ['node', 'props', 'eventKey'], '');
-        const childrenKeys = _.get(info, ['node', 'props', 'children'], []) as any[];
+        console.log("onSelect", checkedKeys, selectedKeys, info);
+        const key = _.get(info, ["node", "props", "eventKey"], "");
+        const childrenKeys = _.get(
+          info,
+          ["node", "props", "children"],
+          []
+        ) as any[];
         setCheckedKeys(
-          produce(checkedKeys, draft => {
+          produce(checkedKeys, (draft) => {
             if (draft.includes(key)) {
-              draft.splice(draft.findIndex(k => k === key), 1);
-              if (key.split('|').length > 1) {
-                const parentKey = key.split('|')[0];
-                draft.splice(draft.findIndex(k => k === parentKey), 1);
+              draft.splice(
+                draft.findIndex((k) => k === key),
+                1
+              );
+              if (key.split("|").length > 1) {
+                const parentKey = key.split("|")[0];
+                draft.splice(
+                  draft.findIndex((k) => k === parentKey),
+                  1
+                );
               }
               if (childrenKeys.length) {
-                childrenKeys.forEach(child => {
-                  draft.splice(draft.findIndex(k => k === child.key), 1);
+                childrenKeys.forEach((child) => {
+                  draft.splice(
+                    draft.findIndex((k) => k === child.key),
+                    1
+                  );
                 });
               }
             } else {
               draft.push(key);
               if (childrenKeys.length) {
-                childrenKeys.forEach(child => {
+                childrenKeys.forEach((child) => {
                   if (!draft.includes(child.key)) draft.push(child.key);
                 });
               }
             }
-          }),
+          })
         );
       };
 
       const handleCheck = (checkedKeys: any) => {
-        console.log('onCheck', checkedKeys);
+        console.log("onCheck", checkedKeys);
         setCheckedKeys(checkedKeys);
       };
 
@@ -296,11 +309,14 @@ export default class Demo extends React.Component {
             checkedKeys={checkedKeys}
             onCheck={handleCheck}
           >
-            {treeData.map(p => {
+            {treeData.map((p) => {
               return p.children ? (
                 <TreeNode title={RoleMap[p.title]} key={p.key}>
                   {p.children.map((pi: TreeNode) => (
-                    <TreeNode title={RoleMap[pi.title]} key={`${p.key}|${pi.key}`} />
+                    <TreeNode
+                      title={RoleMap[pi.title]}
+                      key={`${p.key}|${pi.key}`}
+                    />
                   ))}
                 </TreeNode>
               ) : (
@@ -315,5 +331,8 @@ export default class Demo extends React.Component {
     export default connect(({ role }: { role: RoleState }) => ({
       role,
     }))(Permission);
-
     ```
+
+  - React Fiber
+
+    [参考](https://mp.weixin.qq.com/s/7MQp1CrZFwNd4dQ3y2C-UA)
