@@ -73,7 +73,7 @@ const lsStages = [
   }
 ]
 
-const tasks = [
+let tasks = [
   {
     "name": "t1",
     "taskRef": {
@@ -116,10 +116,68 @@ const tasks = [
 /**
 * 如果没有 runAfter 则为头节点、并行头节点中的一个；
 */
-const headers = tasks.filter(t => !t.runAfter)
-console.log('[headers]: ', headers)
+
+/**
+ * 分步拆解
+ */
+// const result = []
+// let length = 0
+// const headers = tasks.filter(t => !t.runAfter)
+// let obj = {}
+// if (headers.length === 1) {
+//   obj = { name: headers[0].name, task: headers }
+// } else {
+//   obj = { name: headers[0].name, parallel: headers.map(t => ({ name: t.name, task: [t] })) }
+// }
+// result.push(obj)
+// length += headers.length
+
+// const p1 = tasks.filter(t => isArrayEqual(t.runAfter, headers.map(h => h.name)))
+// const p2 = tasks.filter(t => isArrayEqual(t.runAfter, p1.map(p => p.name)))
+
+/**
+ * 归纳
+ */
 const result = []
-if (headers.length === 1) {
-  result.push({ name: headers[0].name, task: headers[0] })
+let length = 0
+function core(lastTasks) {
+  let p = []
+  if (!lastTasks.length) {
+    p = tasks.filter(t => !t.runAfter)
+  } else {
+    p = tasks.filter(t => isArrayEqual(t.runAfter, lastTasks.map(t => t.name)))
+  }
+
+  if (!p.length) return []
+  let obj = {}
+  if (p.length === 1) {
+    obj = { name: p[0].name, task: p }
+  } else {
+    obj = { name: p[0].name, parallel: p.map(t => ({ name: t.name, task: [t] })) }
+  }
+  result.push(obj)
+  length += p.length
+  if (length === tasks.length) {
+    console.log('[result]', result)
+    return result
+  } else {
+    core(p)
+  }
 }
-console.log('[result]: ', result)
+core([])
+
+function isArrayEqual(arr1 = [], arr2 = []) {
+  let copy = JSON.parse(JSON.stringify(arr2))
+  if (arr1.length === arr2.length) {
+    for (let i = 0; i < arr1.length; i++) {
+      const index = copy.indexOf(arr1[i])
+      if (index > -1) {
+        copy.splice(index, 1)
+      } else {
+        return false
+      }
+    }
+    return true
+  }
+  return false
+}
