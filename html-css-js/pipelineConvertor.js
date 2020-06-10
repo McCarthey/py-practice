@@ -138,33 +138,137 @@ let tasks = [
 /**
  * 归纳
  */
-const result = []
-let length = 0
-function core(lastTasks) {
-  let p = []
-  if (!lastTasks.length) {
-    p = tasks.filter(t => !t.runAfter)
-  } else {
-    p = tasks.filter(t => isArrayEqual(t.runAfter, lastTasks.map(t => t.name)))
-  }
 
-  if (!p.length) return []
-  let obj = {}
-  if (p.length === 1) {
-    obj = { name: p[0].name, task: p }
-  } else {
-    obj = { name: p[0].name, parallel: p.map(t => ({ name: t.name, task: [t] })) }
+let tasks2 = [
+  {
+    "name": "starter",
+    "params": [
+      {
+        "name": "message",
+        "value": "$(params.message)"
+      }
+    ],
+    "taskRef": {
+      "kind": "Task",
+      "name": "persist-param"
+    },
+    "workspaces": [
+      {
+        "name": "task-ws",
+        "subPath": "init",
+        "workspace": "ws"
+      }
+    ]
+  },
+  {
+    "name": "upper",
+    "params": [
+      {
+        "name": "input-path",
+        "value": "init/message"
+      }
+    ],
+    "runAfter": [
+      "starter"
+    ],
+    "taskRef": {
+      "kind": "Task",
+      "name": "to-upper"
+    },
+    "workspaces": [
+      {
+        "name": "w",
+        "workspace": "ws"
+      }
+    ]
+  },
+  {
+    "name": "lower",
+    "params": [
+      {
+        "name": "input-path",
+        "value": "init/message"
+      }
+    ],
+    "runAfter": [
+      "starter"
+    ],
+    "taskRef": {
+      "kind": "Task",
+      "name": "to-lower"
+    },
+    "workspaces": [
+      {
+        "name": "w",
+        "workspace": "ws"
+      }
+    ]
+  },
+  {
+    "name": "reporter",
+    "params": [
+      {
+        "name": "result-to-report",
+        "value": "$(tasks.upper.results.message)"
+      }
+    ],
+    "runAfter": [
+      "upper"
+    ],
+    "taskRef": {
+      "kind": "Task",
+      "name": "result-reporter"
+    }
+  },
+  {
+    "name": "validator",
+    "runAfter": [
+      "reporter",
+      "lower"
+    ],
+    "taskRef": {
+      "kind": "Task",
+      "name": "validator"
+    },
+    "workspaces": [
+      {
+        "name": "files",
+        "workspace": "ws"
+      }
+    ]
   }
-  result.push(obj)
-  length += p.length
-  if (length === tasks.length) {
-    console.log('[result]', result)
-    return result
-  } else {
-    core(p)
+];
+
+// TODO: 待修改，不满足并行task中存在串行的情况，即runAfter中不应该判断数组全等
+function convert(tasks) {
+  const result = []
+  let length = 0
+  function core(lastTasks) {
+    let p = []
+    if (!lastTasks.length) {
+      p = tasks.filter(t => !t.runAfter)
+    } else {
+      p = tasks.filter(t => isArrayEqual(t.runAfter, lastTasks.map(t => t.name)))
+    }
+
+    if (!p.length) return []
+    let obj = {}
+    if (p.length === 1) {
+      obj = { name: p[0].name, task: p }
+    } else {
+      obj = { name: p[0].name, parallel: p.map(t => ({ name: t.name, task: [t] })) }
+    }
+    result.push(obj)
+    length += p.length
+    if (length === tasks.length) {
+      return result
+    } else {
+      core(p)
+    }
   }
+  core([])
+  console.log('[result]', result)
 }
-core([])
 
 function isArrayEqual(arr1 = [], arr2 = []) {
   let copy = JSON.parse(JSON.stringify(arr2))
