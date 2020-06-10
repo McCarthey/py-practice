@@ -102,13 +102,13 @@ let tasks = [
   {
     "name": "t31",
     "runAfter": [
-      "t21", "t22", "t23"
+      "t21",
     ],
   },
   {
     "name": "t32",
     "runAfter": [
-      "t21", "t22", "t23"
+      "t31", "t22", "t23"
     ],
   },
 ]
@@ -120,15 +120,17 @@ let tasks = [
 /**
  * 分步拆解
  */
-// const result = []
-// let length = 0
-// const headers = tasks.filter(t => !t.runAfter)
-// let obj = {}
-// if (headers.length === 1) {
-//   obj = { name: headers[0].name, task: headers }
-// } else {
-//   obj = { name: headers[0].name, parallel: headers.map(t => ({ name: t.name, task: [t] })) }
-// }
+const result = []
+
+const headers = []
+const indexes = []
+
+let obj = {}
+if (headers.length === 1) {
+  obj = { name: headers[0].name, task: headers }
+} else {
+  obj = { name: headers[0].name, parallel: headers.map(t => ({ name: t.name, task: [t] })) }
+}
 // result.push(obj)
 // length += headers.length
 
