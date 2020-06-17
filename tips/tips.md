@@ -1825,13 +1825,26 @@ document.body.appendChild(s);
 
 - Base64 编码、解码
 
+  window:
+
   atob()，btoa()方法均在 window 对象上
 
-  **atob():** 解码一个 Base64 字符串。
+      **atob():** 解码一个 Base64 字符串。
 
-  **btoa():** 从一个字符串或者二进制数据编码一个 Base64 字符串。
+      **btoa():** 从一个字符串或者二进制数据编码一个 Base64 字符串。
 
-- yarn 安装 node-sass 失败时
+  node:
+
+  node 中直接使用 Buffer 即可实现：
+
+  ```javascript
+  Buffer.from("中文大侠").toString("base64");
+  // '5Lit5paH5aSn5L6g'
+  Buffer.from("5Lit5paH5aSn5L6g", "base64").toString("utf-8");
+  // '中文大侠'
+  ```
+
+* yarn 安装 node-sass 失败时
 
   - 第一步：更改镜像源
     ```
@@ -1842,7 +1855,7 @@ document.body.appendChild(s);
     yarn config set sass_binary_site http://cdn.npm.taobao.org/dist/node-sass -g
     ```
 
-- Array.prototype.flatMap()
+* Array.prototype.flatMap()
 
   将数组内元素打平
 
@@ -1851,14 +1864,14 @@ document.body.appendChild(s);
   a.flatMap((i) => i); // [1, 2, 3, 4, 5]
   ```
 
-- https 证书安装
+* https 证书安装
 
   以 Nginx 为例：
 
   在云服务器控制台下载证书，上传到服务器，如果 nginx 没有安装 ssl 模块，则需要在源目录出安装 ssl 模块，再配置 conf 文件，重启后生效
 
-- 目前 Javascript 中共有 7 种基本类型：string, number, bigint, null, undefined, boolean, symbol
-- Cmder 修改默认打开路径：
+* 目前 Javascript 中共有 7 种基本类型：string, number, bigint, null, undefined, boolean, symbol
+* Cmder 修改默认打开路径：
 
   - setting/Startup/Tasks
   - 选择需要修改的 task（比如{bash::bash}）
@@ -1868,15 +1881,15 @@ document.body.appendChild(s);
      -new_console:d:D:\
     ```
 
-- JSON.stringify
+* JSON.stringify
 
   参考[文章](https://mp.weixin.qq.com/s/X7pzcNo_CTM-syS-sfHwwg)
 
   - 可传递第二个参数
 
-- JSON Merge Patch & JSON Patch
+* JSON Merge Patch & JSON Patch
 
-- [Math.sign(x)](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Math/sign)
+* [Math.sign(x)](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Math/sign)
 
   是 Math 的静态方法，判断参数是**正数、负数、正零、负零、NaN**。将对传入的参数隐式类型转换成数字类型。
 

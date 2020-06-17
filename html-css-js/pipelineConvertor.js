@@ -33,9 +33,15 @@ let tasks = [
   {
     "name": "t32",
     "runAfter": [
-      "t31", "t22", "t23"
+      "t22", "t23"
     ],
   },
+  {
+    "name": "t41",
+    "runAfter": [
+      "t31", "t32"
+    ],
+  }
 ]
 
 /**
