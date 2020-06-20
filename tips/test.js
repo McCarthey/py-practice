@@ -16,6 +16,30 @@ Function.prototype.myCall = function (context) {
   return result
 }
 
+function myCall(context, ...args) {
+  const ctx = context || window
+  ctx.fn = this
+  const res = ctx.fn(...args)
+  delete ctx.fn
+  return res
+}
+
+function myApply(context, args) {
+  const ctx = context || window
+  ctx.fn = this
+  const res = ctx.fn(...args)
+  delete ctx.fn
+  return res
+}
+
+function myBind(context, ...args) {
+  const fn = this
+  const restArgs = [...arguments].slice(1)
+  return function () {
+    return fn.apply(context, [...args, ...restArgs])
+  }
+}
+
 Function.prototype.myApply = function (context) {
   const ctx = context || window
   ctx.fn = this
@@ -135,6 +159,17 @@ function debounce(fn, wait) {
   }
 }
 
+function debounce(func, delay) {
+  let timer
+  return function () {
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+      func.apply(this, arguments)
+      timer = null
+    }, delay)
+  }
+}
+
 function debounceRightNow(func, wait = 500, immediate = true) {
   let timer, context, args
 
@@ -238,6 +273,29 @@ function throttle(func, delay) {
     if (currentTime - startTime >= delay) {
       func.apply(this, params)
       startTime = currentTime
+    }
+  }
+}
+
+function throttle(func, delay) {
+  let flag = true
+  return function () {
+    if (!flag) return
+    flag = false
+    setTimeout(() => {
+      func.apply(this, arguments)
+      flag = true
+    }, delay)
+  }
+}
+
+function throttle(func, delay) {
+  let startTime = Date.now()
+  return function (...params) {
+    let current = Date.now()
+    if (current - startTime >= delay) {
+      func.apply(this, params)
+      startTime = current
     }
   }
 }
