@@ -336,3 +336,17 @@ export default class Demo extends React.Component {
   - React Fiber
 
     [参考](https://mp.weixin.qq.com/s/7MQp1CrZFwNd4dQ3y2C-UA)
+
+  - React 获取节点样式
+
+    通过 ref + getComputedStyle 获取当前元素的属性
+
+    ```jsx
+    const width = getComputedStyle(ref.current).width; // eg: "800px"
+    ```
+
+    而通过 ref + style 方式获取到的仅是该元素的内联样式
+
+    ```jsx
+    const width = ref.current.style.width; // 仅当元素设置了该内联属性时才有值
+    ```
