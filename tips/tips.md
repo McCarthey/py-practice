@@ -1991,3 +1991,11 @@ document.body.appendChild(s);
       return color;
     };
     ```
+
+  - 国内 github 镜像提速:
+
+    github.com.cnpmjs.org 替换 github.com 即可
+
+    ```
+    git clone https://github.com.cnpmjs.org/golang/tools.git
+    ```
