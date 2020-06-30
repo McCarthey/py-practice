@@ -1999,3 +1999,12 @@ document.body.appendChild(s);
     ```
     git clone https://github.com.cnpmjs.org/golang/tools.git
     ```
+
+  - lodash的_.pickBy, _.omitBy方法返回一个使得断言函数为真的对象：
+
+    ```javascript
+    var object = { 'a': 1, 'b': '2', 'c': 3 };
+  
+    _.pickBy(object, _.isNumber); // {'a': 1, 'c': 3}
+    _.omitBy(object, _.isNumber); // {'b' : '2'}
+    ```
