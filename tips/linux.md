@@ -148,3 +148,9 @@ zipinfo -1 [filepath].zip | xargs rm -rf
 ## 如果服务器登录时间过长
 
 查看一下 /var/log/btmp 文件是否过大，该文件记录错误登录的日志，极有可能是别人扫描你的服务器不停尝试登录导致（间接得说明了[禁止 root 登录的重要性](https://www.cnblogs.com/jianz/p/7979250.html)）。删除后，秒登。
+
+- mongodb 守护进程启动
+
+  ```s
+  ./mongod --dbpath /data/db --port 27017 --logpath /var/log/mongod --logappend --fork
+  ```
