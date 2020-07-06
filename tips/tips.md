@@ -2000,11 +2000,15 @@ document.body.appendChild(s);
     git clone https://github.com.cnpmjs.org/golang/tools.git
     ```
 
-  - lodash的_.pickBy, _.omitBy方法返回一个使得断言函数为真的对象：
+  - lodash 的*.pickBy, *.omitBy 方法返回一个使得断言函数为真的对象：
 
     ```javascript
-    var object = { 'a': 1, 'b': '2', 'c': 3 };
-  
+    var object = { a: 1, b: "2", c: 3 };
+
     _.pickBy(object, _.isNumber); // {'a': 1, 'c': 3}
     _.omitBy(object, _.isNumber); // {'b' : '2'}
     ```
+
+  - window.crypto.getRandomValues
+
+    cryptoObj.getRandomValues(typedArray) 方法让你可以获取符合密码学要求的安全的随机值。其中 typedArray 是一个基于整数的 TypedArray，它可以是 Int8Array、Uint8Array、Int16Array、 Uint16Array、 Int32Array 或者 Uint32Array。在数组中的所有的元素会被随机数重写。**生成的随机数储存在 typedArray 数组上。** 即 cryptoObj.getRandomValues 方法会改变传入的 typedArray 参数。
