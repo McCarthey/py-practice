@@ -52,11 +52,11 @@
     var string = "2019-07-26";
     var result = string.replace(regex, "$2/$3/$1");
     // 等价于:
-    var result = string.replace(regex, function() {
+    var result = string.replace(regex, function () {
       return RegExp.$2 + "/" + RegExp.$3 + "/" + RegExp.$1;
     });
     // 也等价于:
-    var result = string.replace(regex, function(match, year, month, day) {
+    var result = string.replace(regex, function (match, year, month, day) {
       return month + "/" + day + "/" + year;
     });
     ```
@@ -145,3 +145,22 @@
 - 正则表达式 test() 方法
 
   - 如果正则表达式设置了全局标志 g，test() 的执行会改变正则表达式的 lastIndex 属性。连续的执行 test()方法，后续的执行将会从 lastIndex 处开始匹配字符串，(exec() 同样改变正则本身的 lastIndex 属性值).
+
+- 匹配中文字符方法
+
+  - **旧方法**：
+    可以匹配 1999 年以前的中文字符，后面再收录的无法匹配：
+    ```javascript
+    const str = "78 9  -%阿j斯o发879啊  0哇嘎%我-个卡$顿";
+    const reg = /[\u4e00-\u9fa5]/g;
+    const result = str.match(reg).join("");
+    // "阿斯发啊哇嘎我个卡顿"
+    ```
+  - **新方法**：
+    需支持 ES2018 的环境，或者引入@babel/env：
+    ```javascript
+    const str = "78 9  -%阿j斯o发879啊  0哇嘎%我-个卡$顿";
+    const reg = /\p{Unified_Ideograph}/gu;
+    const result = str.match(reg).join("");
+    // "阿斯发啊哇嘎我个卡顿"
+    ```
