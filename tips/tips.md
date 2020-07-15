@@ -2012,3 +2012,41 @@ document.body.appendChild(s);
   - window.crypto.getRandomValues
 
     cryptoObj.getRandomValues(typedArray) 方法让你可以获取符合密码学要求的安全的随机值。其中 typedArray 是一个基于整数的 TypedArray，它可以是 Int8Array、Uint8Array、Int16Array、 Uint16Array、 Int32Array 或者 Uint32Array。在数组中的所有的元素会被随机数重写。**生成的随机数储存在 typedArray 数组上。** 即 cryptoObj.getRandomValues 方法会改变传入的 typedArray 参数。
+
+  - chromium 中 setTimeout 的 4ms 设置逻辑：
+
+    ```c++
+    static const int maxIntervalForUserGestureForwarding = 1000; // One second matches Gecko.
+    static const int maxTimerNestingLevel = 5;
+    static const double oneMillisecond = 0.001;
+    // Chromium uses a minimum timer interval of 4ms. We'd like to go
+    // lower; however, there are poorly coded websites out there which do
+    // create CPU-spinning loops.  Using 4ms prevents the CPU from
+    // spinning too busily and provides a balance between CPU spinning and
+    // the smallest possible interval timer.
+    static const double minimumInterval = 0.004;
+    ```
+
+    ```c++
+    double intervalMilliseconds = std::max(oneMillisecond, interval * oneMillisecond);
+    if (intervalMilliseconds < minimumInterval && m_nestingLevel >= maxTimerNestingLevel)
+      intervalMilliseconds = minimumInterval;
+    ```
+
+    由此可知在 chromium 中下列代码的输出：
+
+    ```javascript
+    setTimeout(() => console.log(5), 5);
+    setTimeout(() => console.log(4), 4);
+    setTimeout(() => console.log(3), 3);
+    setTimeout(() => console.log(2), 2);
+    setTimeout(() => console.log(1), 1);
+    setTimeout(() => console.log(0), 0);
+
+    // 1
+    // 0
+    // 2
+    // 3
+    // 4
+    // 5
+    ```
