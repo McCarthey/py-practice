@@ -4,9 +4,9 @@ import { produce } from "immer";
 
 const TestKey = () => {
   const [list, setList] = useState<any[]>([
-    { id: 0, name: "hi" },
-    { id: 1, name: "hi" },
-    { id: 2, name: "hi" },
+    { id: 0, name: "" },
+    { id: 1, name: "" },
+    { id: 2, name: "" },
   ]);
 
   return (
