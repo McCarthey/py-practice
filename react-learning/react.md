@@ -333,20 +333,24 @@ export default class Demo extends React.Component {
     }))(Permission);
     ```
 
-  - React Fiber
+  - antd Input 非受控组件的使用：
 
-    [参考](https://mp.weixin.qq.com/s/7MQp1CrZFwNd4dQ3y2C-UA)
+    为 Input 组件指定 defaultValue 而不是 value 时，需要注意值的更新问题，如当有几个不同的非受控 Input 时，**需要为他们指定唯一 key**，作为更新的标识，否则在删除、新增 Input 时会出现实际数据已经发生改变，但 Input 的输入框内容没变化、错乱、混淆的问题；
 
-  - React 获取节点样式
+- React Fiber
 
-    通过 ref + getComputedStyle 获取当前元素的属性
+  [参考](https://mp.weixin.qq.com/s/7MQp1CrZFwNd4dQ3y2C-UA)
 
-    ```jsx
-    const width = getComputedStyle(ref.current).width; // eg: "800px"
-    ```
+- React 获取节点样式
 
-    而通过 ref + style 方式获取到的仅是该元素的内联样式
+  通过 ref + getComputedStyle 获取当前元素的属性
 
-    ```jsx
-    const width = ref.current.style.width; // 仅当元素设置了该内联属性时才有值
-    ```
+  ```jsx
+  const width = getComputedStyle(ref.current).width; // eg: "800px"
+  ```
+
+  而通过 ref + style 方式获取到的仅是该元素的内联样式
+
+  ```jsx
+  const width = ref.current.style.width; // 仅当元素设置了该内联属性时才有值
+  ```
