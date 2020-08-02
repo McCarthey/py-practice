@@ -228,120 +228,132 @@ export default class Demo extends React.Component {
     }
     ```
 
-  - antd tree 可控，并支持 onSelect 选中
+  - antd select (option) 组件支持自定义属性，用于传递数据
 
     ```tsx
-    import React, { useEffect, ReactNode, useState } from "react";
-    import { connect } from "dva";
-    import { Tree } from "antd";
-    import style from "../../Role.less";
-    import { RoleState, TreeNode } from "@/models/role";
-    import { RoleItem, RoleMap } from "@/type/role";
-    import { produce } from "immer";
-    import _ from "lodash";
+    const handleSelect = (value, option) => {
+      console.log(option) // {children: 'test', key: 0, value: 'test', customData: {...}}
+    }
 
-    const { TreeNode } = Tree;
+    return <Select onChange={handleSelect}>
+      <Option value="test" key={0} customData={{id: 0, name: 'test', otherProps: {}}}>
+    </Select>;
+    ```
 
-    const Permission = (props: { role: RoleState }) => {
-      const [treeData, setTreeData] = useState<TreeNode[]>([]);
-      const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
-      const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
+* antd tree 可控，并支持 onSelect 选中
 
-      useEffect(() => {
-        setTreeData(props.role.formatPermissions);
-        setExpandedKeys(props.role.formatPermissions.map((p) => p.key));
-      }, [props.role]);
+  ```tsx
+  import React, { useEffect, ReactNode, useState } from "react";
+  import { connect } from "dva";
+  import { Tree } from "antd";
+  import style from "../../Role.less";
+  import { RoleState, TreeNode } from "@/models/role";
+  import { RoleItem, RoleMap } from "@/type/role";
+  import { produce } from "immer";
+  import _ from "lodash";
 
-      const handleSelect = (selectedKeys: string[], info: any) => {
-        console.log("onSelect", checkedKeys, selectedKeys, info);
-        const key = _.get(info, ["node", "props", "eventKey"], "");
-        const childrenKeys = _.get(
-          info,
-          ["node", "props", "children"],
-          []
-        ) as any[];
-        setCheckedKeys(
-          produce(checkedKeys, (draft) => {
-            if (draft.includes(key)) {
+  const { TreeNode } = Tree;
+
+  const Permission = (props: { role: RoleState }) => {
+    const [treeData, setTreeData] = useState<TreeNode[]>([]);
+    const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+    const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
+
+    useEffect(() => {
+      setTreeData(props.role.formatPermissions);
+      setExpandedKeys(props.role.formatPermissions.map((p) => p.key));
+    }, [props.role]);
+
+    const handleSelect = (selectedKeys: string[], info: any) => {
+      console.log("onSelect", checkedKeys, selectedKeys, info);
+      const key = _.get(info, ["node", "props", "eventKey"], "");
+      const childrenKeys = _.get(
+        info,
+        ["node", "props", "children"],
+        []
+      ) as any[];
+      setCheckedKeys(
+        produce(checkedKeys, (draft) => {
+          if (draft.includes(key)) {
+            draft.splice(
+              draft.findIndex((k) => k === key),
+              1
+            );
+            if (key.split("|").length > 1) {
+              const parentKey = key.split("|")[0];
               draft.splice(
-                draft.findIndex((k) => k === key),
+                draft.findIndex((k) => k === parentKey),
                 1
               );
-              if (key.split("|").length > 1) {
-                const parentKey = key.split("|")[0];
+            }
+            if (childrenKeys.length) {
+              childrenKeys.forEach((child) => {
                 draft.splice(
-                  draft.findIndex((k) => k === parentKey),
+                  draft.findIndex((k) => k === child.key),
                   1
                 );
-              }
-              if (childrenKeys.length) {
-                childrenKeys.forEach((child) => {
-                  draft.splice(
-                    draft.findIndex((k) => k === child.key),
-                    1
-                  );
-                });
-              }
-            } else {
-              draft.push(key);
-              if (childrenKeys.length) {
-                childrenKeys.forEach((child) => {
-                  if (!draft.includes(child.key)) draft.push(child.key);
-                });
-              }
+              });
             }
-          })
-        );
-      };
-
-      const handleCheck = (checkedKeys: any) => {
-        console.log("onCheck", checkedKeys);
-        setCheckedKeys(checkedKeys);
-      };
-
-      return (
-        <div className={style.treeWrapper}>
-          <Tree
-            checkable
-            switcherIcon={<span />}
-            expandedKeys={expandedKeys}
-            onSelect={handleSelect}
-            checkedKeys={checkedKeys}
-            onCheck={handleCheck}
-          >
-            {treeData.map((p) => {
-              return p.children ? (
-                <TreeNode title={RoleMap[p.title]} key={p.key}>
-                  {p.children.map((pi: TreeNode) => (
-                    <TreeNode
-                      title={RoleMap[pi.title]}
-                      key={`${p.key}|${pi.key}`}
-                    />
-                  ))}
-                </TreeNode>
-              ) : (
-                <TreeNode title={RoleMap[p.title]} key={p.key} />
-              );
-            })}
-          </Tree>
-        </div>
+          } else {
+            draft.push(key);
+            if (childrenKeys.length) {
+              childrenKeys.forEach((child) => {
+                if (!draft.includes(child.key)) draft.push(child.key);
+              });
+            }
+          }
+        })
       );
     };
 
-    export default connect(({ role }: { role: RoleState }) => ({
-      role,
-    }))(Permission);
-    ```
+    const handleCheck = (checkedKeys: any) => {
+      console.log("onCheck", checkedKeys);
+      setCheckedKeys(checkedKeys);
+    };
 
-  - antd Input 非受控组件的使用：
+    return (
+      <div className={style.treeWrapper}>
+        <Tree
+          checkable
+          switcherIcon={<span />}
+          expandedKeys={expandedKeys}
+          onSelect={handleSelect}
+          checkedKeys={checkedKeys}
+          onCheck={handleCheck}
+        >
+          {treeData.map((p) => {
+            return p.children ? (
+              <TreeNode title={RoleMap[p.title]} key={p.key}>
+                {p.children.map((pi: TreeNode) => (
+                  <TreeNode
+                    title={RoleMap[pi.title]}
+                    key={`${p.key}|${pi.key}`}
+                  />
+                ))}
+              </TreeNode>
+            ) : (
+              <TreeNode title={RoleMap[p.title]} key={p.key} />
+            );
+          })}
+        </Tree>
+      </div>
+    );
+  };
 
-    为 Input 组件指定 defaultValue 而不是 value 时，需要注意值的更新问题，如当有几个不同的非受控 Input 时，**需要为他们指定唯一 key**，作为更新的标识，否则在删除、新增 Input 时会出现实际数据已经发生改变，但 Input 的输入框内容没变化、错乱、混淆的问题；
+  export default connect(({ role }: { role: RoleState }) => ({
+    role,
+  }))(Permission);
+  ```
 
-- React Fiber
+* antd Input 非受控组件的使用：
+
+  为 Input 组件指定 defaultValue 而不是 value 时，需要注意值的更新问题，如当有几个不同的非受控 Input 时，**需要为他们指定唯一 key**，作为更新的标识，否则在删除、新增 Input 时会出现实际数据已经发生改变，但 Input 的输入框内容没变化、错乱、混淆的问题；
+
+* React Fiber
 
   [参考](https://mp.weixin.qq.com/s/7MQp1CrZFwNd4dQ3y2C-UA)
 
-- React 获取节点样式
+* React 获取节点样式
 
   通过 ref + getComputedStyle 获取当前元素的属性
 
