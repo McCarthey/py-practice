@@ -69,6 +69,7 @@ finally:
    要删除这个间隙，需要在HTML中通过注释删除空白（右）
    例如：
    <div class="half">50% wide</div><!-- --><div class="half">50% wide</div>
+   或者删除两元素间的空白即可
 '''
 # 杂事儿
 ''' - 善用Array.prototype.every 和 filter 会节省很多代码
