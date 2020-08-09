@@ -15,7 +15,7 @@ function DFS(node) {
       const item = stack.pop()
       nodeList.push(item.val)
       const children = item.children
-      for (let i = children.length - 1; i >= 0; i--) {
+      for (let i = children.length - 1; i >= 0; i--) { // 要逆序入栈
         stack.push(children[i])
       }
     }
