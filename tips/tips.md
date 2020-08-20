@@ -1742,6 +1742,16 @@ document.body.appendChild(s);
 
   比如，我需要将复制过来的 JSON 数据字符串转成 TS 的接口中的 string："(\S+)" 替换成 string（改进版：'(?!@)(\S\*)'，可以匹配''，而且不会匹配'@/type/xxxx'之类的引用文件）
 
+- ES6 中 String.prototype.startsWith()
+
+  接受两个参数
+
+  ```javascript
+  str.startsWith(searchString[, position])
+  ```
+
+  如果在字符串的开头找到了给定的字符则返回 true；否则返回 false。
+
 - Javascript 引擎
 
   - Interpreter（解释器） VS Compiler（编译器）
