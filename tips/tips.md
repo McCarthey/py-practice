@@ -852,6 +852,10 @@ var allElements = document.getElementsByTagName("*");
   在使用 axios 时，axios 默认的 header 中 content-type: application/json，此时 post 请求传上去的数据是在 request payload 中的，后端需要在这里取；
   当设置 content-type: application/x-www-form-urlencoded 时，此时 post 请求是以 Form data 方式上传的，需要对 form data 做序列化处理（如使用 qs 库），后端需要解析序列化后的数据
 
+- axios 的响应拦截器中统一错误处理与特殊错误处理
+
+  思路：统一错粗处理放在 setTimeout 中作为宏任务在下一次事件循环中执行，为 error.response 增加一个控制 setTimeout 中逻辑是否执行的 flag 方法，并将这个 flag 方法添加到 error.response 上随着 Promise.reject({...error.response, flag}) 传出去，这样可以在调用请求的 service 层、或者业务组件层调用捕获 reject 传出的错误，在不需要统一错误处理的业务组件或整个 service 层中即可调用 error.flag ，即隐藏统一错误处理。
+
 - 判断空字符串" "
   ```javascript
   const message = " ";
