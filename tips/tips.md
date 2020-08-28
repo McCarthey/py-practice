@@ -856,13 +856,44 @@ var allElements = document.getElementsByTagName("*");
 
   思路：统一错粗处理放在 setTimeout 中作为宏任务在下一次事件循环中执行，为 error.response 增加一个控制 setTimeout 中逻辑是否执行的 flag 方法，并将这个 flag 方法添加到 error.response 上随着 Promise.reject({...error.response, flag}) 传出去，这样可以在调用请求的 service 层、或者业务组件层调用捕获 reject 传出的错误，在不需要统一错误处理的业务组件或整个 service 层中即可调用 error.flag ，即隐藏统一错误处理。
 
+  ```javascript
+  const errorHandler = (errorRes) => {
+    let showErrorNotice = true;
+    const hideErrorNotice = () => (showErrorNotice = false);
+    setTimeout(() => {
+      if (showErrorNotice) {
+        const code = data.code || status;
+        openErrorNotification({ code, msg: CODE_MESSAGE[`${code}`] });
+      }
+    });
+
+    return { ...errorRes, hideErrorNotice };
+  };
+
+  // 使用时，在catch中捕获异常，调用 e.hideErrorNotice() 方法，即可隐藏统一错误处理提示
+  try {
+    const res = await getData(user); // getData接口一定要return Promise.reject(e) 否则捕获的错误并不是http请求导致的错误
+  } catch (e) {
+    e.hideErrorNotice();
+  }
+  ```
+
 - 判断空字符串" "
+
   ```javascript
   const message = " ";
   if (message.replace(/(^\s*)|(\s*$)/g, "").length === 0) {
-    console.log("Message cannot be empty!");
-  }
+    console.log("Message cannot be
+
   ```
+
+  empty!");
+  }
+
+  ```
+
+  ```
+
 - facebook pixel
   用法同 GA
 - 属性描述符
