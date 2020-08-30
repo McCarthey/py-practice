@@ -383,20 +383,92 @@ export default class Demo extends React.Component {
 
   - Stack reconciler：
 
+    [参考](https://zh-hans.reactjs.org/docs/implementation-notes.html)
+
     React 15 版本前的解决方案；
 
-    ```jsx
+    ```javascript
     ReactDOM.render(<App />, rootEle)
     ```
-    reconciler检查要挂载的组件，通过判断组件的 type 属性，type 的类型可以是类、函数、或者字符串，分别对应 App 是**类**还是**函数**或者**宿主元素**。如果是函数，则 reconciler 调用 App(props) 来获取渲染的元素；如果是类，那么reconciler 会通过 new App(props) 来实例化 App，并调用生命周期方法 componentWillMount()，之后调用 render() 方法来获取渲染的元素；如果是字符串，代表是宿主元素，reconciler 会让 renderer 负责挂载它，例如在浏览器中，React DOM 会创建一个DOM节点。
 
-    该过程是递归的，reconciler 会通过用户定义的组件递归地探悉各个组件渲染的元素，子组件生成的DOM节点会附加在父DOM节点上，递归地完成整个DOM结构的组装。
+    reconciler 检查要挂载的组件，通过判断组件的 type 属性，type 的类型可以是类、函数、或者字符串，分别对应 App 是**类**还是**函数**或者**宿主元素**。如果是函数，则 reconciler 调用 App(props) 来获取渲染的元素；如果是类，那么 reconciler 会通过 new App(props) 来实例化 App，并调用生命周期方法 componentWillMount()，之后调用 render() 方法来获取渲染的元素；如果是字符串，代表是宿主元素，reconciler 会让 renderer 负责挂载它，例如在浏览器中，React DOM 会创建一个 DOM 节点。
 
-    (**注**：reconciler 本身不与DOM绑定，挂载的最终结果取决于 renderer，可以是一个DOM节点（React DOM），一个字符串（React DOM Server），或是一个表示原生视图的数字（React Native）)
+    该过程是递归的，reconciler 会通过用户定义的组件递归地探悉各个组件渲染的元素，子组件生成的 DOM 节点会附加在父 DOM 节点上，递归地完成整个 DOM 结构的组装。
 
-    
+    (**注**：reconciler 本身不与 DOM 绑定，挂载的最终结果取决于 renderer，可以是一个 DOM 节点（React DOM），一个字符串（React DOM Server），或是一个表示原生视图的数字（React Native）)
 
-    
+    ```javascript
+    // 伪代码
+    function isClass(type) {
+      // 类组件会有这个标识位
+      return Boolean(type.prototype) && Boolean(type.prototype.isReactComponent)
+    }
+
+    // 此函数处理组合类型的元素，即非宿主元素
+    function mountComposite(element) {
+      var type = element.type
+      var props = element.props
+
+      var renderElement
+      if (isClass(type)) { // 类组件
+        var publicInstance = new type(props)
+        publicInstance.props = props // 设置 props
+        if (publicInstance.componentWillMount) {
+          publicInstance.componentWillMount() // 如果有该声明周期就调用
+        }
+        renderElement = publicInstance.render() // 执行render方法获得要渲染的元素
+      } else if (typeof of type === 'function') { // 函数组件
+        renderElement = type(props)
+      }
+
+      return mount(renderElement) // 递归，当元素是宿主元素（如<div />）时，到达递归底部
+    }
+
+    // 此函数处理宿主类型元素
+    function mountHost(element) {
+      var type = element.type
+      var props = element.props
+      var children = props.children || []
+      if(!Array.isArray(children)) {
+        children = [children]
+      }
+      children = children.filter(Boolean) // 去除假值元素
+
+      // 这段代码不应出现在 reconciler 中，因为不同的 renderer 会以不同的方式初始化节点
+      var node = document.createElement(type)
+      Object.keys(props).forEach(propName => {
+        if(propName !== 'children') {
+          node.setAttribute(propName. props[propName])  // 设置元素属性
+        }
+      })
+
+      // 挂载子元素
+      children.forEach(childElement => {
+        // 子元素可能是宿主或者组合元素，仍是递归挂载
+        var childNode = mount(childElement)
+
+        // 这行 renderer 相关的代码也不应该出现在这里
+        node.appendChild(childNode)
+      })
+
+      // DOM 节点作为挂载的结果返回，也是递归结束的位置
+      return node
+    }
+
+    function mount(element) {
+      var type = mount.type
+      if(typeof type === 'function') { // 类组件：new 构造函数；函数组件：直接调用函数
+        return mountComposite(element)
+      } else if (typeof type === 'string') {
+        return mountHost(element)
+      }
+    }
+
+    var rootEl = document.getElementById('root')
+    var node = mount(<App />)
+    rootEl.appendChild(node)
+    ```
+    （**注**：以上代码与实际实现依然相差很多，关键部分是对更新的支持）
 
   - Fiber reconciler：
 
