@@ -1927,7 +1927,7 @@ document.body.appendChild(s);
 
   在云服务器控制台下载证书，上传到服务器，如果 nginx 没有安装 ssl 模块，则需要在源目录出安装 ssl 模块，再配置 conf 文件，重启后生效
 
-- 目前 Javascript 中共有 7 种基本类型：string, number, bigint, null, undefined, boolean, symbol
+- 目前 Javascript 中共有 8 种数据类型，其中 7 种基本类型：String, Number, BigInt, null, undefined, Boolean, Symbol，以及Object
 - Cmder 修改默认打开路径：
 
   - setting/Startup/Tasks

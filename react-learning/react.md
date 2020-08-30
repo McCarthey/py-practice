@@ -467,7 +467,7 @@ export default class Demo extends React.Component {
     var rootEl = document.getElementById('root')
     var node = mount(<App />)
     rootEl.appendChild(node)
-    ```
+    ````
     （**注**：以上代码与实际实现依然相差很多，关键部分是对更新的支持）
 
   - Fiber reconciler：
