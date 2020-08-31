@@ -19,22 +19,25 @@ const interval = setInterval(() => {
 
 setTimeout(() => {
 	console.log('setTimeout 1')
-	Promise.resolve()
+	new Promise((resolve) => {
+		console.log('promise 1')
+		resolve()
+	})
 		.then(() => {
-			console.log('promise 3')
+			console.log('promise 2')
 		})
 		.then(() => {
-			console.log('promise 4')
+			console.log('promise 3')
 		})
 		.then(() => {
 			setTimeout(() => {
 				console.log('setTimeout 2')
 				Promise.resolve()
 					.then(() => {
-						console.log('promise 5')
+						console.log('promise 4')
 					})
 					.then(() => {
-						console.log('promise 6')
+						console.log('promise 5')
 					})
 					.then(() => {
 						clearInterval(interval)
@@ -45,24 +48,27 @@ setTimeout(() => {
 
 Promise.resolve()
 	.then(() => {
-		console.log('promise 1')
+		console.log('promise 6')
 	})
 	.then(() => {
-		console.log('promise 2')
+		console.log('promise 7')
 	})
 
+console.log('end')
 /**
  * start
- * promise 1 
- * promise 2
+ * end
+ * promise 6
+ * promise 7
  * setInterval
  * setTimeout 1
+ * promise 1
+ * promise 2
  * promise 3
- * promise 4
  * setInterval
  * setTimeout 2
- * promise 5 
- * promise 6
+ * promise 4
+ * promise 5
  */
 
 

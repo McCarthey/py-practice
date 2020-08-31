@@ -22,7 +22,7 @@ Foo.prototype.isPrototypeOf(foo); // true
 // 因为Foo没有这个方法isPrototypeOf 因此Foo需要沿着原型继续查找，因此相当于
 Foo.prototype.__proto__.isPrototypeOf(foo); // true
 // 通过在构造函数的原型上添加同名属性改写原生方法
-Foo.prototype.valueOf = function() {
+Foo.prototype.valueOf = function () {
   console.log("Cunstom valueOf method");
 };
 
@@ -48,7 +48,7 @@ function create() {
 
 ```javascript
 // Or
-var objFactory = function() {
+var objFactory = function () {
   var obj = {},
     Constructor = [].shift.call(arguments);
   obj.__proto__ = Constructor.prototype;
@@ -83,7 +83,7 @@ function myInstanceof(left, right) {
 #### 自己实现 call
 
 ```javascript
-Function.prototype.myCall = function(context) {
+Function.prototype.myCall = function (context) {
   var context = context || window;
   // 给context添加一个属性
   context.fn = this;
@@ -104,7 +104,7 @@ Function.prototype.myCall = function(context) {
 ```javascript
 // 示例：监听滚动事件
 let timer;
-window.onscroll = function() {
+window.onscroll = function () {
   if (timer) {
     clearTimeout(timer);
   }
@@ -122,7 +122,7 @@ window.onscroll = function() {
 ```javascript
 const debounce = (func, delay) => {
   let timer;
-  return function() {
+  return function () {
     if (timer) {
       clearTimeout(timer);
     }
@@ -165,7 +165,7 @@ window.onscroll = function throttle() {
     startTime = currentTime;
   } else {
     clearTimeout(timer);
-    timer = setTimeout(function() {
+    timer = setTimeout(function () {
       throttle();
     }, 50);
   }
@@ -177,7 +177,7 @@ window.onscroll = function throttle() {
 ```javascript
 function throttle(func, delay) {
   let startTime = Date.now();
-  return function() {
+  return function () {
     let _this = this;
     let currentTime = Date.now();
     if (currentTime - startTime >= delay) {
@@ -204,7 +204,7 @@ add(1, 2);
 
 ```javascript
 function add(a) {
-  return function(b) {
+  return function (b) {
     return a + b;
   };
 }
@@ -212,7 +212,7 @@ function add(a) {
 add(1)(2);
 
 // 或者采用更简洁的箭头函数写法
-const add = a => b => a + b;
+const add = (a) => (b) => a + b;
 ```
 
 #### 堆内存与栈内存
@@ -242,8 +242,8 @@ for (var i = 1; i <= 5; i++) {
 ```javascript
 // 闭包
 for (var i = 1; i <= 5; i++) {
-  (function(j) {
-    setTimeout(function() {
+  (function (j) {
+    setTimeout(function () {
       console.log(j);
     }, j * 1000);
   })(i);
@@ -255,7 +255,7 @@ for (var i = 1; i <= 5; i++) {
 // setTimeout第三个以后的参数将作为参数传递给function
 for (var i = 1; i <= 5; i++) {
   setTimeout(
-    function(j) {
+    function (j) {
       console.log(j);
     },
     i * 1000,
@@ -305,15 +305,15 @@ function Promise(callback) {
   }
 }
 
-Promise.prototype.then = function() {};
+Promise.prototype.then = function () {};
 ```
 
 #### 实现 Array.prototype.map
 
 ```javascript
-Array.prototype.map = function(cb) {
+Array.prototype.map = function (cb) {
   var result = [];
-  this.forEach(function(element, index) {
+  this.forEach(function (element, index) {
     result.push(cb(element, index));
   });
   return result;
@@ -323,7 +323,7 @@ Array.prototype.map = function(cb) {
 #### 实现 Array.prototype.filter
 
 ```javascript
-Array.prototype.filter = function(cb) {
+Array.prototype.filter = function (cb) {
   var result = [];
   this.forEach((item, index) => {
     if (cb(item, index)) {
@@ -338,18 +338,18 @@ Array.prototype.filter = function(cb) {
 
 ```javascript
 // 判断数据类型
-const type = obj => {
+const type = (obj) => {
   const typeString = Object.prototype.toString.call(obj);
   const map = {
     "[object Array]": "array",
-    "[object Object]": "object"
+    "[object Object]": "object",
   };
 
   return map[typeString];
 };
 
 // 深拷贝
-const deepClone = data => {
+const deepClone = (data) => {
   const typeString = type(data);
   let r;
   if (typeString === "array") {
@@ -379,6 +379,7 @@ const deepClone = data => {
 - 全局变量
 
   不断地创建全局变量，不管有没有用到，它们都将滞留在程序的执行过程中，如果它们是深层嵌套对象，更会浪费大量内存；
+
   ```javascript
   var a = { ... }
   var b = { ... }
@@ -386,46 +387,56 @@ const deepClone = data => {
     c = a // 隐式地创建了一个全局变量
   }
   ```
+
 - 事件监听器
 
   当在组件中创建事件监听器，在销毁组件时却没有移除事件监听的话，那么当再次加载该组件时，就又会注册新的事件监听，导致事件监听的不断增加，浪费内存；
+
   ```javascript
-  var element = document.getElementById('button')
-  element.addEventListener('click', onClick)
+  var element = document.getElementById("button");
+  element.addEventListener("click", onClick);
   ```
+
 - 计时器
 
   当计时器不再使用时，如忘记清除，会导致内存被持续占用
+
   ```javascript
   setInterval(() => {
     ...
   }, 1000)
   ```
-- 移除DOM元素
 
-  类似于全局变量导致的内存泄漏。当dom从视图上移除时，要注意其引用是否被监听器等保存，否则该内存不会被释放：
+- 移除 DOM 元素
+
+  类似于全局变量导致的内存泄漏。当 dom 从视图上移除时，要注意其引用是否被监听器等保存，否则该内存不会被释放：
+
   ```javascript
-  var terminator = document.getElementById('terminator')
-  var badEle = document.getElementById('badEle')
-  terminator.addEventListener('click', function () {
-    badEle.remove()
-  })
+  var terminator = document.getElementById("terminator");
+  var badEle = document.getElementById("badEle");
+  terminator.addEventListener("click", function () {
+    badEle.remove();
+  });
   ```
-  当点击了terminator的按钮后，badEle会从DOM中移除，但是由于它被监听器引用，因此这个对象分配的内存并不会被释放。
+
+  当点击了 terminator 的按钮后，badEle 会从 DOM 中移除，但是由于它被监听器引用，因此这个对象分配的内存并不会被释放。
+
   ```javascript
-  var terminator = document.getElementById('terminator')
-  terminator.addEventListener('click', function () {
-    var badEle = document.getElementById('badEle')
-    badEle.remove()
-  })
+  var terminator = document.getElementById("terminator");
+  terminator.addEventListener("click", function () {
+    var badEle = document.getElementById("badEle");
+    badEle.remove();
+  });
   ```
-  改动后，badEle变成了局部变量，在移除操作完成之后，内存将会被垃圾回收。
+
+  改动后，badEle 变成了局部变量，在移除操作完成之后，内存将会被垃圾回收。
 
   - numObj.toString([radix])
 
-  将返回指定Number对象的字符串表示方法,其中基数radix参数可选,未指定的话默认是10.
+  将返回指定 Number 对象的字符串表示方法,其中基数 radix 参数可选,未指定的话默认是 10.
+
   ```javascript
-  let count = 10
-  console.log(count.toString()) // '10'
-  console.log(count.toString(2)) // '1010'
+  let count = 10;
+  console.log(count.toString()); // '10'
+  console.log(count.toString(2)); // '1010'
   ```
