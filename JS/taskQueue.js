@@ -51,8 +51,22 @@ Promise.resolve()
 		console.log('promise 2')
 	})
 
+/**
+ * start
+ * promise 1 
+ * promise 2
+ * setInterval
+ * setTimeout 1
+ * promise 3
+ * promise 4
+ * setInterval
+ * setTimeout 2
+ * promise 5 
+ * promise 6
+ */
 
-/** 示例2 */
+
+/** 复杂示例2 */
 console.log('start')
 setTimeout(function () {
 	console.log('setTimeout1')
