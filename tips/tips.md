@@ -555,6 +555,12 @@ var allElements = document.getElementsByTagName("*");
 
 简洁，类似于 ES6
 
+- 大厂的页面黑白效果怎样实现的
+
+  ```css
+  filter: grayscale(100%); /* 一行代码即可 */
+  ```
+
 - css 动画小技巧
   场景：想要做出动画持续 2s，停顿 2s 后再循环的效果
   思路：设置好关键帧的位置
@@ -1927,7 +1933,7 @@ document.body.appendChild(s);
 
   在云服务器控制台下载证书，上传到服务器，如果 nginx 没有安装 ssl 模块，则需要在源目录出安装 ssl 模块，再配置 conf 文件，重启后生效
 
-- 目前 Javascript 中共有 8 种数据类型，其中 7 种基本类型：String, Number, BigInt, null, undefined, Boolean, Symbol，以及Object
+- 目前 Javascript 中共有 8 种数据类型，其中 7 种基本类型：String, Number, BigInt, null, undefined, Boolean, Symbol，以及 Object
 - Cmder 修改默认打开路径：
 
   - setting/Startup/Tasks
