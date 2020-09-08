@@ -2115,3 +2115,4 @@ document.body.appendChild(s);
     ```
 
   - [在线 AST](https://astexplorer.net/#/Z1exs6BWMq)
+  - [eventSource](https://developer.mozilla.org/zh-CN/docs/Server-sent_events/EventSource)
