@@ -2113,3 +2113,5 @@ document.body.appendChild(s);
     // 4
     // 5
     ```
+
+  - [在线 AST](https://astexplorer.net/#/Z1exs6BWMq)
