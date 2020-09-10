@@ -1,3 +1,5 @@
+多 git 密钥管理: 多个 key 存在时，在生成 ssh-key 之后，还需要配置 config，以便让 ssh 找到相应的 key
+
 ```bash
 git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %Cblue <%an>' --abbrev-commit"
 ```
