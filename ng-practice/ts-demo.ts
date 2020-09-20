@@ -247,3 +247,14 @@ var Direction;
 // SOURTH: 1
 // WEST: 3
 */
+
+/** type of Promise, 只管resolve中值的类型 */
+function testPromise(arg: string): Promise<number> {
+  return new Promise<number>((resolve, reject) => {
+    if (arg === "a") {
+      resolve(1);
+    } else {
+      reject("1");
+    }
+  });
+}
