@@ -9,7 +9,7 @@ interface Person {
 
 let tom: Person = {
   name: "Tom",
-  age: 25
+  age: 25,
 }; // 定义的变量的属性必须和接口一致，多一些、少一些都不可以
 
 /**
@@ -22,7 +22,7 @@ interface Police {
 }
 
 let bob: Police = {
-  car: true
+  car: true,
 };
 
 /**
@@ -37,7 +37,7 @@ interface Student {
 let alice: Student = {
   name: "Alice",
   age: 12,
-  gender: "female"
+  gender: "female",
 };
 
 // 一旦定义了任意属性，那么确定属性和可选属性都必须是它的类型的在子集： 下面会报错
@@ -66,7 +66,7 @@ interface Gun {
 let ak47: Gun = {
   id: 41,
   name: "AK47",
-  producer: "RU"
+  producer: "RU",
 };
 
 // ak47.id = 43 // 不可修改只读属性，会报错
@@ -118,7 +118,7 @@ pet.layEggs(); // okay
 /**
  * 函数类型
  */
-let sum: (x: number, y: number) => number = function(
+let sum: (x: number, y: number) => number = function (
   x: number,
   y: number
 ): number {
@@ -133,7 +133,7 @@ interface SearchFunc {
 }
 
 let mySearch: SearchFunc;
-mySearch = function(source: string, subString: string): boolean {
+mySearch = function (source: string, subString: string): boolean {
   return source.includes(subString);
 };
 
@@ -167,7 +167,7 @@ let cat = buildName("Cat");
 
 // 事实上,items是一个数组,所以我们可以用数组的类型来定义它：
 function push(array: any[], ...items: any[]): void {
-  items.forEach(item => {
+  items.forEach((item) => {
     array.push(item);
   });
 }
@@ -182,18 +182,9 @@ function reverse(x: number): number;
 function reverse(x: string): string;
 function reverse(x: number | string): number | string {
   if (typeof x === "number") {
-    return Number(
-      x
-        .toString()
-        .split("")
-        .reverse()
-        .join("")
-    );
+    return Number(x.toString().split("").reverse().join(""));
   } else if (typeof x === "string") {
-    return x
-      .split("")
-      .reverse()
-      .join("");
+    return x.split("").reverse().join("");
   }
 }
 // 上例中我们重复定义了多次函数reverse，前两次是函数定义，最后一次是函数实现
@@ -225,3 +216,34 @@ jQuery("#foo");
  */
 
 /** 定义接口时，最好将不必需的属性标为可选，这样在初始化时，就可以不需要为对象填充无内容的属性。比如react的hooks在setData时。 */
+
+/**
+ * 枚举
+ */
+enum Direction {
+  NORTH,
+  SOURTH,
+  EAST,
+  WEST,
+}
+
+/*
+// 编译成js后：
+var Direction;
+(function (Direction) {
+    Direction[Direction["NORTH"] = 0] = "NORTH";
+    Direction[Direction["SOURTH"] = 1] = "SOURTH";
+    Direction[Direction["EAST"] = 2] = "EAST";
+    Direction[Direction["WEST"] = 3] = "WEST";
+})(Direction || (Direction = {}));
+
+// Direction
+// 0: "NORTH"
+// 1: "SOURTH"
+// 2: "EAST"
+// 3: "WEST"
+// EAST: 2
+// NORTH: 0
+// SOURTH: 1
+// WEST: 3
+*/
