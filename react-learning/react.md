@@ -51,19 +51,19 @@ useEffect(() => {
 
 ```jsx
 const [form, setForm] = useState({
-  leftQuery: '',
-  moreHref: '',
-  picTitle: '',
+  leftQuery: "",
+  moreHref: "",
+  picTitle: "",
   status: 0,
-  topQuery: '',
-})
+  topQuery: "",
+});
 
 const handleChange = (e: any) => {
   setForm({
     ...form,
     [e.target.name]: e.target.value,
-  })
-}
+  });
+};
 
 return (
   <Form labelCol={{ span: 2 }} wrapperCol={{ span: 10 }} labelAlign="left">
@@ -81,7 +81,7 @@ return (
       <Button type="primary">创建</Button>
     </Form.Item>
   </Form>
-)
+);
 ```
 
 Switch 组件，当设置了 defaultChecked={fetchData.status}，在获取数据后，它是不会根据当前的 state 来更新自己的状态的，因此建议当 loading 状态结束后再渲染 Switch 组件
@@ -89,7 +89,7 @@ Switch 组件，当设置了 defaultChecked={fetchData.status}，在获取数据
 ```jsx
 <Form.Item label="状态">
   {isLoading ? (
-    'loading'
+    "loading"
   ) : (
     <Switch defaultChecked={Boolean(form.status)} onChange={handleSwitch} />
   )}
@@ -103,13 +103,13 @@ Switch 组件，当设置了 defaultChecked={fetchData.status}，在获取数据
   ```jsx
   const handleSearch = useCallback(
     debounce((data: any) => {
-      if (data === '') return
-      queryAPI(data)
+      if (data === "") return;
+      queryAPI(data);
     }, 500),
     []
-  )
+  );
 
-  return <input onChange={handleSearch} />
+  return <input onChange={handleSearch} />;
   ```
 
 - useMemo
@@ -124,20 +124,20 @@ Switch 组件，当设置了 defaultChecked={fetchData.status}，在获取数据
 
   ```jsx
   const Child = (props) => {
-    console.log('子组件?')
-    return <div>我是一个子组件</div>
-  }
+    console.log("子组件?");
+    return <div>我是一个子组件</div>;
+  };
 
-  const ChildMemo = React.memo(Child)
+  const ChildMemo = React.memo(Child);
 
   const Page = (props) => {
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0);
 
     return (
       <>
         <button
           onClick={(e) => {
-            setCount(count + 1)
+            setCount(count + 1);
           }}
         >
           加1
@@ -145,8 +145,8 @@ Switch 组件，当设置了 defaultChecked={fetchData.status}，在获取数据
         <p>count:{count}</p>
         <ChildMemo />
       </>
-    )
-  }
+    );
+  };
   ```
 
 - 组件中 input 输入后 re-render 的问题
@@ -162,16 +162,16 @@ Switch 组件，当设置了 defaultChecked={fetchData.status}，在获取数据
 下面以 web-component 为例，dm-header 元素支持 logout 事件:
 
 ```jsx
-import 'omi'
-import 'omi-wc-demo/dist/header'
+import "omi";
+import "omi-wc-demo/dist/header";
 
 export default class Header extends React.Component {
   componentDidMount() {
-    this.el.addEventListener('logout', this.handleLogout)
+    this.el.addEventListener("logout", this.handleLogout);
   }
 
   componentWillUnmount() {
-    this.el.removeEventListener('logout', this.handleLogout)
+    this.el.removeEventListener("logout", this.handleLogout);
   }
 
   render() {
@@ -179,7 +179,7 @@ export default class Header extends React.Component {
       <div>
         <dm-header ref={(elem) => (this.el = elem)} />
       </div>
-    )
+    );
   }
 }
 ```
@@ -188,20 +188,20 @@ export default class Header extends React.Component {
 
 ```jsx
 /** @jsx nativeEvents */
-import nativeEvents from 'jsx-native-events'
-import 'omi-wc-demo/dist/header'
+import nativeEvents from "jsx-native-events";
+import "omi-wc-demo/dist/header";
 
 export default class Demo extends React.Component {
   handleLogout = () => {
     // logoutAPI
-  }
+  };
 
   render() {
     return (
       <div>
         <dm-header onEventLogout={this.handleLogout} />
       </div>
-    )
+    );
   }
 }
 ```
@@ -243,73 +243,73 @@ export default class Demo extends React.Component {
 * antd tree 可控，并支持 onSelect 选中
 
   ```tsx
-  import React, { useEffect, ReactNode, useState } from 'react'
-  import { connect } from 'dva'
-  import { Tree } from 'antd'
-  import style from '../../Role.less'
-  import { RoleState, TreeNode } from '@/models/role'
-  import { RoleItem, RoleMap } from '@/type/role'
-  import { produce } from 'immer'
-  import _ from 'lodash'
+  import React, { useEffect, ReactNode, useState } from "react";
+  import { connect } from "dva";
+  import { Tree } from "antd";
+  import style from "../../Role.less";
+  import { RoleState, TreeNode } from "@/models/role";
+  import { RoleItem, RoleMap } from "@/type/role";
+  import { produce } from "immer";
+  import _ from "lodash";
 
-  const { TreeNode } = Tree
+  const { TreeNode } = Tree;
 
   const Permission = (props: { role: RoleState }) => {
-    const [treeData, setTreeData] = useState<TreeNode[]>([])
-    const [expandedKeys, setExpandedKeys] = useState<string[]>([])
-    const [checkedKeys, setCheckedKeys] = useState<string[]>([])
+    const [treeData, setTreeData] = useState<TreeNode[]>([]);
+    const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
+    const [checkedKeys, setCheckedKeys] = useState<string[]>([]);
 
     useEffect(() => {
-      setTreeData(props.role.formatPermissions)
-      setExpandedKeys(props.role.formatPermissions.map((p) => p.key))
-    }, [props.role])
+      setTreeData(props.role.formatPermissions);
+      setExpandedKeys(props.role.formatPermissions.map((p) => p.key));
+    }, [props.role]);
 
     const handleSelect = (selectedKeys: string[], info: any) => {
-      console.log('onSelect', checkedKeys, selectedKeys, info)
-      const key = _.get(info, ['node', 'props', 'eventKey'], '')
+      console.log("onSelect", checkedKeys, selectedKeys, info);
+      const key = _.get(info, ["node", "props", "eventKey"], "");
       const childrenKeys = _.get(
         info,
-        ['node', 'props', 'children'],
+        ["node", "props", "children"],
         []
-      ) as any[]
+      ) as any[];
       setCheckedKeys(
         produce(checkedKeys, (draft) => {
           if (draft.includes(key)) {
             draft.splice(
               draft.findIndex((k) => k === key),
               1
-            )
-            if (key.split('|').length > 1) {
-              const parentKey = key.split('|')[0]
+            );
+            if (key.split("|").length > 1) {
+              const parentKey = key.split("|")[0];
               draft.splice(
                 draft.findIndex((k) => k === parentKey),
                 1
-              )
+              );
             }
             if (childrenKeys.length) {
               childrenKeys.forEach((child) => {
                 draft.splice(
                   draft.findIndex((k) => k === child.key),
                   1
-                )
-              })
+                );
+              });
             }
           } else {
-            draft.push(key)
+            draft.push(key);
             if (childrenKeys.length) {
               childrenKeys.forEach((child) => {
-                if (!draft.includes(child.key)) draft.push(child.key)
-              })
+                if (!draft.includes(child.key)) draft.push(child.key);
+              });
             }
           }
         })
-      )
-    }
+      );
+    };
 
     const handleCheck = (checkedKeys: any) => {
-      console.log('onCheck', checkedKeys)
-      setCheckedKeys(checkedKeys)
-    }
+      console.log("onCheck", checkedKeys);
+      setCheckedKeys(checkedKeys);
+    };
 
     return (
       <div className={style.treeWrapper}>
@@ -333,16 +333,16 @@ export default class Demo extends React.Component {
               </TreeNode>
             ) : (
               <TreeNode title={RoleMap[p.title]} key={p.key} />
-            )
+            );
           })}
         </Tree>
       </div>
-    )
-  }
+    );
+  };
 
   export default connect(({ role }: { role: RoleState }) => ({
     role,
-  }))(Permission)
+  }))(Permission);
   ```
 
 * antd Input 非受控组件的使用：
@@ -357,7 +357,7 @@ export default class Demo extends React.Component {
 
   ```jsx
   function Counter({ initialCount }) {
-    const [count, setCount] = useState(initialCount)
+    const [count, setCount] = useState(initialCount);
     return (
       <>
         Count: {count}
@@ -367,7 +367,7 @@ export default class Demo extends React.Component {
         </button>
         <button onClick={() => setCount((prevCount) => prevCount + 1)}>+</button>
       </>
-    )
+    );
   }
   ```
 
@@ -382,13 +382,13 @@ export default class Demo extends React.Component {
   通过 ref + getComputedStyle 获取当前元素的属性
 
   ```jsx
-  const width = getComputedStyle(ref.current).width // eg: "800px"
+  const width = getComputedStyle(ref.current).width; // eg: "800px"
   ```
 
   而通过 ref + style 方式获取到的仅是该元素的内联样式
 
   ```jsx
-  const width = ref.current.style.width // 仅当元素设置了该内联属性时才有值
+  const width = ref.current.style.width; // 仅当元素设置了该内联属性时才有值
   ```
 
 ## 一些概念
@@ -412,7 +412,7 @@ export default class Demo extends React.Component {
     React 15 版本前的解决方案；
 
     ```javascript
-    ReactDOM.render(<App />, rootEle)
+    ReactDOM.render(<App />, rootEle);
     ```
 
     reconciler 检查要挂载的组件，通过判断组件的 type 属性，type 的类型可以是类、函数、或者字符串，分别对应 App 是**类**还是**函数**或者**宿主元素**。如果是函数，则 reconciler 调用 App(props) 来获取渲染的元素；如果是类，那么 reconciler 会通过 new App(props) 来实例化 App，并调用生命周期方法 componentWillMount()，之后调用 render() 方法来获取渲染的元素；如果是字符串，代表是宿主元素，reconciler 会让 renderer 负责挂载它，例如在浏览器中，React DOM 会创建一个 DOM 节点。
@@ -505,13 +505,13 @@ export default class Demo extends React.Component {
 
     ```javascript
     function instantiateComponent(element) {
-      var type = element.type
-      if (typeof type === 'function') {
+      var type = element.type;
+      if (typeof type === "function") {
         // 用户定义组件
-        return new CompositeComponent(element)
-      } else if (typeof type === 'string') {
+        return new CompositeComponent(element);
+      } else if (typeof type === "string") {
         // 平台特定组件
-        return new DOMComponent(element)
+        return new DOMComponent(element);
       }
     }
     ```
@@ -521,52 +521,53 @@ export default class Demo extends React.Component {
     ```javascript
     class CompositeComponent {
       constructor(element) {
-        this.currentElement = element
-        this.renderedComponent = null
-        this.publicInstance = null
+        this.currentElement = element;
+        this.renderedComponent = null;
+        this.publicInstance = null;
       }
 
       getPublicInstance() {
         // 对于组合组件，公共类实例
-        return this.publicInstance
+        return this.publicInstance;
       }
 
       mount() {
-        var element = this.currentElement
-        var type = element.type
-        var props = element.props
+        var element = this.currentElement;
+        var type = element.type;
+        var props = element.props;
 
-        var publicInstance
-        var renderedElement
+        var publicInstance;
+        var renderedElement;
         if (isClass(type)) {
           // 类组件
-          publicInstance = new type(props)
-          publicInstance.props = props
+          publicInstance = new type(props);
+          publicInstance.props = props;
           // 如果有生命周期方法就调用
           if (publicInstance.componentWillMount) {
-            publicInstance.componentWillMount()
+            publicInstance.componentWillMount();
           }
-          renderedElement = publicInstance.render()
-        } else if (typeof type === 'function') {
+          renderedElement = publicInstance.render();
+        } else if (typeof type === "function") {
           // 函数组件
-          publicInstance = null
-          renderedElement = type(props)
+          publicInstance = null;
+          renderedElement = type(props);
         }
 
         // 保存公共实例
-        this.publicInstance = publicInstance
+        this.publicInstance = publicInstance;
 
         // 根据实例化子内部实例
         // <div /> 或者 <p /> 是 DOMComponent,
         // 而<App /> 或者 <Button /> 是 CompositeComponent。
-        var renderedComponent = instantiateComponent(renderedElement)
-        this.renderedComponent = renderedComponent
+        var renderedComponent = instantiateComponent(renderedElement);
+        this.renderedComponent = renderedComponent;
 
         // 挂载渲染后的输出
-        return renderedComponent.mount()
+        return renderedComponent.mount();
       }
     }
     ```
+
     这与之前的 mountComposite() 的实现没有太多不同，但是现在我们可以保存一些信息，如 this.currentElement, this.renderedComponent 和 this.publicInstance，用于更新期间使用。
 
     需要注意的是 CompositeComponent 的实例与用户提供的 element.type 的实例是不同的东西。CompositeComponent 是我们的 reconciler 的实现细节，而且永远不会暴露给用户。用户定义的类是 element.type 读取的，并且 CompositeComponent 会创建一个它的实例。
@@ -574,6 +575,56 @@ export default class Demo extends React.Component {
     为了避免混淆，我们把 CompositeComponent 和 DOMComponent 的实例叫做“内部实例”。由于它们的存在，我们可以把一些长时间存在的数据存入其中。只有 renderer 和 reconciler 能意识到它们的存在。
 
     相反，我们把用户定义的类的实例叫做“公共实例”。公共实例就是你在 render() 中所见到的 this 和你的自定义组件中的一些其他方法。
+
+    mountHost() 函数，重构为 DOMComponent 类的 mount() 方法，看起来也很熟悉：
+
+    ```javascript
+    class DOMComponent {
+      constructor(element) {
+        this.currentElement = element;
+        this.renderedChildren = [];
+        this.node = null;
+      }
+
+      getPublicInstance() {
+        return this.node;
+      }
+
+      mount() {
+        var element = this.currentElement;
+        var type = element.type;
+        var props = element.props;
+        var children = props.children || [];
+        if (!Array.isArray(children)) {
+          children = [children];
+        }
+
+        // 创建并保存节点
+        var node = document.createElement(type);
+        this.node = node;
+
+        // 设置属性
+        Object.keys(props).forEach((propName) => {
+          if (propName !== "children") {
+            node.setAttribute(propName, props[propName]);
+          }
+        });
+
+        // 创建并保存包含的子项
+        // 他们每个都可以是 DOMComponent 或 CompositeComponent
+        // 取决于类型是字符串还是函数
+        var renderedChildren = children.map(instantiateComponent);
+        this.renderedChildren = renderedChildren;
+
+        // 收集他们在 mount 上返回的节点
+        var childNodes = renderedChildren.map((child) => child.mount());
+        childNodes.forEach((childNode) => node.appendChild(childNode));
+
+        // DOM 节点作为挂载结果返回
+        return node;
+      }
+    }
+    ```
 
   - Fiber reconciler：
 
