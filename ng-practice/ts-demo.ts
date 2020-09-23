@@ -258,3 +258,8 @@ function testPromise(arg: string): Promise<number> {
     }
   });
 }
+
+/** (!)作为非空断言，如react的useRef中，
+ * editor.current!.dispose()
+ * 指定 editor.current 非空即可
+ */
