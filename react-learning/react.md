@@ -351,6 +351,28 @@ export default class Demo extends React.Component {
 
   antd(4.x) Input 的 defaultValue 属性可能失效，同等情况下使用原生 input 元素的 defaultValue 便可实现；
 
+* useState 的函数式更新方法
+
+  如果新的 state 需要通过使用先前的 state 计算得出，那么可以将函数传递给 setState。该函数将接收先前的 state，并返回一个更新后的值。下面的计数器组件示例展示了 setState 的两种用法：
+
+  ```jsx
+  function Counter({ initialCount }) {
+    const [count, setCount] = useState(initialCount);
+    return (
+      <>
+        Count: {count}
+        <button onClick={() => setCount(initialCount)}>Reset</button>
+        <button onClick={() => setCount((prevCount) => prevCount - 1)}>
+          -
+        </button>
+        <button onClick={() => setCount((prevCount) => prevCount + 1)}>+</button>
+      </>
+    );
+  }
+  ```
+
+  如果你的更新函数返回值与当前 state 完全相同，则随后的重渲染会被完全跳过。
+
 * React Fiber
 
   [参考](https://mp.weixin.qq.com/s/7MQp1CrZFwNd4dQ3y2C-UA)
