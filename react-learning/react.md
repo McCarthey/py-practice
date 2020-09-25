@@ -567,6 +567,13 @@ export default class Demo extends React.Component {
       }
     }
     ```
+    这与之前的 mountComposite() 的实现没有太多不同，但是现在我们可以保存一些信息，如 this.currentElement, this.renderedComponent 和 this.publicInstance，用于更新期间使用。
+
+    需要注意的是 CompositeComponent 的实例与用户提供的 element.type 的实例是不同的东西。CompositeComponent 是我们的 reconciler 的实现细节，而且永远不会暴露给用户。用户定义的类是 element.type 读取的，并且 CompositeComponent 会创建一个它的实例。
+
+    为了避免混淆，我们把 CompositeComponent 和 DOMComponent 的实例叫做“内部实例”。由于它们的存在，我们可以把一些长时间存在的数据存入其中。只有 renderer 和 reconciler 能意识到它们的存在。
+
+    相反，我们把用户定义的类的实例叫做“公共实例”。公共实例就是你在 render() 中所见到的 this 和你的自定义组件中的一些其他方法。
 
   - Fiber reconciler：
 
