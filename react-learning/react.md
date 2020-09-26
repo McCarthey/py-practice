@@ -516,6 +516,58 @@ export default class Demo extends React.Component {
     }
     ```
 
+    首先，我们思考一下 CompositeComponent 的实现：
+
+    ```javascript
+    class CompositeComponent {
+      constructor(element) {
+        this.currentElement = element
+        this.renderedComponent = null
+        this.publicInstance = null
+      }
+
+      getPublicInstance() {
+        // 对于组合组件，公共类实例
+        return this.publicInstance
+      }
+
+      mount() {
+        var element = this.currentElement
+        var type = element.type
+        var props = element.props
+
+        var publicInstance
+        var renderedElement
+        if (isClass(type)) {
+          // 类组件
+          publicInstance = new type(props)
+          publicInstance.props = props
+          // 如果有生命周期方法就调用
+          if (publicInstance.componentWillMount) {
+            publicInstance.componentWillMount()
+          }
+          renderedElement = publicInstance.render()
+        } else if (typeof type === 'function') {
+          // 函数组件
+          publicInstance = null
+          renderedElement = type(props)
+        }
+
+        // 保存公共实例
+        this.publicInstance = publicInstance
+
+        // 根据实例化子内部实例
+        // <div /> 或者 <p /> 是 DOMComponent,
+        // 而<App /> 或者 <Button /> 是 CompositeComponent。
+        var renderedComponent = instantiateComponent(renderedElement)
+        this.renderedComponent = renderedComponent
+
+        // 挂载渲染后的输出
+        return renderedComponent.mount()
+      }
+    }
+    ```
+
   - Fiber reconciler：
 
     React 16 版本后的解决方案；
