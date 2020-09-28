@@ -626,6 +626,61 @@ export default class Demo extends React.Component {
     }
     ```
 
+    mountHost() 重构后主要的区别是我们保存了与内部 DOM 组件实例关联的 this.name 和 this.renderedChildren，将来我们会使用他们进行非破坏性更新。
+
+    因此，每个内部实例，组合组件或者宿主组件，现在都指向了它的子内部实例。假设有函数组件 App 会渲染类组件 Button，并且 Button 渲染一个 div，其内部实例树将如下所示:
+
+    ```javascript
+    [object CompositeComponent]: {
+      currentElement: <App />,
+      publicInstance: null,
+      renderedComponent: [object CompositeComponent] {
+        currentElement: <Button />,
+        publicInstance: [object Button],
+        renderedComponent: [object DOMComponent] {
+          currentElement: <div />,
+          publicInstance: [object HTMLDivElement],
+          renderedChildren: []
+        }
+      }
+    }
+    ```
+
+    在 DOM 中，你只会看到 div，但是在内部实例树包含了组合和宿主的内部实例。
+
+    组合内部实例需要存储：
+
+    - 当前元素
+    - 如果元素的类型是类，则存储该类的公共实例
+    - 单次渲染后的内部实例。它可以是 DOMComponent 或 CompositeComponent
+
+    宿主内部实例需要存储：
+
+    - 当前元素
+    - DOM 节点
+    - 所有子内部实例。它们中的每一个都可以是 DOMComponent 或 CompositeComponent
+
+    为了完成重构，我们引入一个函数，它将完整的树挂载到容器节点中，并返回公共实例，就像 ReactDOM.render() 一样：
+
+    ```javascript
+    function mountTree(element, containerNode) {
+      // 创建顶层内部实例
+      var rootElement = instantiateComponent(element);
+
+      // 挂载顶层组件到容器中
+      var node = rootElement.mount();
+      containerName.appendChild(node);
+
+      // 返回它提供的公共实例
+      var publicInstance = rootElement.getPublicInstance();
+      return publicInstance;
+    }
+
+    // 使用时
+    var rootEl = document.getElementById("root");
+    mountTree(<App />, rootEl);
+    ```
+
   - Fiber reconciler：
 
     React 16 版本后的解决方案；
