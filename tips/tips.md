@@ -183,6 +183,8 @@
 
 - 判断是否是数组
 
+  Array.isArray(obj)， 返回值为 true 或 false
+
   ```javascript
   Array.isArray([]); // true
   // 不支持Array.isArray()方法的ployfill（不支持Array.isArray方法的宿主环境多半不支持箭头函数-_-||）：
