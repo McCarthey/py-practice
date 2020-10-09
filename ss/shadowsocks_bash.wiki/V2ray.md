@@ -46,3 +46,10 @@ function proxy_off(){
 
 proxy_off
 ```
+
+全局执行上述脚本的方法就是为命令赋 alias 别名即可：
+
+```shell
+alias proxy_on='sh ~/bash/proxy_on.sh'
+alias proxy_off='sh ~/bash/proxy_off.sh'
+```
