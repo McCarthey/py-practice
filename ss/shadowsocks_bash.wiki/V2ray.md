@@ -12,3 +12,9 @@ export https_proxy=http://127.0.0.1:10809
 # 测试google 不能使用ping命令
 curl http://www.google.com
 ```
+
+上述设置后，在 cmder 中成为了全局代理，当想访问一些不需要被代理的资源，如内网自建 gitlab 等，则需要设置白名单：
+
+```shell
+export NO_PROXY="localhost,x.x.x.x"
+```
