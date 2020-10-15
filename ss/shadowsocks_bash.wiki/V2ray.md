@@ -18,3 +18,31 @@ curl http://www.google.com
 ```shell
 export NO_PROXY="localhost,x.x.x.x"
 ```
+
+为了不必每次启动终端都输入代理、白名单，可以将这些逻辑抽成.sh 文件，可以全局执行：
+
+```shell
+# 文件1：proxy_on.sh
+export http_proxy=http://127.0.0.1:10809
+export https_proxy=http://127.0.0.1:10809
+export NO_PROXY="localhost,x.x.x.x"
+
+function proxy_on() {
+    export http_proxy="http://0.0.0.0:10809"
+    export https_proxy=$http_proxy
+    echo -e "已开启代理"
+}
+
+proxy_on
+```
+
+```shell
+# 文件2：proxy_off
+function proxy_off(){
+    unset http_proxy
+    unset https_proxy
+    echo -e "已关闭代理"
+}
+
+proxy_off
+```
