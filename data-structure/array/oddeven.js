@@ -34,3 +34,7 @@ function generateNumbers(n, range = 10000) {
   }
   return result
 }
+
+/**
+ * TODO: 若要保证相对顺序不变，则两个指针都从首部开始
+ */
