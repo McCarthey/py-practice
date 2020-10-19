@@ -1775,35 +1775,70 @@ document.body.appendChild(s);
 
   在 href 属性中填入 URL，并指定 download 属性，即可实现下载资源。如果给 download 属性赋值，则会影响下载的文件名。
 
-  URL 需同源，否则默认跳转。
+  **注意**，该属性适用于同源 URL，否则默认跳转。尽管 HTTP URL 需要位于同一源中，但是可以使用 blob: URL 和 data: URL ，以方便用户下载使用 JavaScript 生成的内容（例如使用在线绘图 Web 应用程序创建的照片）。
+
+  此时，就需要使用 blob: URL 或 data: URL 进行兼容处理：
+
+  ```typescript
+  const download = (href: string, name = "pic") => {
+    const eleLink = document.createElement("a");
+    eleLink.download = name;
+    eleLink.href = href;
+    eleLink.click();
+    eleLink.remove();
+  };
+
+  export const downloadByData = (url: string, name: string) => {
+    const image = new Image();
+    image.setAttribute("crossOrigin", "anonymous");
+    image.src = url;
+    image.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = image.width;
+      canvas.height = image.height;
+      const ctx = canvas.getContext("2d");
+      ctx?.drawImage(image, 0, 0, image.width, image.height);
+      const ext = image.src
+        .substring(image.src.lastIndexOf(".") + 1)
+        .toLowerCase();
+      const dataURL = canvas.toDataURL(`image/${ext}`);
+      download(dataURL, name);
+    };
+  };
+
+  // 使用时
+  <a onClick={() => downloadByData(imageUrl, "图片名")}>下载图片</a>;
+  ```
+
+````
 
 - html 缓存解决办法
 
-  [参考 github 上 antd 的 issue](https://github.com/ant-design/ant-design-pro/issues/1365#issuecomment-384496088)
+[参考 github 上 antd 的 issue](https://github.com/ant-design/ant-design-pro/issues/1365#issuecomment-384496088)
 
 - encodeURI 和 encodeURIComponent 区别
 
-  两者都可以对 URI 进行编码，使用一到四个转义序列来表示字符串中的字符的 UTF-8 编码
+两者都可以对 URI 进行编码，使用一到四个转义序列来表示字符串中的字符的 UTF-8 编码
 
-  encodeURI 不会替换以下字符：;、,、/、?、:、@、&、=、+、\$、字母、数字、-、\_、.、!、~、\*、'、(、)、#
+encodeURI 不会替换以下字符：;、,、/、?、:、@、&、=、+、\$、字母、数字、-、\_、.、!、~、\*、'、(、)、#
 
-  encodeURIComponent 会转义除了字母、数字、(、)、.、!、~、\*、'、-和\_之外的所有字符。
+encodeURIComponent 会转义除了字母、数字、(、)、.、!、~、\*、'、-和\_之外的所有字符。
 
 - VSCode 中查找/替换字符串
 
-  可以点击使用‘正则表达式’来进行高级查找
+可以点击使用‘正则表达式’来进行高级查找
 
-  比如，我需要将复制过来的 JSON 数据字符串转成 TS 的接口中的 string："(\S+)" 替换成 string（改进版：'(?!@)(\S\*)'，可以匹配''，而且不会匹配'@/type/xxxx'之类的引用文件）
+比如，我需要将复制过来的 JSON 数据字符串转成 TS 的接口中的 string："(\S+)" 替换成 string（改进版：'(?!@)(\S\*)'，可以匹配''，而且不会匹配'@/type/xxxx'之类的引用文件）
 
 - ES6 中 String.prototype.startsWith()
 
-  接受两个参数
+接受两个参数
 
-  ```javascript
-  str.startsWith(searchString[, position])
-  ```
+```javascript
+str.startsWith(searchString[, position])
+````
 
-  如果在字符串的开头找到了给定的字符则返回 true；否则返回 false。
+如果在字符串的开头找到了给定的字符则返回 true；否则返回 false。
 
 - Javascript 引擎
 
