@@ -289,6 +289,53 @@ curryAdd(1)(2, 3, 4)(); // 10
 curryAdd(1, 2, 3, 4)(); //10
 ```
 
+### 自己实现 Promise
+
+```javascript
+// 简单版
+function myPromise(constructor) {
+  let that = this;
+  this.state = "pending";
+  this.value = undefined;
+  this.reason = undefined;
+
+  function resolve(value) {
+    if (that.state === "pending") {
+      that.value = value;
+      that.state = "resolved";
+    }
+  }
+
+  function reject(reason) {
+    if (that.state === "pending") {
+      that.reason = reason;
+      that.state = "rejected";
+    }
+  }
+
+  try {
+    constructor(resolve, reject);
+  } catch (e) {
+    reject(e);
+  }
+}
+
+myPromise.prototype.then = function (onFulfilled, onRejected) {
+  if (this.state === "resolved") {
+    onFulfilled(this.value);
+  }
+  if (this.state === "rejected") {
+    onRejected(this.reason);
+  }
+};
+
+// 测试
+const p1 = new myPromise(function (resolve, reject) {
+  resolve("x");
+});
+p1.then((res) => console.log(res)); // "x"
+```
+
 ### 堆内存与栈内存
 
 JS 引擎中对变量的存储主要有两种，**堆内存**和**栈内存**。
