@@ -1767,6 +1767,16 @@ document.body.appendChild(s);
 
   即可设置除第一个 groupItem 元素外的其他所有 groupItem 元素的上外边距为 12px
 
+- HTML5 a 标签实现下载
+
+  ```html
+  <a href="/static/img1.jpg" download="下载图片">下载</a>
+  ```
+
+  在 href 属性中填入 URL，并指定 download 属性，即可实现下载资源。如果给 download 属性赋值，则会影响下载的文件名。
+
+  URL 需同源，否则默认跳转。
+
 - html 缓存解决办法
 
   [参考 github 上 antd 的 issue](https://github.com/ant-design/ant-design-pro/issues/1365#issuecomment-384496088)
