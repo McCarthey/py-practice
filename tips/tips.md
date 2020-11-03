@@ -1919,6 +1919,10 @@ document.body.appendChild(s);
   // '中文大侠'
   ```
 
+- css background-position：
+
+  当使用 backgroun-size: cover 时，最好调整一下 background-position，以至于图片中的主体可以呈现在合适的位置上（设计希望的位置）
+
 - yarn 安装 node-sass 失败时
 
   - 第一步：更改镜像源
