@@ -681,6 +681,44 @@ export default class Demo extends React.Component {
     mountTree(<App />, rootEl);
     ```
 
+    **卸载**
+
+    现在，我们有内部实例，以保留其子节点和 DOM 节点，我们可以实现卸载。对于组合组件，卸载调用生命周期方法并进行递归。
+
+    ```javascript
+    class CompositeComponent {
+      // ...
+      unmount() {
+        // 如果有生命周期方法就调用
+        var publicInstance = this.publicInstance;
+        if (publicInstance) {
+          if (publicInstance.componentWillUnmount) {
+            publicInstance.componentWillUnmount();
+          }
+        }
+
+        // 卸载单个渲染的组件
+        var renderedComponent = this.renderedComponent;
+        renderedComponent.unmount();
+      }
+    }
+    ```
+
+    对于 DOMComponent，会告诉每一个子项去卸载
+
+    ```javascript
+    class DOMComponent {
+      // ...
+      unmount() {
+        // 下载所有子项
+        var renderedChildren = this.renderedChildren;
+        renderedChildren.forEach((child) => child.unmount());
+      }
+    }
+    ```
+
+    在实践中，卸载 DOM 组件也需要删除事件监听器，已经一些缓存，这里跳过。
+
   - Fiber reconciler：
 
     React 16 版本后的解决方案；
