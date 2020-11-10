@@ -2081,89 +2081,125 @@ str.startsWith(searchString[, position])
     }
     ```
 
-  - form 中的 button 默认 type="submit"
+- form 中的 button 默认 type="submit"
 
-    在 form 中的 button 元素，如果不指定 type 属性，则 type 默认为 submit，默认行为会将表单数据提交给服务器；如果不想默认提交，则应指定 button 的 type="button"，这样就不会有默认事件；
+  在 form 中的 button 元素，如果不指定 type 属性，则 type 默认为 submit，默认行为会将表单数据提交给服务器；如果不想默认提交，则应指定 button 的 type="button"，这样就不会有默认事件；
 
-  - CSS3 根据子元素数量为其定义不同样式
+- CSS3 根据子元素数量为其定义不同样式
 
-    [参考](https://lightcss.com/styling-children-based-on-their-number-with-css3/)
+  [参考](https://lightcss.com/styling-children-based-on-their-number-with-css3/)
 
-  - 根据字符串生成唯一确定的 hex 颜色
+- 根据字符串生成唯一确定的 hex 颜色
 
-    ```javascript
-    export const stringToColor = (str: string) => {
-      let hash = 0;
-      for (let i = 0; i < str.length; i++) {
-        hash = str.charCodeAt(i) + ((hash << 5) - hash);
-      }
-      let color = "#";
-      for (let i = 0; i < 3; i++) {
-        let value = (hash >> (i * 8)) & 0xff;
-        color += ("00" + value.toString(16)).substr(-2);
-      }
-      return color;
-    };
-    ```
+  ```javascript
+  export const stringToColor = (str: string) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    let color = "#";
+    for (let i = 0; i < 3; i++) {
+      let value = (hash >> (i * 8)) & 0xff;
+      color += ("00" + value.toString(16)).substr(-2);
+    }
+    return color;
+  };
+  ```
 
-  - 国内 github 镜像提速:
+- 国内 github 镜像提速:
 
-    github.com.cnpmjs.org 替换 github.com 即可
+  github.com.cnpmjs.org 替换 github.com 即可
 
-    ```
-    git clone https://github.com.cnpmjs.org/golang/tools.git
-    ```
+  ```
+  git clone https://github.com.cnpmjs.org/golang/tools.git
+  ```
 
-  - lodash 的*.pickBy, *.omitBy 方法返回一个使得断言函数为真的对象：
+- lodash 的*.pickBy, *.omitBy 方法返回一个使得断言函数为真的对象：
 
-    ```javascript
-    var object = { a: 1, b: "2", c: 3 };
+  ```javascript
+  var object = { a: 1, b: "2", c: 3 };
 
-    _.pickBy(object, _.isNumber); // {'a': 1, 'c': 3}
-    _.omitBy(object, _.isNumber); // {'b' : '2'}
-    ```
+  _.pickBy(object, _.isNumber); // {'a': 1, 'c': 3}
+  _.omitBy(object, _.isNumber); // {'b' : '2'}
+  ```
 
-  - window.crypto.getRandomValues
+- window.crypto.getRandomValues
 
-    cryptoObj.getRandomValues(typedArray) 方法让你可以获取符合密码学要求的安全的随机值。其中 typedArray 是一个基于整数的 TypedArray，它可以是 Int8Array、Uint8Array、Int16Array、 Uint16Array、 Int32Array 或者 Uint32Array。在数组中的所有的元素会被随机数重写。**生成的随机数储存在 typedArray 数组上。** 即 cryptoObj.getRandomValues 方法会改变传入的 typedArray 参数。
+  cryptoObj.getRandomValues(typedArray) 方法让你可以获取符合密码学要求的安全的随机值。其中 typedArray 是一个基于整数的 TypedArray，它可以是 Int8Array、Uint8Array、Int16Array、 Uint16Array、 Int32Array 或者 Uint32Array。在数组中的所有的元素会被随机数重写。**生成的随机数储存在 typedArray 数组上。** 即 cryptoObj.getRandomValues 方法会改变传入的 typedArray 参数。
 
-  - chromium 中 setTimeout 的 4ms 设置逻辑：
+- chromium 中 setTimeout 的 4ms 设置逻辑：
 
-    ```c++
-    static const int maxIntervalForUserGestureForwarding = 1000; // One second matches Gecko.
-    static const int maxTimerNestingLevel = 5;
-    static const double oneMillisecond = 0.001;
-    // Chromium uses a minimum timer interval of 4ms. We'd like to go
-    // lower; however, there are poorly coded websites out there which do
-    // create CPU-spinning loops.  Using 4ms prevents the CPU from
-    // spinning too busily and provides a balance between CPU spinning and
-    // the smallest possible interval timer.
-    static const double minimumInterval = 0.004;
-    ```
+  ```c++
+  static const int maxIntervalForUserGestureForwarding = 1000; // One second matches Gecko.
+  static const int maxTimerNestingLevel = 5;
+  static const double oneMillisecond = 0.001;
+  // Chromium uses a minimum timer interval of 4ms. We'd like to go
+  // lower; however, there are poorly coded websites out there which do
+  // create CPU-spinning loops.  Using 4ms prevents the CPU from
+  // spinning too busily and provides a balance between CPU spinning and
+  // the smallest possible interval timer.
+  static const double minimumInterval = 0.004;
+  ```
 
-    ```c++
-    double intervalMilliseconds = std::max(oneMillisecond, interval * oneMillisecond);
-    if (intervalMilliseconds < minimumInterval && m_nestingLevel >= maxTimerNestingLevel)
-      intervalMilliseconds = minimumInterval;
-    ```
+  ```c++
+  double intervalMilliseconds = std::max(oneMillisecond, interval * oneMillisecond);
+  if (intervalMilliseconds < minimumInterval && m_nestingLevel >= maxTimerNestingLevel)
+    intervalMilliseconds = minimumInterval;
+  ```
 
-    由此可知在 chromium 中下列代码的输出：
+  由此可知在 chromium 中下列代码的输出：
 
-    ```javascript
-    setTimeout(() => console.log(5), 5);
-    setTimeout(() => console.log(4), 4);
-    setTimeout(() => console.log(3), 3);
-    setTimeout(() => console.log(2), 2);
-    setTimeout(() => console.log(1), 1);
-    setTimeout(() => console.log(0), 0);
+  ```javascript
+  setTimeout(() => console.log(5), 5);
+  setTimeout(() => console.log(4), 4);
+  setTimeout(() => console.log(3), 3);
+  setTimeout(() => console.log(2), 2);
+  setTimeout(() => console.log(1), 1);
+  setTimeout(() => console.log(0), 0);
 
-    // 1
-    // 0
-    // 2
-    // 3
-    // 4
-    // 5
-    ```
+  // 1
+  // 0
+  // 2
+  // 3
+  // 4
+  // 5
+  ```
 
-  - [在线 AST](https://astexplorer.net/#/Z1exs6BWMq)
-  - [eventSource](https://developer.mozilla.org/zh-CN/docs/Server-sent_events/EventSource)
+- [在线 AST](https://astexplorer.net/#/Z1exs6BWMq)
+- [eventSource](https://developer.mozilla.org/zh-CN/docs/Server-sent_events/EventSource)
+
+- [逗号操作符](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Comma_Operator)：
+
+  [参考文章](https://javascriptweblog.wordpress.com/2011/04/04/the-javascript-comma-operator/)，才知道逗号可以做为操作符，而不仅仅是分隔符，例如：
+
+  ```javascript
+  // 实现斐波那契数列
+  function Fab(n) {
+    for (var i = 2, r = [0, 1]; i < n; r.push(r[i - 1] + r[i - 2]), i++);
+    return r;
+  }
+
+  Fab(15);
+  // [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377]
+  ```
+
+  不同于`&&`和`||`操作符，逗号操作符会执行两边的表达式，即：
+
+  ```markdown
+  // (LHE: left hand expression, RHE right hand expression)
+
+  LHE && RHE
+
+  1. Always evaluate LHE
+  2. If LHE is true, evaluate RHE
+
+  LHE || RHE
+
+  1. Always evaluate LHE
+  2. If LHE is false, evaluate RHE
+
+  LHE, RHE
+
+  1. Always evaluate LHE
+  2. Always evaluate RHE
+  ```
