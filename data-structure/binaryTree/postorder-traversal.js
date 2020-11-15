@@ -55,3 +55,5 @@ const postorderTraversalIterator = function (root) {
 
   return result
 }
+
+// TODO:可逆向，使用array.unshift() + 遍历current.right
