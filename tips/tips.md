@@ -85,6 +85,14 @@
   // vue instance mounted
   ```
 
+- 标记语句
+
+  ```javascript
+  label: statement;
+  ```
+
+  可以和 break 或 continue 语句一起使用。标记就是在一条语句前面加个可以引用的标识符，通常用于跳出循环。
+
 - webkit 内核模仿 mac 的滚动条样式
   ```css
   ::-webkit-scrollbar {
