@@ -30,3 +30,20 @@ var preorderTraversal = function (root) {
   preorder(root)
   return result
 };
+
+/** 迭代版 */
+const preorderTraversalIterator = function (root) {
+  const result = []
+  const stack = []
+  let current = root
+  while (current || stack.length > 0) {
+    while (current) {
+      stack.push(current)
+      result.push(current.val)
+      current = current.left
+    }
+    current = stack.pop()
+    current = current.right
+  }
+  return result
+}
