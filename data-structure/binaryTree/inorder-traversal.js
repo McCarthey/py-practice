@@ -13,7 +13,7 @@ function inorderTraversalRecursive(root, array) {
   return array
 }
 
-/**迭代版本，显示维护一个栈结构 */
+/*使用栈的迭代版本，显示维护一个栈结构 */
 function inorderTraversal(root) {
   let current = root
   const stack = []
