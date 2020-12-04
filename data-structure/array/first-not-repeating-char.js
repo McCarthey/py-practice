@@ -14,7 +14,7 @@
  * 时间复杂度O(n^2)：遍历 + indexOf
 */
 function firstNotRepeatingChar(str) {
-  if (!str) return ''
+  if (!str) return ' '
   for (let index = 0; index < str.length; index++) {
     const char = str[index]
     const firstIndex = str.indexOf(char)
@@ -23,5 +23,36 @@ function firstNotRepeatingChar(str) {
       return char
     }
   }
-  return ''
+  return ' '
+}
+
+/**
+ * 巧用Set数据结构 + 正则
+ */
+function firstNotRepeatingCharWithReg(s) {
+  if (!s) return ' '
+  for (let c of new Set(s)) {
+    if (s.match(new RegExp(c, 'g')).length === 1) {
+      return c
+    }
+  }
+  return ' '
+}
+
+/**
+ * 来自剑指offer的更普适用的解法 TODO:
+ */
+function firstNotRepeatingCharWithHashMap(s) {
+  // 运用charCodeAt 和 fromCharCode
+  let container = new Array(256).fill(-1)
+  for (let i = 0; i < s.length; i++) {
+    const code = s[i].charCodeAt()
+    if (container[code] === -1) {
+      container[code] = i
+    } else if (container[code] >= 0) {
+      container[code] = -2
+    }
+  }
+  const strIndex = container.findIndex(r => r >= 0)
+  return String.fromCharCode(strIndex)
 }
