@@ -18,4 +18,15 @@
  * @return {ListNode}
  */
 function removeDuplicateNode(head) {
+  let cur = head
+  const map = { [cur.val]: true }
+  while (cur.next) {
+    if (!map[cur.next.val]) {
+      map[cur.next.val] = true
+      cur = cur.next
+    } else {
+      cur.next = cur.next.next
+    }
+  }
+  return head
 }
