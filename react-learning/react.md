@@ -391,6 +391,14 @@ export default class Demo extends React.Component {
   const width = ref.current.style.width; // 仅当元素设置了该内联属性时才有值
   ```
 
+* React Hooks 原理
+
+  [参考](https://www.infoq.cn/article/mMWGcQTqzUj3JbY0Vhls?utm_source=related_read_bottom&utm_medium=article)
+
+  - 为什么不要在循环，条件或嵌套函数中调用 Hook， 确保总是在你的 React 函数的最顶层调用他们：
+
+    答：因为我们是根据调用 hook 的顺序依次将值存入数组中，如果在判断逻辑循环嵌套中，就有可能导致更新时不能获取到对应的值，从而导致取值混乱。同时 useEffect 第二个参数是数组，也是因为它就是以数组的形式存入的。
+
 ## 一些概念
 
 - React Core：
