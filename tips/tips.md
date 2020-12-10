@@ -899,16 +899,48 @@ var allElements = document.getElementsByTagName("*");
   ```javascript
   const message = " ";
   if (message.replace(/(^\s*)|(\s*$)/g, "").length === 0) {
-    console.log("Message cannot be
-
-  ```
-
-  empty!");
+    console.log("Message cannot be empty!");
   }
-
   ```
 
+- 字符串 slice, substring, substr 区别
+
+  slice, substring 参数均为(start [, end])，返回从 start 到 end(不包含)的子字符串，即包左不包右，区别在于：
+
+  - substring 允许 start 大于 end，如
+
+    ```javascript
+    let str = "stringify";
+
+    // 这些对于 substring 是相同的
+    str.substring(2, 6); // "ring"
+    str.substring(6, 2); // "ring"
+
+    // 但对 slice 是不同的
+    str.slice(2, 6); // "ring"（一样）
+    str.slice(6, 2); // ""（空字符串）
+    ```
+
+  - slice 支持负参数，它们被视为 0
+
+  str.substr(start [, length]) 返回字符串从 start 开始的给定 length 的部分。start 可为负数，从结尾算起，例如：
+
+  ```javascript
+  str.substr(2, 4); // "ring"
+  str.substr(-4, 2); // "gi"
   ```
+
+- 字符串 codePointAt，String.fromCodePoint
+
+  - codePointAt(pos)：返回位置在 pos 处的字符 UTF-16 编码：
+    ```javascript
+    let str = "Widget with id";
+    str.codePointAt(2); // 100
+    ```
+  - String.fromCodePoint(code)：通过数字 code 创建字符：
+    ```javascript
+    String.fromCodePoint(90); // Z
+    ```
 
 - facebook pixel
   用法同 GA
