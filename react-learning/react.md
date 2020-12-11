@@ -376,6 +376,7 @@ export default class Demo extends React.Component {
 * React Fiber
 
   [参考](https://mp.weixin.qq.com/s/7MQp1CrZFwNd4dQ3y2C-UA)
+  [参考](https://zhuanlan.zhihu.com/p/37095662)
 
 * React 获取节点样式
 
