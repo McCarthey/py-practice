@@ -1134,7 +1134,9 @@ var allElements = document.getElementsByTagName("*");
     },
   });
   ```
+- 线程 VS 进程
 
+  
 - 判断是否是 iphoneX XR XS
 
   ```javascript

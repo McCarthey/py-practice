@@ -1,3 +1,4 @@
+"use strict"
 /**
  * 阶乘函数
  */
@@ -38,6 +39,6 @@ const curryingTailFactorial = currying(innerTailFactorial, 1)
 
 /**ES6默认参数 */
 function defaultParamTailFactorial(n, r = 1) {
-  if (n === 1) return 1
+  if (n === 1) return r
   return defaultParamTailFactorial(n - 1, n * r)
 }
