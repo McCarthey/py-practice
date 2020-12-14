@@ -1,3 +1,7 @@
+// https://github.com/ruanyf/es6tutorial/issues/703
+/**
+ * 实测尾递归优化在 node 和 chrome 中并没有开启，即使是严格模式也没有
+ */
 "use strict"
 /**
  * 阶乘函数
