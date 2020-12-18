@@ -63,19 +63,22 @@ var objFactory = function () {
 
 ```javascript
 function myInstanceof(left, right) {
+  // 左侧类型不是对象则返回 false
+  if ((typeof left !== "object" && typeof left !== "function") || left === null)
+    return false;
+  // 获取左侧实例对象的内部[[prototype]]属性
+  let proto = Object.getPrototypeOf(left);
   // 获取右侧类型的prototype，如Number.prototype, Bar.prototype
   let prototype = right.prototype;
-  // 获取左侧实例对象的内部[[prototype]]属性
-  left = left.__proto__;
   // 沿着原型链逐级查找，直到找到或者[[prototype]]为null
   while (true) {
-    if (left === null) {
+    if (proto === null) {
       return false;
     }
-    if (left === prototype) {
+    if (proto === prototype) {
       return true;
     }
-    left = left.__proto__; // 继续查找
+    proto = Object.getPrototypeOf(proto); // 继续查找
   }
 }
 ```
