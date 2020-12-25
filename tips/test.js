@@ -119,3 +119,78 @@ setImmediate(function () {
     console.log('immediate2_then')
   })
 })
+
+
+function debounce(fn, wait) {
+  let timer
+  return function () {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      console.log(this, arguments)
+      fn.apply(this, arguments)
+      timer = null
+    }, wait)
+  }
+}
+
+function debounceRightNow(func, wait = 500, immediate = true) {
+  let timer, context, args
+
+  // 延迟执行的函数
+  const later = () => setTimeout(() => {
+    timer = null
+    if (!immediate) {
+      func.apply(context, args)
+      context = null
+      args = null
+    }
+  }, wait)
+
+  return function (...params) {
+    // 如果没有定时器，则设定
+    if (!timer) {
+      timer = later()
+      // 如果立即执行，则调用函数
+      // 否则缓存执行上下文 和 参数
+      if (immediate) {
+        func.apply(this, params)
+      } else {
+        context = this
+        args = params
+      }
+    } else {
+      clearTimeout(timer)
+      timer = later()
+    }
+  }
+}
+
+
+function debounce2(func, wait = 300, immediate = true) {
+  let timer, args, context
+  const later = () => setTimeout(() => {
+    timer = null
+    if (!immediate) {
+      func.apply(context, args)
+      args = null
+      context = null
+    }
+  }, wait)
+
+  return function (...params) {
+    if (!timer) {
+      timer = later()
+      if (immediate) {
+        func.apply(this, params)
+      } else {
+        args = params
+        context = this
+      }
+    } else {
+      clearTimeout(timer)
+      timer = later()
+    }
+  }
+}

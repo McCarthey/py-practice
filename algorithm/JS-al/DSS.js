@@ -15,13 +15,14 @@ function DFS(node) {
       const item = stack.pop()
       nodeList.push(item.val)
       const children = item.children
-      for (let i = children.length - 1; i >= 0; i--) { // 要逆序入栈
+      for (let i = children.length - 1; i >= 0; i--) {
         stack.push(children[i])
       }
     }
   }
   return nodeList
 }
+
 /**
  * test: 
  * <div>
@@ -31,6 +32,7 @@ function DFS(node) {
  *        <img />
  *      </a>
  *    </li>
+ *    <li />
  *    <li>
  *      <span />
  *    </li>
@@ -45,23 +47,20 @@ let test = {
     val: 'ul',
     children: [{
       val: 'li',
-      children: [
-        {
-          val: 'a', children: [
-            {
-              val: 'img', children: []
-            }]
-        },
-        {
-          val: 'li', children: [
-            {
-              val: 'span', children: []
-            }]
-        },
-        {
-          val: 'li', children: []
-        }
-      ]
+      children: [{
+        val: 'a',
+        children: [{
+          val: 'img', children: []
+        }]
+      }]
+    },
+    {
+      val: 'li', children: []
+    },
+    {
+      val: 'li', children: [{
+        val: 'span', children: []
+      }]
     }]
   },
   {
