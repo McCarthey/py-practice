@@ -2244,3 +2244,8 @@ str.startsWith(searchString[, position])
   1. Always evaluate LHE
   2. Always evaluate RHE
   ```
+
+- chrome 扩展杂记
+
+  [chrome create new tab](https://developer.chrome.com/docs/extensions/reference/tabs/#method-create)
+  [chrome message passing 新 API 全指南](https://juejin.cn/post/6844903823115304973)

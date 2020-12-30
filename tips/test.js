@@ -194,3 +194,77 @@ function debounce2(func, wait = 300, immediate = true) {
     }
   }
 }
+
+
+// 生意参谋 流量看板 自动点击脚本，兼容低速网络
+function sleep(time) {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), time * 1000)
+  })
+}
+
+async function autoClick() {
+  const tabContainer = document.querySelector('.summary-main-index-tab')
+  if (!tabContainer) return false
+  const tabs = tabContainer.childNodes
+  const dataContainer = document.querySelector('#overviewBoardSummaryIndexesTrend')
+  await sleep(3)
+  for (let i = 0; i < tabs.length; i++) {
+    tabs[i].click()
+    await isDomExist(dataContainer, '.alife-one-design-sycm-indexes-trend-index-content-container')
+    const subTabsContainer = dataContainer.querySelector('.alife-one-design-sycm-indexes-trend-index-content-container')
+    await isDomExist(subTabsContainer, '.alife-one-design-sycm-indexes-trend-index-item-multiple-line-selectable', true)
+    const subTabs = subTabsContainer.querySelectorAll('.alife-one-design-sycm-indexes-trend-index-item-multiple-line-selectable')
+    for (let j = 0; j < subTabs.length; j++) {
+      subTabs[j].click()
+      await sleep(1)
+    }
+  }
+}
+
+
+async function isDomExist(target, selector, list = false) {
+  return new Promise((resolve) => {
+    let timer = null
+    const max = 60
+    let count = 0
+    timer = setInterval(() => {
+      const dom = list ? target.querySelector(selector) : target.querySelectorAll(selector)
+      if (count >= max) {
+        clearInterval(timer)
+        resolve()
+      }
+      if ('length' in dom) {
+        if (dom.length !== 0) {
+          clearInterval(timer)
+          resolve()
+        } else {
+          count++
+        }
+      } else if (dom) {
+        clearInterval(timer)
+        resolve()
+      } else {
+        count++
+      }
+    }, 500)
+  })
+}
+
+const targetNode = document.querySelector('.ebase-ModernFrame__main')
+
+const config = { childList: true, subtree: true };
+
+const callback = async function (mutationsList, observer) {
+  const tabContainer = document.querySelector('.summary-main-index-tab')
+  if (!tabContainer) return false
+  console.log('[start auto click in 2s]')
+  observer.disconnect()
+  console.log('[disconnect observer]')
+  await sleep(2)
+  autoClick()
+}
+
+const observer = new MutationObserver(callback);
+
+observer.observe(targetNode, config);
