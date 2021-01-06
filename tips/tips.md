@@ -2249,3 +2249,15 @@ str.startsWith(searchString[, position])
 
   [chrome create new tab](https://developer.chrome.com/docs/extensions/reference/tabs/#method-create)
   [chrome message passing 新 API 全指南](https://juejin.cn/post/6844903823115304973)
+
+- Parcel 构建
+
+  [Parcel 中文文档](https://zh.parceljs.org/getting_started.html)
+  如果遇到 regeneratorRuntime is not defined 的报错时，是使用了 async/await 导致的， 可在 package.json 中设置
+  browserslist 来解决，如：
+
+  ```json
+  {
+    "browserslist": ["last 1 Chrome version"]
+  }
+  ```
