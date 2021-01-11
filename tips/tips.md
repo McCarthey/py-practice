@@ -2245,6 +2245,16 @@ str.startsWith(searchString[, position])
   2. Always evaluate RHE
   ```
 
+- 空值合并运算符（nullish-coalescing-operator）
+
+  ```javascript
+  const name = data?.spec?.template?.spec?.metadata?.name ?? "defaultName";
+  ```
+
+  如果它左侧表达式的结果是 undefined，name 就会取右侧的 defaultName；
+  如果使用 || 短路操作符的话，当左侧表达式的值是 0 、空字符串等假值，结果就不同了，因此还需要额外判断。
+  故 ?? 就是为了取代 ||，来设置默认值的。
+
 - chrome 扩展杂记
 
   [chrome create new tab](https://developer.chrome.com/docs/extensions/reference/tabs/#method-create)
