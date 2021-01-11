@@ -2252,8 +2252,19 @@ str.startsWith(searchString[, position])
   ```
 
   如果它左侧表达式的结果是 undefined，name 就会取右侧的 defaultName；
-  如果使用 || 短路操作符的话，当左侧表达式的值是 0 、空字符串等假值，结果就不同了，因此还需要额外判断。
+  如果使用 || 短路操作符的话，当左侧表达式的值是 0 、空字符串等 [falsy 值](https://developer.mozilla.org/zh-CN/docs/Glossary/Falsy)，结果就不同了，因此还需要额外判断。
   故 ?? 就是为了取代 ||，来设置默认值的。
+
+  falsy：
+
+  - false
+  - 0
+  - -0
+  - 0n
+  - "", '', ``
+  - null
+  - undefined
+  - NaN
 
 - chrome 扩展杂记
 
