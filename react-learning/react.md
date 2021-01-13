@@ -240,6 +240,28 @@ export default class Demo extends React.Component {
     </Select>;
     ```
 
+  - antd pro 删除生产环境中的 console.\*
+
+    安装引入 babel 的插件
+
+    ```
+    npm i babel-plugin-transform-remove-console -S -D
+    ```
+
+    在项目的 config 中引入额外的 babel 插件，仅在生产环境下启用：
+
+    ```javascript
+    export default {
+      //...
+      extraBabelPlugins: [
+        process.env.REACT_APP_ENV === "pro"
+          ? ["transform-remove-console", { exclude: ["error", "warn"] }]
+          : "",
+      ],
+      //...
+    };
+    ```
+
 * antd tree 可控，并支持 onSelect 选中
 
   ```tsx
