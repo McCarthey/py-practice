@@ -2271,7 +2271,15 @@ str.startsWith(searchString[, position])
   [chrome create new tab](https://developer.chrome.com/docs/extensions/reference/tabs/#method-create)
   [chrome message passing 新 API 全指南](https://juejin.cn/post/6844903823115304973)
 
-- Parcel 构建
+- Webpack
+
+  [Webpack 中文文档](https://webpack.docschina.org)
+
+  - [DefinePlugin](https://webpack.docschina.org/plugins/define-plugin/)
+
+    允许在编译时创建配置的全局常量
+
+- Parcel
 
   [Parcel 中文文档](https://zh.parceljs.org/getting_started.html)
   如果遇到 regeneratorRuntime is not defined 的报错时，是使用了 async/await 导致的， 可在 package.json 中设置
