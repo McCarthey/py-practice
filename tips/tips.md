@@ -152,7 +152,7 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   word-break: break-word;
   word-wrap: normal;
@@ -1785,7 +1785,7 @@ document.body.appendChild(s);
   }
   ```
 
-  即可排除类名为 active 的 <a> 标签的 hover 时的样式
+  即可排除类名为 active 的 <a> 标签的 hover 时的样式 </a>
 
 - css +选择器
 
@@ -1851,35 +1851,111 @@ document.body.appendChild(s);
   <a onClick={() => downloadByData(imageUrl, "图片名")}>下载图片</a>;
   ```
 
-````
-
 - html 缓存解决办法
 
-[参考 github 上 antd 的 issue](https://github.com/ant-design/ant-design-pro/issues/1365#issuecomment-384496088)
+  [参考 github 上 antd 的 issue](https://github.com/ant-design/ant-design-pro/issues/1365#issuecomment-384496088)
 
 - encodeURI 和 encodeURIComponent 区别
 
-两者都可以对 URI 进行编码，使用一到四个转义序列来表示字符串中的字符的 UTF-8 编码
+  两者都可以对 URI 进行编码，使用一到四个转义序列来表示字符串中的字符的 UTF-8 编码
 
-encodeURI 不会替换以下字符：;、,、/、?、:、@、&、=、+、\$、字母、数字、-、\_、.、!、~、\*、'、(、)、#
+  encodeURI 不会替换以下字符：;、,、/、?、:、@、&、=、+、\$、字母、数字、-、\_、.、!、~、\*、'、(、)、#
 
-encodeURIComponent 会转义除了字母、数字、(、)、.、!、~、\*、'、-和\_之外的所有字符。
+  encodeURIComponent 会转义除了字母、数字、(、)、.、!、~、\*、'、-和\_之外的所有字符。
 
 - VSCode 中查找/替换字符串
 
-可以点击使用‘正则表达式’来进行高级查找
+  可以点击使用‘正则表达式’来进行高级查找
 
-比如，我需要将复制过来的 JSON 数据字符串转成 TS 的接口中的 string："(\S+)" 替换成 string（改进版：'(?!@)(\S\*)'，可以匹配''，而且不会匹配'@/type/xxxx'之类的引用文件）
+  比如，我需要将复制过来的 JSON 数据字符串转成 TS 的接口中的 string："(\S+)" 替换成 string（改进版：'(?!@)(\S\*)'，可以匹配''，而且不会匹配'@/type/xxxx'之类的引用文件）
+
+- VSCode 项目插件及设置
+
+  项目根目录下创建.vscode 目录，编写其中的 setting.json、extensions.json 文件，
+
+  ```json
+  // setting.json
+  {
+    "search.exclude": {
+      "**/node_modules": true,
+      "dist": true,
+      "yarn.lock": true
+    },
+    "editor.formatOnSave": true,
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[markdown]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[less]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[scss]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
+    ],
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true,
+      "source.fixAll.stylelint": true
+    },
+    // 使用 stylelint 自身的校验即可
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false
+  }
+  ```
+
+  ```json
+  // extension.json
+  {
+    "recommendations": [
+      "jerryhong.autofilename",
+      "streetsidesoftware.code-spell-checker",
+      "dsznajder.es7-react-js-snippets",
+      "dbaeumer.vscode-eslint",
+      "eamodio.gitlens",
+      "esbenp.prettier-vscode",
+      "stylelint.vscode-stylelint",
+      "ms-vscode.vscode-typescript-tslint-plugin"
+    ]
+  }
+  ```
+
+  使用时在插件扩展中
 
 - ES6 中 String.prototype.startsWith()
 
-接受两个参数
+  接受两个参数
 
-```javascript
-str.startsWith(searchString[, position])
-````
+  ```javascript
+  str.startsWith(searchString[, position])
+  ```
 
-如果在字符串的开头找到了给定的字符则返回 true；否则返回 false。
+  如果在字符串的开头找到了给定的字符则返回 true；否则返回 false。
 
 - Javascript 引擎
 
