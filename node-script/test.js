@@ -6,13 +6,13 @@ const exec = util.promisify(require('child_process').exec);
 
 exec('git rev-parse --abbrev-ref HEAD', (err, stdout, stderr) => {
   console.log('git 分支结果', stdout, stdout.split(''))
-  if (stdout.includes('test')) {
-    console.log('[哦吼是test分支，拉代码！]')
-    exec('git pull', (e, sto, ste) => {
-      console.log('[git pull结果]', sto)
-    })
-    return
-  }
+  // if (stdout.includes('test')) {
+  console.log('[哦吼是test分支，拉代码！]')
+  exec('git pull', (e, sto, ste) => {
+    console.log('[git pull结果]', sto)
+  })
+  return
+  // }
 })
 
 // exec('git branch', (err, stdout, stderr) => {
