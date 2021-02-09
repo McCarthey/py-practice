@@ -1678,6 +1678,12 @@ document.body.appendChild(s);
     npm cache clean -f
     ```
 
+  - 查看当前登录的账号
+
+    ```
+    npm whoami
+    ```
+
 - coverage
 
   chrome59 之后推出的 css/js 代码覆盖率检测工具，检查文件中未使用的代码，以优化性能。
