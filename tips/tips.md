@@ -1650,6 +1650,10 @@ document.body.appendChild(s);
     - 如果已经存在 node_modules，则在 npm ci 前将自动删除 node_modules；
     - 它不会写入 package.json 或 package-lock.json，安装基本上是冻结的；
 
+  - peerDependencies 作用
+
+    目的是提示宿主环境去安装满足插件 peerDependencies 所指定依赖的包，然后在插件 import 或 require 所依赖的包时，永远都引用宿主环境统一安装的 npm 包，最终解决插件与所依赖包不一致的问题。
+
 - coverage
 
   chrome59 之后推出的 css/js 代码覆盖率检测工具，检查文件中未使用的代码，以优化性能。
