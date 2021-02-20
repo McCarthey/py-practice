@@ -2075,9 +2075,15 @@ document.body.appendChild(s);
   // '中文大侠'
   ```
 
+- Number.prototype.toString([radix])
+
+  返回指定 Number 对象的字符串表示形式。
+
+  可选参数 radix：指定要用于数字到字符串的转换基数，必须从 2 到 36 （0-z 共 36 个），如果未指定，则默认 10。
+
 - css background-position：
 
-  当使用 backgroun-size: cover 时，最好调整一下 background-position，以至于图片中的主体可以呈现在合适的位置上（设计希望的位置）
+  当使用 background-size: cover 时，最好调整一下 background-position，以至于图片中的主体可以呈现在合适的位置上（设计希望的位置）
 
 - yarn 安装 node-sass 失败时
 
