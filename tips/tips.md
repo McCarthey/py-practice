@@ -1773,6 +1773,31 @@ document.body.appendChild(s);
   }
   ```
 
+- 后端返回 xls、csv 数据的文件下载方法
+
+  在请求参数中，须指定响应类型
+
+  ```
+  responseType: 'arrayBuffer'
+  ```
+
+  在响应中处理，并构建 a 标签下载后删除：
+
+  ```javascript
+  let blob = new Blob([data], { type: type });
+  const a = document.createElement("a");
+  // 创建URL
+  const blobUrl = window.URL.createObjectURL(blob);
+  a.download = fileName;
+  a.href = blobUrl;
+  document.body.appendChild(a);
+  // 下载文件
+  a.click();
+  // 释放内存
+  URL.revokeObjectURL(blobUrl);
+  document.body.removeChild(a);
+  ```
+
 - box-shadow： inset
 
   如果没有指定 inset，默认阴影在边框外，即阴影向外扩散。
