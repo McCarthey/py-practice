@@ -1672,6 +1672,12 @@ document.body.appendChild(s);
 
     空格切换选择，Enter 开始更新
 
+  - 清除 npm 缓存
+
+    ```
+    npm cache clean -f
+    ```
+
 - coverage
 
   chrome59 之后推出的 css/js 代码覆盖率检测工具，检查文件中未使用的代码，以优化性能。
