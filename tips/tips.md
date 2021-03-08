@@ -2309,6 +2309,40 @@ document.body.appendChild(s);
 
   cryptoObj.getRandomValues(typedArray) 方法让你可以获取符合密码学要求的安全的随机值。其中 typedArray 是一个基于整数的 TypedArray，它可以是 Int8Array、Uint8Array、Int16Array、 Uint16Array、 Int32Array 或者 Uint32Array。在数组中的所有的元素会被随机数重写。**生成的随机数储存在 typedArray 数组上。** 即 cryptoObj.getRandomValues 方法会改变传入的 typedArray 参数。
 
+- 前端导出 excel
+
+  ```javascript
+  function exportCsv(obj) {
+    console.log("[excel data]", obj);
+    // 列表头部
+    let title = obj.title;
+    let dataKey = Object.keys(obj.data[0]);
+    // 列表内容
+    let data = obj.data;
+    let str = [];
+    // 拼接 enter 键或者换行符
+    str.push(obj.title.join(",") + "\r\n");
+    for (let i = 0; i < data.length; i++) {
+      let temp = [];
+      for (let j = 0; j < dataKey.length; j++) {
+        temp.push(data[i][dataKey[j]]);
+      }
+      // 拼接 enter 键或者换行符
+      str.push(temp.join(",") + "\r\n");
+    }
+
+    let blob = new Blob(["\uFEFF" + str.join("")], {
+      type: "text/csv;charset=utf-8",
+    });
+    const url = window.URL.createObjectURL(blob);
+    let downloadLink = document.createElement("a");
+    downloadLink.href = url;
+    downloadLink.download = "result.csv"; // 导出的文件名
+    downloadLink.click();
+    window.URL.revokeObjectURL(url);
+  }
+  ```
+
 - chromium 中 setTimeout 的 4ms 设置逻辑：
 
   ```c++
