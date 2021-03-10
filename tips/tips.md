@@ -1683,6 +1683,21 @@ document.body.appendChild(s);
     ```
     npm whoami
     ```
+  
+  - npm link 
+
+    在本地开发 npm 模块时，可以使用 npm link 命令，将 npm 模块链接到对应的运行项目中去，方便对模块调试。
+
+    在正在开发的模块目录下执行 npm link
+    ```
+    cd project/my-components
+    npm link
+    ```
+    在将要调用上述模块的项目中 执行 npm link [moduleName]
+    ```
+    cd project/some-project
+    npm link my-components
+    ```
 
 - coverage
 
