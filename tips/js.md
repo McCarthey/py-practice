@@ -5,28 +5,28 @@
 每个函数都有 prototype 属性（除了 let fun = Function.prototype.bind()以外）,该属性的值是一个对象，只有一个 constructor 属性，对应着构造函数
 
 ```javascript
-Foo.prototype.constructor === Foo // true
+Foo.prototype.constructor === Foo; // true
 ```
 
 每个对象都有**proto**属性，指向了创建该对象的构造函数的原型。其实指向的是内部属性[[prototype]]。对象可以通过**proto**来寻找不属于该对象的属性，**proto**将对象链接成了原型链。
 
 ```javascript
 function Foo() {
-  console.log('Foo')
+  console.log("Foo");
 }
-let foo = new Foo()
+let foo = new Foo();
 // 获取foo对象的原型
-Object.getPrototypeOf(foo) === Foo.prototype // true
+Object.getPrototypeOf(foo) === Foo.prototype; // true
 // 判断一个对象是否是另一个对象的原型
-Foo.prototype.isPrototypeOf(foo) // true
+Foo.prototype.isPrototypeOf(foo); // true
 // 因为Foo没有这个方法isPrototypeOf 因此Foo需要沿着原型继续查找，因此相当于
-Foo.prototype.__proto__.isPrototypeOf(foo) // true
+Foo.prototype.__proto__.isPrototypeOf(foo); // true
 // 通过在构造函数的原型上添加同名属性改写原生方法
 Foo.prototype.valueOf = function () {
-  console.log('Cunstom valueOf method')
-}
+  console.log("Cunstom valueOf method");
+};
 
-foo.valueOf() // 'Cunstom valueOf method' 屏蔽了Object上的原生valueOf方法
+foo.valueOf(); // 'Cunstom valueOf method' 屏蔽了Object上的原生valueOf方法
 ```
 
 ### 自己实现一个 new
@@ -34,15 +34,15 @@ foo.valueOf() // 'Cunstom valueOf method' 屏蔽了Object上的原生valueOf方�
 ```javascript
 function create() {
   // 创建一个空对象
-  let obj = {}
+  let obj = {};
   // 获取构造函数
-  let Con = [].shift.call(arguments)
+  let Con = [].shift.call(arguments);
   // 链接到原型
-  obj.__proto__ = Con.prototype
+  obj.__proto__ = Con.prototype;
   // 绑定this，执行构造函数，即使新创建的 obj 对象作为this的上下文
-  let result = Con.apply(obj, arguments)
+  let result = Con.apply(obj, arguments);
   // 确保new出来的是个对象
-  return typeof result === 'object' ? result : obj
+  return typeof result === "object" ? result : obj;
 }
 ```
 
@@ -50,12 +50,29 @@ function create() {
 // Or
 var objFactory = function () {
   var obj = {},
-    Constructor = [].shift.call(arguments)
-  obj.__proto__ = Constructor.prototype
-  var ret = Constructor.apply(obj, arguments)
-  return typeof ret === 'object' ? ret : obj
-}
+    Constructor = [].shift.call(arguments);
+  obj.__proto__ = Constructor.prototype;
+  var ret = Constructor.apply(obj, arguments);
+  return typeof ret === "object" ? ret : obj;
+};
 ```
+
+### typeof 操作符
+
+```javascript
+typeof null; // 'object'
+typeof undefined; // 'undefined'
+typeof function name() {}; // 'function'
+typeof (function name() {})(); // 'undefined'
+typeof [1, 2, 3]; // 'object'
+typeof /.+?(.*)/; // 'object'
+typeof String; // 'function'
+typeof RegExp; // 'function'
+typeof asdfghjkl; // 'undefined'
+typeof 汉字; // 'undefined'
+```
+
+可见`typeof`操作符相对比较安全
 
 ### 自己实现一个 instanceof
 
@@ -64,21 +81,21 @@ var objFactory = function () {
 ```javascript
 function myInstanceof(left, right) {
   // 左侧类型不是对象则返回 false
-  if ((typeof left !== 'object' && typeof left !== 'function') || left === null)
-    return false
+  if ((typeof left !== "object" && typeof left !== "function") || left === null)
+    return false;
   // 获取左侧实例对象的内部[[prototype]]属性
-  let proto = Object.getPrototypeOf(left)
+  let proto = Object.getPrototypeOf(left);
   // 获取右侧类型的prototype，如Number.prototype, Bar.prototype
-  let prototype = right.prototype
+  let prototype = right.prototype;
   // 沿着原型链逐级查找，直到找到或者[[prototype]]为null
   while (true) {
     if (proto === null) {
-      return falseu
+      return falseu;
     }
     if (proto === prototype) {
-      return true
+      return true;
     }
-    proto = Object.getPrototypeOf(proto) // 继续查找
+    proto = Object.getPrototypeOf(proto); // 继续查找
   }
 }
 ```
@@ -87,15 +104,15 @@ function myInstanceof(left, right) {
 
 ```javascript
 Function.prototype.myCall = function (context) {
-  var context = context || window
+  var context = context || window;
   // 给context添加一个属性
-  context.fn = this
+  context.fn = this;
   // 将context后面的参数取出来
-  var args = [...arguments].slice(1)
-  var result = context.fn(...args)
-  delete context.fn
-  return result
-}
+  var args = [...arguments].slice(1);
+  var result = context.fn(...args);
+  delete context.fn;
+  return result;
+};
 ```
 
 ### 自己实现 apply
@@ -104,13 +121,13 @@ Function.prototype.myCall = function (context) {
 
 ```javascript
 Function.prototype.myApply = function (context) {
-  const ctx = context || window
-  const resetArgs = [...arguments][1]
-  ctx.fn = this
-  const result = ctx.fn(resetArgs)
-  delete ctx.fn
-  return result
-}
+  const ctx = context || window;
+  const resetArgs = [...arguments][1];
+  ctx.fn = this;
+  const result = ctx.fn(resetArgs);
+  delete ctx.fn;
+  return result;
+};
 ```
 
 ### 自己实现 bind
@@ -119,29 +136,29 @@ bind 和 call, apply 作用也是一致的，只是该方法会返回一个函�
 
 ```javascript
 Function.prototype.myBind = function (context) {
-  const func = this
-  const restArgs = [...arguments].slice(1)
+  const func = this;
+  const restArgs = [...arguments].slice(1);
 
   return function () {
-    const args = [...restArgs, ...arguments] // 合并 bind时传入的参数 和 执行返回的函数时的参数，因此可以使用bind实现函数柯里化
-    return func.apply(context, args)
-  }
-}
+    const args = [...restArgs, ...arguments]; // 合并 bind时传入的参数 和 执行返回的函数时的参数，因此可以使用bind实现函数柯里化
+    return func.apply(context, args);
+  };
+};
 ```
 
 柯里化实现，例如：
 
 ```javascript
-let a = { value: 5 }
+let a = { value: 5 };
 function getValue(name, age) {
-  console.log(name)
-  console.log(age)
-  console.log(this.value)
+  console.log(name);
+  console.log(age);
+  console.log(this.value);
 }
 
-getValue.myBind(a, '344', 56)() // '344', 56 , 5
-getValue.myBind(a, '344')(56) // '344', 56 , 5
-getValue.myBind(a)('344', 56) // '344', 56 , 5
+getValue.myBind(a, "344", 56)(); // '344', 56 , 5
+getValue.myBind(a, "344")(56); // '344', 56 , 5
+getValue.myBind(a)("344", 56); // '344', 56 , 5
 ```
 
 ### 防抖实现
@@ -152,46 +169,46 @@ getValue.myBind(a)('344', 56) // '344', 56 , 5
 
 ```javascript
 // 示例：监听滚动事件
-let timer
+let timer;
 window.onscroll = function () {
   if (timer) {
-    clearTimeout(timer)
+    clearTimeout(timer);
   }
   timer = setTimeout(() => {
     let scrollTop =
-      document.body.scrollTop || document.documentElement.scrollTop
-    console.log(`滚动位置：${scrollTop}`)
-    timer = null
-  }, 500)
-}
+      document.body.scrollTop || document.documentElement.scrollTop;
+    console.log(`滚动位置：${scrollTop}`);
+    timer = null;
+  }, 500);
+};
 ```
 
 抽象函数：
 
 ```javascript
 const debounce = (func, delay) => {
-  let timer
+  let timer;
   return function () {
     if (timer) {
-      clearTimeout(timer)
+      clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      func.apply(this, arguments)
-      timer = null
-    }, delay)
-  }
-}
+      func.apply(this, arguments);
+      timer = null;
+    }, delay);
+  };
+};
 ```
 
 使用
 
 ```javascript
 function onScroll() {
-  let scrollTop = document.body.scrollTop || document.documentElement.scrollTop
-  console.log('滚动条位置：' + scrollTop)
+  let scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+  console.log("滚动条位置：" + scrollTop);
 }
 
-window.onscroll = debounce(onScroll, 500)
+window.onscroll = debounce(onScroll, 500);
 ```
 
 ### 节流实现
@@ -202,38 +219,38 @@ window.onscroll = debounce(onScroll, 500)
 
 ```javascript
 // 示例：监听滚动事件
-let startTime = Date.now() //开始时间
-let time = 500 //间隔时间
-let timer
+let startTime = Date.now(); //开始时间
+let time = 500; //间隔时间
+let timer;
 window.onscroll = function throttle() {
-  let currentTime = Date.now()
+  let currentTime = Date.now();
   if (currentTime - startTime >= time) {
     let scrollTop =
-      document.body.scrollTop || document.documentElement.scrollTop
-    console.log('滚动条位置：' + scrollTop)
-    startTime = currentTime
+      document.body.scrollTop || document.documentElement.scrollTop;
+    console.log("滚动条位置：" + scrollTop);
+    startTime = currentTime;
   } else {
-    clearTimeout(timer)
+    clearTimeout(timer);
     timer = setTimeout(function () {
-      throttle()
-    }, 50)
+      throttle();
+    }, 50);
   }
-}
+};
 ```
 
 抽象函数：
 
 ```javascript
 function throttle(func, delay) {
-  let startTime = Date.now()
+  let startTime = Date.now();
   return function () {
-    let _this = this
-    let currentTime = Date.now()
+    let _this = this;
+    let currentTime = Date.now();
     if (currentTime - startTime >= delay) {
-      func.apply(_this, arguments)
-      startTime = currentTime
+      func.apply(_this, arguments);
+      startTime = currentTime;
     }
-  }
+  };
 }
 ```
 
@@ -243,10 +260,10 @@ function throttle(func, delay) {
 
 ```javascript
 function add(a, b) {
-  return a + b
+  return a + b;
 }
 
-add(1, 2)
+add(1, 2);
 ```
 
 柯里化后，
@@ -254,42 +271,42 @@ add(1, 2)
 ```javascript
 function add(a) {
   return function (b) {
-    return a + b
-  }
+    return a + b;
+  };
 }
 
-add(1)(2)
+add(1)(2);
 
 // 或者采用更简洁的箭头函数写法
-const add = (a) => (b) => a + b
+const add = (a) => (b) => a + b;
 ```
 
 对于不定参数的函数的柯里化：
 
 ```javascript
 const curry = (fn) => {
-  let args = []
+  let args = [];
   return function inner(...newArgs) {
     if (newArgs.length) {
-      args = [...args, ...newArgs]
-      return inner
+      args = [...args, ...newArgs];
+      return inner;
     } else {
-      let result = fn.apply(this, args)
-      args = []
-      return result
+      let result = fn.apply(this, args);
+      args = [];
+      return result;
     }
-  }
-}
+  };
+};
 
 function add(...args) {
-  return args.reduce((acc, cur) => acc + cur, 0)
+  return args.reduce((acc, cur) => acc + cur, 0);
 }
 
-const curryAdd = curry(add)
-curryAdd(1)(2)(3)(4)() // 10
-curryAdd(1)(2)(3, 4)() // 10
-curryAdd(1)(2, 3, 4)() // 10
-curryAdd(1, 2, 3, 4)() //10
+const curryAdd = curry(add);
+curryAdd(1)(2)(3)(4)(); // 10
+curryAdd(1)(2)(3, 4)(); // 10
+curryAdd(1)(2, 3, 4)(); // 10
+curryAdd(1, 2, 3, 4)(); //10
 ```
 
 ### 自己实现 Promise
@@ -297,46 +314,46 @@ curryAdd(1, 2, 3, 4)() //10
 ```javascript
 // 简单版
 function myPromise(constructor) {
-  let that = this
-  this.state = 'pending'
-  this.value = undefined
-  this.reason = undefined
+  let that = this;
+  this.state = "pending";
+  this.value = undefined;
+  this.reason = undefined;
 
   function resolve(value) {
-    if (that.state === 'pending') {
-      that.value = value
-      that.state = 'resolved'
+    if (that.state === "pending") {
+      that.value = value;
+      that.state = "resolved";
     }
   }
 
   function reject(reason) {
-    if (that.state === 'pending') {
-      that.reason = reason
-      that.state = 'rejected'
+    if (that.state === "pending") {
+      that.reason = reason;
+      that.state = "rejected";
     }
   }
 
   try {
-    constructor(resolve, reject)
+    constructor(resolve, reject);
   } catch (e) {
-    reject(e)
+    reject(e);
   }
 }
 
 myPromise.prototype.then = function (onFulfilled, onRejected) {
-  if (this.state === 'resolved') {
-    onFulfilled(this.value)
+  if (this.state === "resolved") {
+    onFulfilled(this.value);
   }
-  if (this.state === 'rejected') {
-    onRejected(this.reason)
+  if (this.state === "rejected") {
+    onRejected(this.reason);
   }
-}
+};
 
 // 测试
 const p1 = new myPromise(function (resolve, reject) {
-  resolve('x')
-})
-p1.then((res) => console.log(res)) // "x"
+  resolve("x");
+});
+p1.then((res) => console.log(res)); // "x"
 ```
 
 ### 堆内存与栈内存
@@ -356,8 +373,8 @@ JS 引擎中对变量的存储主要有两种，**堆内存**和**栈内存**。
 ```javascript
 for (var i = 1; i <= 5; i++) {
   setTimeout(function timer() {
-    console.log(i)
-  }, i * 1000)
+    console.log(i);
+  }, i * 1000);
 }
 ```
 
@@ -366,11 +383,11 @@ for (var i = 1; i <= 5; i++) {
 ```javascript
 // 闭包
 for (var i = 1; i <= 5; i++) {
-  ;(function (j) {
+  (function (j) {
     setTimeout(function () {
-      console.log(j)
-    }, j * 1000)
-  })(i)
+      console.log(j);
+    }, j * 1000);
+  })(i);
 }
 ```
 
@@ -380,11 +397,11 @@ for (var i = 1; i <= 5; i++) {
 for (var i = 1; i <= 5; i++) {
   setTimeout(
     function (j) {
-      console.log(j)
+      console.log(j);
     },
     i * 1000,
     i
-  )
+  );
 }
 ```
 
@@ -392,8 +409,8 @@ for (var i = 1; i <= 5; i++) {
 // let 创建块级作用域
 for (let i = 1; i <= 5; i++) {
   setTimeout(function timer() {
-    console.log(i)
-  }, i * 1000)
+    console.log(i);
+  }, i * 1000);
 }
 ```
 
@@ -401,62 +418,62 @@ for (let i = 1; i <= 5; i++) {
 
 ```javascript
 // 三种状态
-const PENDING = 'pending'
-const RESOLVED = 'resolved'
-const REJECTED = 'rejected'
+const PENDING = "pending";
+const RESOLVED = "resolved";
+const REJECTED = "rejected";
 // promise 接收一个函数参数，该函数会立即执行
 function MyPromise(fn) {
-  let _this = this
-  _this.currentState = PENDING
-  _this.value = undefined
+  let _this = this;
+  _this.currentState = PENDING;
+  _this.value = undefined;
   // 用于保存 then 中的回调，只有当 promise
   // 状态为 pending 时才会缓存，并且每个实例至多缓存一个
-  _this.resolvedCallbacks = []
-  _this.rejectedCallbacks = []
+  _this.resolvedCallbacks = [];
+  _this.rejectedCallbacks = [];
 
   _this.resolve = function (value) {
     if (value instanceof MyPromise) {
       // 如果 value 是个 Promise，递归执行
-      return value.then(_this.resolve, _this.reject)
+      return value.then(_this.resolve, _this.reject);
     }
     setTimeout(() => {
       // 异步执行，保证执行顺序
       if (_this.currentState === PENDING) {
-        _this.currentState = RESOLVED
-        _this.value = value
-        _this.resolvedCallbacks.forEach((cb) => cb())
+        _this.currentState = RESOLVED;
+        _this.value = value;
+        _this.resolvedCallbacks.forEach((cb) => cb());
       }
-    })
-  }
+    });
+  };
 
   _this.reject = function (reason) {
     setTimeout(() => {
       // 异步执行，保证执行顺序
       if (_this.currentState === PENDING) {
-        _this.currentState = REJECTED
-        _this.value = reason
-        _this.rejectedCallbacks.forEach((cb) => cb())
+        _this.currentState = REJECTED;
+        _this.value = reason;
+        _this.rejectedCallbacks.forEach((cb) => cb());
       }
-    })
-  }
+    });
+  };
   // 用于解决以下问题
   // new Promise(() => throw Error('error))
   try {
-    fn(_this.resolve, _this.reject)
+    fn(_this.resolve, _this.reject);
   } catch (e) {
-    _this.reject(e)
+    _this.reject(e);
   }
 }
 
 MyPromise.prototype.then = function (onResolved, onRejected) {
-  var self = this
+  var self = this;
   // 规范 2.2.7，then 必须返回一个新的 promise
-  var promise2
+  var promise2;
   // 规范 2.2.onResolved 和 onRejected 都为可选参数
   // 如果类型不是函数需要忽略，同时也实现了透传
   // Promise.resolve(4).then().then((value) => console.log(value))
-  onResolved = typeof onResolved === 'function' ? onResolved : (v) => v
-  onRejected = typeof onRejected === 'function' ? onRejected : (r) => throw r
+  onResolved = typeof onResolved === "function" ? onResolved : (v) => v;
+  onRejected = typeof onRejected === "function" ? onRejected : (r) => throw r;
 
   if (self.currentState === RESOLVED) {
     return (promise2 = new MyPromise(function (resolve, reject) {
@@ -464,13 +481,13 @@ MyPromise.prototype.then = function (onResolved, onRejected) {
       // 所以用了 setTimeout 包裹下
       setTimeout(function () {
         try {
-          var x = onResolved(self.value)
-          resolutionProcedure(promise2, x, resolve, reject)
+          var x = onResolved(self.value);
+          resolutionProcedure(promise2, x, resolve, reject);
         } catch (reason) {
-          reject(reason)
+          reject(reason);
         }
-      })
-    }))
+      });
+    }));
   }
 
   if (self.currentState === REJECTED) {
@@ -478,13 +495,13 @@ MyPromise.prototype.then = function (onResolved, onRejected) {
       setTimeout(function () {
         // 异步执行onRejected
         try {
-          var x = onRejected(self.value)
-          resolutionProcedure(promise2, x, resolve, reject)
+          var x = onRejected(self.value);
+          resolutionProcedure(promise2, x, resolve, reject);
         } catch (reason) {
-          reject(reason)
+          reject(reason);
         }
-      })
-    }))
+      });
+    }));
   }
 
   if (self.currentState === PENDING) {
@@ -492,29 +509,29 @@ MyPromise.prototype.then = function (onResolved, onRejected) {
       self.resolvedCallbacks.push(function () {
         // 考虑到可能会有报错，所以使用 try/catch 包裹
         try {
-          var x = onResolved(self.value)
-          resolutionProcedure(promise2, x, resolve, reject)
+          var x = onResolved(self.value);
+          resolutionProcedure(promise2, x, resolve, reject);
         } catch (r) {
-          reject(r)
+          reject(r);
         }
-      })
+      });
 
       self.rejectedCallbacks.push(function () {
         try {
-          var x = onRejected(self.value)
-          resolutionProcedure(promise2, x, resolve, reject)
+          var x = onRejected(self.value);
+          resolutionProcedure(promise2, x, resolve, reject);
         } catch (r) {
-          reject(r)
+          reject(r);
         }
-      })
-    }))
+      });
+    }));
   }
-}
+};
 // 规范 2.3
 function resolutionProcedure(promise2, x, resolve, reject) {
   // 规范 2.3.1，x 不能和 promise2 相同，避免循环引用
   if (promise2 === x) {
-    return reject(new TypeError('Error'))
+    return reject(new TypeError("Error"));
   }
   // 规范 2.3.2
   // 如果 x 为 Promise，状态为 pending 需要继续等待否则执行
@@ -524,51 +541,51 @@ function resolutionProcedure(promise2, x, resolve, reject) {
         // 再次调用该函数是为了确认 x resolve 的
         // 参数是什么类型，如果是基本类型就再次 resolve
         // 把值传给下个 then
-        resolutionProcedure(promise2, value, resolve, reject)
-      }, reject)
+        resolutionProcedure(promise2, value, resolve, reject);
+      }, reject);
     } else {
-      x.then(resolve, reject)
+      x.then(resolve, reject);
     }
-    return
+    return;
   }
   // 规范 2.3.3.3.3
   // reject 或者 resolve 其中一个执行过得话，忽略其他的
-  let called = false
+  let called = false;
   // 规范 2.3.3，判断 x 是否为对象或者函数
-  if (x !== null && (typeof x === 'object' || typeof x === 'function')) {
+  if (x !== null && (typeof x === "object" || typeof x === "function")) {
     // 规范 2.3.3.2，如果不能取出 then，就 reject
     try {
       // 规范 2.3.3.1
-      let then = x.then
+      let then = x.then;
       // 如果 then 是函数，调用 x.then
-      if (typeof then === 'function') {
+      if (typeof then === "function") {
         // 规范 2.3.3.3
         then.call(
           x,
           (y) => {
-            if (called) return
-            called = true
+            if (called) return;
+            called = true;
             // 规范 2.3.3.3.1
-            resolutionProcedure(promise2, y, resolve, reject)
+            resolutionProcedure(promise2, y, resolve, reject);
           },
           (e) => {
-            if (called) return
-            called = true
-            reject(e)
+            if (called) return;
+            called = true;
+            reject(e);
           }
-        )
+        );
       } else {
         // 规范 2.3.3.4
-        resolve(x)
+        resolve(x);
       }
     } catch (e) {
-      if (called) return
-      called = true
-      reject(e)
+      if (called) return;
+      called = true;
+      reject(e);
     }
   } else {
     // 规范 2.3.4，x 为基本类型
-    resolve(x)
+    resolve(x);
   }
 }
 ```
@@ -577,26 +594,26 @@ function resolutionProcedure(promise2, x, resolve, reject) {
 
 ```javascript
 Array.prototype.map = function (cb) {
-  var result = []
+  var result = [];
   this.forEach(function (element, index) {
-    result.push(cb(element, index))
-  })
-  return result
-}
+    result.push(cb(element, index));
+  });
+  return result;
+};
 ```
 
 ### 实现 Array.prototype.filter
 
 ```javascript
 Array.prototype.filter = function (cb) {
-  var result = []
+  var result = [];
   this.forEach((item, index) => {
     if (cb(item, index)) {
-      result.push(item)
+      result.push(item);
     }
-  })
-  return result
-}
+  });
+  return result;
+};
 ```
 
 ### 实现一个深拷贝函数 deepClone
@@ -604,35 +621,35 @@ Array.prototype.filter = function (cb) {
 ```javascript
 // 判断数据类型
 const type = (obj) => {
-  const typeString = Object.prototype.toString.call(obj)
+  const typeString = Object.prototype.toString.call(obj);
   const map = {
-    '[object Array]': 'array',
-    '[object Object]': 'object',
-  }
+    "[object Array]": "array",
+    "[object Object]": "object",
+  };
 
-  return map[typeString]
-}
+  return map[typeString];
+};
 
 // 深拷贝
 const deepClone = (data) => {
-  const typeString = type(data)
-  let r
-  if (typeString === 'array') {
-    r = []
+  const typeString = type(data);
+  let r;
+  if (typeString === "array") {
+    r = [];
     for (let i = 0; i < data.length; i++) {
-      r.push(deepClone(data[i]))
+      r.push(deepClone(data[i]));
     }
-    return r
-  } else if (typeString === 'object') {
-    r = {}
+    return r;
+  } else if (typeString === "object") {
+    r = {};
     for (let i in data) {
-      r[i] = deepClone(data[i])
+      r[i] = deepClone(data[i]);
     }
-    return r
+    return r;
   } else {
-    return data
+    return data;
   }
-}
+};
 ```
 
 ### 内存泄漏
@@ -658,8 +675,8 @@ const deepClone = (data) => {
   当在组件中创建事件监听器，在销毁组件时却没有移除事件监听的话，那么当再次加载该组件时，就又会注册新的事件监听，导致事件监听的不断增加，浪费内存；
 
   ```javascript
-  var element = document.getElementById('button')
-  element.addEventListener('click', onClick)
+  var element = document.getElementById("button");
+  element.addEventListener("click", onClick);
   ```
 
 - 计时器
@@ -677,21 +694,21 @@ const deepClone = (data) => {
   类似于全局变量导致的内存泄漏。当 dom 从视图上移除时，要注意其引用是否被监听器等保存，否则该内存不会被释放：
 
   ```javascript
-  var terminator = document.getElementById('terminator')
-  var badEle = document.getElementById('badEle')
-  terminator.addEventListener('click', function () {
-    badEle.remove()
-  })
+  var terminator = document.getElementById("terminator");
+  var badEle = document.getElementById("badEle");
+  terminator.addEventListener("click", function () {
+    badEle.remove();
+  });
   ```
 
   当点击了 terminator 的按钮后，badEle 会从 DOM 中移除，但是由于它被监听器引用，因此这个对象分配的内存并不会被释放。
 
   ```javascript
-  var terminator = document.getElementById('terminator')
-  terminator.addEventListener('click', function () {
-    var badEle = document.getElementById('badEle')
-    badEle.remove()
-  })
+  var terminator = document.getElementById("terminator");
+  terminator.addEventListener("click", function () {
+    var badEle = document.getElementById("badEle");
+    badEle.remove();
+  });
   ```
 
   改动后，badEle 变成了局部变量，在移除操作完成之后，内存将会被垃圾回收。
@@ -701,7 +718,7 @@ const deepClone = (data) => {
   将返回指定 Number 对象的字符串表示方法,其中基数 radix 参数可选,未指定的话默认是 10.
 
   ```javascript
-  let count = 10
-  console.log(count.toString()) // '10'
-  console.log(count.toString(2)) // '1010'
+  let count = 10;
+  console.log(count.toString()); // '10'
+  console.log(count.toString(2)); // '1010'
   ```
