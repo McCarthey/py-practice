@@ -4,14 +4,23 @@
   <style>
     /* 两栏布局：利用float + margin-left */
     .box {
-      /* 创建bfc，防止后面的float元素与 */
+      /* 创建bfc，防止float元素造成的父元素高度塌陷，其他的内容块就会自动排版上去, 也可通过伪元素清除浮动解决（如下.box::after） */
       overflow: hidden;
       margin-bottom: 10px;
     }
 
+    /*
+    .box::after {
+      clear: both;
+      display: block;
+      height: 0;
+      content: "";
+    }
+    */
+
     .left {
       float: left;
-      height: 150px;
+      height: 200px;
       width: 200px;
       background-color: gray;
     }
@@ -76,6 +85,15 @@
     <div class="left">左侧</div>
     <div class="right">右侧</div>
   </div>
+  内容内容内容内容内容内容内容内容内容内容
+  内容内容内容内容内容内容内容内容内容内容
+  内容内容内容内容内容内容内容内容内容内容
+  内容内容内容内容内容内容内容内容内容内容
+  内容内容内容内容内容内容内容内容内容内容
+  内容内容内容内容内容内容内容内容内容内容
+  内容内容内容内容内容内容内容内容内容内容
+  内容内容内容内容内容内容内容内容内容内容
+  内容内容内容内容内容内容内容内容内容内容
 
   <div class="box2">
     <div class="left2">左侧</div>
