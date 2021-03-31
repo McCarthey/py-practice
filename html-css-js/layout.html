@@ -29,7 +29,7 @@
     }
 
     .left2 {
-      min-width: 200px;
+      width: 200px;
       background-color: gray;
       margin-right: 10px;
     }
@@ -37,6 +37,36 @@
     .right2 {
       background-color: lightgray;
       flex-grow: 1;
+    }
+
+    /* 三栏布局：float + margin */
+    .wrap {
+      background: #eee;
+      overflow: hidden;
+      padding: 20px;
+      height: 200px;
+    }
+
+    .left3 {
+      width: 200px;
+      height: 200px;
+      float: left;
+      background: coral;
+    }
+
+
+    .right3 {
+      width: 120px;
+      height: 200px;
+      float: right;
+      background: lightblue;
+    }
+
+    .mid3 {
+      margin-left: 220px;
+      height: 200px;
+      background: lightpink;
+      margin-right: 140px;
     }
   </style>
 </head>
@@ -50,6 +80,13 @@
   <div class="box2">
     <div class="left2">左侧</div>
     <div class="right2">右侧</div>
+  </div>
+
+  <div class="wrap">
+    <div class="left3">左侧</div>
+    <div class="right3">右侧</div>
+    <!-- NOTE: 必须把中间的主题内容放在最下方，否则右侧会被中间挤下去 -->
+    <div class="mid3">中间</div>
   </div>
 </body>
 
