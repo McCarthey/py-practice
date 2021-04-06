@@ -21,6 +21,8 @@
     .inner-float,
     .clear-inner-float {
       border: 5px solid pink;
+      width: 200px;
+      margin: 20px;
     }
 
     .inner-float>p,
@@ -32,6 +34,25 @@
 
     .clear-inner-float {
       /* 创建bfc块 清除内部浮动，因为计算BFC高度浮动的子元素也参与计算  */
+      overflow: hidden;
+    }
+
+
+    body {
+      width: 300px;
+      position: relative;
+    }
+
+    .aside {
+      width: 100px;
+      height: 150px;
+      float: left;
+      background: #f66;
+    }
+
+    .main {
+      height: 200px;
+      background: #fcc;
       overflow: hidden;
     }
   </style>
@@ -52,11 +73,14 @@
     <p>float1</p>
     <p>float2</p>
   </div>
-  <div style="clear: both; margin: 50px 0;">--------------分割线-------------</div>
+  <div style="clear: both; margin: 50px 20px;">--------------分割线-------------</div>
   <div class="clear-inner-float">
     <p>clear float1</p>
     <p>clear float2</p>
   </div>
+
+  <div class="aside"></div>
+  <div class="main"></div>
 </body>
 
 </html>
