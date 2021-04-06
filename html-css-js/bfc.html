@@ -1,0 +1,62 @@
+<html>
+
+<head>
+  <style>
+    /* margin塌陷（重叠） */
+    .margin-overlay p {
+      width: 200px;
+      color: #fff;
+      text-align: center;
+      background-color: brown;
+      line-height: 20px;
+      margin: 20px;
+    }
+
+    .wrap {
+      overflow: hidden;
+      /* 创建bfc块 消除margin重叠、塌陷 */
+    }
+
+    /* 清除内部浮动 */
+    .inner-float,
+    .clear-inner-float {
+      border: 5px solid pink;
+    }
+
+    .inner-float>p,
+    .clear-inner-float>p {
+      float: left;
+      border: 5px solid red;
+      margin: 0;
+    }
+
+    .clear-inner-float {
+      /* 创建bfc块 清除内部浮动，因为计算BFC高度浮动的子元素也参与计算  */
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="margin-overlay">
+    <p>within the same bfc1</p>
+    <p>within the same bfc2</p>
+  </div>
+  <div class="margin-overlay">
+    <p>within different bfc1</p>
+    <div class="wrap">
+      <p>within different bfc2</p>
+    </div>
+  </div>
+  <div class="inner-float">
+    <p>float1</p>
+    <p>float2</p>
+  </div>
+  <div style="clear: both; margin: 50px 0;">--------------分割线-------------</div>
+  <div class="clear-inner-float">
+    <p>clear float1</p>
+    <p>clear float2</p>
+  </div>
+</body>
+
+</html>
