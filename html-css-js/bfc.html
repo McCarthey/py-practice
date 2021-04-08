@@ -37,8 +37,8 @@
       overflow: hidden;
     }
 
-
-    body {
+    .left-float-overlay,
+    .left-float {
       width: 300px;
       position: relative;
     }
@@ -53,6 +53,10 @@
     .main {
       height: 200px;
       background: #fcc;
+    }
+
+    .left-float>.main {
+      /* 创建bfc块 bfc区域不与float元素区域重叠 */
       overflow: hidden;
     }
   </style>
@@ -79,8 +83,16 @@
     <p>clear float2</p>
   </div>
 
-  <div class="aside"></div>
-  <div class="main"></div>
+  <div class="left-float-overlay">
+    <div class="aside"></div>
+    <div class="main"></div>
+  </div>
+  <div style="margin: 50px 20px;">--------------分割线-------------</div>
+  <div class="left-float">
+    <div class="aside"></div>
+    <div class="main"></div>
+  </div>
+
 </body>
 
 </html>
