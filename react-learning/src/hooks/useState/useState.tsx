@@ -49,6 +49,8 @@ function CountBtn() {
     <div className="App">
       <button onClick={() => setCount((prev) => prev + 1)}>{count}</button>
       <button onClick={() => setCount(count + 1)}>{count}</button>
+      {/* 调用 State Hook 的更新函数并传入当前的 state 时，React 将跳过子组件的渲染及 effect 的执行。（React 使用 Object.is 比较算法 来比较 state。） */}
+      <button onClick={() => setCount(count)}>{count}</button> 
     </div>
   );
 }
