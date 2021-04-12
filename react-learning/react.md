@@ -428,11 +428,13 @@ export default class Demo extends React.Component {
 
   React 核心只包含定义组件必要的 API，同时适用于 React DOM 和 React Native 组件。
 
-- 渲染器：
+- Scheduler 调度器：
 
-  用于管理一颗 React 树，使其根据底层平台进行不同的调用。主要的渲染器就是 React DOM Render 和 React Native Render。
+  调度任务的优先级，高优任务优先进入 Reconciler
 
-- reconciler（协调器）：
+- Reconciler 协调器：
+
+  负责找出变化的组件
 
   不同的渲染器共享部分代码，包括声明式渲染，自定义组件，state，生命周期方法和 refs 等特性，以保持跨平台工作一致。
 
@@ -753,3 +755,9 @@ export default class Demo extends React.Component {
   - Fiber reconciler：
 
     React 16 版本后的解决方案；
+
+- Renderer 渲染器：
+
+  负责将变化的组件渲染到页面上
+
+  用于管理一颗 React 树，使其根据底层平台进行不同的调用。主要的渲染器就是 React DOM Render 和 React Native Render。
