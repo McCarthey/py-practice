@@ -430,7 +430,14 @@ export default class Demo extends React.Component {
 
 - Scheduler 调度器：
 
-  调度任务的优先级，高优任务优先进入 Reconciler
+  调度任务的优先级，高优任务优先进入 Reconciler。
+
+  我们以浏览器是否有剩余时间作为任务中断的标准，那么我们需要一种机制，当浏览器有剩余时间时通知我们，部分浏览器已经实现了这个 API，[requestIdleCallback](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestIdleCallback)，但是由于一下原因，React 放弃使用它：
+
+  - 浏览器兼容性
+  - 触发频率不稳定，受很多因素影响。比如当我们的浏览器切换 tab 后，之前 tab 注册的 requestIdleCallback 触发的频率会变得很低
+
+  React 团队实现了功能更完备的 requestIdleCallback polyfill，这就是 Scheduler，而且除了在空闲时触发回调的功能外，Scheduler 还提供了多种调度优先级供任务设置。
 
 - Reconciler 协调器：
 
@@ -754,10 +761,35 @@ export default class Demo extends React.Component {
 
   - Fiber reconciler：
 
-    React 16 版本后的解决方案；
+    React 16 版本后的解决方案，更新工作从递归变成了可以中断的循环过程。每次循环都会调用 shouldYield 判断当前是否有剩余时间：
+
+    ```javascript
+    function workLoopConcurrent() {
+      // Perform work until Scheduler asks us to yield
+      while (workInProgress !== null && !shouldYield()) {
+        workInProgress = performUnitOfWork(workInProgress);
+      }
+    }
+    ```
+
+    在 React 16 中，Reconciler 和 Renderer 不再交替工作，当 Scheduler 将任务交给 Reconciler 后，Reconciler 会为变化的虚拟 DOM 打上代表增/删/更新的标记，如：
+
+    ```javascript
+    export const Placement = /*             */ 0b0000000000010;
+    export const Update = /*                */ 0b0000000000100;
+    export const PlacementAndUpdate = /*    */ 0b0000000000110;
+    export const Deletion = /*              */ 0b0000000001000;
+    ```
+
+    整个 Scheduler 和 Reconciler 的工作都在内存中进行，只有当所有组件都完成 Reconciler 的工作，才会统一交给 Renderer
 
 - Renderer 渲染器：
 
-  负责将变化的组件渲染到页面上
+  负责将变化的组件渲染到页面上（管理一颗 React 树，使其根据底层平台进行不同的调用。主要的渲染器就是 React DOM Render 和 React Native Render。）
 
-  用于管理一颗 React 树，使其根据底层平台进行不同的调用。主要的渲染器就是 React DOM Render 和 React Native Render。
+  Renderer 根据 Reconciler 为虚拟 DOM 打的标记，同步执行对应 DOM 操作，其中 Scheduler 和 Reconciler 的过程随时可能由以下原因被中断：
+
+  - 有其他更高优任务需要先更新
+  - 当前帧没有剩余时间
+
+  由于 Scheduler 和 Reconciler 的过程都在内存中进行，不会更新页面上的 DOM，所以即使反复中断，用户也不会看见更新不完全的 DOM
