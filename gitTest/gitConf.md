@@ -78,3 +78,9 @@ git branch -d <branchName>
 ```
 git push origin --delete <branchName>
 ```
+
+查找两个分支的祖先节点
+
+```
+git merge-base branchA branchB
+```
