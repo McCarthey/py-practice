@@ -128,18 +128,34 @@
         .container>div:nth-child(6) {
             background-color: red;
         }
+
+        .editable-div {
+            border: 1px solid #a0b3d6;
+            width: 500px;
+            min-height: 200px;
+            font-size: 14px;
+            padding: 4px;
+            color: #333;
+            outline: 0;
+            /* 解决聚焦边框 */
+        }
+
+        .editable-div:empty::before {
+            content: attr(placeholder);
+            color: #999;
+        }
     </style>
 </head>
 
 <body>
-    <!-- <div contenteditable="true">这是一个可以编辑的div</div>
+    <div class="editable-div" contenteditable="true" placeholder="请输入">这是一个可以编辑的div</div>
     测试meta标签的重定向
     <span id="countDown">5</span>s后到百度
     <p>这是一个emoji：&#x1F49C;</p>
     <p>test</p>
     <p>test 新的</p>
     <button class="btn-close">close WebSocket</button>
-    <button class="init">send init info</button> -->
+    <button class="init">send init info</button>
     <!-- <p>这是一个<span class="comment">SPA</span></p>
     <ruby>Hello<rt>你好</rt></ruby> -->
     <div>
