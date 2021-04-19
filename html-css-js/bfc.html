@@ -2,6 +2,14 @@
 
 <head>
   <style>
+    /*
+    创建bfc的方式：
+    - 根元素，即HTML元素
+    - 浮动元素：float 值为 left 或 right
+    - overflow值不为 visible （默认值），为 hidden scroll auto
+    - display的值为 inline-block、table-cell、table-caption、table、inline-table、flex、inline-flex、grid、inline-grid
+    - position的值为 absolute 或 fixed
+    */
     /* margin塌陷（重叠） */
     .margin-overlay p {
       width: 200px;
