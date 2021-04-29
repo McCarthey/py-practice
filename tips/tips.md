@@ -477,6 +477,16 @@ var newPlayer = Object.assign({}, player, { name: "Sam", age: 25 });
 console.log(newPlayer); // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
 ```
 
+Object.assign()方法可以处理一层深度的对象拷贝：
+
+```javascript
+var obj1 = { a: 10, b: 20, c: 30 };
+var obj2 = Object.assign({}, obj1);
+console.log(obj1); //  {a: 10, b: 20, c: 30}
+obj2.a = 11;
+console.log(obj2); //  {a: 11, b: 20, c: 30}
+```
+
 - Object.is() 方法判断两个值是否为同一个值
 
   ```javascript
@@ -497,7 +507,18 @@ console.log(newPlayer); // {name: 'Sam', age: 25, job: 'engineer', country: 'chi
     - 或都是非零而且非 NaN 且为同一个值
 
   与 === 符号不同之处是 === 运算符 (也包括 == 运算符) 将数字 -0 和 +0 视为相等 ，而将 Number.NaN 与 NaN 视为不相等。
-  
+  Polyfill:
+  ```javascript
+  if(!Object.is) {
+    Object.is = function (x, y) {
+      if(x === y) {
+        return x === 0 || 1/x === 1/y
+      } else {
+        return x !== x && y !== y 
+      }
+    }
+  }
+  ```
 
 - 构造函数模式的劣势
   例如，本库中 data-structure 目录下的 stack.js 中，使用构造函数模式模拟了栈（具体实现请看代码，此处略）
