@@ -512,9 +512,9 @@ console.log(obj2); //  {a: 11, b: 20, c: 30}
   if(!Object.is) {
     Object.is = function (x, y) {
       if(x === y) {
-        return x === 0 || 1/x === 1/y
+        return x !== 0 || 1/x === 1/y // 均不为0 或者 均为 +0 、-0
       } else {
-        return x !== x && y !== y 
+        return x !== x && y !== y // X, Y 均为 NaN 
       }
     }
   }
