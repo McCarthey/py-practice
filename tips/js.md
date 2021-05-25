@@ -169,6 +169,7 @@ window.onscroll = function () {
 抽象函数：
 
 ```javascript
+// 简单版
 const debounce = (func, delay) => {
   let timer;
   return function () {
@@ -180,6 +181,41 @@ const debounce = (func, delay) => {
       timer = null;
     }, delay);
   };
+};
+
+// 带立即执行版
+const debounce = (
+  func,
+  delay,
+  option = {
+    leading: true, // 是否立即执行
+    context: null, // 上下文
+  }
+) => {
+  let timer = null;
+  let res;
+  const debounceFunc = function (...arg) {
+    option.context || (option.context = this);
+    if (timer) clearTimeout(timer);
+    if (!timer && option.leading) {
+      timer = setTimeout(() => {
+        timer = null;
+      }, delay);
+      res = func.apply(option.context, arg);
+    } else {
+      timer = setTimeout(() => {
+        res = func.apply(option.context, arg);
+        timer = null;
+      }, delay);
+    }
+    return res;
+  };
+  debounceFunc.cancel = function () {
+    clearTimeout(timer);
+    timer = null;
+  };
+
+  return debounceFunc;
 };
 ```
 
