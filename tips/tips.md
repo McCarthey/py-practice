@@ -152,7 +152,7 @@
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   overflow: hidden;
   word-break: break-word;
   word-wrap: normal;
@@ -477,6 +477,49 @@ var newPlayer = Object.assign({}, player, { name: "Sam", age: 25 });
 console.log(newPlayer); // {name: 'Sam', age: 25, job: 'engineer', country: 'china'}
 ```
 
+Object.assign()方法可以处理一层深度的对象拷贝：
+
+```javascript
+var obj1 = { a: 10, b: 20, c: 30 };
+var obj2 = Object.assign({}, obj1);
+console.log(obj1); //  {a: 10, b: 20, c: 30}
+obj2.a = 11;
+console.log(obj2); //  {a: 11, b: 20, c: 30}
+```
+
+- Object.is() 方法判断两个值是否为同一个值
+
+  ```javascript
+  Object.is(value1, value2);
+  ```
+
+  如果满足以下条件则两个值相等：
+
+  - 都是 undefined
+  - 都是 null
+  - 都是 true 或 false
+  - 都是相同长度的字符串且相同字符按相同顺序排列
+  - 都是相同对象（意味着每个对象有同一个引用）
+  - 都是相同数字且
+    - 都是 +0
+    - 都是 -0
+    - 都是 NaN
+    - 或都是非零而且非 NaN 且为同一个值
+
+  与 === 符号不同之处是 === 运算符 (也包括 == 运算符) 将数字 -0 和 +0 视为相等 ，而将 Number.NaN 与 NaN 视为不相等。
+  Polyfill:
+  ```javascript
+  if(!Object.is) {
+    Object.is = function (x, y) {
+      if(x === y) {
+        return x !== 0 || 1/x === 1/y // 均不为0 或者 均为 +0 、-0
+      } else {
+        return x !== x && y !== y // X, Y 均为 NaN 
+      }
+    }
+  }
+  ```
+
 - 构造函数模式的劣势
   例如，本库中 data-structure 目录下的 stack.js 中，使用构造函数模式模拟了栈（具体实现请看代码，此处略）
 
@@ -658,15 +701,40 @@ var allElements = document.getElementsByTagName("*");
 
 - 网页生成的过程
 
-  1. HTML 代码转化成 DOM
-  2. CSS 代码转化成 CSSOM（CSS Object Model）
-  3. 结合 DOM 和 CSSOM，生成一棵渲染树（包含每个节点的视觉信息）
-  4. 生成布局（layout），即将所有渲染树的所有节点进行平面合成 （**耗时**）
-  5. 将布局绘制（paint）在屏幕上 （**耗时**）
+  1. HTML 代码解析成 DOM
+  2. CSS 代码转化成 CSSOM（CSS Object Model），即**样式计算**
+    
+      - 将 CSS 文本解析成浏览器理解的结构————styleSheets
+      - 转换样式表中的属性值，使其标准化
+      - 应用 CSS 继承和层叠机制，计算 DOM 树中每个节点的具体样式 
+  3. 创建布局树（layout），即将计算出 DOM 树中可见元素的几何位置
+
+      - 遍历 DOM 树中的所有可见节点，并把这些节点加到布局树中
+      - 而不可见的节点会被布局树忽略掉，如 head 标签下的全部内容，display 属性为 none 的元素 
+      - 布局计算（**耗时且复杂**）
+  4. 分层，渲染引擎需要为特定的节点生成专用的图层，并生成一颗对应的图层树
+
+      - 并不是布局树的每一个节点都包含一个图层，如果一个节点没有对应的层，那么这个节点就从属于父节点的层，满足以下任意一点即可被提升为一个单独的图层
+        
+        1. 拥有[层叠上下文](https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Positioning/Understanding_z_index/The_stacking_context)属性的元素会被提升为单独的一层
+        2. 需要裁减(clip)的地方也为会创建为图层，如果出现滚动条，滚动条也会被提升为单独的层。
+  5. 再完成图层树的构建后，渲染引擎会对图层树中的每个图层进行绘制
+
+      - 把一个图层的绘制拆分成很多小的绘制指令，然后把这些绘制指令按顺序组成一个待绘制列表
+      - 绘制列表只是用来记录绘制顺序和绘制指令的列表，而实际上绘制操作是由渲染引擎中的合成线程来完成的，即绘制列表准备好后，主线程会把该绘制列表提交给合成线程
+  6. 栅格化（光栅化）：
+      
+      - 有的图层很大，但实际上只需要展示视口中的图层内容，因此，合成线程将图层划分成图块（tile，大小通常是256 * 256，或512 * 512）
+      - 合成线程会根据适口附近的图块来优先生成位图，即栅格化，因此图块是栅格化的最小单位。渲染进程维护了一个栅格化的线程池，所有的图块栅格化都是在线程池内执行的
+      - 通常栅格化过程都会使用 GPU 加速生成，使用 GPU 栅格化的过程叫快速栅格化，或 GPU 栅格化，生成的位图被保存在 GPU 内存中
+  7. 合成和显示
+
+      - 一旦所有图块都被栅格化，合成线程就会生成一个绘制图块的命令————DrawQuad，然后将该命令提交给浏览器进程
+      - 浏览器进程中有一个叫 viz 的组件，用来接收合成线程发过来的 DrawQuad 命令，根据命令，将其页面内容绘制到内存中，最后再将内存显示在屏幕上
 
   "**生成布局**"（flow）和"**绘制**"（paint）这两步，合称为"**渲染**"（render）。
 
-  **网页生成的时候，至少会渲染一次。用户访问的过程中，还会不断重新渲染。**以下三种情况，会导致网页重新渲染：
+  **网页生成的时候，至少会渲染一次。用户访问的过程中，还会不断重新渲染。** 以下三种情况，会导致网页重新渲染：
 
         - 修改DOM
         - 修改样式表
@@ -1197,6 +1265,8 @@ var allElements = document.getElementsByTagName("*");
 
   localforage 库虽然好用，但是还需优化，比如可以维护一个数组，用于存放变化的键，同步到 indexedDB 后，数组清空
 
+- 垃圾回收：JavaScript 的垃圾回收机制有着很多的步骤，除了`标记-清除`，其实还有其它的过程，这里简单介绍一下就不展开讨论了。例如：标记-整理，在清空部分垃圾数据后释放了一定的内存空间后会可能会留下大面积的不连续内存片段，导致后续可能无法为某些对象分配连续内存，此时需要整理一下内存空间；交替执行，因为 JavaScript 是运行在主线程上的，所以执行垃圾回收机制时会暂停 js 的运行，若垃圾回收执行时间过长，则会给用户带来明显的卡顿现象，所以垃圾回收机制会被分成一个个的小任务，穿插在 js 任务之中，即交替执行，尽可能得保证不会带来明显的卡顿感
+
 - 滚动问题
 
   需求：一个可以滚动的<div>标签，里面有很多个子元素标签，需要滚动定位到特定的标签元素
@@ -1650,6 +1720,58 @@ document.body.appendChild(s);
     - 如果已经存在 node_modules，则在 npm ci 前将自动删除 node_modules；
     - 它不会写入 package.json 或 package-lock.json，安装基本上是冻结的；
 
+  - peerDependencies 作用
+
+    目的是提示宿主环境去安装满足插件 peerDependencies 所指定依赖的包，然后在插件 import 或 require 所依赖的包时，永远都引用宿主环境统一安装的 npm 包，最终解决插件与所依赖包不一致的问题。
+
+  - npm-check
+
+    用于检查项目目录下的依赖版本的库，可在终端里交互升级依赖版本。
+
+    安装 npm-check
+
+    ```
+    npm i -g npm-check
+    ```
+
+    根目录下运行
+
+    ```
+    npm-check -u
+    ```
+
+    空格切换选择，Enter 开始更新
+
+  - 清除 npm 缓存
+
+    ```
+    npm cache clean -f
+    ```
+
+  - 查看当前登录的账号
+
+    ```
+    npm whoami
+    ```
+
+  - npm link
+
+    在本地开发 npm 模块时，可以使用 npm link 命令，将 npm 模块链接到对应的运行项目中去，方便对模块调试。
+
+    在正在开发的模块目录下执行 npm link
+
+    ```
+    cd project/my-components
+    npm link
+    ```
+
+    在将要调用上述模块的项目中 执行 npm link [moduleName]
+
+    ```
+    cd project/some-project
+    npm link my-components
+    ```
+
 - coverage
 
   chrome59 之后推出的 css/js 代码覆盖率检测工具，检查文件中未使用的代码，以优化性能。
@@ -1745,6 +1867,31 @@ document.body.appendChild(s);
   }
   ```
 
+- 后端返回 xls、csv 数据的文件下载方法
+
+  在请求参数中，须指定响应类型
+
+  ```
+  responseType: 'arrayBuffer'
+  ```
+
+  在响应中处理，并构建 a 标签下载后删除：
+
+  ```javascript
+  let blob = new Blob([data], { type: type });
+  const a = document.createElement("a");
+  // 创建URL
+  const blobUrl = window.URL.createObjectURL(blob);
+  a.download = fileName;
+  a.href = blobUrl;
+  document.body.appendChild(a);
+  // 下载文件
+  a.click();
+  // 释放内存
+  URL.revokeObjectURL(blobUrl);
+  document.body.removeChild(a);
+  ```
+
 - box-shadow： inset
 
   如果没有指定 inset，默认阴影在边框外，即阴影向外扩散。
@@ -1785,7 +1932,7 @@ document.body.appendChild(s);
   }
   ```
 
-  即可排除类名为 active 的 <a> 标签的 hover 时的样式
+  即可排除类名为 active 的 <a> 标签的 hover 时的样式 </a>
 
 - css +选择器
 
@@ -1851,35 +1998,111 @@ document.body.appendChild(s);
   <a onClick={() => downloadByData(imageUrl, "图片名")}>下载图片</a>;
   ```
 
-````
-
 - html 缓存解决办法
 
-[参考 github 上 antd 的 issue](https://github.com/ant-design/ant-design-pro/issues/1365#issuecomment-384496088)
+  [参考 github 上 antd 的 issue](https://github.com/ant-design/ant-design-pro/issues/1365#issuecomment-384496088)
 
 - encodeURI 和 encodeURIComponent 区别
 
-两者都可以对 URI 进行编码，使用一到四个转义序列来表示字符串中的字符的 UTF-8 编码
+  两者都可以对 URI 进行编码，使用一到四个转义序列来表示字符串中的字符的 UTF-8 编码
 
-encodeURI 不会替换以下字符：;、,、/、?、:、@、&、=、+、\$、字母、数字、-、\_、.、!、~、\*、'、(、)、#
+  encodeURI 不会替换以下字符：;、,、/、?、:、@、&、=、+、\$、字母、数字、-、\_、.、!、~、\*、'、(、)、#
 
-encodeURIComponent 会转义除了字母、数字、(、)、.、!、~、\*、'、-和\_之外的所有字符。
+  encodeURIComponent 会转义除了字母、数字、(、)、.、!、~、\*、'、-和\_之外的所有字符。
 
 - VSCode 中查找/替换字符串
 
-可以点击使用‘正则表达式’来进行高级查找
+  可以点击使用‘正则表达式’来进行高级查找
 
-比如，我需要将复制过来的 JSON 数据字符串转成 TS 的接口中的 string："(\S+)" 替换成 string（改进版：'(?!@)(\S\*)'，可以匹配''，而且不会匹配'@/type/xxxx'之类的引用文件）
+  比如，我需要将复制过来的 JSON 数据字符串转成 TS 的接口中的 string："(\S+)" 替换成 string（改进版：'(?!@)(\S\*)'，可以匹配''，而且不会匹配'@/type/xxxx'之类的引用文件）
+
+- VSCode 项目插件及设置
+
+  项目根目录下创建.vscode 目录，编写其中的 setting.json、extensions.json 文件，
+
+  ```json
+  // setting.json
+  {
+    "search.exclude": {
+      "**/node_modules": true,
+      "dist": true,
+      "yarn.lock": true
+    },
+    "editor.formatOnSave": true,
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[markdown]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[less]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[scss]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact"
+    ],
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true,
+      "source.fixAll.stylelint": true
+    },
+    // 使用 stylelint 自身的校验即可
+    "css.validate": false,
+    "less.validate": false,
+    "scss.validate": false
+  }
+  ```
+
+  ```json
+  // extension.json
+  {
+    "recommendations": [
+      "jerryhong.autofilename",
+      "streetsidesoftware.code-spell-checker",
+      "dsznajder.es7-react-js-snippets",
+      "dbaeumer.vscode-eslint",
+      "eamodio.gitlens",
+      "esbenp.prettier-vscode",
+      "stylelint.vscode-stylelint",
+      "ms-vscode.vscode-typescript-tslint-plugin"
+    ]
+  }
+  ```
+
+  使用时在插件扩展中
 
 - ES6 中 String.prototype.startsWith()
 
-接受两个参数
+  接受两个参数
 
-```javascript
-str.startsWith(searchString[, position])
-````
+  ```javascript
+  str.startsWith(searchString[, position])
+  ```
 
-如果在字符串的开头找到了给定的字符则返回 true；否则返回 false。
+  如果在字符串的开头找到了给定的字符则返回 true；否则返回 false。
 
 - Javascript 引擎
 
@@ -1995,9 +2218,15 @@ str.startsWith(searchString[, position])
   // '中文大侠'
   ```
 
+- Number.prototype.toString([radix])
+
+  返回指定 Number 对象的字符串表示形式。
+
+  可选参数 radix：指定要用于数字到字符串的转换基数，必须从 2 到 36 （0-z 共 36 个），如果未指定，则默认 10。
+
 - css background-position：
 
-  当使用 backgroun-size: cover 时，最好调整一下 background-position，以至于图片中的主体可以呈现在合适的位置上（设计希望的位置）
+  当使用 background-size: cover 时，最好调整一下 background-position，以至于图片中的主体可以呈现在合适的位置上（设计希望的位置）
 
 - yarn 安装 node-sass 失败时
 
@@ -2168,6 +2397,40 @@ str.startsWith(searchString[, position])
 
   cryptoObj.getRandomValues(typedArray) 方法让你可以获取符合密码学要求的安全的随机值。其中 typedArray 是一个基于整数的 TypedArray，它可以是 Int8Array、Uint8Array、Int16Array、 Uint16Array、 Int32Array 或者 Uint32Array。在数组中的所有的元素会被随机数重写。**生成的随机数储存在 typedArray 数组上。** 即 cryptoObj.getRandomValues 方法会改变传入的 typedArray 参数。
 
+- 前端导出 excel
+
+  ```javascript
+  function exportCsv(obj) {
+    console.log("[excel data]", obj);
+    // 列表头部
+    let title = obj.title;
+    let dataKey = Object.keys(obj.data[0]);
+    // 列表内容
+    let data = obj.data;
+    let str = [];
+    // 拼接 enter 键或者换行符
+    str.push(obj.title.join(",") + "\r\n");
+    for (let i = 0; i < data.length; i++) {
+      let temp = [];
+      for (let j = 0; j < dataKey.length; j++) {
+        temp.push(data[i][dataKey[j]]);
+      }
+      // 拼接 enter 键或者换行符
+      str.push(temp.join(",") + "\r\n");
+    }
+
+    let blob = new Blob(["\uFEFF" + str.join("")], {
+      type: "text/csv;charset=utf-8",
+    });
+    const url = window.URL.createObjectURL(blob);
+    let downloadLink = document.createElement("a");
+    downloadLink.href = url;
+    downloadLink.download = "result.csv"; // 导出的文件名
+    downloadLink.click();
+    window.URL.revokeObjectURL(url);
+  }
+  ```
+
 - chromium 中 setTimeout 的 4ms 设置逻辑：
 
   ```c++
@@ -2243,4 +2506,50 @@ str.startsWith(searchString[, position])
 
   1. Always evaluate LHE
   2. Always evaluate RHE
+  ```
+
+- 空值合并运算符（nullish-coalescing-operator）
+
+  ```javascript
+  const name = data?.spec?.template?.spec?.metadata?.name ?? "defaultName";
+  ```
+
+  如果它左侧表达式的结果是 undefined，name 就会取右侧的 defaultName；
+  如果使用 || 短路操作符的话，当左侧表达式的值是 0 、空字符串等 [falsy 值](https://developer.mozilla.org/zh-CN/docs/Glossary/Falsy)，结果就不同了，因此还需要额外判断。
+  故 ?? 就是为了取代 ||，来设置默认值的。
+
+  falsy：
+
+  - false
+  - 0
+  - -0
+  - 0n
+  - "", '', ``
+  - null
+  - undefined
+  - NaN
+
+- chrome 扩展杂记
+
+  [chrome create new tab](https://developer.chrome.com/docs/extensions/reference/tabs/#method-create)
+  [chrome message passing 新 API 全指南](https://juejin.cn/post/6844903823115304973)
+
+- Webpack
+
+  [Webpack 中文文档](https://webpack.docschina.org)
+
+  - [DefinePlugin](https://webpack.docschina.org/plugins/define-plugin/)
+
+    允许在编译时创建配置的全局常量
+
+- Parcel
+
+  [Parcel 中文文档](https://zh.parceljs.org/getting_started.html)
+  如果遇到 regeneratorRuntime is not defined 的报错时，是使用了 async/await 导致的， 可在 package.json 中设置
+  browserslist 来解决，如：
+
+  ```json
+  {
+    "browserslist": ["last 1 Chrome version"]
+  }
   ```

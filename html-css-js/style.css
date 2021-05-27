@@ -83,3 +83,36 @@
 }
 
 /* 伪类:last-of-type 参考https://developer.mozilla.org/zh-CN/docs/Web/CSS/:last-of-type */
+
+/** 小于1px的边框大小 */
+/** 
+  <div class="wrapper">
+    <img class="image" />
+    <div class="border03"></div>
+  </div>
+*/
+.wrapper {
+  position: relative;
+  width: 120px;
+  height: 160px;
+}
+
+.image {
+  width: inherit;
+  height: inherit;
+  object-fit: cover;
+}
+
+.border03 ::after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 333%;
+  height: 333%;
+  border: 1px solid red;
+  border-radius: 12px;
+  transform: scale(0.3);
+  transform-origin: 0 0;
+  content: "";
+}

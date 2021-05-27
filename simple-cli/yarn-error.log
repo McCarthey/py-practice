@@ -1,0 +1,36 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js init
+
+PATH: 
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\admin\bin;C:\Program Files (x86)\NetSarang\Xftp 6;C:\Program Files (x86)\NetSarang\Xshell 6;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files (x86)\Yarn\bin;C:\Go\bin;C:\Program Files\Calibre2;C:\Program Files\Java\jdk-12.0.1\bin;C:\Program Files\Java\jdk-12.0.1\jre\bin;C:\work\Redis;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\practice\Ruby26-x64\bin;C:\Users\admin\AppData\Local\Programs\Python\Python36\Scripts;C:\Users\admin\AppData\Local\Programs\Python\Python36;C:\Users\admin\AppData\Local\Microsoft\WindowsApps;C:\Users\admin\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\admin\AppData\Local\Yarn\bin;C:\Users\admin\go\bin;C:\Users\admin\AppData\Local\Programs\Microsoft VS Code Insiders\bin;C:\Users\admin\.deno\bin;C:\Users\admin\go\bin;C:\Users\admin\AppData\Roaming\npm;C:\Users\admin\AppData\Local\Microsoft\WindowsApps
+
+Yarn version: 
+  1.13.0
+
+Node version: 
+  12.18.3
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:125657:13)
+      at Interface.emit (events.js:315:20)
+      at Interface._ttyWrite (readline.js:868:16)
+      at ReadStream.onkeypress (readline.js:205:10)
+      at ReadStream.emit (events.js:315:20)
+      at emitKeys (internal/readline/utils.js:335:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1137:36)
+      at ReadStream.emit (events.js:315:20)
+      at addChunk (_stream_readable.js:295:12)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

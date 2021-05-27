@@ -1,0 +1,106 @@
+<html>
+
+<head>
+  <style>
+    /*
+    创建bfc的方式：
+    - 根元素，即HTML元素
+    - 浮动元素：float 值为 left 或 right
+    - overflow值不为 visible （默认值），为 hidden scroll auto
+    - display的值为 inline-block、table-cell、table-caption、table、inline-table、flex、inline-flex、grid、inline-grid
+    - position的值为 absolute 或 fixed
+    */
+    /* margin塌陷（重叠） */
+    .margin-overlay p {
+      width: 200px;
+      color: #fff;
+      text-align: center;
+      background-color: brown;
+      line-height: 20px;
+      margin: 20px;
+    }
+
+    .wrap {
+      overflow: hidden;
+      /* 创建bfc块 消除margin重叠、塌陷 */
+    }
+
+    /* 清除内部浮动 */
+    .inner-float,
+    .clear-inner-float {
+      border: 5px solid pink;
+      width: 200px;
+      margin: 20px;
+    }
+
+    .inner-float>p,
+    .clear-inner-float>p {
+      float: left;
+      border: 5px solid red;
+      margin: 0;
+    }
+
+    .clear-inner-float {
+      /* 创建bfc块 清除内部浮动，因为计算BFC高度浮动的子元素也参与计算  */
+      overflow: hidden;
+    }
+
+    .left-float-overlay,
+    .left-float {
+      width: 300px;
+      position: relative;
+    }
+
+    .aside {
+      width: 100px;
+      height: 150px;
+      float: left;
+      background: #f66;
+    }
+
+    .main {
+      height: 200px;
+      background: #fcc;
+    }
+
+    .left-float>.main {
+      /* 创建bfc块 bfc区域不与float元素区域重叠 */
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="margin-overlay">
+    <p>within the same bfc1</p>
+    <p>within the same bfc2</p>
+  </div>
+  <div class="margin-overlay">
+    <p>within different bfc1</p>
+    <div class="wrap">
+      <p>within different bfc2</p>
+    </div>
+  </div>
+  <div class="inner-float">
+    <p>float1</p>
+    <p>float2</p>
+  </div>
+  <div style="clear: both; margin: 50px 20px;">--------------分割线-------------</div>
+  <div class="clear-inner-float">
+    <p>clear float1</p>
+    <p>clear float2</p>
+  </div>
+
+  <div class="left-float-overlay">
+    <div class="aside"></div>
+    <div class="main"></div>
+  </div>
+  <div style="margin: 50px 20px;">--------------分割线-------------</div>
+  <div class="left-float">
+    <div class="aside"></div>
+    <div class="main"></div>
+  </div>
+
+</body>
+
+</html>

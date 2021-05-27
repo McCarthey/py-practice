@@ -46,3 +46,41 @@ git 开启大小写敏感
 ```sh
 git config core.ignorecase false
 ```
+
+git 查看全部分支
+
+```
+git branch -a
+```
+
+git 获取当前分支/Hash
+
+分支
+
+```
+git rev-parse --abbrev-ref HEAD
+```
+
+```
+git rev-parse --short HEAD
+```
+
+git 删除本地分支、并推送到远程
+
+删除本地
+
+```
+git branch -d <branchName>
+```
+
+推送到远程
+
+```
+git push origin --delete <branchName>
+```
+
+查找两个分支的祖先节点
+
+```
+git merge-base branchA branchB
+```

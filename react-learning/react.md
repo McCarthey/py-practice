@@ -10,11 +10,20 @@
 - React 在属性更新时，会自动重新渲染子组件；
 - 事件机制默认采用事件代理机制，即 React 仅仅在根元素上绑定事件，给事件处理函数传入的事件对象参数 e，和原生事件参数极其相似，但是其是由 React 根据 W3C 标准封装过的，屏蔽了浏览器的差异性。当然也可以访问原生事件对象
 
-```javascript
-handleClick(e) {
-    e.nativeEvent // 原生对象
-}
-```
+  ```javascript
+  handleClick(e) {
+      e.nativeEvent // 原生对象
+  }
+  ```
+
+- diff 算法简述
+
+  - 只对同级元素进行 diff ，如果一个 DOM 节点在前后两次更新中跨越了层级，那么 React 不会尝试复用它
+  - 两个不同类型的元素会产生出不同的树，如，元素由 div 变成 p，React 会销毁 div 及其子孙节点，并新建 p 及其子孙节点
+  - 开发者可以通过 key 来暗示哪些子元素在不同的渲染下保持稳定，对前后 key 相同的元素进行复用，避免重复地销毁、重建 DOM 树
+
+    - 不推荐使用 index 作为 key 的情形：受控组件，当数据变化时，会导致各个组件全部重新渲染（因为 key 还在，所以不是销毁，只是重新渲染）；非受控组件，不会重新渲染，导致状态混乱
+    - 推荐使用 index 的情况：列表翻页，key 不变，组件值发生改变，组件并不会被卸载，只发生更新
 
 # react hooks
 
@@ -25,76 +34,76 @@ useMemo
 
 - useEffect
 
-在 useEffect 中设定定时器，可以实现防抖功能，在 return 时（组件 unmount 时）清除定时器
+  在 useEffect 中设定定时器，可以实现防抖功能，在 return 时（组件 unmount 时）清除定时器
 
-例如，在输入查询条件变化时，调用查询 API：
+  例如，在输入查询条件变化时，调用查询 API：
 
-```jsx
-useEffect(() => {
-  let timer: any
-  if(timer) {
-    clearTimeout(timer)
-  }
-  timer = setTimeout(() => {
-    queryStringAPI(props.queryString)
-    timer = null
-  }, 500)
-  return {
-    clearTimeout(timer)
-  }
-}, [props.queryString])
-```
+  ```jsx
+  useEffect(() => {
+    let timer: any
+    if(timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      queryStringAPI(props.queryString)
+      timer = null
+    }, 500)
+    return {
+      clearTimeout(timer)
+    }
+  }, [props.queryString])
+  ```
 
 - useState
 
-绑定表单输入
+  绑定表单输入
 
-```jsx
-const [form, setForm] = useState({
-  leftQuery: "",
-  moreHref: "",
-  picTitle: "",
-  status: 0,
-  topQuery: "",
-});
-
-const handleChange = (e: any) => {
-  setForm({
-    ...form,
-    [e.target.name]: e.target.value,
+  ```jsx
+  const [form, setForm] = useState({
+    leftQuery: "",
+    moreHref: "",
+    picTitle: "",
+    status: 0,
+    topQuery: "",
   });
-};
 
-return (
-  <Form labelCol={{ span: 2 }} wrapperCol={{ span: 10 }} labelAlign="left">
-    <Form.Item label="Field A">
-      <Input
-        placeholder="input placeholder"
-        name="picTitle"
-        onChange={handleChange}
-      />
-    </Form.Item>
-    <Form.Item label="Field B">
-      <Input placeholder="input placeholder" />
-    </Form.Item>
-    <Form.Item>
-      <Button type="primary">创建</Button>
-    </Form.Item>
-  </Form>
-);
-```
+  const handleChange = (e: any) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
-Switch 组件，当设置了 defaultChecked={fetchData.status}，在获取数据后，它是不会根据当前的 state 来更新自己的状态的，因此建议当 loading 状态结束后再渲染 Switch 组件
+  return (
+    <Form labelCol={{ span: 2 }} wrapperCol={{ span: 10 }} labelAlign="left">
+      <Form.Item label="Field A">
+        <Input
+          placeholder="input placeholder"
+          name="picTitle"
+          onChange={handleChange}
+        />
+      </Form.Item>
+      <Form.Item label="Field B">
+        <Input placeholder="input placeholder" />
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary">创建</Button>
+      </Form.Item>
+    </Form>
+  );
+  ```
 
-```jsx
-<Form.Item label="状态">
-  {isLoading ? (
-    "loading"
-  ) : (
-    <Switch defaultChecked={Boolean(form.status)} onChange={handleSwitch} />
-  )}
-</Form.Item>
-```
+  Switch 组件，当设置了 defaultChecked={fetchData.status}，在获取数据后，它是不会根据当前的 state 来更新自己的状态的，因此建议当 loading 状态结束后再渲染 Switch 组件
+
+  ```jsx
+  <Form.Item label="状态">
+    {isLoading ? (
+      "loading"
+    ) : (
+      <Switch defaultChecked={Boolean(form.status)} onChange={handleSwitch} />
+    )}
+  </Form.Item>
+  ```
 
 - useCallback
 
@@ -151,60 +160,60 @@ Switch 组件，当设置了 defaultChecked={fetchData.status}，在获取数据
 
 - 组件中 input 输入后 re-render 的问题
 
-问题：input 后 re-render，导致失去焦点
+  问题：input 后 re-render，导致失去焦点
 
-解决：将子组件定义在最外层（或单独的文件中），完全解耦
+  解决：将子组件定义在最外层（或单独的文件中），完全解耦
 
 - react 的自定义事件
 
-要实现自定义事件，需要在生命周期中绑定，并通过 ref 获取需要绑定事件的元素。
+  要实现自定义事件，需要在生命周期中绑定，并通过 ref 获取需要绑定事件的元素。
 
-下面以 web-component 为例，dm-header 元素支持 logout 事件:
+  下面以 web-component 为例，dm-header 元素支持 logout 事件:
 
-```jsx
-import "omi";
-import "omi-wc-demo/dist/header";
+  ```jsx
+  import "omi";
+  import "omi-wc-demo/dist/header";
 
-export default class Header extends React.Component {
-  componentDidMount() {
-    this.el.addEventListener("logout", this.handleLogout);
+  export default class Header extends React.Component {
+    componentDidMount() {
+      this.el.addEventListener("logout", this.handleLogout);
+    }
+
+    componentWillUnmount() {
+      this.el.removeEventListener("logout", this.handleLogout);
+    }
+
+    render() {
+      return (
+        <div>
+          <dm-header ref={(elem) => (this.el = elem)} />
+        </div>
+      );
+    }
   }
+  ```
 
-  componentWillUnmount() {
-    this.el.removeEventListener("logout", this.handleLogout);
+  或者可以使用[jsx-native-events](https://github.com/calebdwilliams/jsx-native-events#readme)来实现自定义事件。
+
+  ```jsx
+  /** @jsx nativeEvents */
+  import nativeEvents from "jsx-native-events";
+  import "omi-wc-demo/dist/header";
+
+  export default class Demo extends React.Component {
+    handleLogout = () => {
+      // logoutAPI
+    };
+
+    render() {
+      return (
+        <div>
+          <dm-header onEventLogout={this.handleLogout} />
+        </div>
+      );
+    }
   }
-
-  render() {
-    return (
-      <div>
-        <dm-header ref={(elem) => (this.el = elem)} />
-      </div>
-    );
-  }
-}
-```
-
-或者可以使用[jsx-native-events](https://github.com/calebdwilliams/jsx-native-events#readme)来实现自定义事件。
-
-```jsx
-/** @jsx nativeEvents */
-import nativeEvents from "jsx-native-events";
-import "omi-wc-demo/dist/header";
-
-export default class Demo extends React.Component {
-  handleLogout = () => {
-    // logoutAPI
-  };
-
-  render() {
-    return (
-      <div>
-        <dm-header onEventLogout={this.handleLogout} />
-      </div>
-    );
-  }
-}
-```
+  ```
 
 - react-router 没有命名路由
 
@@ -238,6 +247,28 @@ export default class Demo extends React.Component {
     return <Select onChange={handleSelect}>
       <Option value="test" key={0} customData={{id: 0, name: 'test', otherProps: {}}}>
     </Select>;
+    ```
+
+  - antd pro 删除生产环境中的 console.\*
+
+    安装引入 babel 的插件
+
+    ```
+    npm i babel-plugin-transform-remove-console -S -D
+    ```
+
+    在项目的 config 中引入额外的 babel 插件，仅在生产环境下启用：
+
+    ```javascript
+    export default {
+      //...
+      extraBabelPlugins: [
+        process.env.REACT_APP_ENV === "pro"
+          ? ["transform-remove-console", { exclude: ["error", "warn"] }]
+          : "",
+      ],
+      //...
+    };
     ```
 
 * antd tree 可控，并支持 onSelect 选中
@@ -406,11 +437,20 @@ export default class Demo extends React.Component {
 
   React 核心只包含定义组件必要的 API，同时适用于 React DOM 和 React Native 组件。
 
-- 渲染器：
+- Scheduler 调度器：
 
-  用于管理一颗 React 树，使其根据底层平台进行不同的调用。主要的渲染器就是 React DOM Render 和 React Native Render。
+  调度任务的优先级，高优任务优先进入 Reconciler。
 
-- reconciler（协调器）：
+  我们以浏览器是否有剩余时间作为任务中断的标准，那么我们需要一种机制，当浏览器有剩余时间时通知我们，部分浏览器已经实现了这个 API，[requestIdleCallback](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/requestIdleCallback)，但是由于一下原因，React 放弃使用它：
+
+  - 浏览器兼容性
+  - 触发频率不稳定，受很多因素影响。比如当我们的浏览器切换 tab 后，之前 tab 注册的 requestIdleCallback 触发的频率会变得很低
+
+  React 团队实现了功能更完备的 requestIdleCallback polyfill，这就是 Scheduler，而且除了在空闲时触发回调的功能外，Scheduler 还提供了多种调度优先级供任务设置。
+
+- Reconciler 协调器：
+
+  负责找出变化的组件
 
   不同的渲染器共享部分代码，包括声明式渲染，自定义组件，state，生命周期方法和 refs 等特性，以保持跨平台工作一致。
 
@@ -730,4 +770,35 @@ export default class Demo extends React.Component {
 
   - Fiber reconciler：
 
-    React 16 版本后的解决方案；
+    React 16 版本后的解决方案，更新工作从递归变成了可以中断的循环过程。每次循环都会调用 shouldYield 判断当前是否有剩余时间：
+
+    ```javascript
+    function workLoopConcurrent() {
+      // Perform work until Scheduler asks us to yield
+      while (workInProgress !== null && !shouldYield()) {
+        workInProgress = performUnitOfWork(workInProgress);
+      }
+    }
+    ```
+
+    在 React 16 中，Reconciler 和 Renderer 不再交替工作，当 Scheduler 将任务交给 Reconciler 后，Reconciler 会为变化的虚拟 DOM 打上代表增/删/更新的标记，如：
+
+    ```javascript
+    export const Placement = /*             */ 0b0000000000010;
+    export const Update = /*                */ 0b0000000000100;
+    export const PlacementAndUpdate = /*    */ 0b0000000000110;
+    export const Deletion = /*              */ 0b0000000001000;
+    ```
+
+    整个 Scheduler 和 Reconciler 的工作都在内存中进行，只有当所有组件都完成 Reconciler 的工作，才会统一交给 Renderer
+
+- Renderer 渲染器：
+
+  负责将变化的组件渲染到页面上（管理一颗 React 树，使其根据底层平台进行不同的调用。主要的渲染器就是 React DOM Render 和 React Native Render。）
+
+  Renderer 根据 Reconciler 为虚拟 DOM（Fiber）打上标记，同步执行对应 DOM 操作，即 appendChild、insertBefore 等。其中 Scheduler 和 Reconciler 的过程随时可能由以下原因被中断：
+
+  - 有其他更高优任务需要先更新
+  - 当前帧没有剩余时间
+
+  由于 Scheduler 和 Reconciler 的过程都在内存中进行，不会更新页面上的 DOM，所以即使反复中断，用户也不会看见更新不完全的 DOM
