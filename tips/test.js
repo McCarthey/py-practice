@@ -26,7 +26,8 @@ Function.prototype.myApply = function (context) {
 }
 
 function myInstanceOf(left, right) {
-  if (typeof left !== 'object' || typeof left !== 'function' || left === null) return false
+  if (typeof left !== 'object' || typeof left !== 'function' || left === null)
+    return false
   let proto = Object.getPrototypeOf(left)
   while (true) {
     if (proto === null) {
@@ -46,80 +47,79 @@ function myInstanceOf(left, right) {
  * 比如区分setTimeout/setImmediate  process.nextTick 和 promise
  */
 
-console.log('golb1');
+console.log('golb1')
 
 setTimeout(function () {
-  console.log('timeout1');
+  console.log('timeout1')
   process.nextTick(function () {
-    console.log('timeout1_nextTick');
+    console.log('timeout1_nextTick')
   })
   new Promise(function (resolve) {
-    console.log('timeout1_promise');
-    resolve();
+    console.log('timeout1_promise')
+    resolve()
   }).then(function () {
     console.log('timeout1_then')
   })
 })
 
 setImmediate(function () {
-  console.log('immediate1');
+  console.log('immediate1')
   process.nextTick(function () {
-    console.log('immediate1_nextTick');
+    console.log('immediate1_nextTick')
   })
   new Promise(function (resolve) {
-    console.log('immediate1_promise');
-    resolve();
+    console.log('immediate1_promise')
+    resolve()
   }).then(function () {
     console.log('immediate1_then')
   })
 })
 
 process.nextTick(function () {
-  console.log('glob1_nextTick');
+  console.log('glob1_nextTick')
 })
 new Promise(function (resolve) {
-  console.log('glob1_promise');
-  resolve();
+  console.log('glob1_promise')
+  resolve()
 }).then(function () {
   console.log('glob1_then')
 })
 
 setTimeout(function () {
-  console.log('timeout2');
+  console.log('timeout2')
   process.nextTick(function () {
-    console.log('timeout2_nextTick');
+    console.log('timeout2_nextTick')
   })
   new Promise(function (resolve) {
-    console.log('timeout2_promise');
-    resolve();
+    console.log('timeout2_promise')
+    resolve()
   }).then(function () {
     console.log('timeout2_then')
   })
 })
 
 process.nextTick(function () {
-  console.log('glob2_nextTick');
+  console.log('glob2_nextTick')
 })
 new Promise(function (resolve) {
-  console.log('glob2_promise');
-  resolve();
+  console.log('glob2_promise')
+  resolve()
 }).then(function () {
   console.log('glob2_then')
 })
 
 setImmediate(function () {
-  console.log('immediate2');
+  console.log('immediate2')
   process.nextTick(function () {
-    console.log('immediate2_nextTick');
+    console.log('immediate2_nextTick')
   })
   new Promise(function (resolve) {
-    console.log('immediate2_promise');
-    resolve();
+    console.log('immediate2_promise')
+    resolve()
   }).then(function () {
     console.log('immediate2_then')
   })
 })
-
 
 function debounce(fn, wait) {
   let timer
@@ -139,14 +139,15 @@ function debounceRightNow(func, wait = 500, immediate = true) {
   let timer, context, args
 
   // 延迟执行的函数
-  const later = () => setTimeout(() => {
-    timer = null
-    if (!immediate) {
-      func.apply(context, args)
-      context = null
-      args = null
-    }
-  }, wait)
+  const later = () =>
+    setTimeout(() => {
+      timer = null
+      if (!immediate) {
+        func.apply(context, args)
+        context = null
+        args = null
+      }
+    }, wait)
 
   return function (...params) {
     // 如果没有定时器，则设定
@@ -167,17 +168,43 @@ function debounceRightNow(func, wait = 500, immediate = true) {
   }
 }
 
-
 function debounce2(func, wait = 300, immediate = true) {
-  let timer, args, context
-  const later = () => setTimeout(() => {
-    timer = null
-    if (!immediate) {
-      func.apply(context, args)
-      args = null
-      context = null
-    }
-  }, wait)
+  // let timer, args, context
+  // const later = () =>
+  //   setTimeout(() => {
+  //     timer = null
+  //     if (!immediate) {
+  //       func.apply(context, args)
+  //       args = null
+  //       context = null
+  //     }
+  //   }, wait)
+
+  // return function (...params) {
+  //   if (!timer) {
+  //     timer = later()
+  //     if (immediate) {
+  //       func.apply(this, params)
+  //     } else {
+  //       args = params
+  //       context = this
+  //     }
+  //   } else {
+  //     clearTimeout(timer)
+  //     timer = later()
+  //   }
+  // }
+  let timer, context, args
+
+  const later = () =>
+    setTimeout(() => {
+      timer = null
+      if (!immediate) {
+        func.apply(context, args)
+        context = null
+        args = null
+      }
+    }, wait)
 
   return function (...params) {
     if (!timer) {
@@ -185,12 +212,101 @@ function debounce2(func, wait = 300, immediate = true) {
       if (immediate) {
         func.apply(this, params)
       } else {
-        args = params
         context = this
+        args = params
       }
     } else {
       clearTimeout(timer)
       timer = later()
     }
+  }
+}
+
+function throttle(func, delay) {
+  // let startTime = Date.now()
+  // return function () {
+  //   let context = this
+  //   let currentTime = Date.now()
+  //   if (currentTime - startTime >= delay) {
+  //     func.apply(context, arguments)
+  //     startTime = currentTime
+  //   }
+  // }
+  let startTime = Date.now()
+  return function (...params) {
+    let currentTime = Date.now()
+    if (currentTime - startTime >= delay) {
+      func.apply(this, params)
+      startTime = currentTime
+    }
+  }
+}
+
+// 问题 1
+// 解析 URL 中的 queryString，返回一个对象 解析异常的 展示 ’‘
+// 返回值示例：
+// {
+//   name: 'coder',
+//   age: '20'.
+//   callback: 'https://youzan.com?name=test',
+//   list: [a, b],
+//   json: {str: "abc", num: 123}, // json key 是固定
+// }
+const testURL =
+  'https://www.youzan.com?name=coder&age=20&callback=https%3A%2F%2Fyouzan.com%3Fname%3Dtest&list[]=a&list[]=b&json=%7B%22str%22%3A%22abc%22,%22num%22%3A123%7D'
+function parseQueryString(url) {
+  const result = {}
+  let arr = url.split('?')[1].split('&')
+  for (let i = 0; i < arr.length; i++) {
+    const element = arr[i]
+    const [name, value] = element.split('=')
+    const decoded = decodeURIComponent(value)
+    if (name.includes('[]')) {
+      listName = name.split('[]')[0]
+      if (result[listName]) {
+        result[listName].push(decoded)
+      } else {
+        result[listName] = [decoded]
+      }
+    } else if (decoded.startsWith('{') && decoded.endsWith('}')) {
+      try {
+        const json = JSON.parse(decoded)
+        result[name] = json
+      } catch (error) {
+        result[name] = decoded
+      }
+    } else {
+      result[name] = decoded
+    }
+  }
+  console.log(result)
+  return result
+}
+
+console.log(parseQueryString(testURL))
+
+/**
+ * 问题 2
+ * 将一个json数据的所有key从下划线改为驼峰
+ *
+ * @param {object | array} value 待处理对象或数组
+ * @returns {object | array} 处理后的对象或数组
+ */
+
+function mapKeysToCamelCase(data) {
+  const result = {}
+
+  for (let key in data) {
+    const value = data[key]
+    let reg = /\d/
+    if (Object.prototype.toString.call(data) === '[object Object]') {
+      convert(data[key])
+    } else {
+    }
+  }
+  function convert(data) {
+    key.replace(/_(\w)/, function () {
+      return RegExp.$1.toUpperCase()
+    })
   }
 }
