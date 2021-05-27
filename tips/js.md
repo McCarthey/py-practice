@@ -264,6 +264,7 @@ window.onscroll = function throttle() {
 抽象函数：
 
 ```javascript
+// 简单版
 function throttle(func, delay) {
   let startTime = Date.now();
   return function () {
