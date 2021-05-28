@@ -16,6 +16,30 @@ Function.prototype.myCall = function (context) {
   return result
 }
 
+function myCall(context, ...args) {
+  const ctx = context || window
+  ctx.fn = this
+  const res = ctx.fn(...args)
+  delete ctx.fn
+  return res
+}
+
+function myApply(context, args) {
+  const ctx = context || window
+  ctx.fn = this
+  const res = ctx.fn(...args)
+  delete ctx.fn
+  return res
+}
+
+function myBind(context, ...args) {
+  const fn = this
+  const restArgs = [...arguments].slice(1)
+  return function () {
+    return fn.apply(context, [...args, ...restArgs])
+  }
+}
+
 Function.prototype.myApply = function (context) {
   const ctx = context || window
   ctx.fn = this
@@ -26,7 +50,8 @@ Function.prototype.myApply = function (context) {
 }
 
 function myInstanceOf(left, right) {
-  if (typeof left !== 'object' || typeof left !== 'function' || left === null) return false
+  if (typeof left !== 'object' || typeof left !== 'function' || left === null)
+    return false
   let proto = Object.getPrototypeOf(left)
   while (true) {
     if (proto === null) {
@@ -46,80 +71,79 @@ function myInstanceOf(left, right) {
  * 比如区分setTimeout/setImmediate  process.nextTick 和 promise
  */
 
-console.log('golb1');
+console.log('golb1')
 
 setTimeout(function () {
-  console.log('timeout1');
+  console.log('timeout1')
   process.nextTick(function () {
-    console.log('timeout1_nextTick');
+    console.log('timeout1_nextTick')
   })
   new Promise(function (resolve) {
-    console.log('timeout1_promise');
-    resolve();
+    console.log('timeout1_promise')
+    resolve()
   }).then(function () {
     console.log('timeout1_then')
   })
 })
 
 setImmediate(function () {
-  console.log('immediate1');
+  console.log('immediate1')
   process.nextTick(function () {
-    console.log('immediate1_nextTick');
+    console.log('immediate1_nextTick')
   })
   new Promise(function (resolve) {
-    console.log('immediate1_promise');
-    resolve();
+    console.log('immediate1_promise')
+    resolve()
   }).then(function () {
     console.log('immediate1_then')
   })
 })
 
 process.nextTick(function () {
-  console.log('glob1_nextTick');
+  console.log('glob1_nextTick')
 })
 new Promise(function (resolve) {
-  console.log('glob1_promise');
-  resolve();
+  console.log('glob1_promise')
+  resolve()
 }).then(function () {
   console.log('glob1_then')
 })
 
 setTimeout(function () {
-  console.log('timeout2');
+  console.log('timeout2')
   process.nextTick(function () {
-    console.log('timeout2_nextTick');
+    console.log('timeout2_nextTick')
   })
   new Promise(function (resolve) {
-    console.log('timeout2_promise');
-    resolve();
+    console.log('timeout2_promise')
+    resolve()
   }).then(function () {
     console.log('timeout2_then')
   })
 })
 
 process.nextTick(function () {
-  console.log('glob2_nextTick');
+  console.log('glob2_nextTick')
 })
 new Promise(function (resolve) {
-  console.log('glob2_promise');
-  resolve();
+  console.log('glob2_promise')
+  resolve()
 }).then(function () {
   console.log('glob2_then')
 })
 
 setImmediate(function () {
-  console.log('immediate2');
+  console.log('immediate2')
   process.nextTick(function () {
-    console.log('immediate2_nextTick');
+    console.log('immediate2_nextTick')
   })
   new Promise(function (resolve) {
-    console.log('immediate2_promise');
-    resolve();
+    console.log('immediate2_promise')
+    resolve()
   }).then(function () {
     console.log('immediate2_then')
   })
 })
-
 
 function debounce(fn, wait) {
   let timer
@@ -135,18 +159,30 @@ function debounce(fn, wait) {
   }
 }
 
+function debounce(func, delay) {
+  let timer
+  return function () {
+    if (timer) clearTimeout(timer)
+    timer = setTimeout(() => {
+      func.apply(this, arguments)
+      timer = null
+    }, delay)
+  }
+}
+
 function debounceRightNow(func, wait = 500, immediate = true) {
   let timer, context, args
 
   // 延迟执行的函数
-  const later = () => setTimeout(() => {
-    timer = null
-    if (!immediate) {
-      func.apply(context, args)
-      context = null
-      args = null
-    }
-  }, wait)
+  const later = () =>
+    setTimeout(() => {
+      timer = null
+      if (!immediate) {
+        func.apply(context, args)
+        context = null
+        args = null
+      }
+    }, wait)
 
   return function (...params) {
     // 如果没有定时器，则设定
@@ -167,17 +203,43 @@ function debounceRightNow(func, wait = 500, immediate = true) {
   }
 }
 
-
 function debounce2(func, wait = 300, immediate = true) {
-  let timer, args, context
-  const later = () => setTimeout(() => {
-    timer = null
-    if (!immediate) {
-      func.apply(context, args)
-      args = null
-      context = null
-    }
-  }, wait)
+  // let timer, args, context
+  // const later = () =>
+  //   setTimeout(() => {
+  //     timer = null
+  //     if (!immediate) {
+  //       func.apply(context, args)
+  //       args = null
+  //       context = null
+  //     }
+  //   }, wait)
+
+  // return function (...params) {
+  //   if (!timer) {
+  //     timer = later()
+  //     if (immediate) {
+  //       func.apply(this, params)
+  //     } else {
+  //       args = params
+  //       context = this
+  //     }
+  //   } else {
+  //     clearTimeout(timer)
+  //     timer = later()
+  //   }
+  // }
+  let timer, context, args
+
+  const later = () =>
+    setTimeout(() => {
+      timer = null
+      if (!immediate) {
+        func.apply(context, args)
+        context = null
+        args = null
+      }
+    }, wait)
 
   return function (...params) {
     if (!timer) {
@@ -185,8 +247,8 @@ function debounce2(func, wait = 300, immediate = true) {
       if (immediate) {
         func.apply(this, params)
       } else {
-        args = params
         context = this
+        args = params
       }
     } else {
       clearTimeout(timer)
@@ -195,76 +257,114 @@ function debounce2(func, wait = 300, immediate = true) {
   }
 }
 
-
-// 生意参谋 流量看板 自动点击脚本，兼容低速网络
-function sleep(time) {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(), time * 1000)
-  })
-}
-
-async function autoClick() {
-  const tabContainer = document.querySelector('.summary-main-index-tab')
-  if (!tabContainer) return false
-  const tabs = tabContainer.childNodes
-  const dataContainer = document.querySelector('#overviewBoardSummaryIndexesTrend')
-  await sleep(3)
-  for (let i = 0; i < tabs.length; i++) {
-    tabs[i].click()
-    await isDomExist(dataContainer, '.alife-one-design-sycm-indexes-trend-index-content-container')
-    const subTabsContainer = dataContainer.querySelector('.alife-one-design-sycm-indexes-trend-index-content-container')
-    await isDomExist(subTabsContainer, '.alife-one-design-sycm-indexes-trend-index-item-multiple-line-selectable', true)
-    const subTabs = subTabsContainer.querySelectorAll('.alife-one-design-sycm-indexes-trend-index-item-multiple-line-selectable')
-    for (let j = 0; j < subTabs.length; j++) {
-      subTabs[j].click()
-      await sleep(1)
+function throttle(func, delay) {
+  // let startTime = Date.now()
+  // return function () {
+  //   let context = this
+  //   let currentTime = Date.now()
+  //   if (currentTime - startTime >= delay) {
+  //     func.apply(context, arguments)
+  //     startTime = currentTime
+  //   }
+  // }
+  let startTime = Date.now()
+  return function (...params) {
+    let currentTime = Date.now()
+    if (currentTime - startTime >= delay) {
+      func.apply(this, params)
+      startTime = currentTime
     }
   }
 }
 
+function throttle(func, delay) {
+  let flag = true
+  return function () {
+    if (!flag) return
+    flag = false
+    setTimeout(() => {
+      func.apply(this, arguments)
+      flag = true
+    }, delay)
+  }
+}
 
-async function isDomExist(target, selector, list = false) {
-  return new Promise((resolve) => {
-    let timer = null
-    const max = 60
-    let count = 0
-    timer = setInterval(() => {
-      const dom = list ? target.querySelector(selector) : target.querySelectorAll(selector)
-      if (count >= max) {
-        clearInterval(timer)
-        resolve()
-      }
-      if ('length' in dom) {
-        if (dom.length !== 0) {
-          clearInterval(timer)
-          resolve()
-        } else {
-          count++
-        }
-      } else if (dom) {
-        clearInterval(timer)
-        resolve()
+function throttle(func, delay) {
+  let startTime = Date.now()
+  return function (...params) {
+    let current = Date.now()
+    if (current - startTime >= delay) {
+      func.apply(this, params)
+      startTime = current
+    }
+  }
+}
+
+// 问题 1
+// 解析 URL 中的 queryString，返回一个对象 解析异常的 展示 ’‘
+// 返回值示例：
+// {
+//   name: 'coder',
+//   age: '20'.
+//   callback: 'https://youzan.com?name=test',
+//   list: [a, b],
+//   json: {str: "abc", num: 123}, // json key 是固定
+// }
+const testURL =
+  'https://www.youzan.com?name=coder&age=20&callback=https%3A%2F%2Fyouzan.com%3Fname%3Dtest&list[]=a&list[]=b&json=%7B%22str%22%3A%22abc%22,%22num%22%3A123%7D'
+function parseQueryString(url) {
+  const result = {}
+  let arr = url.split('?')[1].split('&')
+  for (let i = 0; i < arr.length; i++) {
+    const element = arr[i]
+    const [name, value] = element.split('=')
+    const decoded = decodeURIComponent(value)
+    if (name.includes('[]')) {
+      listName = name.split('[]')[0]
+      if (result[listName]) {
+        result[listName].push(decoded)
       } else {
-        count++
+        result[listName] = [decoded]
       }
-    }, 500)
-  })
+    } else if (decoded.startsWith('{') && decoded.endsWith('}')) {
+      try {
+        const json = JSON.parse(decoded)
+        result[name] = json
+      } catch (error) {
+        result[name] = decoded
+      }
+    } else {
+      result[name] = decoded
+    }
+  }
+  console.log(result)
+  return result
 }
 
-const targetNode = document.querySelector('.ebase-ModernFrame__main')
+console.log(parseQueryString(testURL))
 
-const config = { childList: true, subtree: true };
+/**
+ * 问题 2
+ * 将一个json数据的所有key从下划线改为驼峰
+ *
+ * @param {object | array} value 待处理对象或数组
+ * @returns {object | array} 处理后的对象或数组
+ */
 
-const callback = async function (mutationsList, observer) {
-  const tabContainer = document.querySelector('.summary-main-index-tab')
-  if (!tabContainer) return false
-  console.log('[start auto click in 2s]')
-  observer.disconnect()
-  console.log('[disconnect observer]')
-  await sleep(2)
-  autoClick()
+function mapKeysToCamelCase(data) {
+  const result = {}
+
+  for (let key in data) {
+    const value = data[key]
+    let reg = /\d/
+    if (Object.prototype.toString.call(data) === '[object Object]') {
+      convert(data[key])
+    } else {
+    }
+  }
+  function convert(data) {
+    key.replace(/_(\w)/, function () {
+      return RegExp.$1.toUpperCase()
+    })
+  }
 }
-
-const observer = new MutationObserver(callback);
-
-observer.observe(targetNode, config);
