@@ -21,7 +21,59 @@
 - 使用 HOC：high-order-component，来对组件进行抽重，不是使用已经摒弃的 mixin。HOC 应接受组件作为参数，并返回一个组件，这个组件的 render 函数中使用参数函数，并传递相应的 props，类似容器组件的概念。
 - redux 中：将 reducer 命名为其处理的页面状态数据书中的键值，更加规范清晰，也方便使用 es6 中的对象属性简写。
 
-# React 的一些知识
+# React18 新特性
+
+- Automatic batching
+
+  先来看一个简单例子
+
+  ```javascript
+  import React from "react";
+  import ReactDOM from "react-dom";
+
+  class Demo extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        a: 0,
+      };
+    }
+
+    onClick() {
+      this.setState({ a: 1 });
+      console.log("a :", this.state.a);
+      this.setState({ a: 2 });
+    }
+
+    render() {
+      return (
+        <>
+          <p>{this.state.a}</p>
+          <button onClick={() => this.onClick()}>+</button>
+        </>
+      );
+    }
+  }
+
+  ReactDOM.render(<Demo />, document.getElementById("container"));
+  ```
+
+  此处`console.log`打印`a ：0`，但是异步会存在竞态，即`this.setState({a: 1})`先触发，但可能`this.setState({a: 2})`的流程先完成。那么如何保证`a ：2`的状态更新到视图呢？而且异步的更新会导致视图中`a`先变成一个中间状态（如 1），再变成最终状态（如 2），更期望的情况是只显示最终状态，直接由 0 变成 2，该如何实现？
+
+  <span style="text-decoration: line-through">“当然是把 setState 机制改成同步了”</span>
+
+  同步当然是可以解决以上两个问题，但是同步也意味着浏览器线程被 Javascript 阻塞，一直在执行更新流程。如果更新流程很复杂，或者同时触发多个更新，那么浏览器就会掉帧，即卡顿，带来很严重的性能问题。
+
+  因此，React 团队给出的解决方案是`batchedUpdates`（批处理），即：
+  `React 会尝试将同一上下文中触发的更新合并为一个更新 `。
+
+  批处理的优势：
+
+  - 合并不必要的更新，减少更新流程调用次数
+  - 状态按顺序保存下来，更新时不会出现竞争问题
+  - 最终触发的更新是异步流程，减少浏览器掉帧的可能性
+
+# 一些知识
 
 - React 在属性更新时，会自动重新渲染子组件；
 - 事件机制默认采用事件代理机制，即 React 仅仅在根元素上绑定事件，给事件处理函数传入的事件对象参数 e，和原生事件参数极其相似，但是其是由 React 根据 W3C 标准封装过的，屏蔽了浏览器的差异性。当然也可以访问原生事件对象
