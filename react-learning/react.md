@@ -73,6 +73,46 @@
   - 状态按顺序保存下来，更新时不会出现竞争问题
   - 最终触发的更新是异步流程，减少浏览器掉帧的可能性
 
+  而在 React 18 之前，批处理都是“半自动”的。
+
+  ### 半自动批处理
+
+  在 V18 之前，只有事件回调、生命周期回调中的更新会批处理，比如上例中的`onClick`，而在`Promise`，`setTimeout`等异步回调中不会批处理
+
+  ```javascript
+  // 使用setTimeout、promise时控制台中会同步打印出每次修改后的新值，即1,2,3,4,5
+  onAsyncClick() {
+    setTimeout(() => {
+      this.setState({a: 1})
+      console.log('a :', this.state.a)
+      this.setState({a: 2})
+      console.log('a :', this.state.a)
+      this.setState({a: 3})
+      console.log('a :', this.state.a)
+      this.setState({a: 4})
+      console.log('a :', this.state.a)
+      this.setState({a: 5})
+      console.log('a :', this.state.a)
+    }, 0)
+  }
+
+  onPromiseClick() {
+    const p = new Promise((resolve) => resolve())
+    p.then(res => {
+      this.setState({a: 1})
+      console.log('a :', this.state.a)
+      this.setState({a: 2})
+      console.log('a :', this.state.a)
+      this.setState({a: 3})
+      console.log('a :', this.state.a)
+      this.setState({a: 4})
+      console.log('a :', this.state.a)
+      this.setState({a: 5})
+      console.log('a :', this.state.a)
+    })
+  }
+  ```
+
 # 一些知识
 
 - React 在属性更新时，会自动重新渲染子组件；
