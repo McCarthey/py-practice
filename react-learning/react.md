@@ -113,6 +113,33 @@
   }
   ```
 
+  因为源码中的`batchedUpdates(fn,a)`方法是同步调用的，如果 fn 中包含异步流程，比如上面的例子，那么真正执行`this.setState`时`batchedUpdates`早就执行完了，因此此时触发的更新不会走批处理逻辑。
+
+  因此这种“只对同步流程中的`this.setState`进行批处理，只能说是半自动”
+
+  为了弥补“半自动批处理”的不灵活，`ReactDOM`中导出`unstable_batchedUpdates`方法供开发者手动调用。
+
+  比如以上例子，可以这样修改：
+  ```javascript
+  onAsyncClick() {
+    setTimeout(() => {
+      ReactDOM.unstable_batchedUpdates(() => {
+        this.setState({ a: 1 });
+        console.log("a :", this.state.a);
+        this.setState({ a: 2 });
+        console.log("a :", this.state.a);
+        this.setState({ a: 3 });
+        console.log("a :", this.state.a);
+        this.setState({ a: 4 });
+        console.log("a :", this.state.a);
+        this.setState({ a: 5 });
+        console.log("a :", this.state.a);
+      });
+    }, 0);
+  }
+  ```
+  改动后，5次`this.setState`调用时上下文中全局变量`executionContext`中会包含`BatchedContext`。
+
 # 一些知识
 
 - React 在属性更新时，会自动重新渲染子组件；
