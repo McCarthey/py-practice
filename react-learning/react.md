@@ -75,7 +75,7 @@
 
   而在 React 18 之前，批处理都是“半自动”的。
 
-  ### 半自动批处理
+  ## 半自动批处理
 
   在 V18 之前，只有事件回调、生命周期回调中的更新会批处理，比如上例中的`onClick`，而在`Promise`，`setTimeout`等异步回调中不会批处理
 
@@ -120,6 +120,7 @@
   为了弥补“半自动批处理”的不灵活，`ReactDOM`中导出`unstable_batchedUpdates`方法供开发者手动调用。
 
   比如以上例子，可以这样修改：
+
   ```javascript
   onAsyncClick() {
     setTimeout(() => {
@@ -138,7 +139,98 @@
     }, 0);
   }
   ```
-  改动后，5次`this.setState`调用时上下文中全局变量`executionContext`中会包含`BatchedContext`。
+
+  改动后，5 次`this.setState`调用时上下文中全局变量`executionContext`中会包含`BatchedContext`。
+
+  ## 自动批处理
+
+  V18 实现自动批处理的关键在于两点：
+
+  - 增加调度的流程
+  - 不以全局变量`executionContext`为批处理依据，而是以更新的**优先级**为依据
+
+  那么什么是**优先级**呢？
+
+  ### 优先级
+
+  调用`this.setState`后源码内部会依次执行：
+
+  1. 根据当前环境选择一个**优先级**
+  2. 创建一个代表本次更新的`update`对象，并赋予它步骤`1`中的优先级
+  3. 将`update`挂载在当前组件对应`fiber`（虚拟`DOM`）上
+  4. 进入调度流程
+
+  以如下例子来说：
+
+  ```javascript
+  onClick() {
+    this.setState({a: 3});
+    this.setState({a: 4});
+  }
+  ```
+
+  这两次执行的`this.setState`创造的`update`数据结构如下：
+
+  ```javascript
+  {
+    callback: null,
+    eventTime: 5891.199999988079,
+    lane: 1,
+    next: null,
+    payload: { a: 3 },
+    tag: 0,
+  }
+
+  {
+    callback: null,
+    eventTime: 34380.39999997616,
+    lane: 1,
+    next: null,
+    payload: { a: 4 },
+    tag: 0,
+  }
+  ```
+
+  其中`lane`代表该`update`的优先级。
+
+  在 V18，不同场景下触发的更新拥有不同**优先级**，比如上述例子中事件回调中的`this.setState`会产生同步优先级的更新，这是最高优先级（`lane`为 1）
+
+  为了对比，我们将如上代码放入`setTimeout`中：
+
+  ```javascript
+  onClick() {
+    setTimeout(() => {
+      this.setState({a: 3});
+      this.setState({a: 4});
+    })
+  }
+  ```
+
+  这两次执行的`this.setState`创造的`update`数据结构如下：
+
+  ```javascript
+  {
+    callback: null,
+    eventTime: 13903.399999976158,
+    lane: 16,
+    next: null,
+    payload: { a: 3 },
+    tag: 0,
+  }
+
+  {
+    callback: null,
+    eventTime: 13903.399999976158,
+    lane: 16,
+    next: null,
+    payload: { a: 4 },
+    tag: 0,
+  }
+  ```
+
+  `lane`为 16，代表`Normal`，即一般优先级。
+
+  ### 调度流程
 
 # 一些知识
 
