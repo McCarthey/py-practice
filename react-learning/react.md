@@ -232,6 +232,61 @@
 
   ### 调度流程
 
+  在组件对应`fiber`挂载`update`后，就会进入**调度流程**
+
+  当大型应用中的某一时刻，多个不同组件都触发了更新，那么这些组件对应的`fiber`中会存在不同优先级的`update`。
+
+  **调度流程**的作用就是选出这些`update`中优先级最高的那个，以该优先级进入更新流程。
+
+  以下是部分**调度流程**源码：
+  ```javascript
+  function ensureRootIsScheduled(root, currentTime) {
+
+    // 获取当前所有优先级中最高的优先级
+    var nextLanes = getNextLanes(root, root === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes);
+    // 本次要调度的优先级
+    var newCallbackPriority = getHighestPriorityLane(nextLanes); 
+    
+    // 已经存在的调度的优先级
+    var existingCallbackPriority = root.callbackPriority;
+
+    if (existingCallbackPriority === newCallbackPriority) {
+      return;
+    }
+    // 调度更新流程
+    newCallbackNode = scheduleCallback(schedulerPriorityLevel, performConcurrentWorkOnRoot.bind(null, root));
+
+    root.callbackPriority = newCallbackPriority;
+    root.callbackNode = newCallbackNode;
+  }
+  ```
+
+  可以看出大致的调度流程是：
+  
+  1. 获取当前优先级中最高的优先级
+  2. 将步骤1的优先级作为本次调度的优先级
+  3. 如果已经存在一个调度，且和本次要调度的优先级一致，则`return`
+  4. 否则进入调度流程
+
+  调度的最终目的是在一定时间后执行`performConcurrentWorkOnRoot`，正式进入更新流程。
+
+  以上面的例子来说：
+
+  ```javascript
+  onClick() {
+    this.setState({a: 3});
+    this.setState({a: 4});
+  }
+  ```
+  第一次调用`this.setState`后，由于不存在`existingCallbackPriority`，所以后执行调度；
+
+  第二次调用`this.setState`后，已存在`existingCallbackPriority`，且优先级相同，所以`return`；
+
+  按照这个逻辑，即使多次调用`this.setState`，只有第一次调用会执行调度，后面几次由于和第一次优先级都相同，故都会`return`。
+
+  由于每次执行`this.setState`，都会创建`update`并挂载在`fiber`上，所以即使只执行一次更新流程，还是能将状态更新到最新。
+
+  这就是以**优先级**为依据的**自动批处理**逻辑。
 # 一些知识
 
 - React 在属性更新时，会自动重新渲染子组件；
