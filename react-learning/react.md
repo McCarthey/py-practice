@@ -142,6 +142,57 @@
 
   改动后，5 次`this.setState`调用时上下文中全局变量`executionContext`中会包含`BatchedContext`。
 
+  再看一个批量更新的例子：
+
+  ```javascript
+  constructor(props) {
+    super(props)
+    this.state = {
+      count: 1
+    }
+  }
+
+  handleAdd = () => {
+    this.setState({
+      count: this.state.count + 1,
+    })
+    console.log('first time: ', this.state.count) // 1
+
+    this.setState({
+        count: this.state.count + 1,
+    })
+    console.log('second time: ', this.state.count) // 1
+
+    this.setState({
+        count: this.state.count + 1,
+    })
+    console.log('third time: ', this.state.count) // 1
+  }
+  ```
+
+  点击触发`handleAdd`事件，发现打印的都是`1`，而页面显示的`count`值是`2`，可以看到对一个值进行多次`setState`，`setState`的批量更新策略会对其进行覆盖，仅取最后一次的执行结果，所以上述例子最终表现为只增加了`1`。
+
+  如果是下一个`state`依赖前一个`state`的话，推荐给`setState`一个参数传入一个`function`，如下：
+
+  ```javascript
+  handleAdd = () => {
+    this.setState((prev) => ({
+      count: prev.count + 1,
+    }));
+    console.log("first time: ", this.state.count); // 1
+
+    this.setState((prev) => ({
+      count: prev.count + 1,
+    }));
+    console.log("second time: ", this.state.count); // 1
+
+    this.setState((prev) => ({
+      count: prev.count + 1,
+    }));
+    console.log("third time: ", this.state.count); // 1
+  };
+  ```
+
   ## 自动批处理
 
   V18 实现自动批处理的关键在于两点：
@@ -239,14 +290,17 @@
   **调度流程**的作用就是选出这些`update`中优先级最高的那个，以该优先级进入更新流程。
 
   以下是部分**调度流程**源码：
+
   ```javascript
   function ensureRootIsScheduled(root, currentTime) {
-
     // 获取当前所有优先级中最高的优先级
-    var nextLanes = getNextLanes(root, root === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes);
+    var nextLanes = getNextLanes(
+      root,
+      root === workInProgressRoot ? workInProgressRootRenderLanes : NoLanes
+    );
     // 本次要调度的优先级
-    var newCallbackPriority = getHighestPriorityLane(nextLanes); 
-    
+    var newCallbackPriority = getHighestPriorityLane(nextLanes);
+
     // 已经存在的调度的优先级
     var existingCallbackPriority = root.callbackPriority;
 
@@ -254,7 +308,10 @@
       return;
     }
     // 调度更新流程
-    newCallbackNode = scheduleCallback(schedulerPriorityLevel, performConcurrentWorkOnRoot.bind(null, root));
+    newCallbackNode = scheduleCallback(
+      schedulerPriorityLevel,
+      performConcurrentWorkOnRoot.bind(null, root)
+    );
 
     root.callbackPriority = newCallbackPriority;
     root.callbackNode = newCallbackNode;
@@ -262,9 +319,9 @@
   ```
 
   可以看出大致的调度流程是：
-  
+
   1. 获取当前优先级中最高的优先级
-  2. 将步骤1的优先级作为本次调度的优先级
+  2. 将步骤 1 的优先级作为本次调度的优先级
   3. 如果已经存在一个调度，且和本次要调度的优先级一致，则`return`
   4. 否则进入调度流程
 
@@ -278,6 +335,7 @@
     this.setState({a: 4});
   }
   ```
+
   第一次调用`this.setState`后，由于不存在`existingCallbackPriority`，所以后执行调度；
 
   第二次调用`this.setState`后，已存在`existingCallbackPriority`，且优先级相同，所以`return`；
@@ -287,6 +345,7 @@
   由于每次执行`this.setState`，都会创建`update`并挂载在`fiber`上，所以即使只执行一次更新流程，还是能将状态更新到最新。
 
   这就是以**优先级**为依据的**自动批处理**逻辑。
+
 # 一些知识
 
 - React 在属性更新时，会自动重新渲染子组件；
