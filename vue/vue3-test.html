@@ -1,0 +1,27 @@
+<html>
+
+<body>
+  <div id="counter">
+    <div>Counter: {{ counter }}</div>
+    <button @click="handleAdd">+</button>
+  </div>
+</body>
+<script type="module">
+  import { createApp } from "https://lib.baomitu.com/vue/3.1.4/vue.esm-browser.min.js";
+  const Counter = {
+    data() {
+      return {
+        counter: 0,
+      };
+    },
+    methods: {
+      handleAdd() {
+        this.counter++;
+      },
+    },
+  };
+
+  createApp(Counter).mount("#counter");
+</script>
+
+</html>
