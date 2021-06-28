@@ -1,6 +1,62 @@
 - 构造函数
 
-  类实例是由一个特殊的类方法构造的，这个方法名通常和类名相同，被称为构造函数。这个方法的任务就是初始化实例需要的所有信息（状态）。执行 new 时实际上调用的就是构造函数。构造函数会返回一个对象（也就是类的一个实例）。类构造函数属于类，而且通常和类同名。ES6 中可以通过在子类的构造函数中调用 super()来直接调用父类的构造函数。
+  类实例是由一个特殊的类方法构造的，这个方法名通常和类名相同，被称为构造函数。这个方法的任务就是初始化实例需要的所有信息（状态）。执行 new 时实际上调用的就是构造函数。构造函数会返回一个对象（也就是类的一个实例）。类构造函数属于类，而且通常和类同名。ES6 中可以通过在子类的构造函数中调用 super()来直接调用父类的构造函数。**虽然 super 代表了父类的构造函数，但是返回的是子类的实例，即 super 内部的 this 指向的是子类的实例，因此`super()`在这里相当于 sup.prototype.constructor.call(this)**
+
+  ```javascript
+  class A {
+    constructor() {
+      console.log(new.target.name);
+    }
+  }
+  class B extends A {
+    constructor() {
+      super();
+    }
+  }
+  new A(); // A
+  new B(); // B
+  ```
+
+  上述代码，`new.target`指向当前正在执行的函数，可以看到，在`super()`执行时，它指向的是子类`B`的构造函数，而不是父类`A`的构造函数，也就是说，`super()`内部的`this`指向的是子类`B`
+
+  ES6 要求，子类的构造函数必须执行一次`super()`函数
+
+  如果不调用`super`:
+
+  ```javascript
+  class sup {
+    constructor(msg) {
+      this.msg = msg;
+    }
+    printMsg() {
+      console.log("msg", this.msg);
+    }
+  }
+
+  class sub extends sup {
+    constructor(msg, age) {
+      // super(msg);
+      // this.age = age;
+      // console.log(this.age);
+    }
+    printAge() {
+      console.log("age", this.age);
+    }
+  }
+
+  const s = new sub("hello", 20);
+  s.printMsg();
+  s.printAge();
+  ```
+
+  上述代码中，子类`sub`的构造函数中的`super`，代表调用父类的构造函数，是必须的，否则 Javascript 引擎会报错，报错如下：
+
+  ```
+  ReferenceError
+  Must call super constructor in derived class before accessing 'this' or returning from derived constructor
+  ```
+
+  同样，在 React 中也会报错：
 
   ```javascript
   import React from "react";
