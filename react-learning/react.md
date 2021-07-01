@@ -170,7 +170,7 @@
   }
   ```
 
-  点击触发`handleAdd`事件，发现打印的都是`1`，而页面显示的`count`值是`2`，可以看到对一个值进行多次`setState`，`setState`的批量更新策略会对其进行覆盖，仅取最后一次的执行结果，所以上述例子最终表现为只增加了`1`。
+  如上述代码，点击触发`handleAdd`事件，发现打印的都是`1`，而页面显示的`count`值是`2`，可以看到对一个值进行多次`setState`，`setState`的批量更新策略会对其进行覆盖，仅取最后一次的执行结果，所以上述例子最终表现为只增加了`1`。
 
   如果是下一个`state`依赖前一个`state`的话，推荐给`setState`一个参数传入一个`function`，如下：
 
@@ -354,6 +354,102 @@
   ```javascript
   handleClick(e) {
     e.nativeEvent // 原生对象
+  }
+  ```
+
+- 在 React 绑定事件处理函数时，有以下几种方式：
+
+  ```javascript
+  class App extends React.Component {
+    constructor(props) {
+      super(props);
+      console.log(this.props);
+    }
+
+    handleClick(text, e) {
+      console.log(this, text, e);
+    }
+
+    render() {
+      return (
+        <div className="App">
+          <h1>Hello CodeSandbox</h1>
+          <h2>Edit to see some magic happen!</h2>
+          <button onClick={this.handleClick.bind(this, "test")}>Test</button>
+        </div>
+      );
+    }
+  }
+  // Objet App，‘test’，Object SyntheticBaseEvent
+  ```
+
+  ```javascript
+  class App extends React.Component {
+    constructor(props) {
+      super(props);
+      console.log(this.props);
+    }
+
+    handleClick(text, e) {
+      console.log(this, text, e);
+    }
+
+    render() {
+      return (
+        <div className="App">
+          <h1>Hello CodeSandbox</h1>
+          <h2>Edit to see some magic happen!</h2>
+          <button onClick={(e) => this.handleClick("test", e)}>Test</button>
+        </div>
+      );
+    }
+  }
+  ```
+
+  ```javascript
+  class App extends React.Component {
+    constructor(props) {
+      super(props);
+      console.log(this.props);
+      this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(text, e) {
+      console.log(this, text, e);
+    }
+
+    render() {
+      return (
+        <div className="App">
+          <h1>Hello CodeSandbox</h1>
+          <h2>Edit to see some magic happen!</h2>
+          <button onClick={this.handleClick}>Test</button>
+        </div>
+      );
+    }
+  }
+  ```
+
+  ```javascript
+  class App extends React.Component {
+    constructor(props) {
+      super(props);
+      console.log(this.props);
+    }
+
+    handleClick = (text) => (e) => {
+      console.log(this, text, e);
+    };
+
+    render() {
+      return (
+        <div className="App">
+          <h1>Hello CodeSandbox</h1>
+          <h2>Edit to see some magic happen!</h2>
+          <button onClick={this.handleClick("test")}>Test</button>
+        </div>
+      );
+    }
   }
   ```
 
